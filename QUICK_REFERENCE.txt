@@ -1,0 +1,175 @@
+╔════════════════════════════════════════════════════════════════╗
+║           MCP2515 CAN BUS - QUICK REFERENCE CARD               ║
+║                                                                ║
+║  ⚠️  BOOT FIX v2: HAL_Delay bug fixed - 58,472 bytes          ║
+║  ✅  Ready to upload: .pio\build\control_CAN\firmware.bin     ║
+╚════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────┐
+│ 🚀 QUICK START - UPLOAD FIXED FIRMWARE                         │
+├─────────────────────────────────────────────────────────────────┤
+│ python -m platformio run -e control_CAN --target upload        │
+│                                                                 │
+│ For specific board IDs:                                         │
+│ python -m platformio run -e control_CAN_board1 --target upload │
+│ python -m platformio run -e control_CAN_board2 --target upload │
+│ python -m platformio run -e control_CAN_board3 --target upload │
+│ python -m platformio run -e control_CAN_board4 --target upload │
+│                                                                 │
+│ Expected boot: Clean output, no hang, MCP2515 detected         │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ SERIAL COMMANDS (115200 baud)                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ rC0              Read Board ID (0-15)                           │
+│ rC1              Read Command Base ID                           │
+│ rC2              Read Status Base ID                            │
+│ wC0 <id>         Write Board ID (0-15)                          │
+│ wC1 <id>         Write Command Base (e.g., 256 = 0x100)        │
+│ wC2 <id>         Write Status Base (e.g., 512 = 0x200)         │
+│ w80 1238         Save all changes to flash                      │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ FRONT BOARD SETUP (Board ID 0)                                  │
+├─────────────────────────────────────────────────────────────────┤
+│ wC0 0                                                           │
+│ wC1 256                                                         │
+│ wC2 512                                                         │
+│ w80 1238                                                        │
+│ [Power cycle]                                                   │
+│                                                                 │
+│ Result: Cmd=0x100, Status=0x200                                │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ REAR BOARD SETUP (Board ID 1)                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ wC0 1                                                           │
+│ wC1 256                                                         │
+│ wC2 512                                                         │
+│ w80 1238                                                        │
+│ [Power cycle]                                                   │
+│                                                                 │
+│ Result: Cmd=0x110, Status=0x210                                │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ CAN MESSAGE FORMAT                                              │
+├─────────────────────────────────────────────────────────────────┤
+│ PWM Command (8 bytes):                                          │
+│   ID: 0x100 (Front) / 0x110 (Rear)                             │
+│   Data: [LeftPWM (int32)][RightPWM (int32)]                    │
+│   Range: -1000 to +1000                                         │
+│                                                                 │
+│ Speed Status (8 bytes, 100ms):                                  │
+│   ID: 0x200 (Front) / 0x210 (Rear)                             │
+│   Data: [LeftSpeed (int32)][RightSpeed (int32)]                │
+│                                                                 │
+│ Position Status (8 bytes, 100ms):                               │
+│   ID: 0x201 (Front) / 0x211 (Rear)                             │
+│   Data: [LeftPos (int32)][RightPos (int32)]                    │
+│                                                                 │
+│ Battery Status (4 bytes, 100ms):                                │
+│   ID: 0x202 (Front) / 0x212 (Rear)                             │
+│   Data: [Voltage (int16)][Temp (int16)]                        │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ WIRING (per board)                                              │
+├──────────────┬──────────────┬───────────────────────────────────┤
+│ STM32 Pin    │ MCP2515 Pin  │ Function                          │
+├──────────────┼──────────────┼───────────────────────────────────┤
+│ PA2          │ SI (MOSI)    │ SPI Data Out                      │
+│ PA3          │ SO (MISO)    │ SPI Data In                       │
+│ PB10         │ SCK          │ SPI Clock                         │
+│ PB11         │ CS           │ Chip Select                       │
+│ PB12         │ INT          │ Interrupt (optional)              │
+│ 3.3V         │ VCC          │ Power                             │
+│ GND          │ GND          │ Ground                            │
+└──────────────┴──────────────┴───────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ CAN BUS TOPOLOGY                                                │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Controller ──┬── 120Ω ── CAN_H ──┬── Front Board (ID 0)       │
+│               │                    │                            │
+│               └─────────── CAN_L ──┴── Rear Board (ID 1)        │
+│                                    │                            │
+│                                  120Ω (terminator)              │
+│                                                                 │
+│ • Twisted pair for CAN_H/CAN_L                                  │
+│ • 120Ω resistors at BOTH ends                                   │
+│ • Common ground for all devices                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ ID CALCULATION                                                  │
+├─────────────────────────────────────────────────────────────────┤
+│ Actual_ID = Base_ID + (Board_ID × 0x10) + Offset               │
+│                                                                 │
+│ Example (Board ID 1, Base=0x100):                               │
+│   PWM:      0x100 + (1×0x10) + 0x0 = 0x110                      │
+│   Speed:    0x100 + (1×0x10) + 0x1 = 0x111                      │
+│   Enable:   0x100 + (1×0x10) + 0x3 = 0x113                      │
+│                                                                 │
+│ Supports 16 boards (ID 0-15) per CAN bus                        │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ BUILD & FLASH                                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ pio run -e control_CAN         Build CAN firmware              │
+│ pio run -e control_CAN -t upload   Flash to board              │
+│                                                                 │
+│ Default settings (in config.h):                                 │
+│   CAN_BOARD_ID = 0                                              │
+│   CAN_SPEED = 500kbps                                           │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ BOOT MESSAGES                                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ ✓ "CAN bus detected and initialized"                           │
+│   → MCP2515 found, CAN mode active                              │
+│                                                                 │
+│ ✓ "MCP2515 not detected, using USART mode"                     │
+│   → No MCP2515, using USART2/3 instead                          │
+│                                                                 │
+│ Configuration display shows all CAN IDs on boot                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ TROUBLESHOOTING                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│ Problem: Board doesn't respond to CAN                           │
+│   → Check Board ID matches (rC0)                                │
+│   → Verify CAN speed (default 500kbps)                          │
+│   → Check wiring and termination                                │
+│                                                                 │
+│ Problem: Configuration not saved                                │
+│   → Must write magic: w80 1238                                  │
+│   → Must power cycle after saving                               │
+│                                                                 │
+│ Problem: CAN bus errors                                         │
+│   → Add/check 120Ω terminators at both ends                     │
+│   → Verify twisted pair cable                                   │
+│   → Check all grounds connected                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ DOCUMENTATION FILES                                             │
+├─────────────────────────────────────────────────────────────────┤
+│ DUAL_BOARD_SETUP.md          ← START HERE for front/rear       │
+│ IMPLEMENTATION_SUMMARY.md    ← Complete feature overview       │
+│ CAN_BUS_README.md             Protocol specification           │
+│ CAN_BOARD_ID_GUIDE.md         Board ID methods                 │
+│ CAN_RUNTIME_CONFIG.md         Flash storage details            │
+│ MCP2515_WIRING.md             Hardware connections             │
+└─────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════╗
+║  Status: ✅ IMPLEMENTATION COMPLETE - Ready for Testing!       ║
+╚════════════════════════════════════════════════════════════════╝
