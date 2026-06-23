@@ -105,47 +105,31 @@ bool MCP2515_SetMode(uint8_t mode) {
     return false;
 }
 
-bool MCP2515_SetBitrate(uint8_t speed) {
-    // Bitrate configuration for 8 MHz crystal
-    // CNF1: SJW=1, BRP
-    // CNF2: BTLMODE=1, SAM=0, PHSEG1, PRSEG
-    // CNF3: SOF=0, WAKFIL=0, PHSEG2
-    
-    uint8_t cnf1, cnf2, cnf3;
-    
+// Single source of truth for the CNF (bit-timing) registers, indexed by speed.
+// Values are for an 8 MHz crystal. Used both to program the controller and to
+// verify the readback in diagnostics, so the two can never drift apart.
+bool MCP2515_GetExpectedCNF(uint8_t speed, uint8_t *cnf1, uint8_t *cnf2, uint8_t *cnf3) {
+    // CNF1: SJW=1, BRP / CNF2: BTLMODE=1, SAM=0, PHSEG1, PRSEG / CNF3: PHSEG2
     switch (speed) {
-        case MCP2515_SPEED_125KBPS:
-            cnf1 = 0x01;  // BRP=1, SJW=1
-            cnf2 = 0xB1;  // BTLMODE=1, PHSEG1=3, PRSEG=1
-            cnf3 = 0x85;  // PHSEG2=5
-            break;
-            
-        case MCP2515_SPEED_250KBPS:
-            cnf1 = 0x00;  // BRP=0, SJW=1
-            cnf2 = 0xB1;  // BTLMODE=1, PHSEG1=3, PRSEG=1
-            cnf3 = 0x85;  // PHSEG2=5
-            break;
-            
-        case MCP2515_SPEED_500KBPS:
-            cnf1 = 0x00;  // BRP=0, SJW=1
-            cnf2 = 0x90;  // BTLMODE=1, PHSEG1=2, PRSEG=0
-            cnf3 = 0x82;  // PHSEG2=2
-            break;
-            
-        case MCP2515_SPEED_1MBPS:
-            cnf1 = 0x00;  // BRP=0, SJW=1
-            cnf2 = 0x80;  // BTLMODE=1, PHSEG1=1, PRSEG=0
-            cnf3 = 0x80;  // PHSEG2=1
-            break;
-            
-        default:
-            return false;
+        case MCP2515_SPEED_125KBPS: *cnf1 = 0x01; *cnf2 = 0xB1; *cnf3 = 0x85; break;
+        case MCP2515_SPEED_250KBPS: *cnf1 = 0x00; *cnf2 = 0xB1; *cnf3 = 0x85; break;
+        case MCP2515_SPEED_500KBPS: *cnf1 = 0x00; *cnf2 = 0x90; *cnf3 = 0x82; break;
+        case MCP2515_SPEED_1MBPS:   *cnf1 = 0x00; *cnf2 = 0x80; *cnf3 = 0x80; break;
+        default: return false;
     }
-    
+    return true;
+}
+
+bool MCP2515_SetBitrate(uint8_t speed) {
+    uint8_t cnf1, cnf2, cnf3;
+    if (!MCP2515_GetExpectedCNF(speed, &cnf1, &cnf2, &cnf3)) {
+        return false;
+    }
+
     MCP2515_WriteRegister(MCP2515_CNF1, cnf1);
     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
     MCP2515_WriteRegister(MCP2515_CNF3, cnf3);
-    
+
     return true;
 }
 
