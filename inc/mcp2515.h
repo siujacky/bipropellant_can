@@ -82,6 +82,8 @@ bool MCP2515_SetMode(uint8_t mode);
 
 // Configuration
 bool MCP2515_SetBitrate(uint8_t speed);
+// Expected CNF1/2/3 for a given speed (8 MHz xtal) — shared by init + diagnostics.
+bool MCP2515_GetExpectedCNF(uint8_t speed, uint8_t *cnf1, uint8_t *cnf2, uint8_t *cnf3);
 void MCP2515_SetFilter(uint32_t filter, uint32_t mask);
 void MCP2515_EnableInterrupts(uint8_t interrupts);
 

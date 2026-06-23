@@ -25,6 +25,10 @@ void forceLog(char *message) {
 // Communication mode flags
 volatile bool can_mode_active = false;
 volatile bool usart_mode_active = false;
+// Per-frame RX logging is OFF by default: the sprintf + per-byte serial writes ran
+// on EVERY received frame, adding latency in the control path and flooding the
+// console (and can starve the RX buffers under command load). Set true to debug.
+volatile bool can_rx_verbose = false;
 static bool software_serial_ready = false;  // Track if PA13/PA14 is initialized
 
 // Check if Software Serial (PA13/PA14) is initialized
@@ -259,15 +263,17 @@ void CAN_ProcessMessages(void) {
 
             can_stats.rx_total++;
 
-            // Decode and log message
-            sprintf(msg, "[CAN RX] ID:0x%03X DLC:%d Data:",
-                    (unsigned int)rx_frame.id, rx_frame.dlc);
-            forceLog(msg);
-            for(uint8_t i = 0; i < rx_frame.dlc && i < 8; i++) {
-                sprintf(msg, " %02X", rx_frame.data[i]);
+            // Decode and log message (gated: this ran on every frame, hot path)
+            if (can_rx_verbose) {
+                sprintf(msg, "[CAN RX] ID:0x%03X DLC:%d Data:",
+                        (unsigned int)rx_frame.id, rx_frame.dlc);
                 forceLog(msg);
+                for(uint8_t i = 0; i < rx_frame.dlc && i < 8; i++) {
+                    sprintf(msg, " %02X", rx_frame.data[i]);
+                    forceLog(msg);
+                }
             }
-            
+
             // Process CAN message based on ID (with board offset)
             if (rx_frame.id == can_cmd_pwm) {
                 can_stats.rx_pwm++;
@@ -359,6 +365,15 @@ void CAN_ProcessMessages(void) {
                     memcpy(&pos1, &rx_frame.data[0], 4);
                     memcpy(&pos2, &rx_frame.data[4], 4);
 
+                    // Sanity clamp (mirrors the Speed handler): reject absurd
+                    // setpoints from a corrupt frame so a garbage value can't be
+                    // commanded as a 2-billion-mm position target.
+                    #define MAX_POSITION_MM 1000000   // +/- 1 km
+                    if (pos1 < -MAX_POSITION_MM) pos1 = -MAX_POSITION_MM;
+                    if (pos1 >  MAX_POSITION_MM) pos1 =  MAX_POSITION_MM;
+                    if (pos2 < -MAX_POSITION_MM) pos2 = -MAX_POSITION_MM;
+                    if (pos2 >  MAX_POSITION_MM) pos2 =  MAX_POSITION_MM;
+
                     sprintf(msg, " POS1:%d POS2:%d mm", (int)pos1, (int)pos2);
                     forceLog(msg);
 
@@ -406,10 +421,10 @@ void CAN_ProcessMessages(void) {
                 }
             } else {
                 can_stats.rx_unknown++;
-                forceLog(" [UNKNOWN]");
+                if (can_rx_verbose) forceLog(" [UNKNOWN]");
             }
-            
-            forceLog("\r\n");
+
+            if (can_rx_verbose) forceLog("\r\n");
         }
     }
 #endif
@@ -682,9 +697,14 @@ void CAN_PrintStatistics(void) {
     uint8_t cnf1 = MCP2515_ReadRegister(MCP2515_CNF1);
     uint8_t cnf2 = MCP2515_ReadRegister(MCP2515_CNF2);
     uint8_t cnf3 = MCP2515_ReadRegister(MCP2515_CNF3);
+    // Compare the readback against the CNF expected for the CONFIGURED speed,
+    // not a hardcoded 500 kbps value — otherwise this falsely reports MISMATCH
+    // whenever CAN_SPEED (or the crystal) is changed.
+    uint8_t exp1, exp2, exp3;
+    bool cnf_ok = MCP2515_GetExpectedCNF(CAN_SPEED, &exp1, &exp2, &exp3) &&
+                  cnf1 == exp1 && cnf2 == exp2 && cnf3 == exp3;
     sprintf(msg, "SPI Check: CNF1=0x%02X CNF2=0x%02X CNF3=0x%02X %s\r\n",
-            cnf1, cnf2, cnf3,
-            (cnf1 == 0x00 && cnf2 == 0x90 && cnf3 == 0x82) ? "OK" : "MISMATCH!");
+            cnf1, cnf2, cnf3, cnf_ok ? "OK" : "MISMATCH!");
     forceLog(msg);
 
     sprintf(msg, "======================\r\n");
