@@ -67,9 +67,10 @@ bool MCP2515_Init(uint8_t speed) {
         return false;
     }
 
-    // Configure RX buffers - receive all messages
-    MCP2515_WriteRegister(MCP2515_RXB0CTRL, 0x60);
-    MCP2515_WriteRegister(MCP2515_RXB1CTRL, 0x60);
+    // Configure RX buffers - receive all messages. 0x64 sets BUKT (rollover):
+    // a 2nd frame spills into RXB1 instead of being dropped while RXB0 is drained.
+    MCP2515_WriteRegister(MCP2515_RXB0CTRL, 0x64);  // RXM=11 (accept all) + BUKT
+    MCP2515_WriteRegister(MCP2515_RXB1CTRL, 0x60);  // RXM=11
     MCP2515_WriteRegister(MCP2515_CANINTF, 0x00);
     MCP2515_WriteRegister(MCP2515_CANINTE, 0x03);
 
@@ -149,13 +150,20 @@ bool MCP2515_SetBitrate(uint8_t speed) {
 }
 
 bool MCP2515_SendFrame(CAN_Frame *frame) {
-    // Check if TX buffer 0 is free
-    uint8_t status = MCP2515_ReadRegister(MCP2515_TXB0CTRL);
-    if (status & 0x08) {  // TXREQ bit set - buffer busy
-        return false;
+    // Pick a FREE TX buffer among TXB0/1/2 instead of only TXB0. Sending the 3
+    // status frames (speed/pos/batt) back-to-back to a single buffer dropped the
+    // 2nd and 3rd every cycle while TXB0 was still transmitting. CTRL regs 0x30/
+    // 0x40/0x50, SIDH load addr = CTRL+1, RTS = 0x80|(1<<n).
+    static const uint8_t TXB_CTRL[3] = {0x30, 0x40, 0x50};
+    int buf = -1;
+    for (int b = 0; b < 3; b++) {
+        if (!(MCP2515_ReadRegister(TXB_CTRL[b]) & 0x08)) { buf = b; break; }  // TXREQ clear
     }
-    
-    // Load TX buffer 0
+    if (buf < 0) return false;             // all 3 buffers busy (bus stuck / no ACK)
+    uint8_t sidh_addr = TXB_CTRL[buf] + 1; // TXBnSIDH
+    uint8_t rts_cmd   = MCP2515_CMD_RTS | (uint8_t)(1u << buf);
+
+    // Load TX buffer
     uint8_t txbuf[13];
     uint8_t idx = 0;
     
@@ -183,20 +191,20 @@ bool MCP2515_SendFrame(CAN_Frame *frame) {
         txbuf[idx++] = frame->data[i];
     }
     
-    // Write to TXB0
+    // Write to the chosen TX buffer
     MCP2515_Select();
     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
-    MCP2515_SPITransfer(0x31);  // TXB0SIDH address
+    MCP2515_SPITransfer(sidh_addr);   // TXBnSIDH
     for (uint8_t i = 0; i < idx; i++) {
         MCP2515_SPITransfer(txbuf[i]);
     }
     MCP2515_Deselect();
-    
-    // Request to send
+
+    // Request to send (RTS for the chosen buffer)
     MCP2515_Select();
-    MCP2515_SPITransfer(MCP2515_CMD_RTS | 0x01);  // RTS TXB0
+    MCP2515_SPITransfer(rts_cmd);
     MCP2515_Deselect();
-    
+
     return true;
 }
 

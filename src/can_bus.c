@@ -25,6 +25,10 @@ void forceLog(char *message) {
 // Communication mode flags
 volatile bool can_mode_active = false;
 volatile bool usart_mode_active = false;
+// Per-frame RX logging is OFF by default: the sprintf + per-byte serial writes ran
+// on EVERY received frame, adding latency in the control path and flooding the
+// console (and can starve the RX buffers under command load). Set true to debug.
+volatile bool can_rx_verbose = false;
 static bool software_serial_ready = false;  // Track if PA13/PA14 is initialized
 
 // Check if Software Serial (PA13/PA14) is initialized
@@ -259,15 +263,17 @@ void CAN_ProcessMessages(void) {
 
             can_stats.rx_total++;
 
-            // Decode and log message
-            sprintf(msg, "[CAN RX] ID:0x%03X DLC:%d Data:",
-                    (unsigned int)rx_frame.id, rx_frame.dlc);
-            forceLog(msg);
-            for(uint8_t i = 0; i < rx_frame.dlc && i < 8; i++) {
-                sprintf(msg, " %02X", rx_frame.data[i]);
+            // Decode and log message (gated: this ran on every frame, hot path)
+            if (can_rx_verbose) {
+                sprintf(msg, "[CAN RX] ID:0x%03X DLC:%d Data:",
+                        (unsigned int)rx_frame.id, rx_frame.dlc);
                 forceLog(msg);
+                for(uint8_t i = 0; i < rx_frame.dlc && i < 8; i++) {
+                    sprintf(msg, " %02X", rx_frame.data[i]);
+                    forceLog(msg);
+                }
             }
-            
+
             // Process CAN message based on ID (with board offset)
             if (rx_frame.id == can_cmd_pwm) {
                 can_stats.rx_pwm++;
@@ -406,10 +412,10 @@ void CAN_ProcessMessages(void) {
                 }
             } else {
                 can_stats.rx_unknown++;
-                forceLog(" [UNKNOWN]");
+                if (can_rx_verbose) forceLog(" [UNKNOWN]");
             }
-            
-            forceLog("\r\n");
+
+            if (can_rx_verbose) forceLog("\r\n");
         }
     }
 #endif
