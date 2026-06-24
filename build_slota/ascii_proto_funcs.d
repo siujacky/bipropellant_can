@@ -23,10 +23,9 @@ build_slota/ascii_proto_funcs.d: src/ascii_proto_funcs.c \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h inc/defines.h \
- inc/config.h inc/sensorcoms.h inc/control_structures.h inc/protocol.h \
- inc/protocolfunctions.h inc/protocol.h inc/hallinterrupts.h \
- inc/softwareserial.h inc/bldc.h inc/flashcontent.h inc/flashaccess.h \
- inc/comms.h
+ inc/config.h inc/protocolfunctions.h inc/protocol.h inc/protocol.h \
+ inc/hallinterrupts.h inc/control_structures.h inc/softwareserial.h \
+ inc/bldc.h inc/flashcontent.h inc/flashaccess.h inc/comms.h
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 inc/stm32f1xx_hal_conf.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:
@@ -55,12 +54,11 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 inc/defines.h:
 inc/config.h:
-inc/sensorcoms.h:
-inc/control_structures.h:
-inc/protocol.h:
 inc/protocolfunctions.h:
 inc/protocol.h:
+inc/protocol.h:
 inc/hallinterrupts.h:
+inc/control_structures.h:
 inc/softwareserial.h:
 inc/bldc.h:
 inc/flashcontent.h:

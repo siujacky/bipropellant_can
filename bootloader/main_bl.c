@@ -875,6 +875,60 @@ static void uart_menu(void)
 /* ----------------------------------------------------------------------- */
 int main(void)
 {
+    /* SAFETY FIRST: drive all motor PWM outputs LOW before anything else.
+     *
+     * Hoverboard 3-phase bridge (TIM1=right, TIM8=left):
+     *   Right HIGH: PA8(UH), PA9(VH), PA10(WH)   → AF push-pull (TIM1_CH1-3)
+     *   Right LOW:  PB13(UL), PB14(VL), PB15(WL) → AF push-pull (TIM1_CH1N-3N)
+     *   Left  HIGH: PC6(UH), PC7(VH), PC8(WH)    → AF push-pull (TIM8_CH1-3)
+     *   Left  LOW:  PA7(UL), PB0(VL), PB1(WL)    → AF push-pull (TIM8_CH1N-3N)
+     *
+     * In the STM32 RESET state all pins are INPUT FLOATING.  A floating
+     * PWM input to most gate driver ICs can activate MOSFETs unpredictably.
+     * Shoot-through (high + low side both ON) short-circuits the battery →
+     * large spark / MOSFET damage on every power-up.
+     *
+     * Fix: configure every motor pin as GPIO output LOW immediately, so all
+     * MOSFET gates are pulled low before the app configures the timers.
+     * Also drive OFF_PIN (PA5) HIGH to latch the power supply.
+     */
+    {
+        /* Enable clocks: GPIOA(bit2), GPIOB(bit3), GPIOC(bit4) */
+        RCC_APB2ENR |= (1U<<2)|(1U<<3)|(1U<<4);
+
+        /* Helper: configure pin as output PP 50MHz and drive LOW.
+         * For pins 0-7: CRL offset 0. For pins 8-15: CRH offset 4.
+         * Each pin occupies 4 bits in CNFy:MODEy. Output PP 50MHz = 0x3. */
+#define MOTOR_SAFE(gpiox, pin) do { \
+    volatile uint32_t *cr = (volatile uint32_t *)((uint32_t)(gpiox) + (((pin)>=8)?4U:0U)); \
+    uint32_t shift = (((pin)%8U)*4U); \
+    *cr = (*cr & ~(0xFUL<<shift)) | (0x3UL<<shift); \
+    ((GPIO_t*)(gpiox))->BSRR = (1U<<(16U+(pin))); /* drive LOW via BR */ \
+} while(0)
+
+        /* Right motor — TIM1 */
+        MOTOR_SAFE(GPIOA_BASE, 8U);   /* PA8  UH */
+        MOTOR_SAFE(GPIOA_BASE, 9U);   /* PA9  VH */
+        MOTOR_SAFE(GPIOA_BASE, 10U);  /* PA10 WH */
+        MOTOR_SAFE(GPIOB_BASE, 13U);  /* PB13 UL */
+        MOTOR_SAFE(GPIOB_BASE, 14U);  /* PB14 VL */
+        MOTOR_SAFE(GPIOB_BASE, 15U);  /* PB15 WL */
+
+        /* Left motor — TIM8 */
+        MOTOR_SAFE(GPIOC_BASE, 6U);   /* PC6  UH */
+        MOTOR_SAFE(GPIOC_BASE, 7U);   /* PC7  VH */
+        MOTOR_SAFE(GPIOC_BASE, 8U);   /* PC8  WH */
+        MOTOR_SAFE(GPIOA_BASE, 7U);   /* PA7  UL */
+        MOTOR_SAFE(GPIOB_BASE, 0U);   /* PB0  VL */
+        MOTOR_SAFE(GPIOB_BASE, 1U);   /* PB1  WL */
+
+        /* OFF_PIN (PA5) HIGH — latch power supply ON */
+        MOTOR_SAFE(GPIOA_BASE, 5U);
+        ((GPIO_t*)GPIOA_BASE)->BSRR = (1U<<5U); /* set PA5 HIGH */
+
+#undef MOTOR_SAFE
+    }
+
     /* 1. Disable all interrupts immediately */
     __asm volatile("cpsid i");
     NVIC_ICER0 = 0xFFFFFFFFUL;

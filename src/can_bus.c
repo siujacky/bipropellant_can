@@ -130,6 +130,8 @@ bool CAN_AutoDetectAndInit(void) {
         forceLog(msg);
         
         if (MCP2515_Init(CAN_SPEED)) {
+            /* SoftSPI_Init disabled TIM1/TIM8 IRQs to prevent motor-control
+             * timer interference during SPI pin setup. Re-enable now. */
             forceLog("CAN bus initialized successfully\r\n");
             can_mode_active = true;
             usart_mode_active = false;
@@ -199,9 +201,8 @@ bool CAN_AutoDetectAndInit(void) {
         forceLog("MCP2515 NOT DETECTED\r\n");
     }
     
-    // MCP2515 not detected or initialization failed
     can_mode_active = false;
-    
+
     // Fall back to USART mode
     CAN_Fallback_To_USART();
     return false;
@@ -785,3 +786,4 @@ void CAN_ResetStatistics(void) {}
 void CAN_CheckErrors(void) {}
 
 #endif // ENABLE_CAN_BUS
+

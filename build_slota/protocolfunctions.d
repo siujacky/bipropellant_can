@@ -25,8 +25,7 @@ build_slota/protocolfunctions.d: src/protocolfunctions.c inc/defines.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h inc/config.h \
  inc/protocolfunctions.h inc/protocol.h inc/bldc.h \
  inc/control_structures.h inc/softwareserial.h inc/flashcontent.h \
- inc/flashaccess.h inc/comms.h inc/sensorcoms.h inc/hallinterrupts.h \
- inc/deadreckoner.h
+ inc/flashaccess.h inc/comms.h inc/hallinterrupts.h inc/deadreckoner.h
 inc/defines.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 inc/stm32f1xx_hal_conf.h:
@@ -63,6 +62,5 @@ inc/softwareserial.h:
 inc/flashcontent.h:
 inc/flashaccess.h:
 inc/comms.h:
-inc/sensorcoms.h:
 inc/hallinterrupts.h:
 inc/deadreckoner.h:

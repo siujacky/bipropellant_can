@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccJd5WrF.s 			page 1
+ARM GAS  /tmp/ccnejxj5.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
   31:src/mcp2515.c ****     
   32:src/mcp2515.c ****     // Check again
   33:src/mcp2515.c ****     canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
-ARM GAS  /tmp/ccJd5WrF.s 			page 2
+ARM GAS  /tmp/ccnejxj5.s 			page 2
 
 
   34:src/mcp2515.c ****     if ((canstat & 0xE0) == 0x80) {
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
   88:src/mcp2515.c ****     MCP2515_Select();
   89:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RESET);
   90:src/mcp2515.c ****     MCP2515_Deselect();
-ARM GAS  /tmp/ccJd5WrF.s 			page 3
+ARM GAS  /tmp/ccnejxj5.s 			page 3
 
 
   91:src/mcp2515.c ****     HAL_Delay(10);
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  145:src/mcp2515.c ****     }
  146:src/mcp2515.c ****     
  147:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF1, cnf1);
-ARM GAS  /tmp/ccJd5WrF.s 			page 4
+ARM GAS  /tmp/ccnejxj5.s 			page 4
 
 
  148:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  202:src/mcp2515.c ****     txbuf[idx++] = frame->rtr ? (0x40 | frame->dlc) : frame->dlc;
  203:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
  204:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
-ARM GAS  /tmp/ccJd5WrF.s 			page 5
+ARM GAS  /tmp/ccnejxj5.s 			page 5
 
 
  205:src/mcp2515.c ****     }
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  259:src/mcp2515.c ****     for (uint8_t i = 0; i < 13; i++) {
  260:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
  261:src/mcp2515.c ****     }
-ARM GAS  /tmp/ccJd5WrF.s 			page 6
+ARM GAS  /tmp/ccnejxj5.s 			page 6
 
 
  262:src/mcp2515.c ****     MCP2515_Deselect();
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  316:src/mcp2515.c **** void MCP2515_WriteRegister(uint8_t address, uint8_t value) {
  317:src/mcp2515.c ****     MCP2515_Select();
  318:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
-ARM GAS  /tmp/ccJd5WrF.s 			page 7
+ARM GAS  /tmp/ccnejxj5.s 			page 7
 
 
  319:src/mcp2515.c ****     MCP2515_SPITransfer(address);
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  373:src/mcp2515.c ****         forceLog("Failed to enter config mode!\r\n");
  374:src/mcp2515.c ****         return;
  375:src/mcp2515.c ****     }
-ARM GAS  /tmp/ccJd5WrF.s 			page 8
+ARM GAS  /tmp/ccnejxj5.s 			page 8
 
 
  376:src/mcp2515.c **** 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  430:src/mcp2515.c ****             } else {
  431:src/mcp2515.c ****                 forceLog("*** LOOPBACK FAILED - DATA MISMATCH! ***\r\n");
  432:src/mcp2515.c ****                 sprintf(msg, "Expected: 24 60 xx xx 04 DE AD BE EF\r\n");
-ARM GAS  /tmp/ccJd5WrF.s 			page 9
+ARM GAS  /tmp/ccnejxj5.s 			page 9
 
 
  433:src/mcp2515.c ****                 forceLog(msg);
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
   52              		.loc 1 462 50 is_stmt 1 view -0
   53              		.cfi_startproc
   54              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccJd5WrF.s 			page 10
+ARM GAS  /tmp/ccnejxj5.s 			page 10
 
 
   55              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  107              		@ args = 0, pretend = 0, frame = 0
  108              		@ frame_needed = 0, uses_anonymous_args = 0
  109 0000 08B5     		push	{r3, lr}
-ARM GAS  /tmp/ccJd5WrF.s 			page 11
+ARM GAS  /tmp/ccnejxj5.s 			page 11
 
 
  110              	.LCFI3:
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  157              	.LVL9:
  308:src/mcp2515.c ****     MCP2515_SPITransfer(address);
  158              		.loc 1 308 5 view .LVU21
-ARM GAS  /tmp/ccJd5WrF.s 			page 12
+ARM GAS  /tmp/ccnejxj5.s 			page 12
 
 
  159 0008 0320     		movs	r0, #3
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  206 0002 0546     		mov	r5, r0
  207 0004 0C46     		mov	r4, r1
  317:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
-ARM GAS  /tmp/ccJd5WrF.s 			page 13
+ARM GAS  /tmp/ccnejxj5.s 			page 13
 
 
  208              		.loc 1 317 5 is_stmt 1 view .LVU31
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  255 0008 FFF7FEFF 		bl	SoftSPI_SetMode
  256              	.LVL22:
   18:src/mcp2515.c ****     
-ARM GAS  /tmp/ccJd5WrF.s 			page 14
+ARM GAS  /tmp/ccnejxj5.s 			page 14
 
 
  257              		.loc 1 18 5 view .LVU41
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  297              		.loc 1 40 5 view .LVU55
   40:src/mcp2515.c ****     
  298              		.loc 1 40 20 is_stmt 0 view .LVU56
-ARM GAS  /tmp/ccJd5WrF.s 			page 15
+ARM GAS  /tmp/ccnejxj5.s 			page 15
 
 
  299 0040 2A20     		movs	r0, #42
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  339 0066 F3E7     		b	.L14
  340              	.LVL39:
  341              	.L16:
-ARM GAS  /tmp/ccJd5WrF.s 			page 16
+ARM GAS  /tmp/ccnejxj5.s 			page 16
 
 
   25:src/mcp2515.c ****     }
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  391              		.loc 1 147 5 view .LVU77
  392 0014 2A20     		movs	r0, #42
  393              	.LVL42:
-ARM GAS  /tmp/ccJd5WrF.s 			page 17
+ARM GAS  /tmp/ccnejxj5.s 			page 17
 
 
  147:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  140:src/mcp2515.c ****             break;
  432              		.loc 1 140 13 view .LVU94
  141:src/mcp2515.c ****             
-ARM GAS  /tmp/ccJd5WrF.s 			page 18
+ARM GAS  /tmp/ccnejxj5.s 			page 18
 
 
  433              		.loc 1 141 13 view .LVU95
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  478              		.cfi_offset 4, -16
  479              		.cfi_offset 5, -12
  480              		.cfi_offset 6, -8
-ARM GAS  /tmp/ccJd5WrF.s 			page 19
+ARM GAS  /tmp/ccnejxj5.s 			page 19
 
 
  481              		.cfi_offset 14, -4
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  527              		.loc 1 94 36 is_stmt 0 view .LVU116
  528 0000 38B5     		push	{r3, r4, r5, lr}
  529              	.LCFI9:
-ARM GAS  /tmp/ccJd5WrF.s 			page 20
+ARM GAS  /tmp/ccnejxj5.s 			page 20
 
 
  530              		.cfi_def_cfa_offset 16
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  100:src/mcp2515.c ****         if ((canstat & 0xE0) == mode) {
  572              		.loc 1 100 9 is_stmt 1 view .LVU129
  100:src/mcp2515.c ****         if ((canstat & 0xE0) == mode) {
-ARM GAS  /tmp/ccJd5WrF.s 			page 21
+ARM GAS  /tmp/ccnejxj5.s 			page 21
 
 
  573              		.loc 1 100 27 is_stmt 0 view .LVU130
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  619              		.cfi_offset 14, -4
  620 0002 0446     		mov	r4, r0
   57:src/mcp2515.c ****     HAL_Delay(10);
-ARM GAS  /tmp/ccJd5WrF.s 			page 22
+ARM GAS  /tmp/ccnejxj5.s 			page 22
 
 
  621              		.loc 1 57 5 is_stmt 1 view .LVU141
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  664 003c FFF7FEFF 		bl	MCP2515_WriteRegister
  665              	.LVL77:
   77:src/mcp2515.c **** 
-ARM GAS  /tmp/ccJd5WrF.s 			page 23
+ARM GAS  /tmp/ccnejxj5.s 			page 23
 
 
  666              		.loc 1 77 5 view .LVU153
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  168:src/mcp2515.c ****     for (uint8_t attempt = 0; attempt < 3; attempt++) {
  713              		.loc 1 168 13 is_stmt 0 view .LVU163
  714 0006 5D4B     		ldr	r3, .L68
-ARM GAS  /tmp/ccJd5WrF.s 			page 24
+ARM GAS  /tmp/ccnejxj5.s 			page 24
 
 
  715 0008 1E78     		ldrb	r6, [r3]	@ zero_extendqisi2
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  754              		.loc 1 179 12 is_stmt 0 view .LVU178
  755 0034 022D     		cmp	r5, #2
  756 0036 00F09C80 		beq	.L62
-ARM GAS  /tmp/ccJd5WrF.s 			page 25
+ARM GAS  /tmp/ccnejxj5.s 			page 25
 
 
  757              	.LBE5:
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  189:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
  797              		.loc 1 189 14 is_stmt 0 view .LVU193
  798 005e 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
-ARM GAS  /tmp/ccJd5WrF.s 			page 26
+ARM GAS  /tmp/ccnejxj5.s 			page 26
 
 
  189:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
  835              		.loc 1 202 25 is_stmt 0 view .LVU212
  836 008c A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
-ARM GAS  /tmp/ccJd5WrF.s 			page 27
+ARM GAS  /tmp/ccnejxj5.s 			page 27
 
 
  202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  878              	.LBE11:
  197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
  879              		.loc 1 197 9 is_stmt 1 view .LVU226
-ARM GAS  /tmp/ccJd5WrF.s 			page 28
+ARM GAS  /tmp/ccnejxj5.s 			page 28
 
 
  197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  919 00d6 0DEB0006 		add	r6, sp, r0
  920 00da 06F8101C 		strb	r1, [r6, #-16]
  203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
-ARM GAS  /tmp/ccJd5WrF.s 			page 29
+ARM GAS  /tmp/ccnejxj5.s 			page 29
 
 
  921              		.loc 1 203 51 is_stmt 1 discriminator 4 view .LVU242
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  962              	.LVL115:
  963              	.L59:
  212:src/mcp2515.c ****     }
-ARM GAS  /tmp/ccJd5WrF.s 			page 30
+ARM GAS  /tmp/ccnejxj5.s 			page 30
 
 
  964              		.loc 1 212 9 is_stmt 1 view .LVU256
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
  1006              		.loc 1 226 16 view .LVU269
  226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
-ARM GAS  /tmp/ccJd5WrF.s 			page 31
+ARM GAS  /tmp/ccnejxj5.s 			page 31
 
 
  1007              		.loc 1 226 23 is_stmt 0 view .LVU270
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1048              	.LBE14:
  236:src/mcp2515.c **** }
  1049              		.loc 1 236 12 view .LVU284
-ARM GAS  /tmp/ccJd5WrF.s 			page 32
+ARM GAS  /tmp/ccnejxj5.s 			page 32
 
 
  1050 016e 0120     		movs	r0, #1
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1100              	MCP2515_GetStatus:
  1101              	.LFB78:
  333:src/mcp2515.c ****     uint8_t status;
-ARM GAS  /tmp/ccJd5WrF.s 			page 33
+ARM GAS  /tmp/ccnejxj5.s 			page 33
 
 
  1102              		.loc 1 333 33 is_stmt 1 view -0
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1148              		@ args = 0, pretend = 0, frame = 0
  1149              		@ frame_needed = 0, uses_anonymous_args = 0
  1150 0000 10B5     		push	{r4, lr}
-ARM GAS  /tmp/ccJd5WrF.s 			page 34
+ARM GAS  /tmp/ccnejxj5.s 			page 34
 
 
  1151              	.LCFI16:
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1196 0000 70B5     		push	{r4, r5, r6, lr}
  1197              	.LCFI17:
  1198              		.cfi_def_cfa_offset 16
-ARM GAS  /tmp/ccJd5WrF.s 			page 35
+ARM GAS  /tmp/ccnejxj5.s 			page 35
 
 
  1199              		.cfi_offset 4, -16
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1239              	.LVL148:
  1240              	.L86:
  259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
-ARM GAS  /tmp/ccJd5WrF.s 			page 36
+ARM GAS  /tmp/ccnejxj5.s 			page 36
 
 
  1241              		.loc 1 259 5 view .LVU327
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
  1282              		.loc 1 269 9 is_stmt 1 view .LVU341
  269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
-ARM GAS  /tmp/ccJd5WrF.s 			page 37
+ARM GAS  /tmp/ccnejxj5.s 			page 37
 
 
  1283              		.loc 1 269 37 is_stmt 0 view .LVU342
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
  1320              		.loc 1 285 10 view .LVU360
  1321              	.LVL154:
-ARM GAS  /tmp/ccJd5WrF.s 			page 38
+ARM GAS  /tmp/ccnejxj5.s 			page 38
 
 
  285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1361              	.L81:
  285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
  1362              		.loc 1 285 40 is_stmt 1 discriminator 1 view .LVU376
-ARM GAS  /tmp/ccJd5WrF.s 			page 39
+ARM GAS  /tmp/ccnejxj5.s 			page 39
 
 
  1363 00b0 9942     		cmp	r1, r3
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1407              	.LFE73:
  1409              		.section	.text.MCP2515_Available,"ax",%progbits
  1410              		.align	1
-ARM GAS  /tmp/ccJd5WrF.s 			page 40
+ARM GAS  /tmp/ccnejxj5.s 			page 40
 
 
  1411              		.global	MCP2515_Available
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  356:src/mcp2515.c **** }
  1461              		.loc 1 356 5 view .LVU394
  356:src/mcp2515.c **** }
-ARM GAS  /tmp/ccJd5WrF.s 			page 41
+ARM GAS  /tmp/ccnejxj5.s 			page 41
 
 
  1462              		.loc 1 356 12 is_stmt 0 view .LVU395
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1492 00d4 52582073 		.ascii	"RX status after loopback: 0x%02X\015\012\000"
  1492      74617475 
  1492      73206166 
-ARM GAS  /tmp/ccJd5WrF.s 			page 42
+ARM GAS  /tmp/ccnejxj5.s 			page 42
 
 
  1492      74657220 
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1515 021d 000000   		.align	2
  1516              	.LC14:
  1517 0220 4E6F206C 		.ascii	"No loopback message received!\015\012\000"
-ARM GAS  /tmp/ccJd5WrF.s 			page 43
+ARM GAS  /tmp/ccnejxj5.s 			page 43
 
 
  1517      6F6F7062 
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1553              		.loc 1 364 5 view .LVU400
  1554 0004 6A48     		ldr	r0, .L108
  1555 0006 FFF7FEFF 		bl	forceLog
-ARM GAS  /tmp/ccJd5WrF.s 			page 44
+ARM GAS  /tmp/ccnejxj5.s 			page 44
 
 
  1556              	.LVL167:
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  389:src/mcp2515.c ****     test_frame.id = 0x123;
  1598              		.loc 1 389 5 view .LVU413
  390:src/mcp2515.c ****     test_frame.extended = false;
-ARM GAS  /tmp/ccJd5WrF.s 			page 45
+ARM GAS  /tmp/ccnejxj5.s 			page 45
 
 
  1599              		.loc 1 390 5 view .LVU414
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1635              		.loc 1 399 8 discriminator 1 view .LVU432
  1636 0076 0028     		cmp	r0, #0
  1637 0078 00F08B80 		beq	.L96
-ARM GAS  /tmp/ccJd5WrF.s 			page 46
+ARM GAS  /tmp/ccnejxj5.s 			page 46
 
 
  1638              	.LBB22:
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1679 00ac 6120     		movs	r0, #97
  1680 00ae FFF7FEFF 		bl	MCP2515_SPITransfer
  1681              	.LVL186:
-ARM GAS  /tmp/ccJd5WrF.s 			page 47
+ARM GAS  /tmp/ccnejxj5.s 			page 47
 
 
  414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1723 00d2 04F1A803 		add	r3, r4, #168
  1724 00d6 6B44     		add	r3, sp, r3
  1725 00d8 03F8840C 		strb	r0, [r3, #-132]
-ARM GAS  /tmp/ccJd5WrF.s 			page 48
+ARM GAS  /tmp/ccnejxj5.s 			page 48
 
 
  414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1766 011c 2246     		mov	r2, r4
  1767 011e 2B49     		ldr	r1, .L108+28
  1768 0120 11A8     		add	r0, sp, #68
-ARM GAS  /tmp/ccJd5WrF.s 			page 49
+ARM GAS  /tmp/ccnejxj5.s 			page 49
 
 
  1769 0122 FFF7FEFF 		bl	sprintf
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1814              	.LBE26:
  1815 016c 14E0     		b	.L102
  1816              	.L107:
-ARM GAS  /tmp/ccJd5WrF.s 			page 50
+ARM GAS  /tmp/ccnejxj5.s 			page 50
 
 
  1817              	.LBB27:
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1860 019e 0020     		movs	r0, #0
  1861 01a0 FFF7FEFF 		bl	MCP2515_SetMode
  1862              	.LVL210:
-ARM GAS  /tmp/ccJd5WrF.s 			page 51
+ARM GAS  /tmp/ccnejxj5.s 			page 51
 
 
  450:src/mcp2515.c **** }
@@ -3058,71 +3058,71 @@ ARM GAS  /tmp/ccJd5WrF.s 			page 1
  1924              		.file 3 "inc/mcp2515.h"
  1925              		.file 4 "/usr/include/newlib/stdio.h"
  1926              		.file 5 "inc/software_spi.h"
-ARM GAS  /tmp/ccJd5WrF.s 			page 52
+ARM GAS  /tmp/ccnejxj5.s 			page 52
 
 
  1927              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/ccJd5WrF.s 			page 53
+ARM GAS  /tmp/ccnejxj5.s 			page 53
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 mcp2515.c
-     /tmp/ccJd5WrF.s:19     .text.MCP2515_Select:00000000 $t
-     /tmp/ccJd5WrF.s:24     .text.MCP2515_Select:00000000 MCP2515_Select
-     /tmp/ccJd5WrF.s:44     .text.MCP2515_SPITransfer:00000000 $t
-     /tmp/ccJd5WrF.s:49     .text.MCP2515_SPITransfer:00000000 MCP2515_SPITransfer
-     /tmp/ccJd5WrF.s:72     .text.MCP2515_Deselect:00000000 $t
-     /tmp/ccJd5WrF.s:77     .text.MCP2515_Deselect:00000000 MCP2515_Deselect
-     /tmp/ccJd5WrF.s:97     .text.MCP2515_Reset:00000000 $t
-     /tmp/ccJd5WrF.s:103    .text.MCP2515_Reset:00000000 MCP2515_Reset
-     /tmp/ccJd5WrF.s:134    .text.MCP2515_ReadRegister:00000000 $t
-     /tmp/ccJd5WrF.s:140    .text.MCP2515_ReadRegister:00000000 MCP2515_ReadRegister
-     /tmp/ccJd5WrF.s:185    .text.MCP2515_WriteRegister:00000000 $t
-     /tmp/ccJd5WrF.s:191    .text.MCP2515_WriteRegister:00000000 MCP2515_WriteRegister
-     /tmp/ccJd5WrF.s:233    .text.MCP2515_Detect:00000000 $t
-     /tmp/ccJd5WrF.s:239    .text.MCP2515_Detect:00000000 MCP2515_Detect
-     /tmp/ccJd5WrF.s:353    .text.MCP2515_SetBitrate:00000000 $t
-     /tmp/ccJd5WrF.s:359    .text.MCP2515_SetBitrate:00000000 MCP2515_SetBitrate
-     /tmp/ccJd5WrF.s:380    .text.MCP2515_SetBitrate:0000000a $d
-     /tmp/ccJd5WrF.s:384    .text.MCP2515_SetBitrate:0000000e $t
-     /tmp/ccJd5WrF.s:461    .text.MCP2515_ModifyRegister:00000000 $t
-     /tmp/ccJd5WrF.s:467    .text.MCP2515_ModifyRegister:00000000 MCP2515_ModifyRegister
-     /tmp/ccJd5WrF.s:514    .text.MCP2515_SetMode:00000000 $t
-     /tmp/ccJd5WrF.s:520    .text.MCP2515_SetMode:00000000 MCP2515_SetMode
-     /tmp/ccJd5WrF.s:601    .text.MCP2515_Init:00000000 $t
-     /tmp/ccJd5WrF.s:607    .text.MCP2515_Init:00000000 MCP2515_Init
-     /tmp/ccJd5WrF.s:682    .text.MCP2515_SendFrame:00000000 $t
-     /tmp/ccJd5WrF.s:688    .text.MCP2515_SendFrame:00000000 MCP2515_SendFrame
-     /tmp/ccJd5WrF.s:1085   .text.MCP2515_SendFrame:0000017c $d
-     /tmp/ccJd5WrF.s:1919   .bss.tx_slot.3:00000000 tx_slot.3
-     /tmp/ccJd5WrF.s:1914   .rodata.ctrl_addr.2:00000000 ctrl_addr.2
-     /tmp/ccJd5WrF.s:1908   .rodata.sidh_addr.1:00000000 sidh_addr.1
-     /tmp/ccJd5WrF.s:1902   .rodata.rts_mask.0:00000000 rts_mask.0
-     /tmp/ccJd5WrF.s:1094   .text.MCP2515_GetStatus:00000000 $t
-     /tmp/ccJd5WrF.s:1100   .text.MCP2515_GetStatus:00000000 MCP2515_GetStatus
-     /tmp/ccJd5WrF.s:1138   .text.MCP2515_GetRxStatus:00000000 $t
-     /tmp/ccJd5WrF.s:1144   .text.MCP2515_GetRxStatus:00000000 MCP2515_GetRxStatus
-     /tmp/ccJd5WrF.s:1182   .text.MCP2515_ReceiveFrame:00000000 $t
-     /tmp/ccJd5WrF.s:1188   .text.MCP2515_ReceiveFrame:00000000 MCP2515_ReceiveFrame
-     /tmp/ccJd5WrF.s:1410   .text.MCP2515_Available:00000000 $t
-     /tmp/ccJd5WrF.s:1416   .text.MCP2515_Available:00000000 MCP2515_Available
-     /tmp/ccJd5WrF.s:1444   .text.MCP2515_GetErrorFlags:00000000 $t
-     /tmp/ccJd5WrF.s:1450   .text.MCP2515_GetErrorFlags:00000000 MCP2515_GetErrorFlags
-     /tmp/ccJd5WrF.s:1472   .rodata.MCP2515_LoopbackTest.str1.4:00000000 $d
-     /tmp/ccJd5WrF.s:1528   .text.MCP2515_LoopbackTest:00000000 $t
-     /tmp/ccJd5WrF.s:1534   .text.MCP2515_LoopbackTest:00000000 MCP2515_LoopbackTest
-     /tmp/ccJd5WrF.s:1877   .text.MCP2515_LoopbackTest:000001b0 $d
-     /tmp/ccJd5WrF.s:1899   .rodata.rts_mask.0:00000000 $d
-     /tmp/ccJd5WrF.s:1905   .rodata.sidh_addr.1:00000000 $d
-     /tmp/ccJd5WrF.s:1911   .rodata.ctrl_addr.2:00000000 $d
-     /tmp/ccJd5WrF.s:1920   .bss.tx_slot.3:00000000 $d
+     /tmp/ccnejxj5.s:19     .text.MCP2515_Select:00000000 $t
+     /tmp/ccnejxj5.s:24     .text.MCP2515_Select:00000000 MCP2515_Select
+     /tmp/ccnejxj5.s:44     .text.MCP2515_SPITransfer:00000000 $t
+     /tmp/ccnejxj5.s:49     .text.MCP2515_SPITransfer:00000000 MCP2515_SPITransfer
+     /tmp/ccnejxj5.s:72     .text.MCP2515_Deselect:00000000 $t
+     /tmp/ccnejxj5.s:77     .text.MCP2515_Deselect:00000000 MCP2515_Deselect
+     /tmp/ccnejxj5.s:97     .text.MCP2515_Reset:00000000 $t
+     /tmp/ccnejxj5.s:103    .text.MCP2515_Reset:00000000 MCP2515_Reset
+     /tmp/ccnejxj5.s:134    .text.MCP2515_ReadRegister:00000000 $t
+     /tmp/ccnejxj5.s:140    .text.MCP2515_ReadRegister:00000000 MCP2515_ReadRegister
+     /tmp/ccnejxj5.s:185    .text.MCP2515_WriteRegister:00000000 $t
+     /tmp/ccnejxj5.s:191    .text.MCP2515_WriteRegister:00000000 MCP2515_WriteRegister
+     /tmp/ccnejxj5.s:233    .text.MCP2515_Detect:00000000 $t
+     /tmp/ccnejxj5.s:239    .text.MCP2515_Detect:00000000 MCP2515_Detect
+     /tmp/ccnejxj5.s:353    .text.MCP2515_SetBitrate:00000000 $t
+     /tmp/ccnejxj5.s:359    .text.MCP2515_SetBitrate:00000000 MCP2515_SetBitrate
+     /tmp/ccnejxj5.s:380    .text.MCP2515_SetBitrate:0000000a $d
+     /tmp/ccnejxj5.s:384    .text.MCP2515_SetBitrate:0000000e $t
+     /tmp/ccnejxj5.s:461    .text.MCP2515_ModifyRegister:00000000 $t
+     /tmp/ccnejxj5.s:467    .text.MCP2515_ModifyRegister:00000000 MCP2515_ModifyRegister
+     /tmp/ccnejxj5.s:514    .text.MCP2515_SetMode:00000000 $t
+     /tmp/ccnejxj5.s:520    .text.MCP2515_SetMode:00000000 MCP2515_SetMode
+     /tmp/ccnejxj5.s:601    .text.MCP2515_Init:00000000 $t
+     /tmp/ccnejxj5.s:607    .text.MCP2515_Init:00000000 MCP2515_Init
+     /tmp/ccnejxj5.s:682    .text.MCP2515_SendFrame:00000000 $t
+     /tmp/ccnejxj5.s:688    .text.MCP2515_SendFrame:00000000 MCP2515_SendFrame
+     /tmp/ccnejxj5.s:1085   .text.MCP2515_SendFrame:0000017c $d
+     /tmp/ccnejxj5.s:1919   .bss.tx_slot.3:00000000 tx_slot.3
+     /tmp/ccnejxj5.s:1914   .rodata.ctrl_addr.2:00000000 ctrl_addr.2
+     /tmp/ccnejxj5.s:1908   .rodata.sidh_addr.1:00000000 sidh_addr.1
+     /tmp/ccnejxj5.s:1902   .rodata.rts_mask.0:00000000 rts_mask.0
+     /tmp/ccnejxj5.s:1094   .text.MCP2515_GetStatus:00000000 $t
+     /tmp/ccnejxj5.s:1100   .text.MCP2515_GetStatus:00000000 MCP2515_GetStatus
+     /tmp/ccnejxj5.s:1138   .text.MCP2515_GetRxStatus:00000000 $t
+     /tmp/ccnejxj5.s:1144   .text.MCP2515_GetRxStatus:00000000 MCP2515_GetRxStatus
+     /tmp/ccnejxj5.s:1182   .text.MCP2515_ReceiveFrame:00000000 $t
+     /tmp/ccnejxj5.s:1188   .text.MCP2515_ReceiveFrame:00000000 MCP2515_ReceiveFrame
+     /tmp/ccnejxj5.s:1410   .text.MCP2515_Available:00000000 $t
+     /tmp/ccnejxj5.s:1416   .text.MCP2515_Available:00000000 MCP2515_Available
+     /tmp/ccnejxj5.s:1444   .text.MCP2515_GetErrorFlags:00000000 $t
+     /tmp/ccnejxj5.s:1450   .text.MCP2515_GetErrorFlags:00000000 MCP2515_GetErrorFlags
+     /tmp/ccnejxj5.s:1472   .rodata.MCP2515_LoopbackTest.str1.4:00000000 $d
+     /tmp/ccnejxj5.s:1528   .text.MCP2515_LoopbackTest:00000000 $t
+     /tmp/ccnejxj5.s:1534   .text.MCP2515_LoopbackTest:00000000 MCP2515_LoopbackTest
+     /tmp/ccnejxj5.s:1877   .text.MCP2515_LoopbackTest:000001b0 $d
+     /tmp/ccnejxj5.s:1899   .rodata.rts_mask.0:00000000 $d
+     /tmp/ccnejxj5.s:1905   .rodata.sidh_addr.1:00000000 $d
+     /tmp/ccnejxj5.s:1911   .rodata.ctrl_addr.2:00000000 $d
+     /tmp/ccnejxj5.s:1920   .bss.tx_slot.3:00000000 $d
 
 UNDEFINED SYMBOLS
 SoftSPI_CS_Low
 SoftSPI_Transfer
 SoftSPI_CS_High
 HAL_Delay
-ARM GAS  /tmp/ccJd5WrF.s 			page 54
+ARM GAS  /tmp/ccnejxj5.s 			page 54
 
 
 SoftSPI_Init

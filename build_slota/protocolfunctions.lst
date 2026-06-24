@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccVdRm1d.s 			page 1
+ARM GAS  /tmp/ccdXw4GR.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
   29:src/protocolfunctions.c **** #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
   30:src/protocolfunctions.c ****     PROTOCOL_STAT sUSART3;
   31:src/protocolfunctions.c **** #endif
-ARM GAS  /tmp/ccVdRm1d.s 			page 2
+ARM GAS  /tmp/ccdXw4GR.s 			page 2
 
 
   32:src/protocolfunctions.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
   57 0018 124B     		ldr	r3, .L9
   58              	.LVL1:
   59              		.loc 1 56 17 view .LVU5
-ARM GAS  /tmp/ccVdRm1d.s 			page 3
+ARM GAS  /tmp/ccdXw4GR.s 			page 3
 
 
   60 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
   92              		.loc 1 72 5 view .LVU16
   93 0034 2B46     		mov	r3, r5
   94 0036 2246     		mov	r2, r4
-ARM GAS  /tmp/ccVdRm1d.s 			page 4
+ARM GAS  /tmp/ccdXw4GR.s 			page 4
 
 
   95 0038 3946     		mov	r1, r7
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
   67:src/protocolfunctions.c ****             }
  133              		.loc 1 67 17 is_stmt 1 view .LVU33
  134 005c FFF7FEFF 		bl	init_PID_control
-ARM GAS  /tmp/ccVdRm1d.s 			page 5
+ARM GAS  /tmp/ccdXw4GR.s 			page 5
 
 
  135              	.LVL11:
@@ -264,7 +264,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  155              		.thumb_func
  157              	fn_SpeedData:
  158              	.LVL12:
- 159              	.LFB68:
+ 159              	.LFB67:
   74:src/protocolfunctions.c **** 
   75:src/protocolfunctions.c **** 
   76:src/protocolfunctions.c **** #ifdef CONTROL_SENSOR
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  104:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  105:src/protocolfunctions.c **** // Variable & Functions for 0x03 SpeedData
  106:src/protocolfunctions.c **** 
-ARM GAS  /tmp/ccVdRm1d.s 			page 6
+ARM GAS  /tmp/ccdXw4GR.s 			page 6
 
 
  107:src/protocolfunctions.c **** PROTOCOL_SPEED_DATA SpeedData = {
@@ -358,13 +358,13 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  195              	.L16:
  196              		.align	2
  197              	.L15:
-ARM GAS  /tmp/ccVdRm1d.s 			page 7
+ARM GAS  /tmp/ccdXw4GR.s 			page 7
 
 
  198 001c 00000000 		.word	control_type
  199 0020 00000000 		.word	input_timeout_counter
  200              		.cfi_endproc
- 201              	.LFE68:
+ 201              	.LFE67:
  203              		.section	.text.fn_Position,"ax",%progbits
  204              		.align	1
  205              		.global	fn_Position
@@ -373,7 +373,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  208              		.thumb_func
  210              	fn_Position:
  211              	.LVL14:
- 212              	.LFB69:
+ 212              	.LFB68:
  126:src/protocolfunctions.c **** 
  127:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  128:src/protocolfunctions.c **** // Variable & Functions for 0x04 Position
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  243 0012 1669     		ldr	r6, [r2, #16]
  244              		.loc 1 136 50 view .LVU52
  245 0014 0E60     		str	r6, [r1]
-ARM GAS  /tmp/ccVdRm1d.s 			page 8
+ARM GAS  /tmp/ccdXw4GR.s 			page 8
 
 
  137:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn_mm - HallData[0].HallPosn_mm_
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  288              		.loc 1 148 63 is_stmt 0 view .LVU72
  289 0040 2B69     		ldr	r3, [r5, #16]
  290              		.loc 1 148 70 view .LVU73
-ARM GAS  /tmp/ccVdRm1d.s 			page 9
+ARM GAS  /tmp/ccdXw4GR.s 			page 9
 
 
  291 0042 1A68     		ldr	r2, [r3]
@@ -507,7 +507,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  310              	.L23:
  311 0050 00000000 		.word	HallData
  312              		.cfi_endproc
- 313              	.LFE69:
+ 313              	.LFE68:
  315              		.section	.text.fn_PositionIncr,"ax",%progbits
  316              		.align	1
  317              		.global	fn_PositionIncr
@@ -516,7 +516,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  320              		.thumb_func
  322              	fn_PositionIncr:
  323              	.LVL19:
- 324              	.LFB70:
+ 324              	.LFB69:
  153:src/protocolfunctions.c **** 
  154:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  155:src/protocolfunctions.c **** // Variable & Functions for 0x05 PositionIncr
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  336              		.cfi_offset 6, -12
  337              		.cfi_offset 7, -8
  338              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccVdRm1d.s 			page 10
+ARM GAS  /tmp/ccdXw4GR.s 			page 10
 
 
  339 0002 0746     		mov	r7, r0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  378              		.loc 1 174 13 view .LVU94
  379              		.loc 1 174 20 is_stmt 0 view .LVU95
  380 0036 094B     		ldr	r3, .L31+4
-ARM GAS  /tmp/ccVdRm1d.s 			page 11
+ARM GAS  /tmp/ccdXw4GR.s 			page 11
 
 
  381 0038 0122     		movs	r2, #1
@@ -649,7 +649,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  418 0060 00000000 		.word	input_timeout_counter
  419 0064 00000000 		.word	PosnData
  420              		.cfi_endproc
- 421              	.LFE70:
+ 421              	.LFE69:
  423              		.section	.text.fn_RawPosition,"ax",%progbits
  424              		.align	1
  425              		.global	fn_RawPosition
@@ -658,10 +658,10 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  428              		.thumb_func
  430              	fn_RawPosition:
  431              	.LVL23:
-ARM GAS  /tmp/ccVdRm1d.s 			page 12
+ARM GAS  /tmp/ccdXw4GR.s 			page 12
 
 
- 432              	.LFB71:
+ 432              	.LFB70:
  183:src/protocolfunctions.c **** 
  184:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  185:src/protocolfunctions.c **** // Variable & Functions for 0x06 PosnData
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  464              		.loc 1 204 59 view .LVU117
  465 0014 0E60     		str	r6, [r1]
  205:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn - HallData[0].HallPo
-ARM GAS  /tmp/ccVdRm1d.s 			page 13
+ARM GAS  /tmp/ccdXw4GR.s 			page 13
 
 
  466              		.loc 1 205 13 is_stmt 1 view .LVU118
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  509 0040 2A69     		ldr	r2, [r5, #16]
  510              		.loc 1 216 76 view .LVU138
  511 0042 1168     		ldr	r1, [r2]
-ARM GAS  /tmp/ccVdRm1d.s 			page 14
+ARM GAS  /tmp/ccdXw4GR.s 			page 14
 
 
  512              		.loc 1 216 43 view .LVU139
@@ -804,7 +804,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  528              	.L39:
  529 0050 00000000 		.word	HallData
  530              		.cfi_endproc
- 531              	.LFE71:
+ 531              	.LFE70:
  533              		.section	.text.fn_PWMData,"ax",%progbits
  534              		.align	1
  535              		.global	fn_PWMData
@@ -813,7 +813,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  538              		.thumb_func
  540              	fn_PWMData:
  541              	.LVL28:
- 542              	.LFB73:
+ 542              	.LFB72:
  221:src/protocolfunctions.c **** 
  222:src/protocolfunctions.c **** 
  223:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  242:src/protocolfunctions.c **** 
  243:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
  244:src/protocolfunctions.c **** 
-ARM GAS  /tmp/ccVdRm1d.s 			page 15
+ARM GAS  /tmp/ccdXw4GR.s 			page 15
 
 
  245:src/protocolfunctions.c ****     switch (cmd) {
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  566              	.LVL29:
  567              		.loc 1 275 26 view .LVU151
  568 0010 0321     		movs	r1, #3
-ARM GAS  /tmp/ccVdRm1d.s 			page 16
+ARM GAS  /tmp/ccdXw4GR.s 			page 16
 
 
  569              	.LVL30:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
  596              		.loc 1 295 50 is_stmt 0 view .LVU160
  597 002c 2269     		ldr	r2, [r4, #16]
-ARM GAS  /tmp/ccVdRm1d.s 			page 17
+ARM GAS  /tmp/ccdXw4GR.s 			page 17
 
 
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  635              		.loc 1 290 21 is_stmt 1 view .LVU177
  290:src/protocolfunctions.c ****                 }
  636              		.loc 1 290 65 is_stmt 0 view .LVU178
-ARM GAS  /tmp/ccVdRm1d.s 			page 18
+ARM GAS  /tmp/ccdXw4GR.s 			page 18
 
 
  637 0058 42F82310 		str	r1, [r2, r3, lsl #2]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  676 0086 D7E7     		b	.L50
  677              	.L55:
  678 0088 0023     		movs	r3, #0
-ARM GAS  /tmp/ccVdRm1d.s 			page 19
+ARM GAS  /tmp/ccdXw4GR.s 			page 19
 
 
  679 008a D5E7     		b	.L50
@@ -1088,7 +1088,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  683 008c 00000000 		.word	control_type
  684 0090 00000000 		.word	input_timeout_counter
  685              		.cfi_endproc
- 686              	.LFE73:
+ 686              	.LFE72:
  688              		.section	.text.fn_BuzzerData,"ax",%progbits
  689              		.align	1
  690              		.global	fn_BuzzerData
@@ -1097,7 +1097,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  693              		.thumb_func
  695              	fn_BuzzerData:
  696              	.LVL35:
- 697              	.LFB74:
+ 697              	.LFB73:
  302:src/protocolfunctions.c **** 
  303:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  304:src/protocolfunctions.c **** // Variable & Functions for 0x21 BuzzerData
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  319:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
  320:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerFreq       = buzzerFreq;
  718              		.loc 1 320 13 view .LVU197
-ARM GAS  /tmp/ccVdRm1d.s 			page 20
+ARM GAS  /tmp/ccdXw4GR.s 			page 20
 
 
  719              		.loc 1 320 44 is_stmt 0 view .LVU198
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  762 003c 1170     		strb	r1, [r2]
  332:src/protocolfunctions.c ****             buzzerLen       = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerLen;
  763              		.loc 1 332 13 is_stmt 1 view .LVU214
-ARM GAS  /tmp/ccVdRm1d.s 			page 21
+ARM GAS  /tmp/ccdXw4GR.s 			page 21
 
 
  764              		.loc 1 332 69 is_stmt 0 view .LVU215
@@ -1229,7 +1229,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  785 0050 00000000 		.word	buzzerLen
  786 0054 00000000 		.word	buzzerPattern
  787              		.cfi_endproc
- 788              	.LFE74:
+ 788              	.LFE73:
  790              		.section	.text.fn_FlashContentMaxCurrLim,"ax",%progbits
  791              		.align	1
  792              		.global	fn_FlashContentMaxCurrLim
@@ -1238,7 +1238,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  795              		.thumb_func
  797              	fn_FlashContentMaxCurrLim:
  798              	.LVL40:
- 799              	.LFB77:
+ 799              	.LFB76:
  337:src/protocolfunctions.c **** 
  338:src/protocolfunctions.c **** 
  339:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  353:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
  354:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
  355:src/protocolfunctions.c ****             if (FlashContent.magic != CURRENT_MAGIC){
-ARM GAS  /tmp/ccVdRm1d.s 			page 22
+ARM GAS  /tmp/ccdXw4GR.s 			page 22
 
 
  356:src/protocolfunctions.c ****                 char temp[128];
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  822 0010 064B     		ldr	r3, .L73
  823 0012 5B8A     		ldrh	r3, [r3, #18]
  824 0014 B3F5C86F 		cmp	r3, #1600
-ARM GAS  /tmp/ccVdRm1d.s 			page 23
+ARM GAS  /tmp/ccdXw4GR.s 			page 23
 
 
  825 0018 04D2     		bcs	.L71
@@ -1350,201 +1350,133 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  848 0030 1F85EB51 		.word	1374389535
  849 0034 00000000 		.word	electrical_measurements
  850              		.cfi_endproc
- 851              	.LFE77:
- 853              		.section	.text.fn_SensorData,"ax",%progbits
+ 851              	.LFE76:
+ 853              		.section	.text.fn_xytPosn,"ax",%progbits
  854              		.align	1
- 855              		.global	fn_SensorData
+ 855              		.global	fn_xytPosn
  856              		.syntax unified
  857              		.thumb
  858              		.thumb_func
- 860              	fn_SensorData:
+ 860              	fn_xytPosn:
  861              	.LVL43:
- 862              	.LFB67:
-  85:src/protocolfunctions.c ****     switch (cmd) {
- 863              		.loc 1 85 102 is_stmt 1 view -0
+ 862              	.LFB71:
+ 241:src/protocolfunctions.c **** 
+ 863              		.loc 1 241 99 is_stmt 1 view -0
  864              		.cfi_startproc
  865              		@ args = 0, pretend = 0, frame = 0
  866              		@ frame_needed = 0, uses_anonymous_args = 0
-  85:src/protocolfunctions.c ****     switch (cmd) {
- 867              		.loc 1 85 102 is_stmt 0 view .LVU236
- 868 0000 38B5     		push	{r3, r4, r5, lr}
+ 241:src/protocolfunctions.c **** 
+ 867              		.loc 1 241 99 is_stmt 0 view .LVU236
+ 868 0000 10B5     		push	{r4, lr}
  869              	.LCFI8:
- 870              		.cfi_def_cfa_offset 16
- 871              		.cfi_offset 3, -16
- 872              		.cfi_offset 4, -12
- 873              		.cfi_offset 5, -8
- 874              		.cfi_offset 14, -4
-  86:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
- 875              		.loc 1 86 5 is_stmt 1 view .LVU237
- 876 0002 522A     		cmp	r2, #82
- 877 0004 01D0     		beq	.L76
-ARM GAS  /tmp/ccVdRm1d.s 			page 24
-
-
- 878 0006 732A     		cmp	r2, #115
- 879 0008 18D1     		bne	.L77
- 880              	.L76:
-  90:src/protocolfunctions.c ****             memcpy(&sensor_copy[1], &sensor_data[1].complete, sizeof(sensor_copy[1]));
- 881              		.loc 1 90 13 view .LVU238
- 882 000a 0E4C     		ldr	r4, .L79
- 883 000c 0E4D     		ldr	r5, .L79+4
- 884 000e D5F81CE0 		ldr	lr, [r5, #28]	@ unaligned
- 885 0012 D5F820C0 		ldr	ip, [r5, #32]	@ unaligned
- 886 0016 C4F800E0 		str	lr, [r4]	@ unaligned
- 887 001a C4F804C0 		str	ip, [r4, #4]	@ unaligned
- 888 001e B5F824C0 		ldrh	ip, [r5, #36]	@ unaligned
- 889 0022 A4F808C0 		strh	ip, [r4, #8]	@ unaligned
-  91:src/protocolfunctions.c ****             break;
- 890              		.loc 1 91 13 view .LVU239
- 891 0026 D5F866E0 		ldr	lr, [r5, #102]	@ unaligned
- 892 002a D5F86AC0 		ldr	ip, [r5, #106]	@ unaligned
- 893 002e C4F80AE0 		str	lr, [r4, #10]	@ unaligned
- 894 0032 C4F80EC0 		str	ip, [r4, #14]	@ unaligned
- 895 0036 B5F86E50 		ldrh	r5, [r5, #110]	@ unaligned
- 896 003a 6582     		strh	r5, [r4, #18]	@ unaligned
-  92:src/protocolfunctions.c ****     }
- 897              		.loc 1 92 13 view .LVU240
- 898              	.L77:
-  94:src/protocolfunctions.c **** }
- 899              		.loc 1 94 5 view .LVU241
- 900 003c FFF7FEFF 		bl	fn_defaultProcessingReadOnly
- 901              	.LVL44:
-  95:src/protocolfunctions.c **** 
- 902              		.loc 1 95 1 is_stmt 0 view .LVU242
- 903 0040 38BD     		pop	{r3, r4, r5, pc}
- 904              	.L80:
- 905 0042 00BF     		.align	2
- 906              	.L79:
- 907 0044 00000000 		.word	sensor_copy
- 908 0048 00000000 		.word	sensor_data
- 909              		.cfi_endproc
- 910              	.LFE67:
- 912              		.section	.text.fn_xytPosn,"ax",%progbits
- 913              		.align	1
- 914              		.global	fn_xytPosn
- 915              		.syntax unified
- 916              		.thumb
- 917              		.thumb_func
- 919              	fn_xytPosn:
- 920              	.LVL45:
- 921              	.LFB72:
- 241:src/protocolfunctions.c **** 
- 922              		.loc 1 241 99 is_stmt 1 view -0
- 923              		.cfi_startproc
- 924              		@ args = 0, pretend = 0, frame = 0
- 925              		@ frame_needed = 0, uses_anonymous_args = 0
- 241:src/protocolfunctions.c **** 
- 926              		.loc 1 241 99 is_stmt 0 view .LVU244
- 927 0000 10B5     		push	{r4, lr}
- 928              	.LCFI9:
- 929              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/ccVdRm1d.s 			page 25
-
-
- 930              		.cfi_offset 4, -8
- 931              		.cfi_offset 14, -4
- 932 0002 1446     		mov	r4, r2
+ 870              		.cfi_def_cfa_offset 8
+ 871              		.cfi_offset 4, -8
+ 872              		.cfi_offset 14, -4
+ 873 0002 1446     		mov	r4, r2
  243:src/protocolfunctions.c **** 
- 933              		.loc 1 243 5 is_stmt 1 view .LVU245
- 934 0004 FFF7FEFF 		bl	fn_defaultProcessing
- 935              	.LVL46:
+ 874              		.loc 1 243 5 is_stmt 1 view .LVU237
+ 875 0004 FFF7FEFF 		bl	fn_defaultProcessing
+ 876              	.LVL44:
  245:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
- 936              		.loc 1 245 5 view .LVU246
- 937 0008 572C     		cmp	r4, #87
- 938 000a 02D0     		beq	.L82
- 939 000c 722C     		cmp	r4, #114
- 940 000e 00D0     		beq	.L82
- 941              	.L81:
+ARM GAS  /tmp/ccdXw4GR.s 			page 24
+
+
+ 877              		.loc 1 245 5 view .LVU238
+ 878 0008 572C     		cmp	r4, #87
+ 879 000a 02D0     		beq	.L76
+ 880 000c 722C     		cmp	r4, #114
+ 881 000e 00D0     		beq	.L76
+ 882              	.L75:
  255:src/protocolfunctions.c **** 
- 942              		.loc 1 255 1 is_stmt 0 view .LVU247
- 943 0010 10BD     		pop	{r4, pc}
- 944              	.LVL47:
- 945              	.L82:
+ 883              		.loc 1 255 1 is_stmt 0 view .LVU239
+ 884 0010 10BD     		pop	{r4, pc}
+ 885              	.LVL45:
+ 886              	.L76:
  248:src/protocolfunctions.c ****                 // reset xyt
- 946              		.loc 1 248 13 is_stmt 1 view .LVU248
+ 887              		.loc 1 248 13 is_stmt 1 view .LVU240
  248:src/protocolfunctions.c ****                 // reset xyt
- 947              		.loc 1 248 17 is_stmt 0 view .LVU249
- 948 0012 044B     		ldr	r3, .L85
- 949 0014 1868     		ldr	r0, [r3]
+ 888              		.loc 1 248 17 is_stmt 0 view .LVU241
+ 889 0012 044B     		ldr	r3, .L79
+ 890 0014 1868     		ldr	r0, [r3]
  248:src/protocolfunctions.c ****                 // reset xyt
- 950              		.loc 1 248 16 view .LVU250
- 951 0016 0028     		cmp	r0, #0
- 952 0018 FAD0     		beq	.L81
+ 891              		.loc 1 248 16 view .LVU242
+ 892 0016 0028     		cmp	r0, #0
+ 893 0018 FAD0     		beq	.L75
  250:src/protocolfunctions.c ****             }
- 953              		.loc 1 250 17 is_stmt 1 view .LVU251
- 954 001a 0121     		movs	r1, #1
- 955 001c FFF7FEFF 		bl	reset
- 956              	.LVL48:
+ 894              		.loc 1 250 17 is_stmt 1 view .LVU243
+ 895 001a 0121     		movs	r1, #1
+ 896 001c FFF7FEFF 		bl	reset
+ 897              	.LVL46:
  255:src/protocolfunctions.c **** 
- 957              		.loc 1 255 1 is_stmt 0 view .LVU252
- 958 0020 F6E7     		b	.L81
- 959              	.L86:
- 960 0022 00BF     		.align	2
- 961              	.L85:
- 962 0024 00000000 		.word	deadreconer
- 963              		.cfi_endproc
- 964              	.LFE72:
- 966              		.section	.text.fn_FlashContentPID,"ax",%progbits
- 967              		.align	1
- 968              		.global	fn_FlashContentPID
- 969              		.syntax unified
- 970              		.thumb
- 971              		.thumb_func
- 973              	fn_FlashContentPID:
- 974              	.LVL49:
- 975              	.LFB76:
+ 898              		.loc 1 255 1 is_stmt 0 view .LVU244
+ 899 0020 F6E7     		b	.L75
+ 900              	.L80:
+ 901 0022 00BF     		.align	2
+ 902              	.L79:
+ 903 0024 00000000 		.word	deadreconer
+ 904              		.cfi_endproc
+ 905              	.LFE71:
+ 907              		.section	.text.fn_FlashContentPID,"ax",%progbits
+ 908              		.align	1
+ 909              		.global	fn_FlashContentPID
+ 910              		.syntax unified
+ 911              		.thumb
+ 912              		.thumb_func
+ 914              	fn_FlashContentPID:
+ 915              	.LVL47:
+ 916              	.LFB75:
  368:src/protocolfunctions.c **** 
- 976              		.loc 1 368 107 is_stmt 1 view -0
- 977              		.cfi_startproc
- 978              		@ args = 0, pretend = 0, frame = 0
- 979              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccVdRm1d.s 			page 26
+ 917              		.loc 1 368 107 is_stmt 1 view -0
+ 918              		.cfi_startproc
+ 919              		@ args = 0, pretend = 0, frame = 0
+ 920              		@ frame_needed = 0, uses_anonymous_args = 0
+ 368:src/protocolfunctions.c **** 
+ 921              		.loc 1 368 107 is_stmt 0 view .LVU246
+ 922 0000 10B5     		push	{r4, lr}
+ 923              	.LCFI9:
+ 924              		.cfi_def_cfa_offset 8
+ 925              		.cfi_offset 4, -8
+ 926              		.cfi_offset 14, -4
+ 927 0002 1446     		mov	r4, r2
+ARM GAS  /tmp/ccdXw4GR.s 			page 25
 
 
- 368:src/protocolfunctions.c **** 
- 980              		.loc 1 368 107 is_stmt 0 view .LVU254
- 981 0000 10B5     		push	{r4, lr}
- 982              	.LCFI10:
- 983              		.cfi_def_cfa_offset 8
- 984              		.cfi_offset 4, -8
- 985              		.cfi_offset 14, -4
- 986 0002 1446     		mov	r4, r2
  370:src/protocolfunctions.c **** 
- 987              		.loc 1 370 5 is_stmt 1 view .LVU255
- 988 0004 FFF7FEFF 		bl	fn_defaultProcessing
- 989              	.LVL50:
+ 928              		.loc 1 370 5 is_stmt 1 view .LVU247
+ 929 0004 FFF7FEFF 		bl	fn_defaultProcessing
+ 930              	.LVL48:
  372:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
- 990              		.loc 1 372 5 view .LVU256
- 991 0008 572C     		cmp	r4, #87
- 992 000a 02D0     		beq	.L88
- 993 000c 722C     		cmp	r4, #114
- 994 000e 00D0     		beq	.L88
- 995              	.L87:
+ 931              		.loc 1 372 5 view .LVU248
+ 932 0008 572C     		cmp	r4, #87
+ 933 000a 02D0     		beq	.L82
+ 934 000c 722C     		cmp	r4, #114
+ 935 000e 00D0     		beq	.L82
+ 936              	.L81:
  378:src/protocolfunctions.c **** 
- 996              		.loc 1 378 1 is_stmt 0 view .LVU257
- 997 0010 10BD     		pop	{r4, pc}
- 998              	.LVL51:
- 999              	.L88:
+ 937              		.loc 1 378 1 is_stmt 0 view .LVU249
+ 938 0010 10BD     		pop	{r4, pc}
+ 939              	.LVL49:
+ 940              	.L82:
  375:src/protocolfunctions.c ****             break;
- 1000              		.loc 1 375 13 is_stmt 1 view .LVU258
- 1001 0012 FFF7FEFF 		bl	change_PID_constants
- 1002              	.LVL52:
+ 941              		.loc 1 375 13 is_stmt 1 view .LVU250
+ 942 0012 FFF7FEFF 		bl	change_PID_constants
+ 943              	.LVL50:
  376:src/protocolfunctions.c ****     }
- 1003              		.loc 1 376 13 view .LVU259
+ 944              		.loc 1 376 13 view .LVU251
  378:src/protocolfunctions.c **** 
- 1004              		.loc 1 378 1 is_stmt 0 view .LVU260
- 1005 0016 FBE7     		b	.L87
- 1006              		.cfi_endproc
- 1007              	.LFE76:
- 1009              		.section	.text.setup_protocol,"ax",%progbits
- 1010              		.align	1
- 1011              		.global	setup_protocol
- 1012              		.syntax unified
- 1013              		.thumb
- 1014              		.thumb_func
- 1016              	setup_protocol:
- 1017              	.LVL53:
- 1018              	.LFB78:
+ 945              		.loc 1 378 1 is_stmt 0 view .LVU252
+ 946 0016 FBE7     		b	.L81
+ 947              		.cfi_endproc
+ 948              	.LFE75:
+ 950              		.section	.text.setup_protocol,"ax",%progbits
+ 951              		.align	1
+ 952              		.global	setup_protocol
+ 953              		.syntax unified
+ 954              		.thumb
+ 955              		.thumb_func
+ 957              	setup_protocol:
+ 958              	.LVL51:
+ 959              	.LFB77:
  391:src/protocolfunctions.c **** 
  392:src/protocolfunctions.c **** 
  393:src/protocolfunctions.c **** 
@@ -1558,142 +1490,110 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  401:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  402:src/protocolfunctions.c **** // initialize protocol and register functions
  403:src/protocolfunctions.c **** int setup_protocol(PROTOCOL_STAT *s) {
-ARM GAS  /tmp/ccVdRm1d.s 			page 27
+ 960              		.loc 1 403 38 is_stmt 1 view -0
+ 961              		.cfi_startproc
+ 962              		@ args = 0, pretend = 0, frame = 0
+ 963              		@ frame_needed = 0, uses_anonymous_args = 0
+ 964              		.loc 1 403 38 is_stmt 0 view .LVU254
+ 965 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 966              	.LCFI10:
+ 967              		.cfi_def_cfa_offset 28
+ARM GAS  /tmp/ccdXw4GR.s 			page 26
 
 
- 1019              		.loc 1 403 38 is_stmt 1 view -0
- 1020              		.cfi_startproc
- 1021              		@ args = 0, pretend = 0, frame = 0
- 1022              		@ frame_needed = 0, uses_anonymous_args = 0
- 1023              		.loc 1 403 38 is_stmt 0 view .LVU262
- 1024 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
- 1025              	.LCFI11:
- 1026              		.cfi_def_cfa_offset 32
- 1027              		.cfi_offset 4, -32
- 1028              		.cfi_offset 5, -28
- 1029              		.cfi_offset 6, -24
- 1030              		.cfi_offset 7, -20
- 1031              		.cfi_offset 8, -16
- 1032              		.cfi_offset 9, -12
- 1033              		.cfi_offset 10, -8
- 1034              		.cfi_offset 14, -4
- 1035 0004 82B0     		sub	sp, sp, #8
- 1036              	.LCFI12:
- 1037              		.cfi_def_cfa_offset 40
- 1038 0006 0546     		mov	r5, r0
+ 968              		.cfi_offset 4, -28
+ 969              		.cfi_offset 5, -24
+ 970              		.cfi_offset 6, -20
+ 971              		.cfi_offset 7, -16
+ 972              		.cfi_offset 8, -12
+ 973              		.cfi_offset 9, -8
+ 974              		.cfi_offset 14, -4
+ 975 0004 83B0     		sub	sp, sp, #12
+ 976              	.LCFI11:
+ 977              		.cfi_def_cfa_offset 40
+ 978 0006 0546     		mov	r5, r0
  404:src/protocolfunctions.c **** 
  405:src/protocolfunctions.c ****     protocol_GetTick = HAL_GetTick;
- 1039              		.loc 1 405 5 is_stmt 1 view .LVU263
- 1040              		.loc 1 405 22 is_stmt 0 view .LVU264
- 1041 0008 E04B     		ldr	r3, .L93
- 1042 000a E14A     		ldr	r2, .L93+4
- 1043 000c 1A60     		str	r2, [r3]
+ 979              		.loc 1 405 5 is_stmt 1 view .LVU255
+ 980              		.loc 1 405 22 is_stmt 0 view .LVU256
+ 981 0008 D14B     		ldr	r3, .L87
+ 982 000a D24A     		ldr	r2, .L87+4
+ 983 000c 1A60     		str	r2, [r3]
  406:src/protocolfunctions.c ****     protocol_Delay = HAL_Delay;
- 1044              		.loc 1 406 5 is_stmt 1 view .LVU265
- 1045              		.loc 1 406 20 is_stmt 0 view .LVU266
- 1046 000e E14B     		ldr	r3, .L93+8
- 1047 0010 E14A     		ldr	r2, .L93+12
- 1048 0012 1A60     		str	r2, [r3]
+ 984              		.loc 1 406 5 is_stmt 1 view .LVU257
+ 985              		.loc 1 406 20 is_stmt 0 view .LVU258
+ 986 000e D24B     		ldr	r3, .L87+8
+ 987 0010 D24A     		ldr	r2, .L87+12
+ 988 0012 1A60     		str	r2, [r3]
  407:src/protocolfunctions.c ****     protocol_SystemReset =HAL_NVIC_SystemReset;
- 1049              		.loc 1 407 5 is_stmt 1 view .LVU267
- 1050              		.loc 1 407 26 is_stmt 0 view .LVU268
- 1051 0014 E14B     		ldr	r3, .L93+16
- 1052 0016 E24A     		ldr	r2, .L93+20
- 1053 0018 1A60     		str	r2, [r3]
+ 989              		.loc 1 407 5 is_stmt 1 view .LVU259
+ 990              		.loc 1 407 26 is_stmt 0 view .LVU260
+ 991 0014 D24B     		ldr	r3, .L87+16
+ 992 0016 D34A     		ldr	r2, .L87+20
+ 993 0018 1A60     		str	r2, [r3]
  408:src/protocolfunctions.c **** 
  409:src/protocolfunctions.c **** 
  410:src/protocolfunctions.c ****     int errors = 0;
- 1054              		.loc 1 410 5 is_stmt 1 view .LVU269
- 1055              	.LVL54:
+ 994              		.loc 1 410 5 is_stmt 1 view .LVU261
+ 995              	.LVL52:
  411:src/protocolfunctions.c **** 
  412:src/protocolfunctions.c **** 
  413:src/protocolfunctions.c ****     #ifdef SOFTWARE_SERIAL
  414:src/protocolfunctions.c **** 
  415:src/protocolfunctions.c ****       errors += protocol_init(&sSoftwareSerial);
- 1056              		.loc 1 415 7 view .LVU270
- 1057              		.loc 1 415 17 is_stmt 0 view .LVU271
- 1058 001a E24E     		ldr	r6, .L93+24
- 1059 001c 3046     		mov	r0, r6
- 1060              	.LVL55:
- 1061              		.loc 1 415 17 view .LVU272
- 1062 001e FFF7FEFF 		bl	protocol_init
- 1063              	.LVL56:
-ARM GAS  /tmp/ccVdRm1d.s 			page 28
-
-
- 1064 0022 0446     		mov	r4, r0
- 1065              	.LVL57:
+ 996              		.loc 1 415 7 view .LVU262
+ 997              		.loc 1 415 17 is_stmt 0 view .LVU263
+ 998 001a D34E     		ldr	r6, .L87+24
+ 999 001c 3046     		mov	r0, r6
+ 1000              	.LVL53:
+ 1001              		.loc 1 415 17 view .LVU264
+ 1002 001e FFF7FEFF 		bl	protocol_init
+ 1003              	.LVL54:
+ 1004 0022 0446     		mov	r4, r0
+ 1005              	.LVL55:
  416:src/protocolfunctions.c **** 
  417:src/protocolfunctions.c ****       sSoftwareSerial.send_serial_data=softwareserial_Send;
- 1066              		.loc 1 417 7 is_stmt 1 view .LVU273
- 1067              		.loc 1 417 39 is_stmt 0 view .LVU274
- 1068 0024 E04B     		ldr	r3, .L93+28
- 1069 0026 C6F82031 		str	r3, [r6, #288]
+ 1006              		.loc 1 417 7 is_stmt 1 view .LVU265
+ 1007              		.loc 1 417 39 is_stmt 0 view .LVU266
+ 1008 0024 D14B     		ldr	r3, .L87+28
+ 1009 0026 C6F82031 		str	r3, [r6, #288]
  418:src/protocolfunctions.c ****       sSoftwareSerial.send_serial_data_wait=softwareserial_Send_Wait;
- 1070              		.loc 1 418 7 is_stmt 1 view .LVU275
- 1071              		.loc 1 418 44 is_stmt 0 view .LVU276
- 1072 002a E04B     		ldr	r3, .L93+32
- 1073 002c C6F82431 		str	r3, [r6, #292]
+ARM GAS  /tmp/ccdXw4GR.s 			page 27
+
+
+ 1010              		.loc 1 418 7 is_stmt 1 view .LVU267
+ 1011              		.loc 1 418 44 is_stmt 0 view .LVU268
+ 1012 002a D14B     		ldr	r3, .L87+32
+ 1013 002c C6F82431 		str	r3, [r6, #292]
  419:src/protocolfunctions.c ****       sSoftwareSerial.timeout1 = 500;
- 1074              		.loc 1 419 7 is_stmt 1 view .LVU277
- 1075              		.loc 1 419 32 is_stmt 0 view .LVU278
- 1076 0030 4FF4FA78 		mov	r8, #500
- 1077 0034 C6F81881 		str	r8, [r6, #280]
+ 1014              		.loc 1 419 7 is_stmt 1 view .LVU269
+ 1015              		.loc 1 419 32 is_stmt 0 view .LVU270
+ 1016 0030 4FF4FA73 		mov	r3, #500
+ 1017 0034 C6F81831 		str	r3, [r6, #280]
  420:src/protocolfunctions.c ****       sSoftwareSerial.timeout2 = 100;
- 1078              		.loc 1 420 7 is_stmt 1 view .LVU279
- 1079              		.loc 1 420 32 is_stmt 0 view .LVU280
- 1080 0038 6427     		movs	r7, #100
- 1081 003a C6F81C71 		str	r7, [r6, #284]
+ 1018              		.loc 1 420 7 is_stmt 1 view .LVU271
+ 1019              		.loc 1 420 32 is_stmt 0 view .LVU272
+ 1020 0038 6423     		movs	r3, #100
+ 1021 003a C6F81C31 		str	r3, [r6, #284]
  421:src/protocolfunctions.c ****       sSoftwareSerial.allow_ascii = 1;
- 1082              		.loc 1 421 7 is_stmt 1 view .LVU281
- 1083              		.loc 1 421 35 is_stmt 0 view .LVU282
- 1084 003e 4FF00109 		mov	r9, #1
- 1085 0042 86F80090 		strb	r9, [r6]
+ 1022              		.loc 1 421 7 is_stmt 1 view .LVU273
+ 1023              		.loc 1 421 35 is_stmt 0 view .LVU274
+ 1024 003e 4FF00108 		mov	r8, #1
+ 1025 0042 86F80080 		strb	r8, [r6]
  422:src/protocolfunctions.c **** 
  423:src/protocolfunctions.c ****     #endif
  424:src/protocolfunctions.c **** 
  425:src/protocolfunctions.c ****     #if defined(SERIAL_USART2_IT)
  426:src/protocolfunctions.c ****       // initialise, even if CONTROL_SENSOR, as we may switch vuia software to use this....
  427:src/protocolfunctions.c ****       extern int USART2_IT_send(unsigned char *data, int len);
- 1086              		.loc 1 427 7 is_stmt 1 view .LVU283
  428:src/protocolfunctions.c **** 
  429:src/protocolfunctions.c ****       errors += protocol_init(&sUSART2);
- 1087              		.loc 1 429 7 view .LVU284
- 1088              		.loc 1 429 17 is_stmt 0 view .LVU285
- 1089 0046 DA4E     		ldr	r6, .L93+36
- 1090 0048 3046     		mov	r0, r6
- 1091              	.LVL58:
- 1092              		.loc 1 429 17 view .LVU286
- 1093 004a FFF7FEFF 		bl	protocol_init
- 1094              	.LVL59:
- 1095              		.loc 1 429 14 discriminator 1 view .LVU287
- 1096 004e 0444     		add	r4, r4, r0
- 1097              	.LVL60:
  430:src/protocolfunctions.c **** 
  431:src/protocolfunctions.c ****       sUSART2.send_serial_data=USART2_IT_send;
- 1098              		.loc 1 431 7 is_stmt 1 view .LVU288
- 1099              		.loc 1 431 31 is_stmt 0 view .LVU289
- 1100 0050 D84B     		ldr	r3, .L93+40
- 1101 0052 C6F82031 		str	r3, [r6, #288]
  432:src/protocolfunctions.c ****       sUSART2.send_serial_data_wait=USART2_IT_send;
- 1102              		.loc 1 432 7 is_stmt 1 view .LVU290
- 1103              		.loc 1 432 36 is_stmt 0 view .LVU291
-ARM GAS  /tmp/ccVdRm1d.s 			page 29
-
-
- 1104 0056 C6F82431 		str	r3, [r6, #292]
  433:src/protocolfunctions.c ****       sUSART2.timeout1 = 500;
- 1105              		.loc 1 433 7 is_stmt 1 view .LVU292
- 1106              		.loc 1 433 24 is_stmt 0 view .LVU293
- 1107 005a C6F81881 		str	r8, [r6, #280]
  434:src/protocolfunctions.c ****       sUSART2.timeout2 = 100;
- 1108              		.loc 1 434 7 is_stmt 1 view .LVU294
- 1109              		.loc 1 434 24 is_stmt 0 view .LVU295
- 1110 005e C6F81C71 		str	r7, [r6, #284]
  435:src/protocolfunctions.c ****       sUSART2.allow_ascii = 1;
- 1111              		.loc 1 435 7 is_stmt 1 view .LVU296
- 1112              		.loc 1 435 27 is_stmt 0 view .LVU297
- 1113 0062 86F80090 		strb	r9, [r6]
  436:src/protocolfunctions.c **** 
  437:src/protocolfunctions.c ****     #endif
  438:src/protocolfunctions.c **** 
@@ -1714,997 +1614,946 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  453:src/protocolfunctions.c **** 
  454:src/protocolfunctions.c ****     // initialise ascii protocol functions
  455:src/protocolfunctions.c ****     main_ascii_init(s);
- 1114              		.loc 1 455 5 is_stmt 1 view .LVU298
- 1115 0066 2846     		mov	r0, r5
- 1116 0068 FFF7FEFF 		bl	main_ascii_init
- 1117              	.LVL61:
+ 1026              		.loc 1 455 5 is_stmt 1 view .LVU275
+ 1027 0046 2846     		mov	r0, r5
+ 1028              	.LVL56:
+ 1029              		.loc 1 455 5 is_stmt 0 view .LVU276
+ARM GAS  /tmp/ccdXw4GR.s 			page 28
+
+
+ 1030 0048 FFF7FEFF 		bl	main_ascii_init
+ 1031              	.LVL57:
  456:src/protocolfunctions.c **** 
  457:src/protocolfunctions.c **** 
  458:src/protocolfunctions.c ****     #ifdef CONTROL_SENSOR
  459:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x01, UI_NONE, &sensor_copy, sizeof(sensor_copy) );
- 1118              		.loc 1 459 9 view .LVU299
- 1119              		.loc 1 459 19 is_stmt 0 view .LVU300
- 1120 006c 4FF01408 		mov	r8, #20
- 1121 0070 CDF80080 		str	r8, [sp]
- 1122 0074 D04B     		ldr	r3, .L93+44
- 1123 0076 0022     		movs	r2, #0
- 1124 0078 4946     		mov	r1, r9
- 1125 007a 2846     		mov	r0, r5
- 1126 007c FFF7FEFF 		bl	setParamVariable
- 1127              	.LVL62:
- 1128              		.loc 1 459 16 discriminator 1 view .LVU301
- 1129 0080 0444     		add	r4, r4, r0
- 1130              	.LVL63:
  460:src/protocolfunctions.c ****         setParamHandler( s, 0x01, fn_SensorData );
- 1131              		.loc 1 460 9 is_stmt 1 view .LVU302
- 1132 0082 CE4A     		ldr	r2, .L93+48
-ARM GAS  /tmp/ccVdRm1d.s 			page 30
-
-
- 1133 0084 4946     		mov	r1, r9
- 1134 0086 2846     		mov	r0, r5
- 1135 0088 FFF7FEFF 		bl	setParamHandler
- 1136              	.LVL64:
  461:src/protocolfunctions.c ****     #endif
  462:src/protocolfunctions.c **** 
  463:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x02, UI_NONE, (void *)&HallData, sizeof(HallData) );
- 1137              		.loc 1 463 9 view .LVU303
- 1138              		.loc 1 463 19 is_stmt 0 view .LVU304
- 1139 008c 4823     		movs	r3, #72
- 1140 008e 0093     		str	r3, [sp]
- 1141 0090 CB4B     		ldr	r3, .L93+52
- 1142 0092 0022     		movs	r2, #0
- 1143 0094 0221     		movs	r1, #2
- 1144 0096 2846     		mov	r0, r5
- 1145 0098 FFF7FEFF 		bl	setParamVariable
- 1146              	.LVL65:
- 1147              		.loc 1 463 16 discriminator 1 view .LVU305
- 1148 009c 0444     		add	r4, r4, r0
- 1149              	.LVL66:
+ 1032              		.loc 1 463 9 is_stmt 1 view .LVU277
+ 1033              		.loc 1 463 19 is_stmt 0 view .LVU278
+ 1034 004c 4823     		movs	r3, #72
+ 1035 004e 0093     		str	r3, [sp]
+ 1036 0050 C84B     		ldr	r3, .L87+36
+ 1037 0052 0022     		movs	r2, #0
+ 1038 0054 0221     		movs	r1, #2
+ 1039 0056 2846     		mov	r0, r5
+ 1040 0058 FFF7FEFF 		bl	setParamVariable
+ 1041              	.LVL58:
+ 1042              		.loc 1 463 16 discriminator 1 view .LVU279
+ 1043 005c 0444     		add	r4, r4, r0
+ 1044              	.LVL59:
  464:src/protocolfunctions.c **** 
  465:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x03, UI_NONE, &SpeedData, sizeof(SpeedData) );
- 1150              		.loc 1 465 9 is_stmt 1 view .LVU306
- 1151              		.loc 1 465 19 is_stmt 0 view .LVU307
- 1152 009e 2427     		movs	r7, #36
- 1153 00a0 0097     		str	r7, [sp]
- 1154 00a2 C84B     		ldr	r3, .L93+56
- 1155 00a4 0022     		movs	r2, #0
- 1156 00a6 0321     		movs	r1, #3
- 1157 00a8 2846     		mov	r0, r5
- 1158 00aa FFF7FEFF 		bl	setParamVariable
- 1159              	.LVL67:
- 1160              		.loc 1 465 16 discriminator 1 view .LVU308
- 1161 00ae 0444     		add	r4, r4, r0
- 1162              	.LVL68:
+ 1045              		.loc 1 465 9 is_stmt 1 view .LVU280
+ 1046              		.loc 1 465 19 is_stmt 0 view .LVU281
+ 1047 005e 2427     		movs	r7, #36
+ 1048 0060 0097     		str	r7, [sp]
+ 1049 0062 C54B     		ldr	r3, .L87+40
+ 1050 0064 0022     		movs	r2, #0
+ 1051 0066 0321     		movs	r1, #3
+ 1052 0068 2846     		mov	r0, r5
+ 1053 006a FFF7FEFF 		bl	setParamVariable
+ 1054              	.LVL60:
+ 1055              		.loc 1 465 16 discriminator 1 view .LVU282
+ 1056 006e 0444     		add	r4, r4, r0
+ 1057              	.LVL61:
  466:src/protocolfunctions.c ****         setParamHandler( s, 0x03, fn_SpeedData );
- 1163              		.loc 1 466 9 is_stmt 1 view .LVU309
- 1164 00b0 C54A     		ldr	r2, .L93+60
- 1165 00b2 0321     		movs	r1, #3
- 1166 00b4 2846     		mov	r0, r5
- 1167 00b6 FFF7FEFF 		bl	setParamHandler
- 1168              	.LVL69:
+ 1058              		.loc 1 466 9 is_stmt 1 view .LVU283
+ 1059 0070 C24A     		ldr	r2, .L87+44
+ 1060 0072 0321     		movs	r1, #3
+ 1061 0074 2846     		mov	r0, r5
+ 1062 0076 FFF7FEFF 		bl	setParamHandler
+ 1063              	.LVL62:
  467:src/protocolfunctions.c **** 
  468:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x04, UI_NONE, &Position, sizeof(Position) );
- 1169              		.loc 1 468 9 view .LVU310
- 1170              		.loc 1 468 19 is_stmt 0 view .LVU311
- 1171 00ba 4FF0100A 		mov	r10, #16
- 1172 00be CDF800A0 		str	r10, [sp]
- 1173 00c2 C24B     		ldr	r3, .L93+64
- 1174 00c4 0022     		movs	r2, #0
- 1175 00c6 0421     		movs	r1, #4
- 1176 00c8 2846     		mov	r0, r5
- 1177 00ca FFF7FEFF 		bl	setParamVariable
- 1178              	.LVL70:
- 1179              		.loc 1 468 16 discriminator 1 view .LVU312
- 1180 00ce 0444     		add	r4, r4, r0
- 1181              	.LVL71:
-ARM GAS  /tmp/ccVdRm1d.s 			page 31
+ 1064              		.loc 1 468 9 view .LVU284
+ 1065              		.loc 1 468 19 is_stmt 0 view .LVU285
+ 1066 007a 4FF01009 		mov	r9, #16
+ 1067 007e CDF80090 		str	r9, [sp]
+ 1068 0082 BF4B     		ldr	r3, .L87+48
+ 1069 0084 0022     		movs	r2, #0
+ 1070 0086 0421     		movs	r1, #4
+ 1071 0088 2846     		mov	r0, r5
+ 1072 008a FFF7FEFF 		bl	setParamVariable
+ 1073              	.LVL63:
+ARM GAS  /tmp/ccdXw4GR.s 			page 29
 
 
+ 1074              		.loc 1 468 16 discriminator 1 view .LVU286
+ 1075 008e 0444     		add	r4, r4, r0
+ 1076              	.LVL64:
  469:src/protocolfunctions.c ****         setParamHandler( s, 0x04, fn_Position );
- 1182              		.loc 1 469 9 is_stmt 1 view .LVU313
- 1183 00d0 BF4A     		ldr	r2, .L93+68
- 1184 00d2 0421     		movs	r1, #4
- 1185 00d4 2846     		mov	r0, r5
- 1186 00d6 FFF7FEFF 		bl	setParamHandler
- 1187              	.LVL72:
+ 1077              		.loc 1 469 9 is_stmt 1 view .LVU287
+ 1078 0090 BC4A     		ldr	r2, .L87+52
+ 1079 0092 0421     		movs	r1, #4
+ 1080 0094 2846     		mov	r0, r5
+ 1081 0096 FFF7FEFF 		bl	setParamHandler
+ 1082              	.LVL65:
  470:src/protocolfunctions.c **** 
  471:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x05, UI_NONE, &PositionIncr, sizeof(PositionIncr) );
- 1188              		.loc 1 471 9 view .LVU314
- 1189              		.loc 1 471 19 is_stmt 0 view .LVU315
- 1190 00da 0826     		movs	r6, #8
- 1191 00dc 0096     		str	r6, [sp]
- 1192 00de BD4B     		ldr	r3, .L93+72
- 1193 00e0 0022     		movs	r2, #0
- 1194 00e2 0521     		movs	r1, #5
- 1195 00e4 2846     		mov	r0, r5
- 1196 00e6 FFF7FEFF 		bl	setParamVariable
- 1197              	.LVL73:
- 1198              		.loc 1 471 16 discriminator 1 view .LVU316
- 1199 00ea 0444     		add	r4, r4, r0
- 1200              	.LVL74:
+ 1083              		.loc 1 471 9 view .LVU288
+ 1084              		.loc 1 471 19 is_stmt 0 view .LVU289
+ 1085 009a 0826     		movs	r6, #8
+ 1086 009c 0096     		str	r6, [sp]
+ 1087 009e BA4B     		ldr	r3, .L87+56
+ 1088 00a0 0022     		movs	r2, #0
+ 1089 00a2 0521     		movs	r1, #5
+ 1090 00a4 2846     		mov	r0, r5
+ 1091 00a6 FFF7FEFF 		bl	setParamVariable
+ 1092              	.LVL66:
+ 1093              		.loc 1 471 16 discriminator 1 view .LVU290
+ 1094 00aa 0444     		add	r4, r4, r0
+ 1095              	.LVL67:
  472:src/protocolfunctions.c ****         setParamHandler( s, 0x05, fn_PositionIncr );
- 1201              		.loc 1 472 9 is_stmt 1 view .LVU317
- 1202 00ec BA4A     		ldr	r2, .L93+76
- 1203 00ee 0521     		movs	r1, #5
- 1204 00f0 2846     		mov	r0, r5
- 1205 00f2 FFF7FEFF 		bl	setParamHandler
- 1206              	.LVL75:
+ 1096              		.loc 1 472 9 is_stmt 1 view .LVU291
+ 1097 00ac B74A     		ldr	r2, .L87+60
+ 1098 00ae 0521     		movs	r1, #5
+ 1099 00b0 2846     		mov	r0, r5
+ 1100 00b2 FFF7FEFF 		bl	setParamHandler
+ 1101              	.LVL68:
  473:src/protocolfunctions.c **** 
  474:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x06, UI_NONE, &PosnData, sizeof(PosnData) );
- 1207              		.loc 1 474 9 view .LVU318
- 1208              		.loc 1 474 19 is_stmt 0 view .LVU319
- 1209 00f6 2023     		movs	r3, #32
- 1210 00f8 0093     		str	r3, [sp]
- 1211 00fa B84B     		ldr	r3, .L93+80
- 1212 00fc 0022     		movs	r2, #0
- 1213 00fe 0621     		movs	r1, #6
- 1214 0100 2846     		mov	r0, r5
- 1215 0102 FFF7FEFF 		bl	setParamVariable
- 1216              	.LVL76:
- 1217              		.loc 1 474 16 discriminator 1 view .LVU320
- 1218 0106 0444     		add	r4, r4, r0
- 1219              	.LVL77:
+ 1102              		.loc 1 474 9 view .LVU292
+ 1103              		.loc 1 474 19 is_stmt 0 view .LVU293
+ 1104 00b6 2023     		movs	r3, #32
+ 1105 00b8 0093     		str	r3, [sp]
+ 1106 00ba B54B     		ldr	r3, .L87+64
+ 1107 00bc 0022     		movs	r2, #0
+ 1108 00be 0621     		movs	r1, #6
+ 1109 00c0 2846     		mov	r0, r5
+ 1110 00c2 FFF7FEFF 		bl	setParamVariable
+ 1111              	.LVL69:
+ 1112              		.loc 1 474 16 discriminator 1 view .LVU294
+ 1113 00c6 0444     		add	r4, r4, r0
+ 1114              	.LVL70:
  475:src/protocolfunctions.c **** 
  476:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x07, UI_NONE, &RawPosition, sizeof(RawPosition) );
- 1220              		.loc 1 476 9 is_stmt 1 view .LVU321
- 1221              		.loc 1 476 19 is_stmt 0 view .LVU322
- 1222 0108 CDF800A0 		str	r10, [sp]
- 1223 010c B44B     		ldr	r3, .L93+84
- 1224 010e 0022     		movs	r2, #0
- 1225 0110 0721     		movs	r1, #7
- 1226 0112 2846     		mov	r0, r5
- 1227 0114 FFF7FEFF 		bl	setParamVariable
- 1228              	.LVL78:
- 1229              		.loc 1 476 16 discriminator 1 view .LVU323
- 1230 0118 0444     		add	r4, r4, r0
-ARM GAS  /tmp/ccVdRm1d.s 			page 32
+ 1115              		.loc 1 476 9 is_stmt 1 view .LVU295
+ 1116              		.loc 1 476 19 is_stmt 0 view .LVU296
+ 1117 00c8 CDF80090 		str	r9, [sp]
+ 1118 00cc B14B     		ldr	r3, .L87+68
+ 1119 00ce 0022     		movs	r2, #0
+ 1120 00d0 0721     		movs	r1, #7
+ 1121 00d2 2846     		mov	r0, r5
+ 1122 00d4 FFF7FEFF 		bl	setParamVariable
+ARM GAS  /tmp/ccdXw4GR.s 			page 30
 
 
- 1231              	.LVL79:
+ 1123              	.LVL71:
+ 1124              		.loc 1 476 16 discriminator 1 view .LVU297
+ 1125 00d8 0444     		add	r4, r4, r0
+ 1126              	.LVL72:
  477:src/protocolfunctions.c ****         setParamHandler( s, 0x07, fn_RawPosition );
- 1232              		.loc 1 477 9 is_stmt 1 view .LVU324
- 1233 011a B24A     		ldr	r2, .L93+88
- 1234 011c 0721     		movs	r1, #7
- 1235 011e 2846     		mov	r0, r5
- 1236 0120 FFF7FEFF 		bl	setParamHandler
- 1237              	.LVL80:
+ 1127              		.loc 1 477 9 is_stmt 1 view .LVU298
+ 1128 00da AF4A     		ldr	r2, .L87+72
+ 1129 00dc 0721     		movs	r1, #7
+ 1130 00de 2846     		mov	r0, r5
+ 1131 00e0 FFF7FEFF 		bl	setParamHandler
+ 1132              	.LVL73:
  478:src/protocolfunctions.c **** 
  479:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x08, UI_NONE, (void *)&electrical_measurements, sizeof(ELEC
- 1238              		.loc 1 479 9 view .LVU325
- 1239              		.loc 1 479 19 is_stmt 0 view .LVU326
- 1240 0124 7823     		movs	r3, #120
- 1241 0126 0093     		str	r3, [sp]
- 1242 0128 AF4B     		ldr	r3, .L93+92
- 1243 012a 0022     		movs	r2, #0
- 1244 012c 3146     		mov	r1, r6
- 1245 012e 2846     		mov	r0, r5
- 1246 0130 FFF7FEFF 		bl	setParamVariable
- 1247              	.LVL81:
- 1248              		.loc 1 479 16 discriminator 1 view .LVU327
- 1249 0134 0444     		add	r4, r4, r0
- 1250              	.LVL82:
+ 1133              		.loc 1 479 9 view .LVU299
+ 1134              		.loc 1 479 19 is_stmt 0 view .LVU300
+ 1135 00e4 7823     		movs	r3, #120
+ 1136 00e6 0093     		str	r3, [sp]
+ 1137 00e8 AC4B     		ldr	r3, .L87+76
+ 1138 00ea 0022     		movs	r2, #0
+ 1139 00ec 3146     		mov	r1, r6
+ 1140 00ee 2846     		mov	r0, r5
+ 1141 00f0 FFF7FEFF 		bl	setParamVariable
+ 1142              	.LVL74:
+ 1143              		.loc 1 479 16 discriminator 1 view .LVU301
+ 1144 00f4 0444     		add	r4, r4, r0
+ 1145              	.LVL75:
  480:src/protocolfunctions.c **** 
  481:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x09, UI_CHAR, &protocol_enable, sizeof(enable) );
- 1251              		.loc 1 481 9 is_stmt 1 view .LVU328
- 1252              		.loc 1 481 19 is_stmt 0 view .LVU329
- 1253 0136 CDF80090 		str	r9, [sp]
- 1254 013a AC4B     		ldr	r3, .L93+96
- 1255 013c 1122     		movs	r2, #17
- 1256 013e 0921     		movs	r1, #9
- 1257 0140 2846     		mov	r0, r5
- 1258 0142 FFF7FEFF 		bl	setParamVariable
- 1259              	.LVL83:
- 1260              		.loc 1 481 16 discriminator 1 view .LVU330
- 1261 0146 0444     		add	r4, r4, r0
- 1262              	.LVL84:
+ 1146              		.loc 1 481 9 is_stmt 1 view .LVU302
+ 1147              		.loc 1 481 19 is_stmt 0 view .LVU303
+ 1148 00f6 CDF80080 		str	r8, [sp]
+ 1149 00fa A94B     		ldr	r3, .L87+80
+ 1150 00fc 1122     		movs	r2, #17
+ 1151 00fe 0921     		movs	r1, #9
+ 1152 0100 2846     		mov	r0, r5
+ 1153 0102 FFF7FEFF 		bl	setParamVariable
+ 1154              	.LVL76:
+ 1155              		.loc 1 481 16 discriminator 1 view .LVU304
+ 1156 0106 0444     		add	r4, r4, r0
+ 1157              	.LVL77:
  482:src/protocolfunctions.c ****         setParamHandler( s, 0x09, fn_enable );
- 1263              		.loc 1 482 9 is_stmt 1 view .LVU331
- 1264 0148 A94A     		ldr	r2, .L93+100
- 1265 014a 0921     		movs	r1, #9
- 1266 014c 2846     		mov	r0, r5
- 1267 014e FFF7FEFF 		bl	setParamHandler
- 1268              	.LVL85:
+ 1158              		.loc 1 482 9 is_stmt 1 view .LVU305
+ 1159 0108 A64A     		ldr	r2, .L87+84
+ 1160 010a 0921     		movs	r1, #9
+ 1161 010c 2846     		mov	r0, r5
+ 1162 010e FFF7FEFF 		bl	setParamHandler
+ 1163              	.LVL78:
  483:src/protocolfunctions.c **** 
  484:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0A, UI_CHAR, &disablepoweroff, sizeof(disablepoweroff) );
- 1269              		.loc 1 484 9 view .LVU332
- 1270              		.loc 1 484 19 is_stmt 0 view .LVU333
- 1271 0152 CDF80090 		str	r9, [sp]
- 1272 0156 A74B     		ldr	r3, .L93+104
- 1273 0158 1122     		movs	r2, #17
- 1274 015a 0A21     		movs	r1, #10
- 1275 015c 2846     		mov	r0, r5
- 1276 015e FFF7FEFF 		bl	setParamVariable
- 1277              	.LVL86:
- 1278              		.loc 1 484 16 discriminator 1 view .LVU334
- 1279 0162 0444     		add	r4, r4, r0
-ARM GAS  /tmp/ccVdRm1d.s 			page 33
+ 1164              		.loc 1 484 9 view .LVU306
+ 1165              		.loc 1 484 19 is_stmt 0 view .LVU307
+ 1166 0112 CDF80080 		str	r8, [sp]
+ 1167 0116 A44B     		ldr	r3, .L87+88
+ 1168 0118 1122     		movs	r2, #17
+ 1169 011a 0A21     		movs	r1, #10
+ 1170 011c 2846     		mov	r0, r5
+ 1171 011e FFF7FEFF 		bl	setParamVariable
+ARM GAS  /tmp/ccdXw4GR.s 			page 31
 
 
- 1280              	.LVL87:
+ 1172              	.LVL79:
+ 1173              		.loc 1 484 16 discriminator 1 view .LVU308
+ 1174 0122 0444     		add	r4, r4, r0
+ 1175              	.LVL80:
  485:src/protocolfunctions.c **** 
  486:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0B, UI_CHAR, &debug_out, sizeof(debug_out) );
- 1281              		.loc 1 486 9 is_stmt 1 view .LVU335
- 1282              		.loc 1 486 19 is_stmt 0 view .LVU336
- 1283 0164 CDF80090 		str	r9, [sp]
- 1284 0168 A34B     		ldr	r3, .L93+108
- 1285 016a 1122     		movs	r2, #17
- 1286 016c 0B21     		movs	r1, #11
- 1287 016e 2846     		mov	r0, r5
- 1288 0170 FFF7FEFF 		bl	setParamVariable
- 1289              	.LVL88:
- 1290              		.loc 1 486 16 discriminator 1 view .LVU337
- 1291 0174 0444     		add	r4, r4, r0
- 1292              	.LVL89:
+ 1176              		.loc 1 486 9 is_stmt 1 view .LVU309
+ 1177              		.loc 1 486 19 is_stmt 0 view .LVU310
+ 1178 0124 CDF80080 		str	r8, [sp]
+ 1179 0128 A04B     		ldr	r3, .L87+92
+ 1180 012a 1122     		movs	r2, #17
+ 1181 012c 0B21     		movs	r1, #11
+ 1182 012e 2846     		mov	r0, r5
+ 1183 0130 FFF7FEFF 		bl	setParamVariable
+ 1184              	.LVL81:
+ 1185              		.loc 1 486 16 discriminator 1 view .LVU311
+ 1186 0134 0444     		add	r4, r4, r0
+ 1187              	.LVL82:
  487:src/protocolfunctions.c **** 
  488:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0C, UI_3LONG, &xytPosn, sizeof(xytPosn) );
- 1293              		.loc 1 488 9 is_stmt 1 view .LVU338
- 1294              		.loc 1 488 19 is_stmt 0 view .LVU339
- 1295 0176 4FF00C09 		mov	r9, #12
- 1296 017a CDF80090 		str	r9, [sp]
- 1297 017e 9F4B     		ldr	r3, .L93+112
- 1298 0180 3422     		movs	r2, #52
- 1299 0182 4946     		mov	r1, r9
- 1300 0184 2846     		mov	r0, r5
- 1301 0186 FFF7FEFF 		bl	setParamVariable
- 1302              	.LVL90:
- 1303              		.loc 1 488 16 discriminator 1 view .LVU340
- 1304 018a 0444     		add	r4, r4, r0
- 1305              	.LVL91:
+ 1188              		.loc 1 488 9 is_stmt 1 view .LVU312
+ 1189              		.loc 1 488 19 is_stmt 0 view .LVU313
+ 1190 0136 4FF00C08 		mov	r8, #12
+ 1191 013a CDF80080 		str	r8, [sp]
+ 1192 013e 9C4B     		ldr	r3, .L87+96
+ 1193 0140 3422     		movs	r2, #52
+ 1194 0142 4146     		mov	r1, r8
+ 1195 0144 2846     		mov	r0, r5
+ 1196 0146 FFF7FEFF 		bl	setParamVariable
+ 1197              	.LVL83:
+ 1198              		.loc 1 488 16 discriminator 1 view .LVU314
+ 1199 014a 0444     		add	r4, r4, r0
+ 1200              	.LVL84:
  489:src/protocolfunctions.c ****         setParamHandler( s, 0x0C, fn_xytPosn );
- 1306              		.loc 1 489 9 is_stmt 1 view .LVU341
- 1307 018c 9C4A     		ldr	r2, .L93+116
- 1308 018e 4946     		mov	r1, r9
- 1309 0190 2846     		mov	r0, r5
- 1310 0192 FFF7FEFF 		bl	setParamHandler
- 1311              	.LVL92:
+ 1201              		.loc 1 489 9 is_stmt 1 view .LVU315
+ 1202 014c 994A     		ldr	r2, .L87+100
+ 1203 014e 4146     		mov	r1, r8
+ 1204 0150 2846     		mov	r0, r5
+ 1205 0152 FFF7FEFF 		bl	setParamHandler
+ 1206              	.LVL85:
  490:src/protocolfunctions.c **** 
  491:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0D, UI_NONE, &PWMData, sizeof(PWMData) );
- 1312              		.loc 1 491 9 view .LVU342
- 1313              		.loc 1 491 19 is_stmt 0 view .LVU343
- 1314 0196 DFF86C92 		ldr	r9, .L93+120
- 1315 019a CDF80080 		str	r8, [sp]
- 1316 019e 4B46     		mov	r3, r9
- 1317 01a0 0022     		movs	r2, #0
- 1318 01a2 0D21     		movs	r1, #13
- 1319 01a4 2846     		mov	r0, r5
- 1320 01a6 FFF7FEFF 		bl	setParamVariable
- 1321              	.LVL93:
- 1322              		.loc 1 491 16 discriminator 1 view .LVU344
- 1323 01aa 0444     		add	r4, r4, r0
- 1324              	.LVL94:
+ 1207              		.loc 1 491 9 view .LVU316
+ 1208              		.loc 1 491 19 is_stmt 0 view .LVU317
+ 1209 0156 DFF86092 		ldr	r9, .L87+104
+ 1210 015a 1423     		movs	r3, #20
+ 1211 015c 0093     		str	r3, [sp]
+ 1212 015e 4B46     		mov	r3, r9
+ 1213 0160 0022     		movs	r2, #0
+ 1214 0162 0D21     		movs	r1, #13
+ 1215 0164 2846     		mov	r0, r5
+ 1216 0166 FFF7FEFF 		bl	setParamVariable
+ 1217              	.LVL86:
+ 1218              		.loc 1 491 16 discriminator 1 view .LVU318
+ 1219 016a 0444     		add	r4, r4, r0
+ 1220              	.LVL87:
  492:src/protocolfunctions.c ****         setParamHandler( s, 0x0D, fn_PWMData );
- 1325              		.loc 1 492 9 is_stmt 1 view .LVU345
- 1326 01ac DFF85882 		ldr	r8, .L93+124
- 1327 01b0 4246     		mov	r2, r8
- 1328 01b2 0D21     		movs	r1, #13
-ARM GAS  /tmp/ccVdRm1d.s 			page 34
+ARM GAS  /tmp/ccdXw4GR.s 			page 32
 
 
- 1329 01b4 2846     		mov	r0, r5
- 1330 01b6 FFF7FEFF 		bl	setParamHandler
- 1331              	.LVL95:
+ 1221              		.loc 1 492 9 is_stmt 1 view .LVU319
+ 1222 016c DFF84C82 		ldr	r8, .L87+108
+ 1223 0170 4246     		mov	r2, r8
+ 1224 0172 0D21     		movs	r1, #13
+ 1225 0174 2846     		mov	r0, r5
+ 1226 0176 FFF7FEFF 		bl	setParamHandler
+ 1227              	.LVL88:
  493:src/protocolfunctions.c **** 
  494:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0E, UI_2LONG, &(PWMData.pwm), sizeof(PWMData.pwm) );
- 1332              		.loc 1 494 9 view .LVU346
- 1333              		.loc 1 494 19 is_stmt 0 view .LVU347
- 1334 01ba 0096     		str	r6, [sp]
- 1335 01bc 4B46     		mov	r3, r9
- 1336 01be 3A46     		mov	r2, r7
- 1337 01c0 0E21     		movs	r1, #14
- 1338 01c2 2846     		mov	r0, r5
- 1339 01c4 FFF7FEFF 		bl	setParamVariable
- 1340              	.LVL96:
- 1341              		.loc 1 494 16 discriminator 1 view .LVU348
- 1342 01c8 0444     		add	r4, r4, r0
- 1343              	.LVL97:
+ 1228              		.loc 1 494 9 view .LVU320
+ 1229              		.loc 1 494 19 is_stmt 0 view .LVU321
+ 1230 017a 0096     		str	r6, [sp]
+ 1231 017c 4B46     		mov	r3, r9
+ 1232 017e 3A46     		mov	r2, r7
+ 1233 0180 0E21     		movs	r1, #14
+ 1234 0182 2846     		mov	r0, r5
+ 1235 0184 FFF7FEFF 		bl	setParamVariable
+ 1236              	.LVL89:
+ 1237              		.loc 1 494 16 discriminator 1 view .LVU322
+ 1238 0188 0444     		add	r4, r4, r0
+ 1239              	.LVL90:
  495:src/protocolfunctions.c ****         setParamHandler( s, 0x0E, fn_PWMData );
- 1344              		.loc 1 495 9 is_stmt 1 view .LVU349
- 1345 01ca 4246     		mov	r2, r8
- 1346 01cc 0E21     		movs	r1, #14
- 1347 01ce 2846     		mov	r0, r5
- 1348 01d0 FFF7FEFF 		bl	setParamHandler
- 1349              	.LVL98:
+ 1240              		.loc 1 495 9 is_stmt 1 view .LVU323
+ 1241 018a 4246     		mov	r2, r8
+ 1242 018c 0E21     		movs	r1, #14
+ 1243 018e 2846     		mov	r0, r5
+ 1244 0190 FFF7FEFF 		bl	setParamHandler
+ 1245              	.LVL91:
  496:src/protocolfunctions.c **** 
  497:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x21, UI_NONE, &BuzzerData, sizeof(BuzzerData) );
- 1350              		.loc 1 497 9 view .LVU350
- 1351              		.loc 1 497 19 is_stmt 0 view .LVU351
- 1352 01d4 0423     		movs	r3, #4
- 1353 01d6 0093     		str	r3, [sp]
- 1354 01d8 8C4B     		ldr	r3, .L93+128
- 1355 01da 0022     		movs	r2, #0
- 1356 01dc 2121     		movs	r1, #33
- 1357 01de 2846     		mov	r0, r5
- 1358 01e0 FFF7FEFF 		bl	setParamVariable
- 1359              	.LVL99:
- 1360              		.loc 1 497 16 discriminator 1 view .LVU352
- 1361 01e4 0444     		add	r4, r4, r0
- 1362              	.LVL100:
+ 1246              		.loc 1 497 9 view .LVU324
+ 1247              		.loc 1 497 19 is_stmt 0 view .LVU325
+ 1248 0194 0423     		movs	r3, #4
+ 1249 0196 0093     		str	r3, [sp]
+ 1250 0198 894B     		ldr	r3, .L87+112
+ 1251 019a 0022     		movs	r2, #0
+ 1252 019c 2121     		movs	r1, #33
+ 1253 019e 2846     		mov	r0, r5
+ 1254 01a0 FFF7FEFF 		bl	setParamVariable
+ 1255              	.LVL92:
+ 1256              		.loc 1 497 16 discriminator 1 view .LVU326
+ 1257 01a4 0444     		add	r4, r4, r0
+ 1258              	.LVL93:
  498:src/protocolfunctions.c ****         setParamHandler( s, 0x21, fn_BuzzerData );
- 1363              		.loc 1 498 9 is_stmt 1 view .LVU353
- 1364 01e6 8A4A     		ldr	r2, .L93+132
- 1365 01e8 2121     		movs	r1, #33
- 1366 01ea 2846     		mov	r0, r5
- 1367 01ec FFF7FEFF 		bl	setParamHandler
- 1368              	.LVL101:
+ 1259              		.loc 1 498 9 is_stmt 1 view .LVU327
+ 1260 01a6 874A     		ldr	r2, .L87+116
+ 1261 01a8 2121     		movs	r1, #33
+ 1262 01aa 2846     		mov	r0, r5
+ 1263 01ac FFF7FEFF 		bl	setParamHandler
+ 1264              	.LVL94:
  499:src/protocolfunctions.c **** 
  500:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x80, UI_SHORT, &FlashContent.magic, sizeof(short) );
- 1369              		.loc 1 500 9 view .LVU354
- 1370              		.loc 1 500 19 is_stmt 0 view .LVU355
- 1371 01f0 884E     		ldr	r6, .L93+136
- 1372 01f2 0227     		movs	r7, #2
- 1373 01f4 0097     		str	r7, [sp]
- 1374 01f6 3346     		mov	r3, r6
- 1375 01f8 1222     		movs	r2, #18
- 1376 01fa 8021     		movs	r1, #128
- 1377 01fc 2846     		mov	r0, r5
-ARM GAS  /tmp/ccVdRm1d.s 			page 35
+ 1265              		.loc 1 500 9 view .LVU328
+ 1266              		.loc 1 500 19 is_stmt 0 view .LVU329
+ 1267 01b0 854E     		ldr	r6, .L87+120
+ 1268 01b2 0227     		movs	r7, #2
+ 1269 01b4 0097     		str	r7, [sp]
+ARM GAS  /tmp/ccdXw4GR.s 			page 33
 
 
- 1378 01fe FFF7FEFF 		bl	setParamVariable
- 1379              	.LVL102:
- 1380              		.loc 1 500 16 discriminator 1 view .LVU356
- 1381 0202 0444     		add	r4, r4, r0
- 1382              	.LVL103:
+ 1270 01b6 3346     		mov	r3, r6
+ 1271 01b8 1222     		movs	r2, #18
+ 1272 01ba 8021     		movs	r1, #128
+ 1273 01bc 2846     		mov	r0, r5
+ 1274 01be FFF7FEFF 		bl	setParamVariable
+ 1275              	.LVL95:
+ 1276              		.loc 1 500 16 discriminator 1 view .LVU330
+ 1277 01c2 0444     		add	r4, r4, r0
+ 1278              	.LVL96:
  501:src/protocolfunctions.c ****         setParamHandler( s, 0x80, fn_FlashContentMagic );
- 1383              		.loc 1 501 9 is_stmt 1 view .LVU357
- 1384 0204 DFF81082 		ldr	r8, .L93+140
- 1385 0208 4246     		mov	r2, r8
- 1386 020a 8021     		movs	r1, #128
- 1387 020c 2846     		mov	r0, r5
- 1388 020e FFF7FEFF 		bl	setParamHandler
- 1389              	.LVL104:
+ 1279              		.loc 1 501 9 is_stmt 1 view .LVU331
+ 1280 01c4 DFF80482 		ldr	r8, .L87+124
+ 1281 01c8 4246     		mov	r2, r8
+ 1282 01ca 8021     		movs	r1, #128
+ 1283 01cc 2846     		mov	r0, r5
+ 1284 01ce FFF7FEFF 		bl	setParamHandler
+ 1285              	.LVL97:
  502:src/protocolfunctions.c **** 
  503:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x81, UI_SHORT, &FlashContent.PositionKpx100, sizeof(short) 
- 1390              		.loc 1 503 9 view .LVU358
- 1391              		.loc 1 503 19 is_stmt 0 view .LVU359
- 1392 0212 0097     		str	r7, [sp]
- 1393 0214 F319     		adds	r3, r6, r7
- 1394 0216 1222     		movs	r2, #18
- 1395 0218 8121     		movs	r1, #129
- 1396 021a 2846     		mov	r0, r5
- 1397 021c FFF7FEFF 		bl	setParamVariable
- 1398              	.LVL105:
- 1399              		.loc 1 503 16 discriminator 1 view .LVU360
- 1400 0220 0444     		add	r4, r4, r0
- 1401              	.LVL106:
+ 1286              		.loc 1 503 9 view .LVU332
+ 1287              		.loc 1 503 19 is_stmt 0 view .LVU333
+ 1288 01d2 0097     		str	r7, [sp]
+ 1289 01d4 F319     		adds	r3, r6, r7
+ 1290 01d6 1222     		movs	r2, #18
+ 1291 01d8 8121     		movs	r1, #129
+ 1292 01da 2846     		mov	r0, r5
+ 1293 01dc FFF7FEFF 		bl	setParamVariable
+ 1294              	.LVL98:
+ 1295              		.loc 1 503 16 discriminator 1 view .LVU334
+ 1296 01e0 0444     		add	r4, r4, r0
+ 1297              	.LVL99:
  504:src/protocolfunctions.c ****         setParamHandler( s, 0x81, fn_FlashContentPID );
- 1402              		.loc 1 504 9 is_stmt 1 view .LVU361
- 1403 0222 DFF8F891 		ldr	r9, .L93+144
- 1404 0226 4A46     		mov	r2, r9
- 1405 0228 8121     		movs	r1, #129
- 1406 022a 2846     		mov	r0, r5
- 1407 022c FFF7FEFF 		bl	setParamHandler
- 1408              	.LVL107:
+ 1298              		.loc 1 504 9 is_stmt 1 view .LVU335
+ 1299 01e2 DFF8EC91 		ldr	r9, .L87+128
+ 1300 01e6 4A46     		mov	r2, r9
+ 1301 01e8 8121     		movs	r1, #129
+ 1302 01ea 2846     		mov	r0, r5
+ 1303 01ec FFF7FEFF 		bl	setParamHandler
+ 1304              	.LVL100:
  505:src/protocolfunctions.c **** 
  506:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x82, UI_SHORT, &FlashContent.PositionKix100, sizeof(short) 
- 1409              		.loc 1 506 9 view .LVU362
- 1410              		.loc 1 506 19 is_stmt 0 view .LVU363
- 1411 0230 0097     		str	r7, [sp]
- 1412 0232 331D     		adds	r3, r6, #4
- 1413 0234 1222     		movs	r2, #18
- 1414 0236 8221     		movs	r1, #130
- 1415 0238 2846     		mov	r0, r5
- 1416 023a FFF7FEFF 		bl	setParamVariable
- 1417              	.LVL108:
- 1418              		.loc 1 506 16 discriminator 1 view .LVU364
- 1419 023e 0444     		add	r4, r4, r0
- 1420              	.LVL109:
+ 1305              		.loc 1 506 9 view .LVU336
+ 1306              		.loc 1 506 19 is_stmt 0 view .LVU337
+ 1307 01f0 0097     		str	r7, [sp]
+ 1308 01f2 331D     		adds	r3, r6, #4
+ 1309 01f4 1222     		movs	r2, #18
+ 1310 01f6 8221     		movs	r1, #130
+ 1311 01f8 2846     		mov	r0, r5
+ 1312 01fa FFF7FEFF 		bl	setParamVariable
+ 1313              	.LVL101:
+ 1314              		.loc 1 506 16 discriminator 1 view .LVU338
+ 1315 01fe 0444     		add	r4, r4, r0
+ 1316              	.LVL102:
  507:src/protocolfunctions.c ****         setParamHandler( s, 0x82, fn_FlashContentPID );
- 1421              		.loc 1 507 9 is_stmt 1 view .LVU365
- 1422 0240 4A46     		mov	r2, r9
- 1423 0242 8221     		movs	r1, #130
- 1424 0244 2846     		mov	r0, r5
- 1425 0246 FFF7FEFF 		bl	setParamHandler
- 1426              	.LVL110:
+ 1317              		.loc 1 507 9 is_stmt 1 view .LVU339
+ 1318 0200 4A46     		mov	r2, r9
+ 1319 0202 8221     		movs	r1, #130
+ARM GAS  /tmp/ccdXw4GR.s 			page 34
+
+
+ 1320 0204 2846     		mov	r0, r5
+ 1321 0206 FFF7FEFF 		bl	setParamHandler
+ 1322              	.LVL103:
  508:src/protocolfunctions.c **** 
-ARM GAS  /tmp/ccVdRm1d.s 			page 36
-
-
  509:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x83, UI_SHORT, &FlashContent.PositionKdx100, sizeof(short) 
- 1427              		.loc 1 509 9 view .LVU366
- 1428              		.loc 1 509 19 is_stmt 0 view .LVU367
- 1429 024a 0097     		str	r7, [sp]
- 1430 024c B31D     		adds	r3, r6, #6
- 1431 024e 1222     		movs	r2, #18
- 1432 0250 8321     		movs	r1, #131
- 1433 0252 2846     		mov	r0, r5
- 1434 0254 FFF7FEFF 		bl	setParamVariable
- 1435              	.LVL111:
- 1436              		.loc 1 509 16 discriminator 1 view .LVU368
- 1437 0258 0444     		add	r4, r4, r0
- 1438              	.LVL112:
+ 1323              		.loc 1 509 9 view .LVU340
+ 1324              		.loc 1 509 19 is_stmt 0 view .LVU341
+ 1325 020a 0097     		str	r7, [sp]
+ 1326 020c B31D     		adds	r3, r6, #6
+ 1327 020e 1222     		movs	r2, #18
+ 1328 0210 8321     		movs	r1, #131
+ 1329 0212 2846     		mov	r0, r5
+ 1330 0214 FFF7FEFF 		bl	setParamVariable
+ 1331              	.LVL104:
+ 1332              		.loc 1 509 16 discriminator 1 view .LVU342
+ 1333 0218 0444     		add	r4, r4, r0
+ 1334              	.LVL105:
  510:src/protocolfunctions.c ****         setParamHandler( s, 0x83, fn_FlashContentPID );
- 1439              		.loc 1 510 9 is_stmt 1 view .LVU369
- 1440 025a 4A46     		mov	r2, r9
- 1441 025c 8321     		movs	r1, #131
- 1442 025e 2846     		mov	r0, r5
- 1443 0260 FFF7FEFF 		bl	setParamHandler
- 1444              	.LVL113:
+ 1335              		.loc 1 510 9 is_stmt 1 view .LVU343
+ 1336 021a 4A46     		mov	r2, r9
+ 1337 021c 8321     		movs	r1, #131
+ 1338 021e 2846     		mov	r0, r5
+ 1339 0220 FFF7FEFF 		bl	setParamHandler
+ 1340              	.LVL106:
  511:src/protocolfunctions.c **** 
  512:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x84, UI_SHORT, &FlashContent.PositionPWMLimit, sizeof(short
- 1445              		.loc 1 512 9 view .LVU370
- 1446              		.loc 1 512 19 is_stmt 0 view .LVU371
- 1447 0264 0097     		str	r7, [sp]
- 1448 0266 06F10803 		add	r3, r6, #8
- 1449 026a 1222     		movs	r2, #18
- 1450 026c 8421     		movs	r1, #132
- 1451 026e 2846     		mov	r0, r5
- 1452 0270 FFF7FEFF 		bl	setParamVariable
- 1453              	.LVL114:
- 1454              		.loc 1 512 16 discriminator 1 view .LVU372
- 1455 0274 0444     		add	r4, r4, r0
- 1456              	.LVL115:
+ 1341              		.loc 1 512 9 view .LVU344
+ 1342              		.loc 1 512 19 is_stmt 0 view .LVU345
+ 1343 0224 0097     		str	r7, [sp]
+ 1344 0226 06F10803 		add	r3, r6, #8
+ 1345 022a 1222     		movs	r2, #18
+ 1346 022c 8421     		movs	r1, #132
+ 1347 022e 2846     		mov	r0, r5
+ 1348 0230 FFF7FEFF 		bl	setParamVariable
+ 1349              	.LVL107:
+ 1350              		.loc 1 512 16 discriminator 1 view .LVU346
+ 1351 0234 0444     		add	r4, r4, r0
+ 1352              	.LVL108:
  513:src/protocolfunctions.c ****         setParamHandler( s, 0x84, fn_FlashContentPID );
- 1457              		.loc 1 513 9 is_stmt 1 view .LVU373
- 1458 0276 4A46     		mov	r2, r9
- 1459 0278 8421     		movs	r1, #132
- 1460 027a 2846     		mov	r0, r5
- 1461 027c FFF7FEFF 		bl	setParamHandler
- 1462              	.LVL116:
+ 1353              		.loc 1 513 9 is_stmt 1 view .LVU347
+ 1354 0236 4A46     		mov	r2, r9
+ 1355 0238 8421     		movs	r1, #132
+ 1356 023a 2846     		mov	r0, r5
+ 1357 023c FFF7FEFF 		bl	setParamHandler
+ 1358              	.LVL109:
  514:src/protocolfunctions.c **** 
  515:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x85, UI_SHORT, &FlashContent.SpeedKpx100, sizeof(short) );
- 1463              		.loc 1 515 9 view .LVU374
- 1464              		.loc 1 515 19 is_stmt 0 view .LVU375
- 1465 0280 0097     		str	r7, [sp]
- 1466 0282 06F10A03 		add	r3, r6, #10
- 1467 0286 1222     		movs	r2, #18
- 1468 0288 8521     		movs	r1, #133
- 1469 028a 2846     		mov	r0, r5
- 1470 028c FFF7FEFF 		bl	setParamVariable
- 1471              	.LVL117:
- 1472              		.loc 1 515 16 discriminator 1 view .LVU376
- 1473 0290 0444     		add	r4, r4, r0
- 1474              	.LVL118:
+ 1359              		.loc 1 515 9 view .LVU348
+ 1360              		.loc 1 515 19 is_stmt 0 view .LVU349
+ 1361 0240 0097     		str	r7, [sp]
+ 1362 0242 06F10A03 		add	r3, r6, #10
+ 1363 0246 1222     		movs	r2, #18
+ 1364 0248 8521     		movs	r1, #133
+ 1365 024a 2846     		mov	r0, r5
+ 1366 024c FFF7FEFF 		bl	setParamVariable
+ 1367              	.LVL110:
+ 1368              		.loc 1 515 16 discriminator 1 view .LVU350
+ARM GAS  /tmp/ccdXw4GR.s 			page 35
+
+
+ 1369 0250 0444     		add	r4, r4, r0
+ 1370              	.LVL111:
  516:src/protocolfunctions.c ****         setParamHandler( s, 0x85, fn_FlashContentPID );
- 1475              		.loc 1 516 9 is_stmt 1 view .LVU377
-ARM GAS  /tmp/ccVdRm1d.s 			page 37
-
-
- 1476 0292 4A46     		mov	r2, r9
- 1477 0294 8521     		movs	r1, #133
- 1478 0296 2846     		mov	r0, r5
- 1479 0298 FFF7FEFF 		bl	setParamHandler
- 1480              	.LVL119:
+ 1371              		.loc 1 516 9 is_stmt 1 view .LVU351
+ 1372 0252 4A46     		mov	r2, r9
+ 1373 0254 8521     		movs	r1, #133
+ 1374 0256 2846     		mov	r0, r5
+ 1375 0258 FFF7FEFF 		bl	setParamHandler
+ 1376              	.LVL112:
  517:src/protocolfunctions.c **** 
  518:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x86, UI_SHORT, &FlashContent.SpeedKix100, sizeof(short) );
- 1481              		.loc 1 518 9 view .LVU378
- 1482              		.loc 1 518 19 is_stmt 0 view .LVU379
- 1483 029c 0097     		str	r7, [sp]
- 1484 029e 06F10C03 		add	r3, r6, #12
- 1485 02a2 1222     		movs	r2, #18
- 1486 02a4 8621     		movs	r1, #134
- 1487 02a6 2846     		mov	r0, r5
- 1488 02a8 FFF7FEFF 		bl	setParamVariable
- 1489              	.LVL120:
- 1490              		.loc 1 518 16 discriminator 1 view .LVU380
- 1491 02ac 0444     		add	r4, r4, r0
- 1492              	.LVL121:
+ 1377              		.loc 1 518 9 view .LVU352
+ 1378              		.loc 1 518 19 is_stmt 0 view .LVU353
+ 1379 025c 0097     		str	r7, [sp]
+ 1380 025e 06F10C03 		add	r3, r6, #12
+ 1381 0262 1222     		movs	r2, #18
+ 1382 0264 8621     		movs	r1, #134
+ 1383 0266 2846     		mov	r0, r5
+ 1384 0268 FFF7FEFF 		bl	setParamVariable
+ 1385              	.LVL113:
+ 1386              		.loc 1 518 16 discriminator 1 view .LVU354
+ 1387 026c 0444     		add	r4, r4, r0
+ 1388              	.LVL114:
  519:src/protocolfunctions.c ****         setParamHandler( s, 0x86, fn_FlashContentPID );
- 1493              		.loc 1 519 9 is_stmt 1 view .LVU381
- 1494 02ae 4A46     		mov	r2, r9
- 1495 02b0 8621     		movs	r1, #134
- 1496 02b2 2846     		mov	r0, r5
- 1497 02b4 FFF7FEFF 		bl	setParamHandler
- 1498              	.LVL122:
+ 1389              		.loc 1 519 9 is_stmt 1 view .LVU355
+ 1390 026e 4A46     		mov	r2, r9
+ 1391 0270 8621     		movs	r1, #134
+ 1392 0272 2846     		mov	r0, r5
+ 1393 0274 FFF7FEFF 		bl	setParamHandler
+ 1394              	.LVL115:
  520:src/protocolfunctions.c **** 
  521:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x87, UI_SHORT, &FlashContent.SpeedKdx100, sizeof(short) );
- 1499              		.loc 1 521 9 view .LVU382
- 1500              		.loc 1 521 19 is_stmt 0 view .LVU383
- 1501 02b8 0097     		str	r7, [sp]
- 1502 02ba 06F10E03 		add	r3, r6, #14
- 1503 02be 1222     		movs	r2, #18
- 1504 02c0 8721     		movs	r1, #135
- 1505 02c2 2846     		mov	r0, r5
- 1506 02c4 FFF7FEFF 		bl	setParamVariable
- 1507              	.LVL123:
- 1508              		.loc 1 521 16 discriminator 1 view .LVU384
- 1509 02c8 0444     		add	r4, r4, r0
- 1510              	.LVL124:
+ 1395              		.loc 1 521 9 view .LVU356
+ 1396              		.loc 1 521 19 is_stmt 0 view .LVU357
+ 1397 0278 0097     		str	r7, [sp]
+ 1398 027a 06F10E03 		add	r3, r6, #14
+ 1399 027e 1222     		movs	r2, #18
+ 1400 0280 8721     		movs	r1, #135
+ 1401 0282 2846     		mov	r0, r5
+ 1402 0284 FFF7FEFF 		bl	setParamVariable
+ 1403              	.LVL116:
+ 1404              		.loc 1 521 16 discriminator 1 view .LVU358
+ 1405 0288 0444     		add	r4, r4, r0
+ 1406              	.LVL117:
  522:src/protocolfunctions.c ****         setParamHandler( s, 0x87, fn_FlashContentPID );
- 1511              		.loc 1 522 9 is_stmt 1 view .LVU385
- 1512 02ca 4A46     		mov	r2, r9
- 1513 02cc 8721     		movs	r1, #135
- 1514 02ce 2846     		mov	r0, r5
- 1515 02d0 FFF7FEFF 		bl	setParamHandler
- 1516              	.LVL125:
+ 1407              		.loc 1 522 9 is_stmt 1 view .LVU359
+ 1408 028a 4A46     		mov	r2, r9
+ 1409 028c 8721     		movs	r1, #135
+ 1410 028e 2846     		mov	r0, r5
+ 1411 0290 FFF7FEFF 		bl	setParamHandler
+ 1412              	.LVL118:
  523:src/protocolfunctions.c **** 
  524:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x88, UI_SHORT, &FlashContent.SpeedPWMIncrementLimit, sizeof
- 1517              		.loc 1 524 9 view .LVU386
- 1518              		.loc 1 524 19 is_stmt 0 view .LVU387
- 1519 02d4 0097     		str	r7, [sp]
- 1520 02d6 06EB0A03 		add	r3, r6, r10
- 1521 02da 1222     		movs	r2, #18
- 1522 02dc 8821     		movs	r1, #136
- 1523 02de 2846     		mov	r0, r5
- 1524 02e0 FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/ccVdRm1d.s 			page 38
+ 1413              		.loc 1 524 9 view .LVU360
+ 1414              		.loc 1 524 19 is_stmt 0 view .LVU361
+ 1415 0294 0097     		str	r7, [sp]
+ 1416 0296 06F11003 		add	r3, r6, #16
+ARM GAS  /tmp/ccdXw4GR.s 			page 36
 
 
- 1525              	.LVL126:
- 1526              		.loc 1 524 16 discriminator 1 view .LVU388
- 1527 02e4 0444     		add	r4, r4, r0
- 1528              	.LVL127:
+ 1417 029a 1222     		movs	r2, #18
+ 1418 029c 8821     		movs	r1, #136
+ 1419 029e 2846     		mov	r0, r5
+ 1420 02a0 FFF7FEFF 		bl	setParamVariable
+ 1421              	.LVL119:
+ 1422              		.loc 1 524 16 discriminator 1 view .LVU362
+ 1423 02a4 0444     		add	r4, r4, r0
+ 1424              	.LVL120:
  525:src/protocolfunctions.c ****         setParamHandler( s, 0x88, fn_FlashContentPID );
- 1529              		.loc 1 525 9 is_stmt 1 view .LVU389
- 1530 02e6 4A46     		mov	r2, r9
- 1531 02e8 8821     		movs	r1, #136
- 1532 02ea 2846     		mov	r0, r5
- 1533 02ec FFF7FEFF 		bl	setParamHandler
- 1534              	.LVL128:
+ 1425              		.loc 1 525 9 is_stmt 1 view .LVU363
+ 1426 02a6 4A46     		mov	r2, r9
+ 1427 02a8 8821     		movs	r1, #136
+ 1428 02aa 2846     		mov	r0, r5
+ 1429 02ac FFF7FEFF 		bl	setParamHandler
+ 1430              	.LVL121:
  526:src/protocolfunctions.c **** 
  527:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x89, UI_SHORT, &FlashContent.MaxCurrLim, sizeof(short) );
- 1535              		.loc 1 527 9 view .LVU390
- 1536              		.loc 1 527 19 is_stmt 0 view .LVU391
- 1537 02f0 0097     		str	r7, [sp]
- 1538 02f2 06F11203 		add	r3, r6, #18
- 1539 02f6 1222     		movs	r2, #18
- 1540 02f8 8921     		movs	r1, #137
- 1541 02fa 2846     		mov	r0, r5
- 1542 02fc FFF7FEFF 		bl	setParamVariable
- 1543              	.LVL129:
- 1544              		.loc 1 527 16 discriminator 1 view .LVU392
- 1545 0300 0444     		add	r4, r4, r0
- 1546              	.LVL130:
+ 1431              		.loc 1 527 9 view .LVU364
+ 1432              		.loc 1 527 19 is_stmt 0 view .LVU365
+ 1433 02b0 0097     		str	r7, [sp]
+ 1434 02b2 06F11203 		add	r3, r6, #18
+ 1435 02b6 1222     		movs	r2, #18
+ 1436 02b8 8921     		movs	r1, #137
+ 1437 02ba 2846     		mov	r0, r5
+ 1438 02bc FFF7FEFF 		bl	setParamVariable
+ 1439              	.LVL122:
+ 1440              		.loc 1 527 16 discriminator 1 view .LVU366
+ 1441 02c0 0444     		add	r4, r4, r0
+ 1442              	.LVL123:
  528:src/protocolfunctions.c ****         setParamHandler( s, 0x89, fn_FlashContentMaxCurrLim );
- 1547              		.loc 1 528 9 is_stmt 1 view .LVU393
- 1548 0302 474A     		ldr	r2, .L93+148
- 1549 0304 8921     		movs	r1, #137
- 1550 0306 2846     		mov	r0, r5
- 1551 0308 FFF7FEFF 		bl	setParamHandler
- 1552              	.LVL131:
+ 1443              		.loc 1 528 9 is_stmt 1 view .LVU367
+ 1444 02c2 444A     		ldr	r2, .L87+132
+ 1445 02c4 8921     		movs	r1, #137
+ 1446 02c6 2846     		mov	r0, r5
+ 1447 02c8 FFF7FEFF 		bl	setParamHandler
+ 1448              	.LVL124:
  529:src/protocolfunctions.c **** 
  530:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x90, UI_NONE, &FlashContent.adc, sizeof(PROTOCOL_ADC_SETTIN
- 1553              		.loc 1 530 9 view .LVU394
- 1554              		.loc 1 530 19 is_stmt 0 view .LVU395
- 1555 030c 2C23     		movs	r3, #44
- 1556 030e 0093     		str	r3, [sp]
- 1557 0310 06F12203 		add	r3, r6, #34
- 1558 0314 0022     		movs	r2, #0
- 1559 0316 9021     		movs	r1, #144
- 1560 0318 2846     		mov	r0, r5
- 1561 031a FFF7FEFF 		bl	setParamVariable
- 1562              	.LVL132:
- 1563              		.loc 1 530 16 discriminator 1 view .LVU396
- 1564 031e 0444     		add	r4, r4, r0
- 1565              	.LVL133:
+ 1449              		.loc 1 530 9 view .LVU368
+ 1450              		.loc 1 530 19 is_stmt 0 view .LVU369
+ 1451 02cc 2C23     		movs	r3, #44
+ 1452 02ce 0093     		str	r3, [sp]
+ 1453 02d0 06F12203 		add	r3, r6, #34
+ 1454 02d4 0022     		movs	r2, #0
+ 1455 02d6 9021     		movs	r1, #144
+ 1456 02d8 2846     		mov	r0, r5
+ 1457 02da FFF7FEFF 		bl	setParamVariable
+ 1458              	.LVL125:
+ 1459              		.loc 1 530 16 discriminator 1 view .LVU370
+ 1460 02de 0444     		add	r4, r4, r0
+ 1461              	.LVL126:
  531:src/protocolfunctions.c **** 
  532:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xA0, UI_SHORT, &FlashContent.HoverboardEnable, sizeof(short
- 1566              		.loc 1 532 9 is_stmt 1 view .LVU397
- 1567              		.loc 1 532 19 is_stmt 0 view .LVU398
- 1568 0320 0097     		str	r7, [sp]
- 1569 0322 06F11403 		add	r3, r6, #20
- 1570 0326 1222     		movs	r2, #18
- 1571 0328 A021     		movs	r1, #160
- 1572 032a 2846     		mov	r0, r5
- 1573 032c FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/ccVdRm1d.s 			page 39
+ 1462              		.loc 1 532 9 is_stmt 1 view .LVU371
+ 1463              		.loc 1 532 19 is_stmt 0 view .LVU372
+ 1464 02e0 0097     		str	r7, [sp]
+ 1465 02e2 06F11403 		add	r3, r6, #20
+ARM GAS  /tmp/ccdXw4GR.s 			page 37
 
 
- 1574              	.LVL134:
- 1575              		.loc 1 532 16 discriminator 1 view .LVU399
- 1576 0330 0444     		add	r4, r4, r0
- 1577              	.LVL135:
+ 1466 02e6 1222     		movs	r2, #18
+ 1467 02e8 A021     		movs	r1, #160
+ 1468 02ea 2846     		mov	r0, r5
+ 1469 02ec FFF7FEFF 		bl	setParamVariable
+ 1470              	.LVL127:
+ 1471              		.loc 1 532 16 discriminator 1 view .LVU373
+ 1472 02f0 0444     		add	r4, r4, r0
+ 1473              	.LVL128:
  533:src/protocolfunctions.c ****         
  534:src/protocolfunctions.c ****         // CAN bus configuration parameters
  535:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC0, UI_SHORT, &FlashContent.CAN_BoardID, sizeof(short) );
- 1578              		.loc 1 535 9 is_stmt 1 view .LVU400
- 1579              		.loc 1 535 19 is_stmt 0 view .LVU401
- 1580 0332 0097     		str	r7, [sp]
- 1581 0334 06F11C03 		add	r3, r6, #28
- 1582 0338 1222     		movs	r2, #18
- 1583 033a C021     		movs	r1, #192
- 1584 033c 2846     		mov	r0, r5
- 1585 033e FFF7FEFF 		bl	setParamVariable
- 1586              	.LVL136:
- 1587              		.loc 1 535 16 discriminator 1 view .LVU402
- 1588 0342 0444     		add	r4, r4, r0
- 1589              	.LVL137:
+ 1474              		.loc 1 535 9 is_stmt 1 view .LVU374
+ 1475              		.loc 1 535 19 is_stmt 0 view .LVU375
+ 1476 02f2 0097     		str	r7, [sp]
+ 1477 02f4 06F11C03 		add	r3, r6, #28
+ 1478 02f8 1222     		movs	r2, #18
+ 1479 02fa C021     		movs	r1, #192
+ 1480 02fc 2846     		mov	r0, r5
+ 1481 02fe FFF7FEFF 		bl	setParamVariable
+ 1482              	.LVL129:
+ 1483              		.loc 1 535 16 discriminator 1 view .LVU376
+ 1484 0302 0444     		add	r4, r4, r0
+ 1485              	.LVL130:
  536:src/protocolfunctions.c ****         setParamHandler( s, 0xC0, fn_FlashContentMagic );
- 1590              		.loc 1 536 9 is_stmt 1 view .LVU403
- 1591 0344 4246     		mov	r2, r8
- 1592 0346 C021     		movs	r1, #192
- 1593 0348 2846     		mov	r0, r5
- 1594 034a FFF7FEFF 		bl	setParamHandler
- 1595              	.LVL138:
+ 1486              		.loc 1 536 9 is_stmt 1 view .LVU377
+ 1487 0304 4246     		mov	r2, r8
+ 1488 0306 C021     		movs	r1, #192
+ 1489 0308 2846     		mov	r0, r5
+ 1490 030a FFF7FEFF 		bl	setParamHandler
+ 1491              	.LVL131:
  537:src/protocolfunctions.c ****         
  538:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC1, UI_SHORT, &FlashContent.CAN_BaseID_CMD, sizeof(short) 
- 1596              		.loc 1 538 9 view .LVU404
- 1597              		.loc 1 538 19 is_stmt 0 view .LVU405
- 1598 034e 0097     		str	r7, [sp]
- 1599 0350 06F11E03 		add	r3, r6, #30
- 1600 0354 1222     		movs	r2, #18
- 1601 0356 C121     		movs	r1, #193
- 1602 0358 2846     		mov	r0, r5
- 1603 035a FFF7FEFF 		bl	setParamVariable
- 1604              	.LVL139:
- 1605              		.loc 1 538 16 discriminator 1 view .LVU406
- 1606 035e 0444     		add	r4, r4, r0
- 1607              	.LVL140:
+ 1492              		.loc 1 538 9 view .LVU378
+ 1493              		.loc 1 538 19 is_stmt 0 view .LVU379
+ 1494 030e 0097     		str	r7, [sp]
+ 1495 0310 06F11E03 		add	r3, r6, #30
+ 1496 0314 1222     		movs	r2, #18
+ 1497 0316 C121     		movs	r1, #193
+ 1498 0318 2846     		mov	r0, r5
+ 1499 031a FFF7FEFF 		bl	setParamVariable
+ 1500              	.LVL132:
+ 1501              		.loc 1 538 16 discriminator 1 view .LVU380
+ 1502 031e 0444     		add	r4, r4, r0
+ 1503              	.LVL133:
  539:src/protocolfunctions.c ****         setParamHandler( s, 0xC1, fn_FlashContentMagic );
- 1608              		.loc 1 539 9 is_stmt 1 view .LVU407
- 1609 0360 4246     		mov	r2, r8
- 1610 0362 C121     		movs	r1, #193
- 1611 0364 2846     		mov	r0, r5
- 1612 0366 FFF7FEFF 		bl	setParamHandler
- 1613              	.LVL141:
+ 1504              		.loc 1 539 9 is_stmt 1 view .LVU381
+ 1505 0320 4246     		mov	r2, r8
+ 1506 0322 C121     		movs	r1, #193
+ 1507 0324 2846     		mov	r0, r5
+ 1508 0326 FFF7FEFF 		bl	setParamHandler
+ 1509              	.LVL134:
  540:src/protocolfunctions.c ****         
  541:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC2, UI_SHORT, &FlashContent.CAN_BaseID_STATUS, sizeof(shor
- 1614              		.loc 1 541 9 view .LVU408
- 1615              		.loc 1 541 19 is_stmt 0 view .LVU409
- 1616 036a 0097     		str	r7, [sp]
- 1617 036c 06F12003 		add	r3, r6, #32
- 1618 0370 1222     		movs	r2, #18
- 1619 0372 C221     		movs	r1, #194
- 1620 0374 2846     		mov	r0, r5
- 1621 0376 FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/ccVdRm1d.s 			page 40
+ 1510              		.loc 1 541 9 view .LVU382
+ 1511              		.loc 1 541 19 is_stmt 0 view .LVU383
+ 1512 032a 0097     		str	r7, [sp]
+ 1513 032c 06F12003 		add	r3, r6, #32
+ARM GAS  /tmp/ccdXw4GR.s 			page 38
 
 
- 1622              	.LVL142:
- 1623              		.loc 1 541 16 discriminator 1 view .LVU410
- 1624 037a 0444     		add	r4, r4, r0
- 1625              	.LVL143:
+ 1514 0330 1222     		movs	r2, #18
+ 1515 0332 C221     		movs	r1, #194
+ 1516 0334 2846     		mov	r0, r5
+ 1517 0336 FFF7FEFF 		bl	setParamVariable
+ 1518              	.LVL135:
+ 1519              		.loc 1 541 16 discriminator 1 view .LVU384
+ 1520 033a 0444     		add	r4, r4, r0
+ 1521              	.LVL136:
  542:src/protocolfunctions.c ****         setParamHandler( s, 0xC2, fn_FlashContentMagic );
- 1626              		.loc 1 542 9 is_stmt 1 view .LVU411
- 1627 037c 4246     		mov	r2, r8
- 1628 037e C221     		movs	r1, #194
- 1629 0380 2846     		mov	r0, r5
- 1630 0382 FFF7FEFF 		bl	setParamHandler
- 1631              	.LVL144:
+ 1522              		.loc 1 542 9 is_stmt 1 view .LVU385
+ 1523 033c 4246     		mov	r2, r8
+ 1524 033e C221     		movs	r1, #194
+ 1525 0340 2846     		mov	r0, r5
+ 1526 0342 FFF7FEFF 		bl	setParamHandler
+ 1527              	.LVL137:
  543:src/protocolfunctions.c ****         
  544:src/protocolfunctions.c ****     return errors;
- 1632              		.loc 1 544 5 view .LVU412
+ 1528              		.loc 1 544 5 view .LVU386
  545:src/protocolfunctions.c **** 
  546:src/protocolfunctions.c **** }
- 1633              		.loc 1 546 1 is_stmt 0 view .LVU413
- 1634 0386 2046     		mov	r0, r4
- 1635 0388 4CE0     		b	.L94
- 1636              	.L95:
- 1637 038a 00BF     		.align	2
- 1638              	.L93:
- 1639 038c 00000000 		.word	protocol_GetTick
- 1640 0390 00000000 		.word	HAL_GetTick
- 1641 0394 00000000 		.word	protocol_Delay
- 1642 0398 00000000 		.word	HAL_Delay
- 1643 039c 00000000 		.word	protocol_SystemReset
- 1644 03a0 00000000 		.word	HAL_NVIC_SystemReset
- 1645 03a4 00000000 		.word	sSoftwareSerial
- 1646 03a8 00000000 		.word	softwareserial_Send
- 1647 03ac 00000000 		.word	softwareserial_Send_Wait
- 1648 03b0 00000000 		.word	sUSART2
- 1649 03b4 00000000 		.word	USART2_IT_send
- 1650 03b8 00000000 		.word	sensor_copy
- 1651 03bc 00000000 		.word	fn_SensorData
- 1652 03c0 00000000 		.word	HallData
- 1653 03c4 00000000 		.word	SpeedData
- 1654 03c8 00000000 		.word	fn_SpeedData
- 1655 03cc 00000000 		.word	Position
- 1656 03d0 00000000 		.word	fn_Position
- 1657 03d4 00000000 		.word	PositionIncr
- 1658 03d8 00000000 		.word	fn_PositionIncr
- 1659 03dc 00000000 		.word	PosnData
- 1660 03e0 00000000 		.word	RawPosition
- 1661 03e4 00000000 		.word	fn_RawPosition
- 1662 03e8 00000000 		.word	electrical_measurements
- 1663 03ec 00000000 		.word	protocol_enable
- 1664 03f0 00000000 		.word	fn_enable
- 1665 03f4 00000000 		.word	disablepoweroff
- 1666 03f8 00000000 		.word	debug_out
- 1667 03fc 00000000 		.word	xytPosn
- 1668 0400 00000000 		.word	fn_xytPosn
- 1669 0404 00000000 		.word	PWMData
- 1670 0408 00000000 		.word	fn_PWMData
- 1671 040c 00000000 		.word	BuzzerData
- 1672 0410 00000000 		.word	fn_BuzzerData
- 1673 0414 00000000 		.word	FlashContent
-ARM GAS  /tmp/ccVdRm1d.s 			page 41
+ 1529              		.loc 1 546 1 is_stmt 0 view .LVU387
+ 1530 0346 2046     		mov	r0, r4
+ 1531 0348 03B0     		add	sp, sp, #12
+ 1532              	.LCFI12:
+ 1533              		.cfi_def_cfa_offset 28
+ 1534              		@ sp needed
+ 1535 034a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1536              	.LVL138:
+ 1537              	.L88:
+ 1538              		.loc 1 546 1 view .LVU388
+ 1539 034e 00BF     		.align	2
+ 1540              	.L87:
+ 1541 0350 00000000 		.word	protocol_GetTick
+ 1542 0354 00000000 		.word	HAL_GetTick
+ 1543 0358 00000000 		.word	protocol_Delay
+ 1544 035c 00000000 		.word	HAL_Delay
+ 1545 0360 00000000 		.word	protocol_SystemReset
+ 1546 0364 00000000 		.word	HAL_NVIC_SystemReset
+ 1547 0368 00000000 		.word	sSoftwareSerial
+ 1548 036c 00000000 		.word	softwareserial_Send
+ 1549 0370 00000000 		.word	softwareserial_Send_Wait
+ 1550 0374 00000000 		.word	HallData
+ 1551 0378 00000000 		.word	SpeedData
+ 1552 037c 00000000 		.word	fn_SpeedData
+ 1553 0380 00000000 		.word	Position
+ 1554 0384 00000000 		.word	fn_Position
+ 1555 0388 00000000 		.word	PositionIncr
+ 1556 038c 00000000 		.word	fn_PositionIncr
+ 1557 0390 00000000 		.word	PosnData
+ 1558 0394 00000000 		.word	RawPosition
+ 1559 0398 00000000 		.word	fn_RawPosition
+ 1560 039c 00000000 		.word	electrical_measurements
+ 1561 03a0 00000000 		.word	protocol_enable
+ 1562 03a4 00000000 		.word	fn_enable
+ 1563 03a8 00000000 		.word	disablepoweroff
+ 1564 03ac 00000000 		.word	debug_out
+ 1565 03b0 00000000 		.word	xytPosn
+ARM GAS  /tmp/ccdXw4GR.s 			page 39
 
 
- 1674 0418 00000000 		.word	fn_FlashContentMagic
- 1675 041c 00000000 		.word	fn_FlashContentPID
- 1676 0420 00000000 		.word	fn_FlashContentMaxCurrLim
- 1677              	.L94:
- 1678 0424 02B0     		add	sp, sp, #8
- 1679              	.LCFI13:
- 1680              		.cfi_def_cfa_offset 32
- 1681              		@ sp needed
- 1682 0426 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
- 1683              		.loc 1 546 1 view .LVU414
- 1684              		.cfi_endproc
- 1685              	.LFE78:
- 1687 042a 00BF     		.section	.text.consoleLog,"ax",%progbits
- 1688              		.align	1
- 1689              		.global	consoleLog
- 1690              		.syntax unified
- 1691              		.thumb
- 1692              		.thumb_func
- 1694              	consoleLog:
- 1695              	.LVL145:
- 1696              	.LFB79:
+ 1566 03b4 00000000 		.word	fn_xytPosn
+ 1567 03b8 00000000 		.word	PWMData
+ 1568 03bc 00000000 		.word	fn_PWMData
+ 1569 03c0 00000000 		.word	BuzzerData
+ 1570 03c4 00000000 		.word	fn_BuzzerData
+ 1571 03c8 00000000 		.word	FlashContent
+ 1572 03cc 00000000 		.word	fn_FlashContentMagic
+ 1573 03d0 00000000 		.word	fn_FlashContentPID
+ 1574 03d4 00000000 		.word	fn_FlashContentMaxCurrLim
+ 1575              		.cfi_endproc
+ 1576              	.LFE77:
+ 1578              		.section	.text.consoleLog,"ax",%progbits
+ 1579              		.align	1
+ 1580              		.global	consoleLog
+ 1581              		.syntax unified
+ 1582              		.thumb
+ 1583              		.thumb_func
+ 1585              	consoleLog:
+ 1586              	.LVL139:
+ 1587              	.LFB78:
  547:src/protocolfunctions.c **** 
  548:src/protocolfunctions.c **** 
  549:src/protocolfunctions.c **** void consoleLog(char *message) {
- 1697              		.loc 1 549 32 is_stmt 1 view -0
- 1698              		.cfi_startproc
- 1699              		@ args = 0, pretend = 0, frame = 0
- 1700              		@ frame_needed = 0, uses_anonymous_args = 0
- 1701              		.loc 1 549 32 is_stmt 0 view .LVU416
- 1702 0000 10B5     		push	{r4, lr}
- 1703              	.LCFI14:
- 1704              		.cfi_def_cfa_offset 8
- 1705              		.cfi_offset 4, -8
- 1706              		.cfi_offset 14, -4
- 1707 0002 0446     		mov	r4, r0
+ 1588              		.loc 1 549 32 is_stmt 1 view -0
+ 1589              		.cfi_startproc
+ 1590              		@ args = 0, pretend = 0, frame = 0
+ 1591              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1592              		.loc 1 549 32 is_stmt 0 view .LVU390
+ 1593 0000 08B5     		push	{r3, lr}
+ 1594              	.LCFI13:
+ 1595              		.cfi_def_cfa_offset 8
+ 1596              		.cfi_offset 3, -8
+ 1597              		.cfi_offset 14, -4
  550:src/protocolfunctions.c ****     #ifdef DEBUG_SOFTWARE_SERIAL
  551:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sSoftwareSerial, message, PROTOCOL_SOM_NOACK);
- 1708              		.loc 1 551 9 is_stmt 1 view .LVU417
- 1709              		.loc 1 551 13 is_stmt 0 view .LVU418
- 1710 0004 094B     		ldr	r3, .L102
- 1711 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1712              		.loc 1 551 12 view .LVU419
- 1713 0008 1BB9     		cbnz	r3, .L100
- 1714              	.LVL146:
- 1715              	.L97:
+ 1598              		.loc 1 551 9 is_stmt 1 view .LVU391
+ 1599              		.loc 1 551 13 is_stmt 0 view .LVU392
+ 1600 0002 054B     		ldr	r3, .L93
+ 1601 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1602              		.loc 1 551 12 view .LVU393
+ 1603 0006 03B9     		cbnz	r3, .L92
+ 1604              	.LVL140:
+ 1605              	.L89:
  552:src/protocolfunctions.c ****     #endif
  553:src/protocolfunctions.c **** 
  554:src/protocolfunctions.c ****     #ifdef SERIAL_USART2_IT
  555:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sUSART2, message, PROTOCOL_SOM_NOACK);
- 1716              		.loc 1 555 9 is_stmt 1 view .LVU420
- 1717              		.loc 1 555 13 is_stmt 0 view .LVU421
- 1718 000a 084B     		ldr	r3, .L102
- 1719 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1720              		.loc 1 555 12 view .LVU422
- 1721 000e 33B9     		cbnz	r3, .L101
- 1722              	.L96:
  556:src/protocolfunctions.c ****     #endif
-ARM GAS  /tmp/ccVdRm1d.s 			page 42
-
-
  557:src/protocolfunctions.c **** 
  558:src/protocolfunctions.c ****     #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
  559:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sUSART3, message, PROTOCOL_SOM_NOACK);
  560:src/protocolfunctions.c ****     #endif
  561:src/protocolfunctions.c **** }
- 1723              		.loc 1 561 1 view .LVU423
- 1724 0010 10BD     		pop	{r4, pc}
- 1725              	.LVL147:
- 1726              	.L100:
- 551:src/protocolfunctions.c ****     #endif
- 1727              		.loc 1 551 24 is_stmt 1 discriminator 1 view .LVU424
- 1728 0012 0422     		movs	r2, #4
- 1729 0014 0146     		mov	r1, r0
- 1730 0016 0648     		ldr	r0, .L102+4
- 1731              	.LVL148:
- 551:src/protocolfunctions.c ****     #endif
- 1732              		.loc 1 551 24 is_stmt 0 discriminator 1 view .LVU425
- 1733 0018 FFF7FEFF 		bl	protocol_send_text
- 1734              	.LVL149:
- 1735 001c F5E7     		b	.L97
- 1736              	.L101:
- 555:src/protocolfunctions.c ****     #endif
- 1737              		.loc 1 555 24 is_stmt 1 discriminator 1 view .LVU426
- 1738 001e 0422     		movs	r2, #4
- 1739 0020 2146     		mov	r1, r4
- 1740 0022 0448     		ldr	r0, .L102+8
- 1741 0024 FFF7FEFF 		bl	protocol_send_text
- 1742              	.LVL150:
- 1743              		.loc 1 561 1 is_stmt 0 view .LVU427
- 1744 0028 F2E7     		b	.L96
- 1745              	.L103:
- 1746 002a 00BF     		.align	2
- 1747              	.L102:
- 1748 002c 00000000 		.word	debug_out
- 1749 0030 00000000 		.word	sSoftwareSerial
- 1750 0034 00000000 		.word	sUSART2
- 1751              		.cfi_endproc
- 1752              	.LFE79:
- 1754              		.section	.rodata.fn_FlashContentMagic.str1.4,"aMS",%progbits,1
- 1755              		.align	2
- 1756              	.LC0:
- 1757 0000 696E636F 		.ascii	"incorrect magic %d, should be %d\015\012Flash not w"
- 1757      72726563 
- 1757      74206D61 
- 1757      67696320 
- 1757      25642C20 
- 1758 002d 72697474 		.ascii	"ritten\015\012\000"
- 1758      656E0D0A 
- 1758      00
- 1759 0036 0000     		.align	2
- 1760              	.LC1:
- 1761 0038 77726F74 		.ascii	"wrote flash\015\012\000"
- 1761      6520666C 
- 1761      6173680D 
- 1761      0A00
- 1762              		.section	.text.fn_FlashContentMagic,"ax",%progbits
- 1763              		.align	1
-ARM GAS  /tmp/ccVdRm1d.s 			page 43
+ 1606              		.loc 1 561 1 view .LVU394
+ 1607 0008 08BD     		pop	{r3, pc}
+ 1608              	.LVL141:
+ 1609              	.L92:
+ARM GAS  /tmp/ccdXw4GR.s 			page 40
 
 
- 1764              		.global	fn_FlashContentMagic
- 1765              		.syntax unified
- 1766              		.thumb
- 1767              		.thumb_func
- 1769              	fn_FlashContentMagic:
- 1770              	.LVL151:
- 1771              	.LFB75:
+ 551:src/protocolfunctions.c ****     #endif
+ 1610              		.loc 1 551 24 is_stmt 1 discriminator 1 view .LVU395
+ 1611 000a 0422     		movs	r2, #4
+ 1612 000c 0146     		mov	r1, r0
+ 1613 000e 0348     		ldr	r0, .L93+4
+ 1614              	.LVL142:
+ 551:src/protocolfunctions.c ****     #endif
+ 1615              		.loc 1 551 24 is_stmt 0 discriminator 1 view .LVU396
+ 1616 0010 FFF7FEFF 		bl	protocol_send_text
+ 1617              	.LVL143:
+ 1618              		.loc 1 561 1 view .LVU397
+ 1619 0014 F8E7     		b	.L89
+ 1620              	.L94:
+ 1621 0016 00BF     		.align	2
+ 1622              	.L93:
+ 1623 0018 00000000 		.word	debug_out
+ 1624 001c 00000000 		.word	sSoftwareSerial
+ 1625              		.cfi_endproc
+ 1626              	.LFE78:
+ 1628              		.section	.rodata.fn_FlashContentMagic.str1.4,"aMS",%progbits,1
+ 1629              		.align	2
+ 1630              	.LC0:
+ 1631 0000 696E636F 		.ascii	"incorrect magic %d, should be %d\015\012Flash not w"
+ 1631      72726563 
+ 1631      74206D61 
+ 1631      67696320 
+ 1631      25642C20 
+ 1632 002d 72697474 		.ascii	"ritten\015\012\000"
+ 1632      656E0D0A 
+ 1632      00
+ 1633 0036 0000     		.align	2
+ 1634              	.LC1:
+ 1635 0038 77726F74 		.ascii	"wrote flash\015\012\000"
+ 1635      6520666C 
+ 1635      6173680D 
+ 1635      0A00
+ 1636              		.section	.text.fn_FlashContentMagic,"ax",%progbits
+ 1637              		.align	1
+ 1638              		.global	fn_FlashContentMagic
+ 1639              		.syntax unified
+ 1640              		.thumb
+ 1641              		.thumb_func
+ 1643              	fn_FlashContentMagic:
+ 1644              	.LVL144:
+ 1645              	.LFB74:
  348:src/protocolfunctions.c **** 
- 1772              		.loc 1 348 109 is_stmt 1 view -0
- 1773              		.cfi_startproc
- 1774              		@ args = 0, pretend = 0, frame = 128
- 1775              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1646              		.loc 1 348 109 is_stmt 1 view -0
+ 1647              		.cfi_startproc
+ 1648              		@ args = 0, pretend = 0, frame = 128
+ 1649              		@ frame_needed = 0, uses_anonymous_args = 0
  348:src/protocolfunctions.c **** 
- 1776              		.loc 1 348 109 is_stmt 0 view .LVU429
- 1777 0000 10B5     		push	{r4, lr}
- 1778              	.LCFI15:
- 1779              		.cfi_def_cfa_offset 8
- 1780              		.cfi_offset 4, -8
- 1781              		.cfi_offset 14, -4
- 1782 0002 A0B0     		sub	sp, sp, #128
- 1783              	.LCFI16:
- 1784              		.cfi_def_cfa_offset 136
- 1785 0004 1446     		mov	r4, r2
+ 1650              		.loc 1 348 109 is_stmt 0 view .LVU399
+ 1651 0000 10B5     		push	{r4, lr}
+ 1652              	.LCFI14:
+ 1653              		.cfi_def_cfa_offset 8
+ 1654              		.cfi_offset 4, -8
+ 1655              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccdXw4GR.s 			page 41
+
+
+ 1656 0002 A0B0     		sub	sp, sp, #128
+ 1657              	.LCFI15:
+ 1658              		.cfi_def_cfa_offset 136
+ 1659 0004 1446     		mov	r4, r2
  350:src/protocolfunctions.c **** 
- 1786              		.loc 1 350 5 is_stmt 1 view .LVU430
- 1787 0006 FFF7FEFF 		bl	fn_defaultProcessing
- 1788              	.LVL152:
+ 1660              		.loc 1 350 5 is_stmt 1 view .LVU400
+ 1661 0006 FFF7FEFF 		bl	fn_defaultProcessing
+ 1662              	.LVL145:
  352:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
- 1789              		.loc 1 352 5 view .LVU431
- 1790 000a 572C     		cmp	r4, #87
- 1791 000c 03D0     		beq	.L105
- 1792 000e 722C     		cmp	r4, #114
- 1793 0010 01D0     		beq	.L105
- 1794              	.L104:
+ 1663              		.loc 1 352 5 view .LVU401
+ 1664 000a 572C     		cmp	r4, #87
+ 1665 000c 03D0     		beq	.L96
+ 1666 000e 722C     		cmp	r4, #114
+ 1667 0010 01D0     		beq	.L96
+ 1668              	.L95:
  366:src/protocolfunctions.c **** 
- 1795              		.loc 1 366 1 is_stmt 0 view .LVU432
- 1796 0012 20B0     		add	sp, sp, #128
- 1797              	.LCFI17:
- 1798              		.cfi_remember_state
- 1799              		.cfi_def_cfa_offset 8
- 1800              		@ sp needed
- 1801 0014 10BD     		pop	{r4, pc}
- 1802              	.LVL153:
- 1803              	.L105:
- 1804              	.LCFI18:
- 1805              		.cfi_restore_state
+ 1669              		.loc 1 366 1 is_stmt 0 view .LVU402
+ 1670 0012 20B0     		add	sp, sp, #128
+ 1671              	.LCFI16:
+ 1672              		.cfi_remember_state
+ 1673              		.cfi_def_cfa_offset 8
+ 1674              		@ sp needed
+ 1675 0014 10BD     		pop	{r4, pc}
+ 1676              	.LVL146:
+ 1677              	.L96:
+ 1678              	.LCFI17:
+ 1679              		.cfi_restore_state
  355:src/protocolfunctions.c ****                 char temp[128];
- 1806              		.loc 1 355 13 is_stmt 1 view .LVU433
+ 1680              		.loc 1 355 13 is_stmt 1 view .LVU403
  355:src/protocolfunctions.c ****                 char temp[128];
- 1807              		.loc 1 355 29 is_stmt 0 view .LVU434
- 1808 0016 0D4B     		ldr	r3, .L109
- 1809 0018 1A88     		ldrh	r2, [r3]
+ 1681              		.loc 1 355 29 is_stmt 0 view .LVU404
+ 1682 0016 0D4B     		ldr	r3, .L100
+ 1683 0018 1A88     		ldrh	r2, [r3]
  355:src/protocolfunctions.c ****                 char temp[128];
- 1810              		.loc 1 355 16 view .LVU435
- 1811 001a 40F2D643 		movw	r3, #1238
- 1812 001e 9A42     		cmp	r2, r3
- 1813 0020 0BD0     		beq	.L107
-ARM GAS  /tmp/ccVdRm1d.s 			page 44
-
-
- 1814              	.LBB3:
+ 1684              		.loc 1 355 16 view .LVU405
+ 1685 001a 40F2D643 		movw	r3, #1238
+ 1686 001e 9A42     		cmp	r2, r3
+ 1687 0020 0BD0     		beq	.L98
+ 1688              	.LBB3:
  356:src/protocolfunctions.c ****                 sprintf(temp, "incorrect magic %d, should be %d\r\nFlash not written\r\n", FlashCon
- 1815              		.loc 1 356 17 is_stmt 1 view .LVU436
+ 1689              		.loc 1 356 17 is_stmt 1 view .LVU406
  357:src/protocolfunctions.c ****                 consoleLog(temp);
- 1816              		.loc 1 357 17 view .LVU437
- 1817 0022 0B49     		ldr	r1, .L109+4
- 1818 0024 6846     		mov	r0, sp
- 1819 0026 FFF7FEFF 		bl	sprintf
- 1820              	.LVL154:
+ 1690              		.loc 1 357 17 view .LVU407
+ 1691 0022 0B49     		ldr	r1, .L100+4
+ 1692 0024 6846     		mov	r0, sp
+ 1693 0026 FFF7FEFF 		bl	sprintf
+ 1694              	.LVL147:
  358:src/protocolfunctions.c ****                 FlashContent.magic = CURRENT_MAGIC;
- 1821              		.loc 1 358 17 view .LVU438
- 1822 002a 6846     		mov	r0, sp
- 1823 002c FFF7FEFF 		bl	consoleLog
- 1824              	.LVL155:
+ 1695              		.loc 1 358 17 view .LVU408
+ 1696 002a 6846     		mov	r0, sp
+ 1697 002c FFF7FEFF 		bl	consoleLog
+ 1698              	.LVL148:
  359:src/protocolfunctions.c ****                 return;
- 1825              		.loc 1 359 17 view .LVU439
+ 1699              		.loc 1 359 17 view .LVU409
  359:src/protocolfunctions.c ****                 return;
- 1826              		.loc 1 359 36 is_stmt 0 view .LVU440
- 1827 0030 064B     		ldr	r3, .L109
- 1828 0032 40F2D642 		movw	r2, #1238
- 1829 0036 1A80     		strh	r2, [r3]	@ movhi
+ 1700              		.loc 1 359 36 is_stmt 0 view .LVU410
+ 1701 0030 064B     		ldr	r3, .L100
+ARM GAS  /tmp/ccdXw4GR.s 			page 42
+
+
+ 1702 0032 40F2D642 		movw	r2, #1238
+ 1703 0036 1A80     		strh	r2, [r3]	@ movhi
  360:src/protocolfunctions.c ****             }
- 1830              		.loc 1 360 17 is_stmt 1 view .LVU441
- 1831 0038 EBE7     		b	.L104
- 1832              	.L107:
- 1833              	.LBE3:
+ 1704              		.loc 1 360 17 is_stmt 1 view .LVU411
+ 1705 0038 EBE7     		b	.L95
+ 1706              	.L98:
+ 1707              	.LBE3:
  362:src/protocolfunctions.c ****             consoleLog("wrote flash\r\n");
- 1834              		.loc 1 362 13 view .LVU442
- 1835 003a 4E21     		movs	r1, #78
- 1836 003c 0348     		ldr	r0, .L109
- 1837 003e FFF7FEFF 		bl	writeFlash
- 1838              	.LVL156:
+ 1708              		.loc 1 362 13 view .LVU412
+ 1709 003a 4E21     		movs	r1, #78
+ 1710 003c 0348     		ldr	r0, .L100
+ 1711 003e FFF7FEFF 		bl	writeFlash
+ 1712              	.LVL149:
  363:src/protocolfunctions.c ****             break;
- 1839              		.loc 1 363 13 view .LVU443
- 1840 0042 0448     		ldr	r0, .L109+8
- 1841 0044 FFF7FEFF 		bl	consoleLog
- 1842              	.LVL157:
+ 1713              		.loc 1 363 13 view .LVU413
+ 1714 0042 0448     		ldr	r0, .L100+8
+ 1715 0044 FFF7FEFF 		bl	consoleLog
+ 1716              	.LVL150:
  364:src/protocolfunctions.c ****     }
- 1843              		.loc 1 364 13 view .LVU444
- 1844 0048 E3E7     		b	.L104
- 1845              	.L110:
- 1846 004a 00BF     		.align	2
- 1847              	.L109:
- 1848 004c 00000000 		.word	FlashContent
- 1849 0050 00000000 		.word	.LC0
- 1850 0054 38000000 		.word	.LC1
- 1851              		.cfi_endproc
- 1852              	.LFE75:
- 1854              		.section	.text.consoleLogRaw,"ax",%progbits
- 1855              		.align	1
- 1856              		.global	consoleLogRaw
- 1857              		.syntax unified
- 1858              		.thumb
- 1859              		.thumb_func
- 1861              	consoleLogRaw:
- 1862              	.LVL158:
- 1863              	.LFB80:
-ARM GAS  /tmp/ccVdRm1d.s 			page 45
-
-
+ 1717              		.loc 1 364 13 view .LVU414
+ 1718 0048 E3E7     		b	.L95
+ 1719              	.L101:
+ 1720 004a 00BF     		.align	2
+ 1721              	.L100:
+ 1722 004c 00000000 		.word	FlashContent
+ 1723 0050 00000000 		.word	.LC0
+ 1724 0054 38000000 		.word	.LC1
+ 1725              		.cfi_endproc
+ 1726              	.LFE74:
+ 1728              		.section	.text.consoleLogRaw,"ax",%progbits
+ 1729              		.align	1
+ 1730              		.global	consoleLogRaw
+ 1731              		.syntax unified
+ 1732              		.thumb
+ 1733              		.thumb_func
+ 1735              	consoleLogRaw:
+ 1736              	.LVL151:
+ 1737              	.LFB79:
  562:src/protocolfunctions.c **** 
  563:src/protocolfunctions.c **** // Raw console output without protocol framing (for CAN debug messages)
  564:src/protocolfunctions.c **** void consoleLogRaw(char *message) {
- 1864              		.loc 1 564 35 view -0
- 1865              		.cfi_startproc
- 1866              		@ args = 0, pretend = 0, frame = 0
- 1867              		@ frame_needed = 0, uses_anonymous_args = 0
- 1868              		.loc 1 564 35 is_stmt 0 view .LVU446
- 1869 0000 38B5     		push	{r3, r4, r5, lr}
- 1870              	.LCFI19:
- 1871              		.cfi_def_cfa_offset 16
- 1872              		.cfi_offset 3, -16
- 1873              		.cfi_offset 4, -12
- 1874              		.cfi_offset 5, -8
- 1875              		.cfi_offset 14, -4
- 1876 0002 0546     		mov	r5, r0
+ 1738              		.loc 1 564 35 view -0
+ 1739              		.cfi_startproc
+ 1740              		@ args = 0, pretend = 0, frame = 0
+ 1741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1742              		.loc 1 564 35 is_stmt 0 view .LVU416
+ 1743 0000 38B5     		push	{r3, r4, r5, lr}
+ 1744              	.LCFI18:
+ 1745              		.cfi_def_cfa_offset 16
+ 1746              		.cfi_offset 3, -16
+ 1747              		.cfi_offset 4, -12
+ 1748              		.cfi_offset 5, -8
+ 1749              		.cfi_offset 14, -4
+ 1750 0002 0546     		mov	r5, r0
  565:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart2;
- 1877              		.loc 1 565 5 is_stmt 1 view .LVU447
+ 1751              		.loc 1 565 5 is_stmt 1 view .LVU417
  566:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart3;
- 1878              		.loc 1 566 5 view .LVU448
+ARM GAS  /tmp/ccdXw4GR.s 			page 43
+
+
+ 1752              		.loc 1 566 5 view .LVU418
  567:src/protocolfunctions.c ****     
  568:src/protocolfunctions.c ****     uint16_t len = 0;
- 1879              		.loc 1 568 5 view .LVU449
- 1880              	.LVL159:
+ 1753              		.loc 1 568 5 view .LVU419
+ 1754              	.LVL152:
  569:src/protocolfunctions.c ****     while(message[len] != '\0' && len < 512) len++;
- 1881              		.loc 1 569 5 view .LVU450
+ 1755              		.loc 1 569 5 view .LVU420
  568:src/protocolfunctions.c ****     while(message[len] != '\0' && len < 512) len++;
- 1882              		.loc 1 568 14 is_stmt 0 view .LVU451
- 1883 0004 0024     		movs	r4, #0
- 1884              	.LVL160:
- 1885              	.L112:
- 1886              		.loc 1 569 32 is_stmt 1 discriminator 1 view .LVU452
- 1887              		.loc 1 569 18 is_stmt 0 discriminator 1 view .LVU453
- 1888 0006 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
- 1889              		.loc 1 569 32 discriminator 1 view .LVU454
- 1890 0008 2BB1     		cbz	r3, .L113
- 1891              		.loc 1 569 32 discriminator 2 view .LVU455
- 1892 000a B4F5007F 		cmp	r4, #512
- 1893 000e 02D2     		bcs	.L113
- 1894              		.loc 1 569 46 is_stmt 1 discriminator 3 view .LVU456
- 1895              		.loc 1 569 49 is_stmt 0 discriminator 3 view .LVU457
- 1896 0010 0134     		adds	r4, r4, #1
- 1897              	.LVL161:
- 1898              		.loc 1 569 49 discriminator 3 view .LVU458
- 1899 0012 A4B2     		uxth	r4, r4
- 1900              	.LVL162:
- 1901              		.loc 1 569 49 discriminator 3 view .LVU459
- 1902 0014 F7E7     		b	.L112
- 1903              	.L113:
+ 1756              		.loc 1 568 14 is_stmt 0 view .LVU421
+ 1757 0004 0024     		movs	r4, #0
+ 1758              	.LVL153:
+ 1759              	.L103:
+ 1760              		.loc 1 569 32 is_stmt 1 discriminator 1 view .LVU422
+ 1761              		.loc 1 569 18 is_stmt 0 discriminator 1 view .LVU423
+ 1762 0006 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 1763              		.loc 1 569 32 discriminator 1 view .LVU424
+ 1764 0008 2BB1     		cbz	r3, .L104
+ 1765              		.loc 1 569 32 discriminator 2 view .LVU425
+ 1766 000a B4F5007F 		cmp	r4, #512
+ 1767 000e 02D2     		bcs	.L104
+ 1768              		.loc 1 569 46 is_stmt 1 discriminator 3 view .LVU426
+ 1769              		.loc 1 569 49 is_stmt 0 discriminator 3 view .LVU427
+ 1770 0010 0134     		adds	r4, r4, #1
+ 1771              	.LVL154:
+ 1772              		.loc 1 569 49 discriminator 3 view .LVU428
+ 1773 0012 A4B2     		uxth	r4, r4
+ 1774              	.LVL155:
+ 1775              		.loc 1 569 49 discriminator 3 view .LVU429
+ 1776 0014 F7E7     		b	.L103
+ 1777              	.L104:
  570:src/protocolfunctions.c ****     
  571:src/protocolfunctions.c ****     #ifdef SERIAL_USART2_IT
  572:src/protocolfunctions.c ****         HAL_UART_Transmit(&huart2, (uint8_t*)message, len, 100);
- 1904              		.loc 1 572 9 is_stmt 1 view .LVU460
- 1905 0016 6423     		movs	r3, #100
- 1906 0018 2246     		mov	r2, r4
- 1907 001a 2946     		mov	r1, r5
- 1908 001c 0548     		ldr	r0, .L118
-ARM GAS  /tmp/ccVdRm1d.s 			page 46
-
-
- 1909              	.LVL163:
- 1910              		.loc 1 572 9 is_stmt 0 view .LVU461
- 1911 001e FFF7FEFF 		bl	HAL_UART_Transmit
- 1912              	.LVL164:
  573:src/protocolfunctions.c ****     #endif
  574:src/protocolfunctions.c ****     
  575:src/protocolfunctions.c ****     #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
@@ -2714,179 +2563,168 @@ ARM GAS  /tmp/ccVdRm1d.s 			page 1
  579:src/protocolfunctions.c ****     // Also output to Software Serial (PA13/PA14) if initialized
  580:src/protocolfunctions.c ****     #if defined(SOFTWARE_SERIAL) && defined(ENABLE_CAN_BUS)
  581:src/protocolfunctions.c ****     extern bool CAN_IsSoftwareSerialReady(void);
- 1913              		.loc 1 581 5 is_stmt 1 view .LVU462
+ 1778              		.loc 1 581 5 is_stmt 1 view .LVU430
  582:src/protocolfunctions.c ****     if (CAN_IsSoftwareSerialReady()) {
- 1914              		.loc 1 582 5 view .LVU463
- 1915              		.loc 1 582 9 is_stmt 0 view .LVU464
- 1916 0022 FFF7FEFF 		bl	CAN_IsSoftwareSerialReady
- 1917              	.LVL165:
- 1918              		.loc 1 582 8 discriminator 1 view .LVU465
- 1919 0026 00B9     		cbnz	r0, .L117
- 1920              	.L111:
+ 1779              		.loc 1 582 5 view .LVU431
+ 1780              		.loc 1 582 9 is_stmt 0 view .LVU432
+ 1781 0016 FFF7FEFF 		bl	CAN_IsSoftwareSerialReady
+ 1782              	.LVL156:
+ 1783              		.loc 1 582 8 discriminator 1 view .LVU433
+ 1784 001a 00B9     		cbnz	r0, .L108
+ 1785              	.L102:
  583:src/protocolfunctions.c ****         softwareserial_Send((unsigned char*)message, len);
  584:src/protocolfunctions.c ****     }
  585:src/protocolfunctions.c ****     #endif
  586:src/protocolfunctions.c **** }
- 1921              		.loc 1 586 1 view .LVU466
- 1922 0028 38BD     		pop	{r3, r4, r5, pc}
- 1923              	.LVL166:
- 1924              	.L117:
+ 1786              		.loc 1 586 1 view .LVU434
+ 1787 001c 38BD     		pop	{r3, r4, r5, pc}
+ARM GAS  /tmp/ccdXw4GR.s 			page 44
+
+
+ 1788              	.LVL157:
+ 1789              	.L108:
  583:src/protocolfunctions.c ****         softwareserial_Send((unsigned char*)message, len);
- 1925              		.loc 1 583 9 is_stmt 1 view .LVU467
- 1926 002a 2146     		mov	r1, r4
- 1927 002c 2846     		mov	r0, r5
- 1928 002e FFF7FEFF 		bl	softwareserial_Send
- 1929              	.LVL167:
- 1930              		.loc 1 586 1 is_stmt 0 view .LVU468
- 1931 0032 F9E7     		b	.L111
- 1932              	.L119:
- 1933              		.align	2
- 1934              	.L118:
- 1935 0034 00000000 		.word	huart2
- 1936              		.cfi_endproc
- 1937              	.LFE80:
- 1939              		.global	BuzzerData
- 1940              		.section	.bss.BuzzerData,"aw",%nobits
- 1941              		.align	2
- 1944              	BuzzerData:
- 1945 0000 00000000 		.space	4
- 1946              		.global	PWMData
- 1947              		.section	.data.PWMData,"aw"
- 1948              		.align	2
- 1951              	PWMData:
- 1952 0000 00000000 		.word	0
- 1953 0004 00000000 		.word	0
- 1954 0008 58020000 		.word	600
- 1955 000c A8FDFFFF 		.word	-600
-ARM GAS  /tmp/ccVdRm1d.s 			page 47
+ 1790              		.loc 1 583 9 is_stmt 1 view .LVU435
+ 1791 001e 2146     		mov	r1, r4
+ 1792 0020 2846     		mov	r0, r5
+ 1793 0022 FFF7FEFF 		bl	softwareserial_Send
+ 1794              	.LVL158:
+ 1795              		.loc 1 586 1 is_stmt 0 view .LVU436
+ 1796 0026 F9E7     		b	.L102
+ 1797              		.cfi_endproc
+ 1798              	.LFE79:
+ 1800              		.global	BuzzerData
+ 1801              		.section	.bss.BuzzerData,"aw",%nobits
+ 1802              		.align	2
+ 1805              	BuzzerData:
+ 1806 0000 00000000 		.space	4
+ 1807              		.global	PWMData
+ 1808              		.section	.data.PWMData,"aw"
+ 1809              		.align	2
+ 1812              	PWMData:
+ 1813 0000 00000000 		.word	0
+ 1814 0004 00000000 		.word	0
+ 1815 0008 58020000 		.word	600
+ 1816 000c A8FDFFFF 		.word	-600
+ 1817 0010 28000000 		.word	40
+ 1818              		.comm	RawPosition,16,4
+ 1819              		.global	PosnData
+ 1820              		.section	.data.PosnData,"aw"
+ 1821              		.align	2
+ 1824              	PosnData:
+ 1825 0000 00000000 		.word	0
+ 1826 0004 00000000 		.word	0
+ 1827 0008 C8000000 		.word	200
+ 1828 000c 46000000 		.word	70
+ 1829 0010 00000000 		.space	16
+ 1829      00000000 
+ 1829      00000000 
+ 1829      00000000 
+ 1830              		.comm	PositionIncr,8,4
+ 1831              		.comm	Position,16,4
+ 1832              		.global	SpeedData
+ 1833              		.section	.data.SpeedData,"aw"
+ 1834              		.align	2
+ 1837              	SpeedData:
+ 1838 0000 00000000 		.word	0
+ 1839 0004 00000000 		.word	0
+ 1840 0008 58020000 		.word	600
+ 1841 000c A8FDFFFF 		.word	-600
+ 1842 0010 28000000 		.word	40
+ 1843 0014 00000000 		.space	16
+ 1843      00000000 
+ 1843      00000000 
+ 1843      00000000 
+ 1844              		.global	protocol_enable
+ 1845              		.section	.bss.protocol_enable,"aw",%nobits
+ 1848              	protocol_enable:
+ARM GAS  /tmp/ccdXw4GR.s 			page 45
 
 
- 1956 0010 28000000 		.word	40
- 1957              		.comm	RawPosition,16,4
- 1958              		.global	PosnData
- 1959              		.section	.data.PosnData,"aw"
- 1960              		.align	2
- 1963              	PosnData:
- 1964 0000 00000000 		.word	0
- 1965 0004 00000000 		.word	0
- 1966 0008 C8000000 		.word	200
- 1967 000c 46000000 		.word	70
- 1968 0010 00000000 		.space	16
- 1968      00000000 
- 1968      00000000 
- 1968      00000000 
- 1969              		.comm	PositionIncr,8,4
- 1970              		.comm	Position,16,4
- 1971              		.global	SpeedData
- 1972              		.section	.data.SpeedData,"aw"
- 1973              		.align	2
- 1976              	SpeedData:
- 1977 0000 00000000 		.word	0
- 1978 0004 00000000 		.word	0
- 1979 0008 58020000 		.word	600
- 1980 000c A8FDFFFF 		.word	-600
- 1981 0010 28000000 		.word	40
- 1982 0014 00000000 		.space	16
- 1982      00000000 
- 1982      00000000 
- 1982      00000000 
- 1983              		.comm	sensor_copy,20,4
- 1984              		.global	protocol_enable
- 1985              		.section	.bss.protocol_enable,"aw",%nobits
- 1988              	protocol_enable:
- 1989 0000 00       		.space	1
- 1990              		.comm	sUSART2,4692,4
- 1991              		.comm	sSoftwareSerial,4692,4
- 1992              		.text
- 1993              	.Letext0:
- 1994              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
- 1995              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
- 1996              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 1997              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 1998              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
- 1999              		.file 7 "inc/protocol.h"
- 2000              		.file 8 "inc/protocolfunctions.h"
- 2001              		.file 9 "inc/control_structures.h"
- 2002              		.file 10 "inc/bldc.h"
- 2003              		.file 11 "inc/flashcontent.h"
- 2004              		.file 12 "inc/sensorcoms.h"
- 2005              		.file 13 "inc/hallinterrupts.h"
- 2006              		.file 14 "inc/deadreckoner.h"
- 2007              		.file 15 "inc/softwareserial.h"
- 2008              		.file 16 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 2009              		.file 17 "inc/flashaccess.h"
- 2010              		.file 18 "/usr/include/newlib/stdio.h"
- 2011              		.file 19 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/ccVdRm1d.s 			page 48
+ 1849 0000 00       		.space	1
+ 1850              		.comm	sSoftwareSerial,4692,4
+ 1851              		.text
+ 1852              	.Letext0:
+ 1853              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 1854              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 1855              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 1856              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 1857              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 1858              		.file 7 "inc/protocol.h"
+ 1859              		.file 8 "inc/protocolfunctions.h"
+ 1860              		.file 9 "inc/control_structures.h"
+ 1861              		.file 10 "inc/bldc.h"
+ 1862              		.file 11 "inc/flashcontent.h"
+ 1863              		.file 12 "inc/hallinterrupts.h"
+ 1864              		.file 13 "inc/deadreckoner.h"
+ 1865              		.file 14 "inc/softwareserial.h"
+ 1866              		.file 15 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1867              		.file 16 "inc/flashaccess.h"
+ 1868              		.file 17 "/usr/include/newlib/stdio.h"
+ 1869              		.file 18 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
+ARM GAS  /tmp/ccdXw4GR.s 			page 46
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 protocolfunctions.c
-     /tmp/ccVdRm1d.s:19     .text.fn_enable:00000000 $t
-     /tmp/ccVdRm1d.s:25     .text.fn_enable:00000000 fn_enable
-     /tmp/ccVdRm1d.s:141    .text.fn_enable:00000064 $d
-     /tmp/ccVdRm1d.s:1988   .bss.protocol_enable:00000000 protocol_enable
-     /tmp/ccVdRm1d.s:1963   .data.PosnData:00000000 PosnData
-     /tmp/ccVdRm1d.s:1976   .data.SpeedData:00000000 SpeedData
-     /tmp/ccVdRm1d.s:1951   .data.PWMData:00000000 PWMData
-     /tmp/ccVdRm1d.s:151    .text.fn_SpeedData:00000000 $t
-     /tmp/ccVdRm1d.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
-     /tmp/ccVdRm1d.s:198    .text.fn_SpeedData:0000001c $d
-     /tmp/ccVdRm1d.s:204    .text.fn_Position:00000000 $t
-     /tmp/ccVdRm1d.s:210    .text.fn_Position:00000000 fn_Position
-     /tmp/ccVdRm1d.s:311    .text.fn_Position:00000050 $d
-     /tmp/ccVdRm1d.s:316    .text.fn_PositionIncr:00000000 $t
-     /tmp/ccVdRm1d.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
-     /tmp/ccVdRm1d.s:416    .text.fn_PositionIncr:00000058 $d
-     /tmp/ccVdRm1d.s:424    .text.fn_RawPosition:00000000 $t
-     /tmp/ccVdRm1d.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
-     /tmp/ccVdRm1d.s:529    .text.fn_RawPosition:00000050 $d
-     /tmp/ccVdRm1d.s:534    .text.fn_PWMData:00000000 $t
-     /tmp/ccVdRm1d.s:540    .text.fn_PWMData:00000000 fn_PWMData
-     /tmp/ccVdRm1d.s:683    .text.fn_PWMData:0000008c $d
-     /tmp/ccVdRm1d.s:689    .text.fn_BuzzerData:00000000 $t
-     /tmp/ccVdRm1d.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
-     /tmp/ccVdRm1d.s:784    .text.fn_BuzzerData:0000004c $d
-     /tmp/ccVdRm1d.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
-     /tmp/ccVdRm1d.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
-     /tmp/ccVdRm1d.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
-     /tmp/ccVdRm1d.s:854    .text.fn_SensorData:00000000 $t
-     /tmp/ccVdRm1d.s:860    .text.fn_SensorData:00000000 fn_SensorData
-     /tmp/ccVdRm1d.s:907    .text.fn_SensorData:00000044 $d
-                            *COM*:00000014 sensor_copy
-     /tmp/ccVdRm1d.s:913    .text.fn_xytPosn:00000000 $t
-     /tmp/ccVdRm1d.s:919    .text.fn_xytPosn:00000000 fn_xytPosn
-     /tmp/ccVdRm1d.s:962    .text.fn_xytPosn:00000024 $d
-     /tmp/ccVdRm1d.s:967    .text.fn_FlashContentPID:00000000 $t
-     /tmp/ccVdRm1d.s:973    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
-     /tmp/ccVdRm1d.s:1010   .text.setup_protocol:00000000 $t
-     /tmp/ccVdRm1d.s:1016   .text.setup_protocol:00000000 setup_protocol
-     /tmp/ccVdRm1d.s:1639   .text.setup_protocol:0000038c $d
+     /tmp/ccdXw4GR.s:19     .text.fn_enable:00000000 $t
+     /tmp/ccdXw4GR.s:25     .text.fn_enable:00000000 fn_enable
+     /tmp/ccdXw4GR.s:141    .text.fn_enable:00000064 $d
+     /tmp/ccdXw4GR.s:1848   .bss.protocol_enable:00000000 protocol_enable
+     /tmp/ccdXw4GR.s:1824   .data.PosnData:00000000 PosnData
+     /tmp/ccdXw4GR.s:1837   .data.SpeedData:00000000 SpeedData
+     /tmp/ccdXw4GR.s:1812   .data.PWMData:00000000 PWMData
+     /tmp/ccdXw4GR.s:151    .text.fn_SpeedData:00000000 $t
+     /tmp/ccdXw4GR.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
+     /tmp/ccdXw4GR.s:198    .text.fn_SpeedData:0000001c $d
+     /tmp/ccdXw4GR.s:204    .text.fn_Position:00000000 $t
+     /tmp/ccdXw4GR.s:210    .text.fn_Position:00000000 fn_Position
+     /tmp/ccdXw4GR.s:311    .text.fn_Position:00000050 $d
+     /tmp/ccdXw4GR.s:316    .text.fn_PositionIncr:00000000 $t
+     /tmp/ccdXw4GR.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
+     /tmp/ccdXw4GR.s:416    .text.fn_PositionIncr:00000058 $d
+     /tmp/ccdXw4GR.s:424    .text.fn_RawPosition:00000000 $t
+     /tmp/ccdXw4GR.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
+     /tmp/ccdXw4GR.s:529    .text.fn_RawPosition:00000050 $d
+     /tmp/ccdXw4GR.s:534    .text.fn_PWMData:00000000 $t
+     /tmp/ccdXw4GR.s:540    .text.fn_PWMData:00000000 fn_PWMData
+     /tmp/ccdXw4GR.s:683    .text.fn_PWMData:0000008c $d
+     /tmp/ccdXw4GR.s:689    .text.fn_BuzzerData:00000000 $t
+     /tmp/ccdXw4GR.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
+     /tmp/ccdXw4GR.s:784    .text.fn_BuzzerData:0000004c $d
+     /tmp/ccdXw4GR.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
+     /tmp/ccdXw4GR.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
+     /tmp/ccdXw4GR.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
+     /tmp/ccdXw4GR.s:854    .text.fn_xytPosn:00000000 $t
+     /tmp/ccdXw4GR.s:860    .text.fn_xytPosn:00000000 fn_xytPosn
+     /tmp/ccdXw4GR.s:903    .text.fn_xytPosn:00000024 $d
+     /tmp/ccdXw4GR.s:908    .text.fn_FlashContentPID:00000000 $t
+     /tmp/ccdXw4GR.s:914    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
+     /tmp/ccdXw4GR.s:951    .text.setup_protocol:00000000 $t
+     /tmp/ccdXw4GR.s:957    .text.setup_protocol:00000000 setup_protocol
+     /tmp/ccdXw4GR.s:1541   .text.setup_protocol:00000350 $d
                             *COM*:00001254 sSoftwareSerial
-                            *COM*:00001254 sUSART2
                             *COM*:00000010 Position
                             *COM*:00000008 PositionIncr
                             *COM*:00000010 RawPosition
-     /tmp/ccVdRm1d.s:1944   .bss.BuzzerData:00000000 BuzzerData
-     /tmp/ccVdRm1d.s:1769   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
-     /tmp/ccVdRm1d.s:1678   .text.setup_protocol:00000424 $t
-     /tmp/ccVdRm1d.s:1688   .text.consoleLog:00000000 $t
-     /tmp/ccVdRm1d.s:1694   .text.consoleLog:00000000 consoleLog
-     /tmp/ccVdRm1d.s:1748   .text.consoleLog:0000002c $d
-     /tmp/ccVdRm1d.s:1755   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
-     /tmp/ccVdRm1d.s:1763   .text.fn_FlashContentMagic:00000000 $t
-     /tmp/ccVdRm1d.s:1848   .text.fn_FlashContentMagic:0000004c $d
-     /tmp/ccVdRm1d.s:1855   .text.consoleLogRaw:00000000 $t
-ARM GAS  /tmp/ccVdRm1d.s 			page 49
+     /tmp/ccdXw4GR.s:1805   .bss.BuzzerData:00000000 BuzzerData
+     /tmp/ccdXw4GR.s:1643   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
+     /tmp/ccdXw4GR.s:1579   .text.consoleLog:00000000 $t
+     /tmp/ccdXw4GR.s:1585   .text.consoleLog:00000000 consoleLog
+     /tmp/ccdXw4GR.s:1623   .text.consoleLog:00000018 $d
+     /tmp/ccdXw4GR.s:1629   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
+     /tmp/ccdXw4GR.s:1637   .text.fn_FlashContentMagic:00000000 $t
+     /tmp/ccdXw4GR.s:1722   .text.fn_FlashContentMagic:0000004c $d
+     /tmp/ccdXw4GR.s:1729   .text.consoleLogRaw:00000000 $t
+     /tmp/ccdXw4GR.s:1735   .text.consoleLogRaw:00000000 consoleLogRaw
+     /tmp/ccdXw4GR.s:1802   .bss.BuzzerData:00000000 $d
+     /tmp/ccdXw4GR.s:1809   .data.PWMData:00000000 $d
+     /tmp/ccdXw4GR.s:1821   .data.PosnData:00000000 $d
+     /tmp/ccdXw4GR.s:1834   .data.SpeedData:00000000 $d
+     /tmp/ccdXw4GR.s:1849   .bss.protocol_enable:00000000 $d
+ARM GAS  /tmp/ccdXw4GR.s 			page 47
 
 
-     /tmp/ccVdRm1d.s:1861   .text.consoleLogRaw:00000000 consoleLogRaw
-     /tmp/ccVdRm1d.s:1935   .text.consoleLogRaw:00000034 $d
-     /tmp/ccVdRm1d.s:1941   .bss.BuzzerData:00000000 $d
-     /tmp/ccVdRm1d.s:1948   .data.PWMData:00000000 $d
-     /tmp/ccVdRm1d.s:1960   .data.PosnData:00000000 $d
-     /tmp/ccVdRm1d.s:1973   .data.SpeedData:00000000 $d
-     /tmp/ccVdRm1d.s:1989   .bss.protocol_enable:00000000 $d
 
 UNDEFINED SYMBOLS
 fn_defaultProcessing
@@ -2900,8 +2738,6 @@ buzzerLen
 buzzerPattern
 FlashContent
 electrical_measurements
-fn_defaultProcessingReadOnly
-sensor_data
 reset
 deadreconer
 change_PID_constants
@@ -2917,13 +2753,10 @@ protocol_SystemReset
 HAL_NVIC_SystemReset
 softwareserial_Send
 softwareserial_Send_Wait
-USART2_IT_send
 disablepoweroff
 debug_out
 xytPosn
 protocol_send_text
 sprintf
 writeFlash
-HAL_UART_Transmit
 CAN_IsSoftwareSerialReady
-huart2

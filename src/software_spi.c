@@ -4,7 +4,11 @@ static uint8_t spi_mode = SPI_MODE0;
 
 void SoftSPI_Init(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    
+
+    /* With CONTROL_TYPE=9 (CAN_BUS), USART2/3 are not initialized in interrupt
+     * mode, so there is no USART AF conflict on PA2/PA3/PB10/PB11.
+     * SPI pins are safe to reconfigure directly. */
+
     // Enable GPIO clocks
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();

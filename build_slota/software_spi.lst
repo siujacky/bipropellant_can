@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cccv3qXT.s 			page 1
+ARM GAS  /tmp/cccm57pY.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
   29:inc/software_spi.h **** void SoftSPI_TransferBuffer(uint8_t *txData, uint8_t *rxData, uint16_t length);
   30:inc/software_spi.h **** void SoftSPI_CS_Low(void);
   31:inc/software_spi.h **** void SoftSPI_CS_High(void);
-ARM GAS  /tmp/cccv3qXT.s 			page 2
+ARM GAS  /tmp/cccm57pY.s 			page 2
 
 
   32:inc/software_spi.h **** void SoftSPI_SetMode(uint8_t mode);
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
   27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
   28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
   29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARM GAS  /tmp/cccv3qXT.s 			page 3
+ARM GAS  /tmp/cccm57pY.s 			page 3
 
 
   30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
   84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
   85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
   86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  /tmp/cccv3qXT.s 			page 4
+ARM GAS  /tmp/cccm57pY.s 			page 4
 
 
   87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/cccv3qXT.s 			page 5
+ARM GAS  /tmp/cccm57pY.s 			page 5
 
 
  144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
  200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/cccv3qXT.s 			page 6
+ARM GAS  /tmp/cccm57pY.s 			page 6
 
 
  201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  255:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  256:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  257:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/cccv3qXT.s 			page 7
+ARM GAS  /tmp/cccm57pY.s 			page 7
 
 
  258:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  312:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
  313:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  314:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_FPSCR(void)
-ARM GAS  /tmp/cccv3qXT.s 			page 8
+ARM GAS  /tmp/cccm57pY.s 			page 8
 
 
  315:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  369:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  370:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
  371:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
-ARM GAS  /tmp/cccv3qXT.s 			page 9
+ARM GAS  /tmp/cccm57pY.s 			page 9
 
 
  372:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
   92              		@ frame_needed = 0, uses_anonymous_args = 0
   93 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
   94              	.LCFI2:
-ARM GAS  /tmp/cccv3qXT.s 			page 10
+ARM GAS  /tmp/cccm57pY.s 			page 10
 
 
   95              		.cfi_def_cfa_offset 36
@@ -562,200 +562,204 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  112 000a 0394     		str	r4, [sp, #12]
  113 000c 0494     		str	r4, [sp, #16]
  114 000e 0594     		str	r4, [sp, #20]
-   7:src/software_spi.c ****     
-   8:src/software_spi.c ****     // Enable GPIO clocks
-   9:src/software_spi.c ****     __HAL_RCC_GPIOA_CLK_ENABLE();
- 115              		.loc 1 9 5 is_stmt 1 view .LVU14
+   7:src/software_spi.c **** 
+   8:src/software_spi.c ****     /* With CONTROL_TYPE=9 (CAN_BUS), USART2/3 are not initialized in interrupt
+   9:src/software_spi.c ****      * mode, so there is no USART AF conflict on PA2/PA3/PB10/PB11.
+  10:src/software_spi.c ****      * SPI pins are safe to reconfigure directly. */
+  11:src/software_spi.c **** 
+  12:src/software_spi.c ****     // Enable GPIO clocks
+  13:src/software_spi.c ****     __HAL_RCC_GPIOA_CLK_ENABLE();
+ 115              		.loc 1 13 5 is_stmt 1 view .LVU14
  116              	.LBB89:
- 117              		.loc 1 9 5 view .LVU15
- 118              		.loc 1 9 5 view .LVU16
+ 117              		.loc 1 13 5 view .LVU15
+ 118              		.loc 1 13 5 view .LVU16
  119 0010 314B     		ldr	r3, .L7
  120 0012 9A69     		ldr	r2, [r3, #24]
  121 0014 42F00402 		orr	r2, r2, #4
  122 0018 9A61     		str	r2, [r3, #24]
- 123              		.loc 1 9 5 view .LVU17
+ 123              		.loc 1 13 5 view .LVU17
  124 001a 9A69     		ldr	r2, [r3, #24]
  125 001c 02F00402 		and	r2, r2, #4
  126 0020 0092     		str	r2, [sp]
- 127              		.loc 1 9 5 view .LVU18
+ 127              		.loc 1 13 5 view .LVU18
  128 0022 009A     		ldr	r2, [sp]
  129              	.LBE89:
- 130              		.loc 1 9 5 view .LVU19
-  10:src/software_spi.c ****     __HAL_RCC_GPIOB_CLK_ENABLE();
- 131              		.loc 1 10 5 view .LVU20
+ 130              		.loc 1 13 5 view .LVU19
+  14:src/software_spi.c ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 131              		.loc 1 14 5 view .LVU20
  132              	.LBB90:
- 133              		.loc 1 10 5 view .LVU21
- 134              		.loc 1 10 5 view .LVU22
+ 133              		.loc 1 14 5 view .LVU21
+ 134              		.loc 1 14 5 view .LVU22
  135 0024 9A69     		ldr	r2, [r3, #24]
  136 0026 42F00802 		orr	r2, r2, #8
  137 002a 9A61     		str	r2, [r3, #24]
- 138              		.loc 1 10 5 view .LVU23
+ 138              		.loc 1 14 5 view .LVU23
  139 002c 9B69     		ldr	r3, [r3, #24]
  140 002e 03F00803 		and	r3, r3, #8
  141 0032 0193     		str	r3, [sp, #4]
- 142              		.loc 1 10 5 view .LVU24
+ 142              		.loc 1 14 5 view .LVU24
+ARM GAS  /tmp/cccm57pY.s 			page 11
+
+
  143 0034 019B     		ldr	r3, [sp, #4]
  144              	.LBE90:
- 145              		.loc 1 10 5 view .LVU25
-  11:src/software_spi.c ****     
-ARM GAS  /tmp/cccv3qXT.s 			page 11
-
-
-  12:src/software_spi.c ****     // Configure MOSI pin (Output)
-  13:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MOSI_PIN;
- 146              		.loc 1 13 5 view .LVU26
- 147              		.loc 1 13 25 is_stmt 0 view .LVU27
+ 145              		.loc 1 14 5 view .LVU25
+  15:src/software_spi.c ****     
+  16:src/software_spi.c ****     // Configure MOSI pin (Output)
+  17:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MOSI_PIN;
+ 146              		.loc 1 17 5 view .LVU26
+ 147              		.loc 1 17 25 is_stmt 0 view .LVU27
  148 0036 4FF40069 		mov	r9, #2048
  149 003a CDF80890 		str	r9, [sp, #8]
-  14:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 150              		.loc 1 14 5 is_stmt 1 view .LVU28
- 151              		.loc 1 14 26 is_stmt 0 view .LVU29
+  18:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 150              		.loc 1 18 5 is_stmt 1 view .LVU28
+ 151              		.loc 1 18 26 is_stmt 0 view .LVU29
  152 003e 0125     		movs	r5, #1
  153 0040 0395     		str	r5, [sp, #12]
-  15:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 154              		.loc 1 15 5 is_stmt 1 view .LVU30
-  16:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
- 155              		.loc 1 16 5 view .LVU31
- 156              		.loc 1 16 27 is_stmt 0 view .LVU32
+  19:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 154              		.loc 1 19 5 is_stmt 1 view .LVU30
+  20:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+ 155              		.loc 1 20 5 view .LVU31
+ 156              		.loc 1 20 27 is_stmt 0 view .LVU32
  157 0042 4FF00308 		mov	r8, #3
  158 0046 CDF81480 		str	r8, [sp, #20]
-  17:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MOSI_PORT, &GPIO_InitStruct);
- 159              		.loc 1 17 5 is_stmt 1 view .LVU33
+  21:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MOSI_PORT, &GPIO_InitStruct);
+ 159              		.loc 1 21 5 is_stmt 1 view .LVU33
  160 004a 244E     		ldr	r6, .L7+4
  161 004c 02A9     		add	r1, sp, #8
  162 004e 3046     		mov	r0, r6
  163 0050 FFF7FEFF 		bl	HAL_GPIO_Init
  164              	.LVL0:
-  18:src/software_spi.c ****     
-  19:src/software_spi.c ****     // Configure MISO pin (Input) - no pull (external circuit must handle)
-  20:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MISO_PIN;
- 165              		.loc 1 20 5 view .LVU34
- 166              		.loc 1 20 25 is_stmt 0 view .LVU35
+  22:src/software_spi.c ****     
+  23:src/software_spi.c ****     // Configure MISO pin (Input) - no pull (external circuit must handle)
+  24:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MISO_PIN;
+ 165              		.loc 1 24 5 view .LVU34
+ 166              		.loc 1 24 25 is_stmt 0 view .LVU35
  167 0054 4FF48063 		mov	r3, #1024
  168 0058 0293     		str	r3, [sp, #8]
-  21:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
- 169              		.loc 1 21 5 is_stmt 1 view .LVU36
- 170              		.loc 1 21 26 is_stmt 0 view .LVU37
+  25:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+ 169              		.loc 1 25 5 is_stmt 1 view .LVU36
+ 170              		.loc 1 25 26 is_stmt 0 view .LVU37
  171 005a 0394     		str	r4, [sp, #12]
-  22:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 172              		.loc 1 22 5 is_stmt 1 view .LVU38
- 173              		.loc 1 22 26 is_stmt 0 view .LVU39
+  26:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 172              		.loc 1 26 5 is_stmt 1 view .LVU38
+ 173              		.loc 1 26 26 is_stmt 0 view .LVU39
  174 005c 0494     		str	r4, [sp, #16]
-  23:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MISO_PORT, &GPIO_InitStruct);
- 175              		.loc 1 23 5 is_stmt 1 view .LVU40
+  27:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MISO_PORT, &GPIO_InitStruct);
+ 175              		.loc 1 27 5 is_stmt 1 view .LVU40
  176 005e 02A9     		add	r1, sp, #8
  177 0060 3046     		mov	r0, r6
  178 0062 FFF7FEFF 		bl	HAL_GPIO_Init
  179              	.LVL1:
-  24:src/software_spi.c ****     
-  25:src/software_spi.c ****     // Configure SCK pin (Output)
-  26:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_SCK_PIN;
- 180              		.loc 1 26 5 view .LVU41
- 181              		.loc 1 26 25 is_stmt 0 view .LVU42
+  28:src/software_spi.c ****     
+  29:src/software_spi.c ****     // Configure SCK pin (Output)
+  30:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_SCK_PIN;
+ 180              		.loc 1 30 5 view .LVU41
+ 181              		.loc 1 30 25 is_stmt 0 view .LVU42
  182 0066 4FF0080A 		mov	r10, #8
  183 006a CDF808A0 		str	r10, [sp, #8]
-  27:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 184              		.loc 1 27 5 is_stmt 1 view .LVU43
- 185              		.loc 1 27 26 is_stmt 0 view .LVU44
+ARM GAS  /tmp/cccm57pY.s 			page 12
+
+
+  31:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 184              		.loc 1 31 5 is_stmt 1 view .LVU43
+ 185              		.loc 1 31 26 is_stmt 0 view .LVU44
  186 006e 0395     		str	r5, [sp, #12]
-ARM GAS  /tmp/cccv3qXT.s 			page 12
-
-
-  28:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 187              		.loc 1 28 5 is_stmt 1 view .LVU45
- 188              		.loc 1 28 26 is_stmt 0 view .LVU46
+  32:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 187              		.loc 1 32 5 is_stmt 1 view .LVU45
+ 188              		.loc 1 32 26 is_stmt 0 view .LVU46
  189 0070 0494     		str	r4, [sp, #16]
-  29:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
- 190              		.loc 1 29 5 is_stmt 1 view .LVU47
- 191              		.loc 1 29 27 is_stmt 0 view .LVU48
+  33:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+ 190              		.loc 1 33 5 is_stmt 1 view .LVU47
+ 191              		.loc 1 33 27 is_stmt 0 view .LVU48
  192 0072 CDF81480 		str	r8, [sp, #20]
-  30:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_SCK_PORT, &GPIO_InitStruct);
- 193              		.loc 1 30 5 is_stmt 1 view .LVU49
+  34:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_SCK_PORT, &GPIO_InitStruct);
+ 193              		.loc 1 34 5 is_stmt 1 view .LVU49
  194 0076 1A4F     		ldr	r7, .L7+8
  195 0078 0DEB0A01 		add	r1, sp, r10
  196 007c 3846     		mov	r0, r7
  197 007e FFF7FEFF 		bl	HAL_GPIO_Init
  198              	.LVL2:
-  31:src/software_spi.c ****     
-  32:src/software_spi.c ****     // Configure CS pin (Output)
-  33:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_CS_PIN;
- 199              		.loc 1 33 5 view .LVU50
- 200              		.loc 1 33 25 is_stmt 0 view .LVU51
+  35:src/software_spi.c ****     
+  36:src/software_spi.c ****     // Configure CS pin (Output)
+  37:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_CS_PIN;
+ 199              		.loc 1 37 5 view .LVU50
+ 200              		.loc 1 37 25 is_stmt 0 view .LVU51
  201 0082 4FF0040B 		mov	fp, #4
  202 0086 CDF808B0 		str	fp, [sp, #8]
-  34:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
- 203              		.loc 1 34 5 is_stmt 1 view .LVU52
- 204              		.loc 1 34 26 is_stmt 0 view .LVU53
+  38:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 203              		.loc 1 38 5 is_stmt 1 view .LVU52
+ 204              		.loc 1 38 26 is_stmt 0 view .LVU53
  205 008a 0395     		str	r5, [sp, #12]
-  35:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 206              		.loc 1 35 5 is_stmt 1 view .LVU54
- 207              		.loc 1 35 26 is_stmt 0 view .LVU55
+  39:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 206              		.loc 1 39 5 is_stmt 1 view .LVU54
+ 207              		.loc 1 39 26 is_stmt 0 view .LVU55
  208 008c 0494     		str	r4, [sp, #16]
-  36:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
- 209              		.loc 1 36 5 is_stmt 1 view .LVU56
- 210              		.loc 1 36 27 is_stmt 0 view .LVU57
+  40:src/software_spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+ 209              		.loc 1 40 5 is_stmt 1 view .LVU56
+ 210              		.loc 1 40 27 is_stmt 0 view .LVU57
  211 008e CDF81480 		str	r8, [sp, #20]
-  37:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_CS_PORT, &GPIO_InitStruct);
- 212              		.loc 1 37 5 is_stmt 1 view .LVU58
+  41:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_CS_PORT, &GPIO_InitStruct);
+ 212              		.loc 1 41 5 is_stmt 1 view .LVU58
  213 0092 0DEB0A01 		add	r1, sp, r10
  214 0096 3846     		mov	r0, r7
  215 0098 FFF7FEFF 		bl	HAL_GPIO_Init
  216              	.LVL3:
-  38:src/software_spi.c ****     
-  39:src/software_spi.c ****     // Configure INT pin (Input with interrupt capability)
-  40:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_INT_PIN;
- 217              		.loc 1 40 5 view .LVU59
- 218              		.loc 1 40 25 is_stmt 0 view .LVU60
+  42:src/software_spi.c ****     
+  43:src/software_spi.c ****     // Configure INT pin (Input with interrupt capability)
+  44:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_INT_PIN;
+ 217              		.loc 1 44 5 view .LVU59
+ 218              		.loc 1 44 25 is_stmt 0 view .LVU60
  219 009c 4FF48053 		mov	r3, #4096
  220 00a0 0293     		str	r3, [sp, #8]
-  41:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
- 221              		.loc 1 41 5 is_stmt 1 view .LVU61
- 222              		.loc 1 41 26 is_stmt 0 view .LVU62
+  45:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+ 221              		.loc 1 45 5 is_stmt 1 view .LVU61
+ 222              		.loc 1 45 26 is_stmt 0 view .LVU62
  223 00a2 0394     		str	r4, [sp, #12]
-  42:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
- 224              		.loc 1 42 5 is_stmt 1 view .LVU63
- 225              		.loc 1 42 26 is_stmt 0 view .LVU64
+  46:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 224              		.loc 1 46 5 is_stmt 1 view .LVU63
+ARM GAS  /tmp/cccm57pY.s 			page 13
+
+
+ 225              		.loc 1 46 26 is_stmt 0 view .LVU64
  226 00a4 0495     		str	r5, [sp, #16]
-  43:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_INT_PORT, &GPIO_InitStruct);
- 227              		.loc 1 43 5 is_stmt 1 view .LVU65
-ARM GAS  /tmp/cccv3qXT.s 			page 13
-
-
+  47:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_INT_PORT, &GPIO_InitStruct);
+ 227              		.loc 1 47 5 is_stmt 1 view .LVU65
  228 00a6 0DEB0A01 		add	r1, sp, r10
  229 00aa 3046     		mov	r0, r6
  230 00ac FFF7FEFF 		bl	HAL_GPIO_Init
  231              	.LVL4:
-  44:src/software_spi.c ****     
-  45:src/software_spi.c ****     // Set default pin states
-  46:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_CS_PORT, SOFT_SPI_CS_PIN, GPIO_PIN_SET);   // CS high (inactive)
- 232              		.loc 1 46 5 view .LVU66
+  48:src/software_spi.c ****     
+  49:src/software_spi.c ****     // Set default pin states
+  50:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_CS_PORT, SOFT_SPI_CS_PIN, GPIO_PIN_SET);   // CS high (inactive)
+ 232              		.loc 1 50 5 view .LVU66
  233 00b0 2A46     		mov	r2, r5
  234 00b2 5946     		mov	r1, fp
  235 00b4 3846     		mov	r0, r7
  236 00b6 FFF7FEFF 		bl	HAL_GPIO_WritePin
  237              	.LVL5:
-  47:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_RESET); // SCK low
- 238              		.loc 1 47 5 view .LVU67
+  51:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_RESET); // SCK low
+ 238              		.loc 1 51 5 view .LVU67
  239 00ba 2246     		mov	r2, r4
  240 00bc 5146     		mov	r1, r10
  241 00be 3846     		mov	r0, r7
  242 00c0 FFF7FEFF 		bl	HAL_GPIO_WritePin
  243              	.LVL6:
-  48:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_MOSI_PORT, SOFT_SPI_MOSI_PIN, GPIO_PIN_RESET);
- 244              		.loc 1 48 5 view .LVU68
+  52:src/software_spi.c ****     HAL_GPIO_WritePin(SOFT_SPI_MOSI_PORT, SOFT_SPI_MOSI_PIN, GPIO_PIN_RESET);
+ 244              		.loc 1 52 5 view .LVU68
  245 00c4 2246     		mov	r2, r4
  246 00c6 4946     		mov	r1, r9
  247 00c8 3046     		mov	r0, r6
  248 00ca FFF7FEFF 		bl	HAL_GPIO_WritePin
  249              	.LVL7:
-  49:src/software_spi.c ****     
-  50:src/software_spi.c ****     spi_mode = SPI_MODE0;
- 250              		.loc 1 50 5 view .LVU69
- 251              		.loc 1 50 14 is_stmt 0 view .LVU70
+  53:src/software_spi.c ****     
+  54:src/software_spi.c ****     spi_mode = SPI_MODE0;
+ 250              		.loc 1 54 5 view .LVU69
+ 251              		.loc 1 54 14 is_stmt 0 view .LVU70
  252 00ce 054B     		ldr	r3, .L7+12
  253 00d0 1C70     		strb	r4, [r3]
-  51:src/software_spi.c **** }
- 254              		.loc 1 51 1 view .LVU71
+  55:src/software_spi.c **** }
+ 254              		.loc 1 55 1 view .LVU71
  255 00d2 07B0     		add	sp, sp, #28
  256              	.LCFI4:
  257              		.cfi_def_cfa_offset 36
@@ -774,17 +778,17 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  271              		.align	1
  272              		.p2align 2,,3
  273              		.global	SoftSPI_Deinit
+ARM GAS  /tmp/cccm57pY.s 			page 14
+
+
  274              		.syntax unified
  275              		.thumb
  276              		.thumb_func
  278              	SoftSPI_Deinit:
-ARM GAS  /tmp/cccv3qXT.s 			page 14
-
-
  279              	.LFB68:
-  52:src/software_spi.c **** 
-  53:src/software_spi.c **** void SoftSPI_Deinit(void) {
- 280              		.loc 1 53 27 is_stmt 1 view -0
+  56:src/software_spi.c **** 
+  57:src/software_spi.c **** void SoftSPI_Deinit(void) {
+ 280              		.loc 1 57 27 is_stmt 1 view -0
  281              		.cfi_startproc
  282              		@ args = 0, pretend = 0, frame = 16
  283              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -797,90 +801,90 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  290 0002 85B0     		sub	sp, sp, #20
  291              	.LCFI6:
  292              		.cfi_def_cfa_offset 32
-  54:src/software_spi.c ****     GPIO_InitTypeDef GPIO_InitStruct = {0};
- 293              		.loc 1 54 5 view .LVU73
- 294              		.loc 1 54 22 is_stmt 0 view .LVU74
+  58:src/software_spi.c ****     GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 293              		.loc 1 58 5 view .LVU73
+ 294              		.loc 1 58 22 is_stmt 0 view .LVU74
  295 0004 0023     		movs	r3, #0
  296 0006 0093     		str	r3, [sp]
  297 0008 0193     		str	r3, [sp, #4]
  298 000a 0293     		str	r3, [sp, #8]
  299 000c 0393     		str	r3, [sp, #12]
-  55:src/software_spi.c ****     
-  56:src/software_spi.c ****     // Reconfigure all pins as analog input (low power)
-  57:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 300              		.loc 1 57 5 is_stmt 1 view .LVU75
- 301              		.loc 1 57 26 is_stmt 0 view .LVU76
+  59:src/software_spi.c ****     
+  60:src/software_spi.c ****     // Reconfigure all pins as analog input (low power)
+  61:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+ 300              		.loc 1 61 5 is_stmt 1 view .LVU75
+ 301              		.loc 1 61 26 is_stmt 0 view .LVU76
  302 000e 0323     		movs	r3, #3
  303 0010 0193     		str	r3, [sp, #4]
-  58:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 304              		.loc 1 58 5 is_stmt 1 view .LVU77
-  59:src/software_spi.c ****     
-  60:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MOSI_PIN;
- 305              		.loc 1 60 5 view .LVU78
- 306              		.loc 1 60 25 is_stmt 0 view .LVU79
+  62:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 304              		.loc 1 62 5 is_stmt 1 view .LVU77
+  63:src/software_spi.c ****     
+  64:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MOSI_PIN;
+ 305              		.loc 1 64 5 view .LVU78
+ 306              		.loc 1 64 25 is_stmt 0 view .LVU79
  307 0012 4FF40063 		mov	r3, #2048
  308 0016 0093     		str	r3, [sp]
-  61:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MOSI_PORT, &GPIO_InitStruct);
- 309              		.loc 1 61 5 is_stmt 1 view .LVU80
+  65:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MOSI_PORT, &GPIO_InitStruct);
+ 309              		.loc 1 65 5 is_stmt 1 view .LVU80
  310 0018 104C     		ldr	r4, .L11
  311 001a 6946     		mov	r1, sp
  312 001c 2046     		mov	r0, r4
  313 001e FFF7FEFF 		bl	HAL_GPIO_Init
  314              	.LVL8:
-  62:src/software_spi.c ****     
-  63:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MISO_PIN;
- 315              		.loc 1 63 5 view .LVU81
- 316              		.loc 1 63 25 is_stmt 0 view .LVU82
+  66:src/software_spi.c ****     
+  67:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_MISO_PIN;
+ 315              		.loc 1 67 5 view .LVU81
+ 316              		.loc 1 67 25 is_stmt 0 view .LVU82
  317 0022 4FF48063 		mov	r3, #1024
  318 0026 0093     		str	r3, [sp]
-  64:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MISO_PORT, &GPIO_InitStruct);
- 319              		.loc 1 64 5 is_stmt 1 view .LVU83
+  68:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MISO_PORT, &GPIO_InitStruct);
+ARM GAS  /tmp/cccm57pY.s 			page 15
+
+
+ 319              		.loc 1 68 5 is_stmt 1 view .LVU83
  320 0028 6946     		mov	r1, sp
  321 002a 2046     		mov	r0, r4
  322 002c FFF7FEFF 		bl	HAL_GPIO_Init
-ARM GAS  /tmp/cccv3qXT.s 			page 15
-
-
  323              	.LVL9:
-  65:src/software_spi.c ****     
-  66:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_SCK_PIN;
- 324              		.loc 1 66 5 view .LVU84
- 325              		.loc 1 66 25 is_stmt 0 view .LVU85
+  69:src/software_spi.c ****     
+  70:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_SCK_PIN;
+ 324              		.loc 1 70 5 view .LVU84
+ 325              		.loc 1 70 25 is_stmt 0 view .LVU85
  326 0030 0823     		movs	r3, #8
  327 0032 0093     		str	r3, [sp]
-  67:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_SCK_PORT, &GPIO_InitStruct);
- 328              		.loc 1 67 5 is_stmt 1 view .LVU86
+  71:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_SCK_PORT, &GPIO_InitStruct);
+ 328              		.loc 1 71 5 is_stmt 1 view .LVU86
  329 0034 0A4D     		ldr	r5, .L11+4
  330 0036 6946     		mov	r1, sp
  331 0038 2846     		mov	r0, r5
  332 003a FFF7FEFF 		bl	HAL_GPIO_Init
  333              	.LVL10:
-  68:src/software_spi.c ****     
-  69:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_CS_PIN;
- 334              		.loc 1 69 5 view .LVU87
- 335              		.loc 1 69 25 is_stmt 0 view .LVU88
+  72:src/software_spi.c ****     
+  73:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_CS_PIN;
+ 334              		.loc 1 73 5 view .LVU87
+ 335              		.loc 1 73 25 is_stmt 0 view .LVU88
  336 003e 0423     		movs	r3, #4
  337 0040 0093     		str	r3, [sp]
-  70:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_CS_PORT, &GPIO_InitStruct);
- 338              		.loc 1 70 5 is_stmt 1 view .LVU89
+  74:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_CS_PORT, &GPIO_InitStruct);
+ 338              		.loc 1 74 5 is_stmt 1 view .LVU89
  339 0042 6946     		mov	r1, sp
  340 0044 2846     		mov	r0, r5
  341 0046 FFF7FEFF 		bl	HAL_GPIO_Init
  342              	.LVL11:
-  71:src/software_spi.c ****     
-  72:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_INT_PIN;
- 343              		.loc 1 72 5 view .LVU90
- 344              		.loc 1 72 25 is_stmt 0 view .LVU91
+  75:src/software_spi.c ****     
+  76:src/software_spi.c ****     GPIO_InitStruct.Pin = SOFT_SPI_INT_PIN;
+ 343              		.loc 1 76 5 view .LVU90
+ 344              		.loc 1 76 25 is_stmt 0 view .LVU91
  345 004a 4FF48053 		mov	r3, #4096
  346 004e 0093     		str	r3, [sp]
-  73:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_INT_PORT, &GPIO_InitStruct);
- 347              		.loc 1 73 5 is_stmt 1 view .LVU92
+  77:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_INT_PORT, &GPIO_InitStruct);
+ 347              		.loc 1 77 5 is_stmt 1 view .LVU92
  348 0050 6946     		mov	r1, sp
  349 0052 2046     		mov	r0, r4
  350 0054 FFF7FEFF 		bl	HAL_GPIO_Init
  351              	.LVL12:
-  74:src/software_spi.c **** }
- 352              		.loc 1 74 1 is_stmt 0 view .LVU93
+  78:src/software_spi.c **** }
+ 352              		.loc 1 78 1 is_stmt 0 view .LVU93
  353 0058 05B0     		add	sp, sp, #20
  354              	.LCFI7:
  355              		.cfi_def_cfa_offset 12
@@ -894,73 +898,73 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  363              		.cfi_endproc
  364              	.LFE68:
  366              		.section	.text.SoftSPI_SetMode,"ax",%progbits
+ARM GAS  /tmp/cccm57pY.s 			page 16
+
+
  367              		.align	1
  368              		.p2align 2,,3
  369              		.global	SoftSPI_SetMode
  370              		.syntax unified
-ARM GAS  /tmp/cccv3qXT.s 			page 16
-
-
  371              		.thumb
  372              		.thumb_func
  374              	SoftSPI_SetMode:
  375              	.LVL13:
  376              	.LFB69:
-  75:src/software_spi.c **** 
-  76:src/software_spi.c **** void SoftSPI_SetMode(uint8_t mode) {
- 377              		.loc 1 76 36 is_stmt 1 view -0
+  79:src/software_spi.c **** 
+  80:src/software_spi.c **** void SoftSPI_SetMode(uint8_t mode) {
+ 377              		.loc 1 80 36 is_stmt 1 view -0
  378              		.cfi_startproc
  379              		@ args = 0, pretend = 0, frame = 0
  380              		@ frame_needed = 0, uses_anonymous_args = 0
- 381              		.loc 1 76 36 is_stmt 0 view .LVU95
+ 381              		.loc 1 80 36 is_stmt 0 view .LVU95
  382 0000 08B5     		push	{r3, lr}
  383              	.LCFI8:
  384              		.cfi_def_cfa_offset 8
  385              		.cfi_offset 3, -8
  386              		.cfi_offset 14, -4
-  77:src/software_spi.c ****     spi_mode = mode & 0x03;
- 387              		.loc 1 77 5 is_stmt 1 view .LVU96
- 388              		.loc 1 77 21 is_stmt 0 view .LVU97
+  81:src/software_spi.c ****     spi_mode = mode & 0x03;
+ 387              		.loc 1 81 5 is_stmt 1 view .LVU96
+ 388              		.loc 1 81 21 is_stmt 0 view .LVU97
  389 0002 00F00300 		and	r0, r0, #3
  390              	.LVL14:
- 391              		.loc 1 77 14 view .LVU98
+ 391              		.loc 1 81 14 view .LVU98
  392 0006 094B     		ldr	r3, .L18
  393 0008 1870     		strb	r0, [r3]
-  78:src/software_spi.c ****     
-  79:src/software_spi.c ****     // Set clock idle state based on mode
-  80:src/software_spi.c ****     if (spi_mode == SPI_MODE2 || spi_mode == SPI_MODE3) {
- 394              		.loc 1 80 5 is_stmt 1 view .LVU99
- 395              		.loc 1 80 31 is_stmt 0 view .LVU100
+  82:src/software_spi.c ****     
+  83:src/software_spi.c ****     // Set clock idle state based on mode
+  84:src/software_spi.c ****     if (spi_mode == SPI_MODE2 || spi_mode == SPI_MODE3) {
+ 394              		.loc 1 84 5 is_stmt 1 view .LVU99
+ 395              		.loc 1 84 31 is_stmt 0 view .LVU100
  396 000a 0238     		subs	r0, r0, #2
  397 000c C0B2     		uxtb	r0, r0
- 398              		.loc 1 80 8 view .LVU101
+ 398              		.loc 1 84 8 view .LVU101
  399 000e 0128     		cmp	r0, #1
  400 0010 05D9     		bls	.L17
-  81:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_SET);
-  82:src/software_spi.c ****     } else {
-  83:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_RESET);
- 401              		.loc 1 83 9 is_stmt 1 view .LVU102
+  85:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_SET);
+  86:src/software_spi.c ****     } else {
+  87:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_RESET);
+ 401              		.loc 1 87 9 is_stmt 1 view .LVU102
  402 0012 0022     		movs	r2, #0
  403 0014 0821     		movs	r1, #8
  404 0016 0648     		ldr	r0, .L18+4
  405 0018 FFF7FEFF 		bl	HAL_GPIO_WritePin
  406              	.LVL15:
  407              	.L13:
-  84:src/software_spi.c ****     }
-  85:src/software_spi.c **** }
- 408              		.loc 1 85 1 is_stmt 0 view .LVU103
+  88:src/software_spi.c ****     }
+  89:src/software_spi.c **** }
+ 408              		.loc 1 89 1 is_stmt 0 view .LVU103
  409 001c 08BD     		pop	{r3, pc}
  410              	.L17:
-  81:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_SET);
- 411              		.loc 1 81 9 is_stmt 1 view .LVU104
+  85:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_SET);
+ 411              		.loc 1 85 9 is_stmt 1 view .LVU104
  412 001e 0122     		movs	r2, #1
+ARM GAS  /tmp/cccm57pY.s 			page 17
+
+
  413 0020 0821     		movs	r1, #8
  414 0022 0348     		ldr	r0, .L18+4
  415 0024 FFF7FEFF 		bl	HAL_GPIO_WritePin
  416              	.LVL16:
-ARM GAS  /tmp/cccv3qXT.s 			page 17
-
-
  417 0028 F8E7     		b	.L13
  418              	.L19:
  419 002a 00BF     		.align	2
@@ -978,9 +982,9 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  432              		.thumb_func
  434              	SoftSPI_CS_Low:
  435              	.LFB70:
-  86:src/software_spi.c **** 
-  87:src/software_spi.c **** void SoftSPI_CS_Low(void) {
- 436              		.loc 1 87 27 view -0
+  90:src/software_spi.c **** 
+  91:src/software_spi.c **** void SoftSPI_CS_Low(void) {
+ 436              		.loc 1 91 27 view -0
  437              		.cfi_startproc
  438              		@ args = 0, pretend = 0, frame = 0
  439              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -989,19 +993,19 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  442              		.cfi_def_cfa_offset 8
  443              		.cfi_offset 3, -8
  444              		.cfi_offset 14, -4
-  88:src/software_spi.c ****     SOFT_SPI_CS_PORT->BRR = SOFT_SPI_CS_PIN;  // Direct register: faster
- 445              		.loc 1 88 5 view .LVU106
- 446              		.loc 1 88 27 is_stmt 0 view .LVU107
+  92:src/software_spi.c ****     SOFT_SPI_CS_PORT->BRR = SOFT_SPI_CS_PIN;  // Direct register: faster
+ 445              		.loc 1 92 5 view .LVU106
+ 446              		.loc 1 92 27 is_stmt 0 view .LVU107
  447 0002 034B     		ldr	r3, .L22
  448 0004 0422     		movs	r2, #4
  449 0006 5A61     		str	r2, [r3, #20]
-  89:src/software_spi.c ****     // MCP2515 needs 100ns CS setup time before first clock
-  90:src/software_spi.c ****     SoftSPI_Delay();
- 450              		.loc 1 90 5 is_stmt 1 view .LVU108
+  93:src/software_spi.c ****     // MCP2515 needs 100ns CS setup time before first clock
+  94:src/software_spi.c ****     SoftSPI_Delay();
+ 450              		.loc 1 94 5 is_stmt 1 view .LVU108
  451 0008 FFF7FEFF 		bl	SoftSPI_Delay
  452              	.LVL17:
-  91:src/software_spi.c **** }
- 453              		.loc 1 91 1 is_stmt 0 view .LVU109
+  95:src/software_spi.c **** }
+ 453              		.loc 1 95 1 is_stmt 0 view .LVU109
  454 000c 08BD     		pop	{r3, pc}
  455              	.L23:
  456 000e 00BF     		.align	2
@@ -1014,28 +1018,28 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  464              		.p2align 2,,3
  465              		.global	SoftSPI_CS_High
  466              		.syntax unified
+ARM GAS  /tmp/cccm57pY.s 			page 18
+
+
  467              		.thumb
  468              		.thumb_func
  470              	SoftSPI_CS_High:
  471              	.LFB71:
-ARM GAS  /tmp/cccv3qXT.s 			page 18
-
-
-  92:src/software_spi.c **** 
-  93:src/software_spi.c **** void SoftSPI_CS_High(void) {
- 472              		.loc 1 93 28 is_stmt 1 view -0
+  96:src/software_spi.c **** 
+  97:src/software_spi.c **** void SoftSPI_CS_High(void) {
+ 472              		.loc 1 97 28 is_stmt 1 view -0
  473              		.cfi_startproc
  474              		@ args = 0, pretend = 0, frame = 0
  475              		@ frame_needed = 0, uses_anonymous_args = 0
  476              		@ link register save eliminated.
-  94:src/software_spi.c ****     SOFT_SPI_CS_PORT->BSRR = SOFT_SPI_CS_PIN;  // Direct register: faster
- 477              		.loc 1 94 5 view .LVU111
- 478              		.loc 1 94 28 is_stmt 0 view .LVU112
+  98:src/software_spi.c ****     SOFT_SPI_CS_PORT->BSRR = SOFT_SPI_CS_PIN;  // Direct register: faster
+ 477              		.loc 1 98 5 view .LVU111
+ 478              		.loc 1 98 28 is_stmt 0 view .LVU112
  479 0000 014B     		ldr	r3, .L25
  480 0002 0422     		movs	r2, #4
  481 0004 1A61     		str	r2, [r3, #16]
-  95:src/software_spi.c **** }
- 482              		.loc 1 95 1 view .LVU113
+  99:src/software_spi.c **** }
+ 482              		.loc 1 99 1 view .LVU113
  483 0006 7047     		bx	lr
  484              	.L26:
  485              		.align	2
@@ -1053,34 +1057,34 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  499              	SoftSPI_Transfer:
  500              	.LVL18:
  501              	.LFB72:
-  96:src/software_spi.c **** 
-  97:src/software_spi.c **** // SPI Mode 0 transfer - v1.24: Sample MISO just before falling edge
-  98:src/software_spi.c **** // v1.22 showed first 4 bits correct, last 4 wrong = timing drift
-  99:src/software_spi.c **** __attribute__((optimize("-O3")))
- 100:src/software_spi.c **** uint8_t SoftSPI_Transfer(uint8_t data) {
- 502              		.loc 1 100 40 is_stmt 1 view -0
+ 100:src/software_spi.c **** 
+ 101:src/software_spi.c **** // SPI Mode 0 transfer - v1.24: Sample MISO just before falling edge
+ 102:src/software_spi.c **** // v1.22 showed first 4 bits correct, last 4 wrong = timing drift
+ 103:src/software_spi.c **** __attribute__((optimize("-O3")))
+ 104:src/software_spi.c **** uint8_t SoftSPI_Transfer(uint8_t data) {
+ 502              		.loc 1 104 40 is_stmt 1 view -0
  503              		.cfi_startproc
  504              		@ args = 0, pretend = 0, frame = 0
  505              		@ frame_needed = 0, uses_anonymous_args = 0
- 101:src/software_spi.c ****     uint8_t received = 0;
- 506              		.loc 1 101 5 view .LVU115
- 102:src/software_spi.c **** 
- 103:src/software_spi.c ****     // SPI Mode 0: CPOL=0, CPHA=0
- 104:src/software_spi.c ****     // MCP2515 outputs on falling edge, we sample on rising (or during high)
- 105:src/software_spi.c ****     // Try sampling LATE in the clock high period for maximum stability
+ 105:src/software_spi.c ****     uint8_t received = 0;
+ 506              		.loc 1 105 5 view .LVU115
  106:src/software_spi.c **** 
- 107:src/software_spi.c ****     for (int i = 7; i >= 0; i--) {
- 507              		.loc 1 107 5 view .LVU116
+ 107:src/software_spi.c ****     // SPI Mode 0: CPOL=0, CPHA=0
+ 108:src/software_spi.c ****     // MCP2515 outputs on falling edge, we sample on rising (or during high)
+ 109:src/software_spi.c ****     // Try sampling LATE in the clock high period for maximum stability
+ 110:src/software_spi.c **** 
+ 111:src/software_spi.c ****     for (int i = 7; i >= 0; i--) {
+ 507              		.loc 1 111 5 view .LVU116
  508              	.LBB91:
- 509              		.loc 1 107 10 view .LVU117
- 510              		.loc 1 107 23 discriminator 1 view .LVU118
+ 509              		.loc 1 111 10 view .LVU117
+ 510              		.loc 1 111 23 discriminator 1 view .LVU118
+ARM GAS  /tmp/cccm57pY.s 			page 19
+
+
  511              	.LBE91:
- 100:src/software_spi.c ****     uint8_t received = 0;
- 512              		.loc 1 100 40 is_stmt 0 view .LVU119
+ 104:src/software_spi.c ****     uint8_t received = 0;
+ 512              		.loc 1 104 40 is_stmt 0 view .LVU119
  513 0000 F0B5     		push	{r4, r5, r6, r7, lr}
-ARM GAS  /tmp/cccv3qXT.s 			page 19
-
-
  514              	.LCFI10:
  515              		.cfi_def_cfa_offset 20
  516              		.cfi_offset 4, -20
@@ -1089,61 +1093,61 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  519              		.cfi_offset 7, -8
  520              		.cfi_offset 14, -4
  521              	.LBB174:
- 522              		.loc 1 107 14 view .LVU120
+ 522              		.loc 1 111 14 view .LVU120
  523 0002 0723     		movs	r3, #7
  524              	.LBE174:
- 101:src/software_spi.c ****     uint8_t received = 0;
- 525              		.loc 1 101 13 view .LVU121
+ 105:src/software_spi.c ****     uint8_t received = 0;
+ 525              		.loc 1 105 13 view .LVU121
  526 0004 0022     		movs	r2, #0
  527              	.LBB175:
- 108:src/software_spi.c ****         // 1. Set MOSI bit
- 109:src/software_spi.c ****         if (data & (1 << i)) {
- 110:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
- 111:src/software_spi.c ****         } else {
- 112:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BRR = SOFT_SPI_MOSI_PIN;
- 528              		.loc 1 112 37 view .LVU122
+ 112:src/software_spi.c ****         // 1. Set MOSI bit
+ 113:src/software_spi.c ****         if (data & (1 << i)) {
+ 114:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
+ 115:src/software_spi.c ****         } else {
+ 116:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BRR = SOFT_SPI_MOSI_PIN;
+ 528              		.loc 1 116 37 view .LVU122
  529 0006 4FF40067 		mov	r7, #2048
- 113:src/software_spi.c ****         }
- 114:src/software_spi.c **** 
- 115:src/software_spi.c ****         // 2. MOSI setup time
- 116:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 117:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 117:src/software_spi.c ****         }
  118:src/software_spi.c **** 
- 119:src/software_spi.c ****         // 3. RISING EDGE
- 120:src/software_spi.c ****         SOFT_SPI_SCK_PORT->BSRR = SOFT_SPI_SCK_PIN;
- 530              		.loc 1 120 33 view .LVU123
+ 119:src/software_spi.c ****         // 2. MOSI setup time
+ 120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 121:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 122:src/software_spi.c **** 
+ 123:src/software_spi.c ****         // 3. RISING EDGE
+ 124:src/software_spi.c ****         SOFT_SPI_SCK_PORT->BSRR = SOFT_SPI_SCK_PIN;
+ 530              		.loc 1 124 33 view .LVU123
  531 000a 0824     		movs	r4, #8
- 121:src/software_spi.c **** 
- 122:src/software_spi.c ****         // 4. Hold clock high - let signal stabilize
- 123:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 124:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 125:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 126:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 127:src/software_spi.c **** 
- 128:src/software_spi.c ****         // 5. Sample MISO NOW (late in high period, just before falling)
- 129:src/software_spi.c ****         if (SOFT_SPI_MISO_PORT->IDR & SOFT_SPI_MISO_PIN) {
- 130:src/software_spi.c ****             received |= (1 << i);
- 532              		.loc 1 130 28 view .LVU124
+ 125:src/software_spi.c **** 
+ 126:src/software_spi.c ****         // 4. Hold clock high - let signal stabilize
+ 127:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 128:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 130:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 131:src/software_spi.c **** 
+ 132:src/software_spi.c ****         // 5. Sample MISO NOW (late in high period, just before falling)
+ 133:src/software_spi.c ****         if (SOFT_SPI_MISO_PORT->IDR & SOFT_SPI_MISO_PIN) {
+ 134:src/software_spi.c ****             received |= (1 << i);
+ 532              		.loc 1 134 28 view .LVU124
  533 000c 4FF0010E 		mov	lr, #1
- 112:src/software_spi.c ****         }
- 534              		.loc 1 112 37 view .LVU125
+ 116:src/software_spi.c ****         }
+ 534              		.loc 1 116 37 view .LVU125
  535 0010 1E4D     		ldr	r5, .L38
- 120:src/software_spi.c **** 
- 536              		.loc 1 120 33 view .LVU126
+ 124:src/software_spi.c **** 
+ 536              		.loc 1 124 33 view .LVU126
  537 0012 1F49     		ldr	r1, .L38+4
  538              	.LVL19:
  539              	.L31:
- 109:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
- 540              		.loc 1 109 9 is_stmt 1 view .LVU127
- 110:src/software_spi.c ****         } else {
- 541              		.loc 1 110 13 view .LVU128
- 112:src/software_spi.c ****         }
-ARM GAS  /tmp/cccv3qXT.s 			page 20
+ 113:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
+ARM GAS  /tmp/cccm57pY.s 			page 20
 
 
- 542              		.loc 1 112 13 view .LVU129
- 116:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 543              		.loc 1 116 9 view .LVU130
+ 540              		.loc 1 113 9 is_stmt 1 view .LVU127
+ 114:src/software_spi.c ****         } else {
+ 541              		.loc 1 114 13 view .LVU128
+ 116:src/software_spi.c ****         }
+ 542              		.loc 1 116 13 view .LVU129
+ 120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 543              		.loc 1 120 9 view .LVU130
  544              	.LBB92:
  545              	.LBI92:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1152,18 +1156,18 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  548              		.loc 3 375 3 view .LVU132
  549              	.LBE93:
  550              	.LBE92:
- 109:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
- 551              		.loc 1 109 13 is_stmt 0 view .LVU133
+ 113:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
+ 551              		.loc 1 113 13 is_stmt 0 view .LVU133
  552 0014 40FA03F6 		asr	r6, r0, r3
- 109:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
- 553              		.loc 1 109 12 view .LVU134
+ 113:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
+ 553              		.loc 1 113 12 view .LVU134
  554 0018 F607     		lsls	r6, r6, #31
- 110:src/software_spi.c ****         } else {
- 555              		.loc 1 110 38 view .LVU135
+ 114:src/software_spi.c ****         } else {
+ 555              		.loc 1 114 38 view .LVU135
  556 001a 4CBF     		ite	mi
  557 001c 2F61     		strmi	r7, [r5, #16]
- 112:src/software_spi.c ****         }
- 558              		.loc 1 112 37 view .LVU136
+ 116:src/software_spi.c ****         }
+ 558              		.loc 1 116 37 view .LVU136
  559 001e 6F61     		strpl	r7, [r5, #20]
  560              	.LBB95:
  561              	.LBB94:
@@ -1176,8 +1180,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  568              		.syntax unified
  569              	.LBE94:
  570              	.LBE95:
- 116:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 571              		.loc 1 116 18 is_stmt 1 discriminator 1 view .LVU138
+ 120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 571              		.loc 1 120 18 is_stmt 1 discriminator 1 view .LVU138
  572              	.LBB96:
  573              	.LBI96:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1192,15 +1196,15 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  582              		.syntax unified
  583              	.LBE97:
  584              	.LBE96:
- 116:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 585              		.loc 1 116 27 discriminator 2 view .LVU141
+ 120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 585              		.loc 1 120 27 discriminator 2 view .LVU141
+ARM GAS  /tmp/cccm57pY.s 			page 21
+
+
  586              	.LBB98:
  587              	.LBI98:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  588              		.loc 3 373 53 view .LVU142
-ARM GAS  /tmp/cccv3qXT.s 			page 21
-
-
  589              	.LBB99:
  590              		.loc 3 375 3 view .LVU143
  591              		.syntax unified
@@ -1211,8 +1215,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  596              		.syntax unified
  597              	.LBE99:
  598              	.LBE98:
- 116:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 599              		.loc 1 116 36 discriminator 3 view .LVU144
+ 120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 599              		.loc 1 120 36 discriminator 3 view .LVU144
  600              	.LBB100:
  601              	.LBI100:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1227,8 +1231,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  610              		.syntax unified
  611              	.LBE101:
  612              	.LBE100:
- 117:src/software_spi.c **** 
- 613              		.loc 1 117 9 view .LVU147
+ 121:src/software_spi.c **** 
+ 613              		.loc 1 121 9 view .LVU147
  614              	.LBB102:
  615              	.LBI102:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1243,8 +1247,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  624              		.syntax unified
  625              	.LBE103:
  626              	.LBE102:
- 117:src/software_spi.c **** 
- 627              		.loc 1 117 18 discriminator 1 view .LVU150
+ 121:src/software_spi.c **** 
+ 627              		.loc 1 121 18 discriminator 1 view .LVU150
  628              	.LBB104:
  629              	.LBI104:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1254,16 +1258,16 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  633              		.syntax unified
  634              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
  635 002a 00BF     		nop
+ARM GAS  /tmp/cccm57pY.s 			page 22
+
+
  636              	@ 0 "" 2
  637              		.thumb
  638              		.syntax unified
  639              	.LBE105:
-ARM GAS  /tmp/cccv3qXT.s 			page 22
-
-
  640              	.LBE104:
- 117:src/software_spi.c **** 
- 641              		.loc 1 117 27 discriminator 2 view .LVU153
+ 121:src/software_spi.c **** 
+ 641              		.loc 1 121 27 discriminator 2 view .LVU153
  642              	.LBB106:
  643              	.LBI106:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1278,8 +1282,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  652              		.syntax unified
  653              	.LBE107:
  654              	.LBE106:
- 117:src/software_spi.c **** 
- 655              		.loc 1 117 36 discriminator 3 view .LVU156
+ 121:src/software_spi.c **** 
+ 655              		.loc 1 121 36 discriminator 3 view .LVU156
  656              	.LBB108:
  657              	.LBI108:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1294,13 +1298,13 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  666              		.syntax unified
  667              	.LBE109:
  668              	.LBE108:
- 120:src/software_spi.c **** 
- 669              		.loc 1 120 9 view .LVU159
- 120:src/software_spi.c **** 
- 670              		.loc 1 120 33 is_stmt 0 view .LVU160
+ 124:src/software_spi.c **** 
+ 669              		.loc 1 124 9 view .LVU159
+ 124:src/software_spi.c **** 
+ 670              		.loc 1 124 33 is_stmt 0 view .LVU160
  671 0030 0C61     		str	r4, [r1, #16]
- 123:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 672              		.loc 1 123 9 is_stmt 1 view .LVU161
+ 127:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 672              		.loc 1 127 9 is_stmt 1 view .LVU161
  673              	.LBB110:
  674              	.LBI110:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1314,13 +1318,13 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  682              		.thumb
  683              		.syntax unified
  684              	.LBE111:
+ARM GAS  /tmp/cccm57pY.s 			page 23
+
+
  685              	.LBE110:
- 123:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 686              		.loc 1 123 18 discriminator 1 view .LVU164
+ 127:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 686              		.loc 1 127 18 discriminator 1 view .LVU164
  687              	.LBB112:
-ARM GAS  /tmp/cccv3qXT.s 			page 23
-
-
  688              	.LBI112:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  689              		.loc 3 373 53 view .LVU165
@@ -1334,8 +1338,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  697              		.syntax unified
  698              	.LBE113:
  699              	.LBE112:
- 123:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 700              		.loc 1 123 27 discriminator 2 view .LVU167
+ 127:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 700              		.loc 1 127 27 discriminator 2 view .LVU167
  701              	.LBB114:
  702              	.LBI114:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1350,8 +1354,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  711              		.syntax unified
  712              	.LBE115:
  713              	.LBE114:
- 123:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 714              		.loc 1 123 36 discriminator 3 view .LVU170
+ 127:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 714              		.loc 1 127 36 discriminator 3 view .LVU170
  715              	.LBB116:
  716              	.LBI116:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1366,27 +1370,27 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  725              		.syntax unified
  726              	.LBE117:
  727              	.LBE116:
- 124:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 728              		.loc 1 124 9 view .LVU173
+ 128:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 728              		.loc 1 128 9 view .LVU173
  729              	.LBB118:
  730              	.LBI118:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  731              		.loc 3 373 53 view .LVU174
  732              	.LBB119:
  733              		.loc 3 375 3 view .LVU175
+ARM GAS  /tmp/cccm57pY.s 			page 24
+
+
  734              		.syntax unified
  735              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
  736 003a 00BF     		nop
  737              	@ 0 "" 2
-ARM GAS  /tmp/cccv3qXT.s 			page 24
-
-
  738              		.thumb
  739              		.syntax unified
  740              	.LBE119:
  741              	.LBE118:
- 124:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 742              		.loc 1 124 18 discriminator 1 view .LVU176
+ 128:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 742              		.loc 1 128 18 discriminator 1 view .LVU176
  743              	.LBB120:
  744              	.LBI120:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1401,8 +1405,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  753              		.syntax unified
  754              	.LBE121:
  755              	.LBE120:
- 124:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 756              		.loc 1 124 27 discriminator 2 view .LVU179
+ 128:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 756              		.loc 1 128 27 discriminator 2 view .LVU179
  757              	.LBB122:
  758              	.LBI122:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1417,8 +1421,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  767              		.syntax unified
  768              	.LBE123:
  769              	.LBE122:
- 124:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 770              		.loc 1 124 36 discriminator 3 view .LVU182
+ 128:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 770              		.loc 1 128 36 discriminator 3 view .LVU182
  771              	.LBB124:
  772              	.LBI124:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1433,14 +1437,14 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  781              		.syntax unified
  782              	.LBE125:
  783              	.LBE124:
- 125:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 784              		.loc 1 125 9 view .LVU185
+ 129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ARM GAS  /tmp/cccm57pY.s 			page 25
+
+
+ 784              		.loc 1 129 9 view .LVU185
  785              	.LBB126:
  786              	.LBI126:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/cccv3qXT.s 			page 25
-
-
  787              		.loc 3 373 53 view .LVU186
  788              	.LBB127:
  789              		.loc 3 375 3 view .LVU187
@@ -1452,8 +1456,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  795              		.syntax unified
  796              	.LBE127:
  797              	.LBE126:
- 125:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 798              		.loc 1 125 18 discriminator 1 view .LVU188
+ 129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 798              		.loc 1 129 18 discriminator 1 view .LVU188
  799              	.LBB128:
  800              	.LBI128:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1468,8 +1472,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  809              		.syntax unified
  810              	.LBE129:
  811              	.LBE128:
- 125:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 812              		.loc 1 125 27 discriminator 2 view .LVU191
+ 129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 812              		.loc 1 129 27 discriminator 2 view .LVU191
  813              	.LBB130:
  814              	.LBI130:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1484,8 +1488,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  823              		.syntax unified
  824              	.LBE131:
  825              	.LBE130:
- 125:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 826              		.loc 1 125 36 discriminator 3 view .LVU194
+ 129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 826              		.loc 1 129 36 discriminator 3 view .LVU194
  827              	.LBB132:
  828              	.LBI132:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1494,17 +1498,17 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  831              		.loc 3 375 3 view .LVU196
  832              		.syntax unified
  833              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ARM GAS  /tmp/cccm57pY.s 			page 26
+
+
  834 0048 00BF     		nop
  835              	@ 0 "" 2
  836              		.thumb
  837              		.syntax unified
-ARM GAS  /tmp/cccv3qXT.s 			page 26
-
-
  838              	.LBE133:
  839              	.LBE132:
- 126:src/software_spi.c **** 
- 840              		.loc 1 126 9 view .LVU197
+ 130:src/software_spi.c **** 
+ 840              		.loc 1 130 9 view .LVU197
  841              	.LBB134:
  842              	.LBI134:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1519,8 +1523,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  851              		.syntax unified
  852              	.LBE135:
  853              	.LBE134:
- 126:src/software_spi.c **** 
- 854              		.loc 1 126 18 discriminator 1 view .LVU200
+ 130:src/software_spi.c **** 
+ 854              		.loc 1 130 18 discriminator 1 view .LVU200
  855              	.LBB136:
  856              	.LBI136:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1535,8 +1539,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  865              		.syntax unified
  866              	.LBE137:
  867              	.LBE136:
- 126:src/software_spi.c **** 
- 868              		.loc 1 126 27 discriminator 2 view .LVU203
+ 130:src/software_spi.c **** 
+ 868              		.loc 1 130 27 discriminator 2 view .LVU203
  869              	.LBB138:
  870              	.LBI138:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1551,16 +1555,16 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  879              		.syntax unified
  880              	.LBE139:
  881              	.LBE138:
- 126:src/software_spi.c **** 
- 882              		.loc 1 126 36 discriminator 3 view .LVU206
+ 130:src/software_spi.c **** 
+ 882              		.loc 1 130 36 discriminator 3 view .LVU206
  883              	.LBB140:
+ARM GAS  /tmp/cccm57pY.s 			page 27
+
+
  884              	.LBI140:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  885              		.loc 3 373 53 view .LVU207
  886              	.LBB141:
-ARM GAS  /tmp/cccv3qXT.s 			page 27
-
-
  887              		.loc 3 375 3 view .LVU208
  888              		.syntax unified
  889              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
@@ -1570,35 +1574,35 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  893              		.syntax unified
  894              	.LBE141:
  895              	.LBE140:
- 129:src/software_spi.c ****             received |= (1 << i);
- 896              		.loc 1 129 9 view .LVU209
- 897              		.loc 1 130 13 view .LVU210
- 129:src/software_spi.c ****             received |= (1 << i);
- 898              		.loc 1 129 31 is_stmt 0 view .LVU211
+ 133:src/software_spi.c ****             received |= (1 << i);
+ 896              		.loc 1 133 9 view .LVU209
+ 897              		.loc 1 134 13 view .LVU210
+ 133:src/software_spi.c ****             received |= (1 << i);
+ 898              		.loc 1 133 31 is_stmt 0 view .LVU211
  899 0052 AE68     		ldr	r6, [r5, #8]
- 900              		.loc 1 130 28 view .LVU212
+ 900              		.loc 1 134 28 view .LVU212
  901 0054 0EFA03FC 		lsl	ip, lr, r3
- 129:src/software_spi.c ****             received |= (1 << i);
- 902              		.loc 1 129 12 view .LVU213
+ 133:src/software_spi.c ****             received |= (1 << i);
+ 902              		.loc 1 133 12 view .LVU213
  903 0058 7605     		lsls	r6, r6, #21
- 904              		.loc 1 130 22 view .LVU214
+ 904              		.loc 1 134 22 view .LVU214
  905 005a 44BF     		itt	mi
  906 005c 42EA0C02 		orrmi	r2, r2, ip
  907              	.LVL20:
- 908              		.loc 1 130 22 view .LVU215
+ 908              		.loc 1 134 22 view .LVU215
  909 0060 D2B2     		uxtbmi	r2, r2
  910              	.LVL21:
- 131:src/software_spi.c ****         }
- 132:src/software_spi.c **** 
- 133:src/software_spi.c ****         // 6. FALLING EDGE - MCP2515 shifts out next bit
- 134:src/software_spi.c ****         SOFT_SPI_SCK_PORT->BRR = SOFT_SPI_SCK_PIN;
- 911              		.loc 1 134 9 is_stmt 1 view .LVU216
- 912              		.loc 1 134 32 is_stmt 0 view .LVU217
+ 135:src/software_spi.c ****         }
+ 136:src/software_spi.c **** 
+ 137:src/software_spi.c ****         // 6. FALLING EDGE - MCP2515 shifts out next bit
+ 138:src/software_spi.c ****         SOFT_SPI_SCK_PORT->BRR = SOFT_SPI_SCK_PIN;
+ 911              		.loc 1 138 9 is_stmt 1 view .LVU216
+ 912              		.loc 1 138 32 is_stmt 0 view .LVU217
  913 0062 4C61     		str	r4, [r1, #20]
- 135:src/software_spi.c **** 
- 136:src/software_spi.c ****         // 7. Wait for data valid (tV=45ns) + margin
- 137:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 914              		.loc 1 137 9 is_stmt 1 view .LVU218
+ 139:src/software_spi.c **** 
+ 140:src/software_spi.c ****         // 7. Wait for data valid (tV=45ns) + margin
+ 141:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 914              		.loc 1 141 9 is_stmt 1 view .LVU218
  915              	.LBB142:
  916              	.LBI142:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1613,14 +1617,14 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  925              		.syntax unified
  926              	.LBE143:
  927              	.LBE142:
- 928              		.loc 1 137 18 discriminator 1 view .LVU221
+ 928              		.loc 1 141 18 discriminator 1 view .LVU221
+ARM GAS  /tmp/cccm57pY.s 			page 28
+
+
  929              	.LBB144:
  930              	.LBI144:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  931              		.loc 3 373 53 view .LVU222
-ARM GAS  /tmp/cccv3qXT.s 			page 28
-
-
  932              	.LBB145:
  933              		.loc 3 375 3 view .LVU223
  934              		.syntax unified
@@ -1631,7 +1635,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  939              		.syntax unified
  940              	.LBE145:
  941              	.LBE144:
- 942              		.loc 1 137 27 discriminator 2 view .LVU224
+ 942              		.loc 1 141 27 discriminator 2 view .LVU224
  943              	.LBB146:
  944              	.LBI146:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1646,7 +1650,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  953              		.syntax unified
  954              	.LBE147:
  955              	.LBE146:
- 956              		.loc 1 137 36 discriminator 3 view .LVU227
+ 956              		.loc 1 141 36 discriminator 3 view .LVU227
  957              	.LBB148:
  958              	.LBI148:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1661,8 +1665,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  967              		.syntax unified
  968              	.LBE149:
  969              	.LBE148:
- 138:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 970              		.loc 1 138 9 view .LVU230
+ 142:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 970              		.loc 1 142 9 view .LVU230
  971              	.LBB150:
  972              	.LBI150:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1674,13 +1678,13 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  978 006c 00BF     		nop
  979              	@ 0 "" 2
  980              		.thumb
+ARM GAS  /tmp/cccm57pY.s 			page 29
+
+
  981              		.syntax unified
  982              	.LBE151:
  983              	.LBE150:
- 984              		.loc 1 138 18 discriminator 1 view .LVU233
-ARM GAS  /tmp/cccv3qXT.s 			page 29
-
-
+ 984              		.loc 1 142 18 discriminator 1 view .LVU233
  985              	.LBB152:
  986              	.LBI152:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1695,7 +1699,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  995              		.syntax unified
  996              	.LBE153:
  997              	.LBE152:
- 998              		.loc 1 138 27 discriminator 2 view .LVU236
+ 998              		.loc 1 142 27 discriminator 2 view .LVU236
  999              	.LBB154:
  1000              	.LBI154:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1710,7 +1714,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1009              		.syntax unified
  1010              	.LBE155:
  1011              	.LBE154:
- 1012              		.loc 1 138 36 discriminator 3 view .LVU239
+ 1012              		.loc 1 142 36 discriminator 3 view .LVU239
  1013              	.LBB156:
  1014              	.LBI156:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1725,8 +1729,8 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1023              		.syntax unified
  1024              	.LBE157:
  1025              	.LBE156:
- 139:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 1026              		.loc 1 139 9 view .LVU242
+ 143:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 1026              		.loc 1 143 9 view .LVU242
  1027              	.LBB158:
  1028              	.LBI158:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1734,17 +1738,17 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1030              	.LBB159:
  1031              		.loc 3 375 3 view .LVU244
  1032              		.syntax unified
+ARM GAS  /tmp/cccm57pY.s 			page 30
+
+
  1033              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
  1034 0074 00BF     		nop
  1035              	@ 0 "" 2
  1036              		.thumb
-ARM GAS  /tmp/cccv3qXT.s 			page 30
-
-
  1037              		.syntax unified
  1038              	.LBE159:
  1039              	.LBE158:
- 1040              		.loc 1 139 18 discriminator 1 view .LVU245
+ 1040              		.loc 1 143 18 discriminator 1 view .LVU245
  1041              	.LBB160:
  1042              	.LBI160:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1759,7 +1763,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1051              		.syntax unified
  1052              	.LBE161:
  1053              	.LBE160:
- 1054              		.loc 1 139 27 discriminator 2 view .LVU248
+ 1054              		.loc 1 143 27 discriminator 2 view .LVU248
  1055              	.LBB162:
  1056              	.LBI162:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1774,7 +1778,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1065              		.syntax unified
  1066              	.LBE163:
  1067              	.LBE162:
- 1068              		.loc 1 139 36 discriminator 3 view .LVU251
+ 1068              		.loc 1 143 36 discriminator 3 view .LVU251
  1069              	.LBB164:
  1070              	.LBI164:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1789,18 +1793,18 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1079              		.syntax unified
  1080              	.LBE165:
  1081              	.LBE164:
- 140:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
- 1082              		.loc 1 140 9 view .LVU254
+ 144:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
+ 1082              		.loc 1 144 9 view .LVU254
  1083              	.LBB166:
  1084              	.LBI166:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /tmp/cccm57pY.s 			page 31
+
+
  1085              		.loc 3 373 53 view .LVU255
  1086              	.LBB167:
  1087              		.loc 3 375 3 view .LVU256
  1088              		.syntax unified
-ARM GAS  /tmp/cccv3qXT.s 			page 31
-
-
  1089              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
  1090 007c 00BF     		nop
  1091              	@ 0 "" 2
@@ -1808,7 +1812,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1093              		.syntax unified
  1094              	.LBE167:
  1095              	.LBE166:
- 1096              		.loc 1 140 18 discriminator 1 view .LVU257
+ 1096              		.loc 1 144 18 discriminator 1 view .LVU257
  1097              	.LBB168:
  1098              	.LBI168:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1823,7 +1827,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1107              		.syntax unified
  1108              	.LBE169:
  1109              	.LBE168:
- 1110              		.loc 1 140 27 discriminator 2 view .LVU260
+ 1110              		.loc 1 144 27 discriminator 2 view .LVU260
  1111              	.LBB170:
  1112              	.LBI170:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1838,7 +1842,7 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1121              		.syntax unified
  1122              	.LBE171:
  1123              	.LBE170:
- 1124              		.loc 1 140 36 discriminator 3 view .LVU263
+ 1124              		.loc 1 144 36 discriminator 3 view .LVU263
  1125              	.LBB172:
  1126              	.LBI172:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1853,28 +1857,28 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1135              		.syntax unified
  1136              	.LBE173:
  1137              	.LBE172:
- 107:src/software_spi.c ****         // 1. Set MOSI bit
- 1138              		.loc 1 107 30 discriminator 2 view .LVU266
- 107:src/software_spi.c ****         // 1. Set MOSI bit
- 1139              		.loc 1 107 23 is_stmt 0 discriminator 1 view .LVU267
+ 111:src/software_spi.c ****         // 1. Set MOSI bit
+ARM GAS  /tmp/cccm57pY.s 			page 32
+
+
+ 1138              		.loc 1 111 30 discriminator 2 view .LVU266
+ 111:src/software_spi.c ****         // 1. Set MOSI bit
+ 1139              		.loc 1 111 23 is_stmt 0 discriminator 1 view .LVU267
  1140 0084 013B     		subs	r3, r3, #1
-ARM GAS  /tmp/cccv3qXT.s 			page 32
-
-
  1141              	.LVL22:
- 107:src/software_spi.c ****         // 1. Set MOSI bit
- 1142              		.loc 1 107 23 discriminator 1 view .LVU268
+ 111:src/software_spi.c ****         // 1. Set MOSI bit
+ 1142              		.loc 1 111 23 discriminator 1 view .LVU268
  1143 0086 C5D2     		bcs	.L31
  1144              	.LBE175:
- 141:src/software_spi.c ****     }
- 142:src/software_spi.c **** 
- 143:src/software_spi.c ****     return received;
- 1145              		.loc 1 143 5 is_stmt 1 view .LVU269
- 144:src/software_spi.c **** }
- 1146              		.loc 1 144 1 is_stmt 0 view .LVU270
+ 145:src/software_spi.c ****     }
+ 146:src/software_spi.c **** 
+ 147:src/software_spi.c ****     return received;
+ 1145              		.loc 1 147 5 is_stmt 1 view .LVU269
+ 148:src/software_spi.c **** }
+ 1146              		.loc 1 148 1 is_stmt 0 view .LVU270
  1147 0088 1046     		mov	r0, r2
  1148              	.LVL23:
- 1149              		.loc 1 144 1 view .LVU271
+ 1149              		.loc 1 148 1 view .LVU271
  1150 008a F0BD     		pop	{r4, r5, r6, r7, pc}
  1151              	.L39:
  1152              		.align	2
@@ -1893,13 +1897,13 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1167              	SoftSPI_TransferBuffer:
  1168              	.LVL24:
  1169              	.LFB73:
- 145:src/software_spi.c **** 
- 146:src/software_spi.c **** void SoftSPI_TransferBuffer(uint8_t *txData, uint8_t *rxData, uint16_t length) {
- 1170              		.loc 1 146 80 is_stmt 1 view -0
+ 149:src/software_spi.c **** 
+ 150:src/software_spi.c **** void SoftSPI_TransferBuffer(uint8_t *txData, uint8_t *rxData, uint16_t length) {
+ 1170              		.loc 1 150 80 is_stmt 1 view -0
  1171              		.cfi_startproc
  1172              		@ args = 0, pretend = 0, frame = 0
  1173              		@ frame_needed = 0, uses_anonymous_args = 0
- 1174              		.loc 1 146 80 is_stmt 0 view .LVU273
+ 1174              		.loc 1 150 80 is_stmt 0 view .LVU273
  1175 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
  1176              	.LCFI11:
  1177              		.cfi_def_cfa_offset 24
@@ -1912,47 +1916,47 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1184 0002 0746     		mov	r7, r0
  1185 0004 0E46     		mov	r6, r1
  1186 0006 1546     		mov	r5, r2
- 147:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
- 1187              		.loc 1 147 5 is_stmt 1 view .LVU274
+ 151:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
+ 1187              		.loc 1 151 5 is_stmt 1 view .LVU274
+ARM GAS  /tmp/cccm57pY.s 			page 33
+
+
  1188              	.LBB176:
- 1189              		.loc 1 147 10 view .LVU275
+ 1189              		.loc 1 151 10 view .LVU275
  1190              	.LVL25:
- 1191              		.loc 1 147 19 is_stmt 0 view .LVU276
-ARM GAS  /tmp/cccv3qXT.s 			page 33
-
-
+ 1191              		.loc 1 151 19 is_stmt 0 view .LVU276
  1192 0008 0024     		movs	r4, #0
- 1193              		.loc 1 147 5 view .LVU277
+ 1193              		.loc 1 151 5 view .LVU277
  1194 000a 05E0     		b	.L41
  1195              	.LVL26:
  1196              	.L42:
- 148:src/software_spi.c ****         rxData[i] = SoftSPI_Transfer(txData[i]);
- 1197              		.loc 1 148 9 is_stmt 1 view .LVU278
- 1198              		.loc 1 148 21 is_stmt 0 view .LVU279
+ 152:src/software_spi.c ****         rxData[i] = SoftSPI_Transfer(txData[i]);
+ 1197              		.loc 1 152 9 is_stmt 1 view .LVU278
+ 1198              		.loc 1 152 21 is_stmt 0 view .LVU279
  1199 000c 385D     		ldrb	r0, [r7, r4]	@ zero_extendqisi2
  1200 000e FFF7FEFF 		bl	SoftSPI_Transfer
  1201              	.LVL27:
- 1202              		.loc 1 148 19 discriminator 1 view .LVU280
+ 1202              		.loc 1 152 19 discriminator 1 view .LVU280
  1203 0012 3055     		strb	r0, [r6, r4]
- 147:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
- 1204              		.loc 1 147 39 is_stmt 1 discriminator 3 view .LVU281
+ 151:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
+ 1204              		.loc 1 151 39 is_stmt 1 discriminator 3 view .LVU281
  1205 0014 0134     		adds	r4, r4, #1
  1206              	.LVL28:
- 147:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
- 1207              		.loc 1 147 39 is_stmt 0 discriminator 3 view .LVU282
+ 151:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
+ 1207              		.loc 1 151 39 is_stmt 0 discriminator 3 view .LVU282
  1208 0016 A4B2     		uxth	r4, r4
  1209              	.LVL29:
  1210              	.L41:
- 147:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
- 1211              		.loc 1 147 28 is_stmt 1 discriminator 1 view .LVU283
+ 151:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
+ 1211              		.loc 1 151 28 is_stmt 1 discriminator 1 view .LVU283
  1212 0018 AC42     		cmp	r4, r5
  1213 001a F7D3     		bcc	.L42
  1214              	.LBE176:
- 149:src/software_spi.c ****     }
- 150:src/software_spi.c **** }
- 1215              		.loc 1 150 1 is_stmt 0 view .LVU284
+ 153:src/software_spi.c ****     }
+ 154:src/software_spi.c **** }
+ 1215              		.loc 1 154 1 is_stmt 0 view .LVU284
  1216 001c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 1217              		.loc 1 150 1 view .LVU285
+ 1217              		.loc 1 154 1 view .LVU285
  1218              		.cfi_endproc
  1219              	.LFE73:
  1221 001e 00BF     		.section	.bss.spi_mode,"aw",%nobits
@@ -1963,35 +1967,35 @@ ARM GAS  /tmp/cccv3qXT.s 			page 1
  1228              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
  1229              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
  1230              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
-ARM GAS  /tmp/cccv3qXT.s 			page 34
+ARM GAS  /tmp/cccm57pY.s 			page 34
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 software_spi.c
-     /tmp/cccv3qXT.s:19     .text.SoftSPI_Delay:00000000 $t
-     /tmp/cccv3qXT.s:25     .text.SoftSPI_Delay:00000000 SoftSPI_Delay
-     /tmp/cccv3qXT.s:80     .text.SoftSPI_Init:00000000 $t
-     /tmp/cccv3qXT.s:87     .text.SoftSPI_Init:00000000 SoftSPI_Init
-     /tmp/cccv3qXT.s:263    .text.SoftSPI_Init:000000d8 $d
-     /tmp/cccv3qXT.s:1224   .bss.spi_mode:00000000 spi_mode
-     /tmp/cccv3qXT.s:271    .text.SoftSPI_Deinit:00000000 $t
-     /tmp/cccv3qXT.s:278    .text.SoftSPI_Deinit:00000000 SoftSPI_Deinit
-     /tmp/cccv3qXT.s:361    .text.SoftSPI_Deinit:0000005c $d
-     /tmp/cccv3qXT.s:367    .text.SoftSPI_SetMode:00000000 $t
-     /tmp/cccv3qXT.s:374    .text.SoftSPI_SetMode:00000000 SoftSPI_SetMode
-     /tmp/cccv3qXT.s:421    .text.SoftSPI_SetMode:0000002c $d
-     /tmp/cccv3qXT.s:427    .text.SoftSPI_CS_Low:00000000 $t
-     /tmp/cccv3qXT.s:434    .text.SoftSPI_CS_Low:00000000 SoftSPI_CS_Low
-     /tmp/cccv3qXT.s:458    .text.SoftSPI_CS_Low:00000010 $d
-     /tmp/cccv3qXT.s:463    .text.SoftSPI_CS_High:00000000 $t
-     /tmp/cccv3qXT.s:470    .text.SoftSPI_CS_High:00000000 SoftSPI_CS_High
-     /tmp/cccv3qXT.s:487    .text.SoftSPI_CS_High:00000008 $d
-     /tmp/cccv3qXT.s:492    .text.SoftSPI_Transfer:00000000 $t
-     /tmp/cccv3qXT.s:499    .text.SoftSPI_Transfer:00000000 SoftSPI_Transfer
-     /tmp/cccv3qXT.s:1154   .text.SoftSPI_Transfer:0000008c $d
-     /tmp/cccv3qXT.s:1160   .text.SoftSPI_TransferBuffer:00000000 $t
-     /tmp/cccv3qXT.s:1167   .text.SoftSPI_TransferBuffer:00000000 SoftSPI_TransferBuffer
-     /tmp/cccv3qXT.s:1225   .bss.spi_mode:00000000 $d
+     /tmp/cccm57pY.s:19     .text.SoftSPI_Delay:00000000 $t
+     /tmp/cccm57pY.s:25     .text.SoftSPI_Delay:00000000 SoftSPI_Delay
+     /tmp/cccm57pY.s:80     .text.SoftSPI_Init:00000000 $t
+     /tmp/cccm57pY.s:87     .text.SoftSPI_Init:00000000 SoftSPI_Init
+     /tmp/cccm57pY.s:263    .text.SoftSPI_Init:000000d8 $d
+     /tmp/cccm57pY.s:1224   .bss.spi_mode:00000000 spi_mode
+     /tmp/cccm57pY.s:271    .text.SoftSPI_Deinit:00000000 $t
+     /tmp/cccm57pY.s:278    .text.SoftSPI_Deinit:00000000 SoftSPI_Deinit
+     /tmp/cccm57pY.s:361    .text.SoftSPI_Deinit:0000005c $d
+     /tmp/cccm57pY.s:367    .text.SoftSPI_SetMode:00000000 $t
+     /tmp/cccm57pY.s:374    .text.SoftSPI_SetMode:00000000 SoftSPI_SetMode
+     /tmp/cccm57pY.s:421    .text.SoftSPI_SetMode:0000002c $d
+     /tmp/cccm57pY.s:427    .text.SoftSPI_CS_Low:00000000 $t
+     /tmp/cccm57pY.s:434    .text.SoftSPI_CS_Low:00000000 SoftSPI_CS_Low
+     /tmp/cccm57pY.s:458    .text.SoftSPI_CS_Low:00000010 $d
+     /tmp/cccm57pY.s:463    .text.SoftSPI_CS_High:00000000 $t
+     /tmp/cccm57pY.s:470    .text.SoftSPI_CS_High:00000000 SoftSPI_CS_High
+     /tmp/cccm57pY.s:487    .text.SoftSPI_CS_High:00000008 $d
+     /tmp/cccm57pY.s:492    .text.SoftSPI_Transfer:00000000 $t
+     /tmp/cccm57pY.s:499    .text.SoftSPI_Transfer:00000000 SoftSPI_Transfer
+     /tmp/cccm57pY.s:1154   .text.SoftSPI_Transfer:0000008c $d
+     /tmp/cccm57pY.s:1160   .text.SoftSPI_TransferBuffer:00000000 $t
+     /tmp/cccm57pY.s:1167   .text.SoftSPI_TransferBuffer:00000000 SoftSPI_TransferBuffer
+     /tmp/cccm57pY.s:1225   .bss.spi_mode:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_Init

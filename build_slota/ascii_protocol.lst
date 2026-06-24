@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cclwzciS.s 			page 1
+ARM GAS  /tmp/ccehP9oo.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
   22:src/hbprotocol/ascii_protocol.c **** #include <stdlib.h>
   23:src/hbprotocol/ascii_protocol.c **** #include <stdio.h>
   24:src/hbprotocol/ascii_protocol.c **** 
-ARM GAS  /tmp/cclwzciS.s 			page 2
+ARM GAS  /tmp/ccehP9oo.s 			page 2
 
 
   25:src/hbprotocol/ascii_protocol.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
   42              		.loc 1 67 5 is_stmt 1 view .LVU2
   43              		.loc 1 67 36 is_stmt 0 view .LVU3
   44 0004 00F58050 		add	r0, r0, #4096
-ARM GAS  /tmp/cclwzciS.s 			page 3
+ARM GAS  /tmp/ccehP9oo.s 			page 3
 
 
   45              	.LVL1:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
   86              		.section	.text.line_unlock_ascii,"ax",%progbits
   87              		.align	1
   88              		.syntax unified
-ARM GAS  /tmp/cclwzciS.s 			page 4
+ARM GAS  /tmp/ccehP9oo.s 			page 4
 
 
   89              		.thumb
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  135              	.LBE2:
   49:src/hbprotocol/ascii_protocol.c ****     } else {
  136              		.loc 1 49 9 is_stmt 1 view .LVU18
-ARM GAS  /tmp/cclwzciS.s 			page 5
+ARM GAS  /tmp/ccehP9oo.s 			page 5
 
 
  137 0020 4122     		movs	r2, #65
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  183              	.LVL11:
   51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
  184              		.loc 1 51 27 discriminator 1 view .LVU27
-ARM GAS  /tmp/cclwzciS.s 			page 6
+ARM GAS  /tmp/ccehP9oo.s 			page 6
 
 
  185 0074 A042     		cmp	r0, r4
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  230              		.thumb
  231              		.thumb_func
  233              	line_help:
-ARM GAS  /tmp/cclwzciS.s 			page 7
+ARM GAS  /tmp/ccehP9oo.s 			page 7
 
 
  234              	.LVL12:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  123:src/hbprotocol/ascii_protocol.c ****                 }
  124:src/hbprotocol/ascii_protocol.c **** 
  125:src/hbprotocol/ascii_protocol.c ****                 if (line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn){
-ARM GAS  /tmp/cclwzciS.s 			page 8
+ARM GAS  /tmp/ccehP9oo.s 			page 8
 
 
  126:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  254 0008 8046     		mov	r8, r0
  255 000a 9146     		mov	r9, r2
  162:src/hbprotocol/ascii_protocol.c ****     char out[512];
-ARM GAS  /tmp/cclwzciS.s 			page 9
+ARM GAS  /tmp/ccehP9oo.s 			page 9
 
 
  256              		.loc 1 162 5 is_stmt 1 view .LVU39
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  294              		.loc 1 170 25 is_stmt 1 view .LVU54
  295 0024 002C     		cmp	r4, #0
  296 0026 03DD     		ble	.L27
-ARM GAS  /tmp/cclwzciS.s 			page 10
+ARM GAS  /tmp/ccehP9oo.s 			page 10
 
 
  297              	.LBB7:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  340              		.loc 1 165 9 view .LVU68
  165:src/hbprotocol/ascii_protocol.c ****             int count = strlen(line_functions[i].description);
  341              		.loc 1 165 30 is_stmt 0 view .LVU69
-ARM GAS  /tmp/cclwzciS.s 			page 11
+ARM GAS  /tmp/ccehP9oo.s 			page 11
 
 
  342 0052 114B     		ldr	r3, .L29+4
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  170:src/hbprotocol/ascii_protocol.c ****                 int len = count;
  383              		.loc 1 170 18 view .LVU83
  384              	.LBE8:
-ARM GAS  /tmp/cclwzciS.s 			page 12
+ARM GAS  /tmp/ccehP9oo.s 			page 12
 
 
  385              	.LBE4:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  431 000a 5A60     		str	r2, [r3, #4]
   76:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
  432              		.loc 1 76 5 is_stmt 1 view .LVU94
-ARM GAS  /tmp/cclwzciS.s 			page 13
+ARM GAS  /tmp/ccehP9oo.s 			page 13
 
 
   76:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  478              		@ frame_needed = 0, uses_anonymous_args = 0
  479              		@ link register save eliminated.
   84:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].description = description;
-ARM GAS  /tmp/cclwzciS.s 			page 14
+ARM GAS  /tmp/ccehP9oo.s 			page 14
 
 
  480              		.loc 1 84 5 view .LVU106
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  521              		.section	.rodata.ascii_byte.str1.4,"aMS",%progbits,1
  522              		.align	2
  523              	.LC5:
-ARM GAS  /tmp/cclwzciS.s 			page 15
+ARM GAS  /tmp/ccehP9oo.s 			page 15
 
 
  524 0000 2D202573 		.ascii	"- %s\015\012\000"
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  564              		.loc 1 96 17 is_stmt 0 view .LVU125
  565 000c 00F58053 		add	r3, r0, #4096
  566 0010 DB6A     		ldr	r3, [r3, #44]
-ARM GAS  /tmp/cclwzciS.s 			page 16
+ARM GAS  /tmp/ccehP9oo.s 			page 16
 
 
   96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  138:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn++] = byte;
  605              		.loc 1 138 25 is_stmt 0 view .LVU142
  606 0042 04F58052 		add	r2, r4, #4096
-ARM GAS  /tmp/cclwzciS.s 			page 17
+ARM GAS  /tmp/ccehP9oo.s 			page 17
 
 
  607 0046 D2F84822 		ldr	r2, [r2, #584]
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  646              		.loc 1 149 8 view .LVU157
  647 0088 7BB1     		cbz	r3, .L51
  150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
-ARM GAS  /tmp/cclwzciS.s 			page 18
+ARM GAS  /tmp/ccehP9oo.s 			page 18
 
 
  648              		.loc 1 150 9 is_stmt 1 view .LVU158
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  689 00be BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
  690              	.LVL51:
  691              	.L53:
-ARM GAS  /tmp/cclwzciS.s 			page 19
+ARM GAS  /tmp/ccehP9oo.s 			page 19
 
 
  692              	.LCFI9:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  731              		.loc 1 117 20 view .LVU186
  732 00fa 2BB9     		cbnz	r3, .L45
  117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
-ARM GAS  /tmp/cclwzciS.s 			page 20
+ARM GAS  /tmp/ccehP9oo.s 			page 20
 
 
  733              		.loc 1 117 75 discriminator 1 view .LVU187
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  774              	.L46:
  775 013e BC46     		mov	ip, r7
  776 0140 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
-ARM GAS  /tmp/cclwzciS.s 			page 21
+ARM GAS  /tmp/ccehP9oo.s 			page 21
 
 
  777 0144 3060     		str	r0, [r6]	@ unaligned
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  820              	.LVL60:
  821 0186 CBE7     		b	.L49
  822              	.LVL61:
-ARM GAS  /tmp/cclwzciS.s 			page 22
+ARM GAS  /tmp/ccehP9oo.s 			page 22
 
 
  823              	.L41:
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  862              		@ args = 0, pretend = 0, frame = 0
  863              		@ frame_needed = 0, uses_anonymous_args = 0
  190:src/hbprotocol/ascii_protocol.c ****     if (!s->ascii.initialised) {
-ARM GAS  /tmp/cclwzciS.s 			page 23
+ARM GAS  /tmp/ccehP9oo.s 			page 23
 
 
  864              		.loc 1 190 5 view .LVU215
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  195:src/hbprotocol/ascii_protocol.c ****         return 1;
  904              		.loc 1 195 9 view .LVU225
  195:src/hbprotocol/ascii_protocol.c ****         return 1;
-ARM GAS  /tmp/cclwzciS.s 			page 24
+ARM GAS  /tmp/ccehP9oo.s 			page 24
 
 
  905              		.loc 1 195 30 is_stmt 0 view .LVU226
@@ -1435,43 +1435,43 @@ ARM GAS  /tmp/cclwzciS.s 			page 1
  951              		.file 5 "/usr/include/newlib/string.h"
  952              		.file 6 "/usr/include/newlib/stdio.h"
  953              		.file 7 "<built-in>"
-ARM GAS  /tmp/cclwzciS.s 			page 25
+ARM GAS  /tmp/ccehP9oo.s 			page 25
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ascii_protocol.c
-     /tmp/cclwzciS.s:19     .rodata.line_lock_ascii.str1.4:00000000 $d
-     /tmp/cclwzciS.s:23     .text.line_lock_ascii:00000000 $t
-     /tmp/cclwzciS.s:28     .text.line_lock_ascii:00000000 line_lock_ascii
-     /tmp/cclwzciS.s:74     .text.line_lock_ascii:00000038 $d
-     /tmp/cclwzciS.s:79     .rodata.line_unlock_ascii.str1.4:00000000 $d
-     /tmp/cclwzciS.s:87     .text.line_unlock_ascii:00000000 $t
-     /tmp/cclwzciS.s:92     .text.line_unlock_ascii:00000000 line_unlock_ascii
-     /tmp/cclwzciS.s:213    .text.line_unlock_ascii:0000009c $d
-     /tmp/cclwzciS.s:932    .data.password:00000000 password
-     /tmp/cclwzciS.s:221    .rodata.line_help.str1.4:00000000 $d
-     /tmp/cclwzciS.s:228    .text.line_help:00000000 $t
-     /tmp/cclwzciS.s:233    .text.line_help:00000000 line_help
-     /tmp/cclwzciS.s:403    .text.line_help:00000094 $d
-     /tmp/cclwzciS.s:938    .bss.line_functions:00000000 line_functions
-     /tmp/cclwzciS.s:410    .text.ascii_add_immediate:00000000 $t
-     /tmp/cclwzciS.s:416    .text.ascii_add_immediate:00000000 ascii_add_immediate
-     /tmp/cclwzciS.s:461    .text.ascii_add_immediate:0000002c $d
-     /tmp/cclwzciS.s:944    .bss.immediate_functions:00000000 immediate_functions
-     /tmp/cclwzciS.s:466    .text.ascii_add_line_fn:00000000 $t
-     /tmp/cclwzciS.s:472    .text.ascii_add_line_fn:00000000 ascii_add_line_fn
-     /tmp/cclwzciS.s:517    .text.ascii_add_line_fn:0000002c $d
-     /tmp/cclwzciS.s:522    .rodata.ascii_byte.str1.4:00000000 $d
-     /tmp/cclwzciS.s:533    .text.ascii_byte:00000000 $t
-     /tmp/cclwzciS.s:539    .text.ascii_byte:00000000 ascii_byte
-     /tmp/cclwzciS.s:832    .text.ascii_byte:00000190 $d
-     /tmp/cclwzciS.s:841    .rodata.ascii_init.str1.4:00000000 $d
-     /tmp/cclwzciS.s:851    .text.ascii_init:00000000 $t
-     /tmp/cclwzciS.s:857    .text.ascii_init:00000000 ascii_init
-     /tmp/cclwzciS.s:919    .text.ascii_init:00000038 $d
-     /tmp/cclwzciS.s:929    .data.password:00000000 $d
-     /tmp/cclwzciS.s:935    .bss.line_functions:00000000 $d
-     /tmp/cclwzciS.s:941    .bss.immediate_functions:00000000 $d
+     /tmp/ccehP9oo.s:19     .rodata.line_lock_ascii.str1.4:00000000 $d
+     /tmp/ccehP9oo.s:23     .text.line_lock_ascii:00000000 $t
+     /tmp/ccehP9oo.s:28     .text.line_lock_ascii:00000000 line_lock_ascii
+     /tmp/ccehP9oo.s:74     .text.line_lock_ascii:00000038 $d
+     /tmp/ccehP9oo.s:79     .rodata.line_unlock_ascii.str1.4:00000000 $d
+     /tmp/ccehP9oo.s:87     .text.line_unlock_ascii:00000000 $t
+     /tmp/ccehP9oo.s:92     .text.line_unlock_ascii:00000000 line_unlock_ascii
+     /tmp/ccehP9oo.s:213    .text.line_unlock_ascii:0000009c $d
+     /tmp/ccehP9oo.s:932    .data.password:00000000 password
+     /tmp/ccehP9oo.s:221    .rodata.line_help.str1.4:00000000 $d
+     /tmp/ccehP9oo.s:228    .text.line_help:00000000 $t
+     /tmp/ccehP9oo.s:233    .text.line_help:00000000 line_help
+     /tmp/ccehP9oo.s:403    .text.line_help:00000094 $d
+     /tmp/ccehP9oo.s:938    .bss.line_functions:00000000 line_functions
+     /tmp/ccehP9oo.s:410    .text.ascii_add_immediate:00000000 $t
+     /tmp/ccehP9oo.s:416    .text.ascii_add_immediate:00000000 ascii_add_immediate
+     /tmp/ccehP9oo.s:461    .text.ascii_add_immediate:0000002c $d
+     /tmp/ccehP9oo.s:944    .bss.immediate_functions:00000000 immediate_functions
+     /tmp/ccehP9oo.s:466    .text.ascii_add_line_fn:00000000 $t
+     /tmp/ccehP9oo.s:472    .text.ascii_add_line_fn:00000000 ascii_add_line_fn
+     /tmp/ccehP9oo.s:517    .text.ascii_add_line_fn:0000002c $d
+     /tmp/ccehP9oo.s:522    .rodata.ascii_byte.str1.4:00000000 $d
+     /tmp/ccehP9oo.s:533    .text.ascii_byte:00000000 $t
+     /tmp/ccehP9oo.s:539    .text.ascii_byte:00000000 ascii_byte
+     /tmp/ccehP9oo.s:832    .text.ascii_byte:00000190 $d
+     /tmp/ccehP9oo.s:841    .rodata.ascii_init.str1.4:00000000 $d
+     /tmp/ccehP9oo.s:851    .text.ascii_init:00000000 $t
+     /tmp/ccehP9oo.s:857    .text.ascii_init:00000000 ascii_init
+     /tmp/ccehP9oo.s:919    .text.ascii_init:00000038 $d
+     /tmp/ccehP9oo.s:929    .data.password:00000000 $d
+     /tmp/ccehP9oo.s:935    .bss.line_functions:00000000 $d
+     /tmp/ccehP9oo.s:941    .bss.immediate_functions:00000000 $d
 
 UNDEFINED SYMBOLS
 strlen
