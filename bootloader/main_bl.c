@@ -875,58 +875,64 @@ static void uart_menu(void)
 /* ----------------------------------------------------------------------- */
 int main(void)
 {
-    /* SAFETY FIRST: drive all motor PWM outputs LOW before anything else.
+    /* SAFETY FIRST: replicate the reference firmware idle state IMMEDIATELY.
      *
-     * Hoverboard 3-phase bridge (TIM1=right, TIM8=left):
-     *   Right HIGH: PA8(UH), PA9(VH), PA10(WH)   → AF push-pull (TIM1_CH1-3)
-     *   Right LOW:  PB13(UL), PB14(VL), PB15(WL) → AF push-pull (TIM1_CH1N-3N)
-     *   Left  HIGH: PC6(UH), PC7(VH), PC8(WH)    → AF push-pull (TIM8_CH1-3)
-     *   Left  LOW:  PA7(UL), PB0(VL), PB1(WL)    → AF push-pull (TIM8_CH1N-3N)
+     * Source: bipropellant/bipropellant-hoverboard-firmware, src/setup.c
+     *   sConfigOC.OCIdleState  = TIM_OCIDLESTATE_RESET;   // high-side idle = LOW
+     *   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;    // low-side idle  = HIGH
+     *   sBreakDeadTimeConfig.OSSR/OSSI = ENABLE            // enforce idle state when MOE=0
      *
-     * In the STM32 RESET state all pins are INPUT FLOATING.  A floating
-     * PWM input to most gate driver ICs can activate MOSFETs unpredictably.
-     * Shoot-through (high + low side both ON) short-circuits the battery →
-     * large spark / MOSFET damage on every power-up.
+     * The CORRECT safe state is SHORT-BRAKE (all low-side FETs ON, all high-side OFF):
+     *   HIGH-SIDE pins (UH/VH/WH) → OUTPUT LOW  — high-side FET off
+     *   LOW-SIDE  pins (UL/VL/WL) → OUTPUT HIGH — low-side FET on → motor phases
+     *                                               shorted to GND = defined braking state
      *
-     * Fix: configure every motor pin as GPIO output LOW immediately, so all
-     * MOSFET gates are pulled low before the app configures the timers.
-     * Also drive OFF_PIN (PA5) HIGH to latch the power supply.
+     * WRONG: driving LOW-SIDE pins LOW leaves phases floating. Floating inputs
+     * to some gate driver ICs (bootstrap charge / leakage) can randomly activate
+     * FETs → motors "get power" unpredictably when button is pressed.
+     *
+     * After reset, GPIO is INPUT FLOATING → gate inputs undefined → dangerous.
+     * We must reach the safe state in the very first instructions before anything
+     * else (before disabling interrupts, before BKP check, before MCP2515 init).
      */
     {
         /* Enable clocks: GPIOA(bit2), GPIOB(bit3), GPIOC(bit4) */
         RCC_APB2ENR |= (1U<<2)|(1U<<3)|(1U<<4);
 
-        /* Helper: configure pin as output PP 50MHz and drive LOW.
-         * For pins 0-7: CRL offset 0. For pins 8-15: CRH offset 4.
-         * Each pin occupies 4 bits in CNFy:MODEy. Output PP 50MHz = 0x3. */
-#define MOTOR_SAFE(gpiox, pin) do { \
+        /* Output PP 50MHz = 0x3 in CNFy:MODEy 4-bit field */
+#define PIN_OUT(gpiox, pin) do { \
     volatile uint32_t *cr = (volatile uint32_t *)((uint32_t)(gpiox) + (((pin)>=8)?4U:0U)); \
     uint32_t shift = (((pin)%8U)*4U); \
     *cr = (*cr & ~(0xFUL<<shift)) | (0x3UL<<shift); \
-    ((GPIO_t*)(gpiox))->BSRR = (1U<<(16U+(pin))); /* drive LOW via BR */ \
 } while(0)
+        /* BSRR upper half = BRR (reset/low), lower half = BSR (set/high) */
+#define PIN_LOW(gpiox, pin)  (((GPIO_t*)(gpiox))->BSRR = (1U<<(16U+(pin))))
+#define PIN_HIGH(gpiox, pin) (((GPIO_t*)(gpiox))->BSRR = (1U<<(pin)))
 
-        /* Right motor — TIM1 */
-        MOTOR_SAFE(GPIOA_BASE, 8U);   /* PA8  UH */
-        MOTOR_SAFE(GPIOA_BASE, 9U);   /* PA9  VH */
-        MOTOR_SAFE(GPIOA_BASE, 10U);  /* PA10 WH */
-        MOTOR_SAFE(GPIOB_BASE, 13U);  /* PB13 UL */
-        MOTOR_SAFE(GPIOB_BASE, 14U);  /* PB14 VL */
-        MOTOR_SAFE(GPIOB_BASE, 15U);  /* PB15 WL */
+        /* HIGH-SIDE (UH/VH/WH) → OUTPUT LOW  (high-side FETs OFF) */
+        PIN_OUT(GPIOA_BASE, 8U);  PIN_LOW(GPIOA_BASE, 8U);   /* PA8  TIM1 UH */
+        PIN_OUT(GPIOA_BASE, 9U);  PIN_LOW(GPIOA_BASE, 9U);   /* PA9  TIM1 VH */
+        PIN_OUT(GPIOA_BASE, 10U); PIN_LOW(GPIOA_BASE, 10U);  /* PA10 TIM1 WH */
+        PIN_OUT(GPIOC_BASE, 6U);  PIN_LOW(GPIOC_BASE, 6U);   /* PC6  TIM8 UH */
+        PIN_OUT(GPIOC_BASE, 7U);  PIN_LOW(GPIOC_BASE, 7U);   /* PC7  TIM8 VH */
+        PIN_OUT(GPIOC_BASE, 8U);  PIN_LOW(GPIOC_BASE, 8U);   /* PC8  TIM8 WH */
 
-        /* Left motor — TIM8 */
-        MOTOR_SAFE(GPIOC_BASE, 6U);   /* PC6  UH */
-        MOTOR_SAFE(GPIOC_BASE, 7U);   /* PC7  VH */
-        MOTOR_SAFE(GPIOC_BASE, 8U);   /* PC8  WH */
-        MOTOR_SAFE(GPIOA_BASE, 7U);   /* PA7  UL */
-        MOTOR_SAFE(GPIOB_BASE, 0U);   /* PB0  VL */
-        MOTOR_SAFE(GPIOB_BASE, 1U);   /* PB1  WL */
+        /* LOW-SIDE  (UL/VL/WL) → OUTPUT HIGH (low-side FETs ON = short brake)
+         * This matches OCNIdleState=SET from the reference firmware.
+         * Motor phases are shorted to GND: defined braking, no energy from battery. */
+        PIN_OUT(GPIOB_BASE, 13U); PIN_HIGH(GPIOB_BASE, 13U); /* PB13 TIM1 UL */
+        PIN_OUT(GPIOB_BASE, 14U); PIN_HIGH(GPIOB_BASE, 14U); /* PB14 TIM1 VL */
+        PIN_OUT(GPIOB_BASE, 15U); PIN_HIGH(GPIOB_BASE, 15U); /* PB15 TIM1 WL */
+        PIN_OUT(GPIOA_BASE, 7U);  PIN_HIGH(GPIOA_BASE, 7U);  /* PA7  TIM8 UL */
+        PIN_OUT(GPIOB_BASE, 0U);  PIN_HIGH(GPIOB_BASE, 0U);  /* PB0  TIM8 VL */
+        PIN_OUT(GPIOB_BASE, 1U);  PIN_HIGH(GPIOB_BASE, 1U);  /* PB1  TIM8 WL */
 
         /* OFF_PIN (PA5) HIGH — latch power supply ON */
-        MOTOR_SAFE(GPIOA_BASE, 5U);
-        ((GPIO_t*)GPIOA_BASE)->BSRR = (1U<<5U); /* set PA5 HIGH */
+        PIN_OUT(GPIOA_BASE, 5U); PIN_HIGH(GPIOA_BASE, 5U);
 
-#undef MOTOR_SAFE
+#undef PIN_OUT
+#undef PIN_LOW
+#undef PIN_HIGH
     }
 
     /* 1. Disable all interrupts immediately */
