@@ -285,8 +285,10 @@ static void jump_to_app_at(uint32_t start)
     uint32_t app_pc = *(volatile uint32_t *)(start + 4U);
 
     /* Reject erased flash (0xFFFFFFFF) or null SP */
-    if (app_sp < 0x20000000UL || app_sp >= 0x2000C000UL) return;
-    if ((app_pc & 1U) == 0U || app_pc < 0x08000000UL)    return;
+    /* SP must be anywhere in SRAM space (0x20xxxxxx); 0x2000C000 is the
+     * valid top-of-stack for 48KB SRAM — use > not >= so it is accepted. */
+    if ((app_sp & 0xFF000000UL) != 0x20000000UL)          return;
+    if ((app_pc & 1U) == 0U || app_pc < 0x08000000UL)     return;
 
     SCB_VTOR = start;
     __asm volatile("msr msp, %0\nbx %1\n" : : "r"(app_sp), "r"(app_pc));

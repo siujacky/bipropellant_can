@@ -1,0 +1,1142 @@
+ARM GAS  /tmp/ccLIpjUO.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"pid.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/pid.c"
+  18              		.section	.text.pid_need_compute,"ax",%progbits
+  19              		.align	1
+  20              		.global	pid_need_compute
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	pid_need_compute:
+  26              	.LVL0:
+  27              	.LFB67:
+   1:src/pid.c     **** /*	Floating point PID control loop for Microcontrollers
+   2:src/pid.c     **** 	Copyright (C) 2015 Jesus Ruben Santa Anna Zamudio.
+   3:src/pid.c     **** 
+   4:src/pid.c     **** 	This program is free software: you can redistribute it and/or modify
+   5:src/pid.c     **** 	it under the terms of the GNU General Public License as published by
+   6:src/pid.c     **** 	the Free Software Foundation, either version 3 of the License, or
+   7:src/pid.c     **** 	(at your option) any later version.
+   8:src/pid.c     **** 
+   9:src/pid.c     **** 	This program is distributed in the hope that it will be useful,
+  10:src/pid.c     **** 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:src/pid.c     **** 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:src/pid.c     **** 	GNU General Public License for more details.
+  13:src/pid.c     **** 
+  14:src/pid.c     **** 	You should have received a copy of the GNU General Public License
+  15:src/pid.c     **** 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:src/pid.c     **** 
+  17:src/pid.c     **** 	Author website: http://www.geekfactory.mx
+  18:src/pid.c     **** 	Author e-mail: ruben at geekfactory dot mx
+  19:src/pid.c     ****  */
+  20:src/pid.c     **** #include "pid.h"
+  21:src/pid.c     **** 
+  22:src/pid.c     **** p_pid_controller pid_create(p_pid_controller pid, float* in, float* out, float* set, float kp, floa
+  23:src/pid.c     **** {
+  24:src/pid.c     **** 	pid->input = in;
+  25:src/pid.c     **** 	pid->output = out;
+  26:src/pid.c     **** 	pid->setpoint = set;
+  27:src/pid.c     **** 	pid->automode = false;
+  28:src/pid.c     **** 
+  29:src/pid.c     **** 	pid_limits(pid, 0, 255);
+  30:src/pid.c     **** 
+  31:src/pid.c     **** 	// Set default sample time to 100 ms
+ARM GAS  /tmp/ccLIpjUO.s 			page 2
+
+
+  32:src/pid.c     **** 	pid->sampletime = 100 * (TICK_SECOND / 1000);
+  33:src/pid.c     **** 
+  34:src/pid.c     **** 	pid_direction(pid, E_PID_DIRECT);
+  35:src/pid.c     **** 	pid_tune(pid, kp, ki, kd);
+  36:src/pid.c     **** 
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+  38:src/pid.c     **** 
+  39:src/pid.c     **** 	return pid;
+  40:src/pid.c     **** }
+  41:src/pid.c     **** 
+  42:src/pid.c     **** bool pid_need_compute(p_pid_controller pid)
+  43:src/pid.c     **** {
+  28              		.loc 1 43 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 43 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 0446     		mov	r4, r0
+  44:src/pid.c     **** 	// Check if the PID period has elapsed
+  45:src/pid.c     **** 	return(tick_get() - pid->lasttime >= pid->sampletime) ? true : false;
+  39              		.loc 1 45 2 is_stmt 1 view .LVU2
+  40              		.loc 1 45 9 is_stmt 0 view .LVU3
+  41 0004 FFF7FEFF 		bl	HAL_GetTick
+  42              	.LVL1:
+  43              		.loc 1 45 25 discriminator 1 view .LVU4
+  44 0008 A36A     		ldr	r3, [r4, #40]
+  45              		.loc 1 45 20 discriminator 1 view .LVU5
+  46 000a C01A     		subs	r0, r0, r3
+  47              		.loc 1 45 42 discriminator 1 view .LVU6
+  48 000c E36A     		ldr	r3, [r4, #44]
+  46:src/pid.c     **** }
+  49              		.loc 1 46 1 view .LVU7
+  50 000e 9842     		cmp	r0, r3
+  51 0010 34BF     		ite	cc
+  52 0012 0020     		movcc	r0, #0
+  53 0014 0120     		movcs	r0, #1
+  54 0016 10BD     		pop	{r4, pc}
+  55              		.loc 1 46 1 view .LVU8
+  56              		.cfi_endproc
+  57              	.LFE67:
+  59              		.global	__aeabi_fsub
+  60              		.global	__aeabi_fmul
+  61              		.global	__aeabi_fadd
+  62              		.global	__aeabi_fcmpgt
+  63              		.global	__aeabi_fcmplt
+  64              		.section	.text.pid_compute,"ax",%progbits
+  65              		.align	1
+  66              		.global	pid_compute
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  71              	pid_compute:
+ARM GAS  /tmp/ccLIpjUO.s 			page 3
+
+
+  72              	.LVL2:
+  73              	.LFB68:
+  47:src/pid.c     **** 
+  48:src/pid.c     **** void pid_compute(p_pid_controller pid)
+  49:src/pid.c     **** {
+  74              		.loc 1 49 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		.loc 1 49 1 is_stmt 0 view .LVU10
+  79 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  80              	.LCFI1:
+  81              		.cfi_def_cfa_offset 32
+  82              		.cfi_offset 3, -32
+  83              		.cfi_offset 4, -28
+  84              		.cfi_offset 5, -24
+  85              		.cfi_offset 6, -20
+  86              		.cfi_offset 7, -16
+  87              		.cfi_offset 8, -12
+  88              		.cfi_offset 9, -8
+  89              		.cfi_offset 14, -4
+  50:src/pid.c     **** 	// Check if control is enabled
+  51:src/pid.c     **** 	if (!pid->automode)
+  90              		.loc 1 51 2 is_stmt 1 view .LVU11
+  91              		.loc 1 51 10 is_stmt 0 view .LVU12
+  92 0004 90F83030 		ldrb	r3, [r0, #48]	@ zero_extendqisi2
+  93              		.loc 1 51 5 view .LVU13
+  94 0008 002B     		cmp	r3, #0
+  95 000a 44D0     		beq	.L3
+  96 000c 0446     		mov	r4, r0
+  52:src/pid.c     **** 		return;
+  53:src/pid.c     **** 	
+  54:src/pid.c     **** 	float in = *(pid->input);
+  97              		.loc 1 54 2 is_stmt 1 view .LVU14
+  98              		.loc 1 54 18 is_stmt 0 view .LVU15
+  99 000e 0368     		ldr	r3, [r0]
+ 100              		.loc 1 54 8 view .LVU16
+ 101 0010 D3F80080 		ldr	r8, [r3]	@ float
+ 102              	.LVL3:
+  55:src/pid.c     **** 	// Compute error
+  56:src/pid.c     **** 	float error = (*(pid->setpoint)) - in;
+ 103              		.loc 1 56 2 is_stmt 1 view .LVU17
+ 104              		.loc 1 56 22 is_stmt 0 view .LVU18
+ 105 0014 8368     		ldr	r3, [r0, #8]
+ 106              		.loc 1 56 8 view .LVU19
+ 107 0016 4146     		mov	r1, r8
+ 108 0018 1868     		ldr	r0, [r3]	@ float
+ 109              	.LVL4:
+ 110              		.loc 1 56 8 view .LVU20
+ 111 001a FFF7FEFF 		bl	__aeabi_fsub
+ 112              	.LVL5:
+ 113 001e 0646     		mov	r6, r0
+ 114              	.LVL6:
+  57:src/pid.c     **** 	// Compute integral
+  58:src/pid.c     **** 	pid->iterm += (pid->Ki * error);
+ 115              		.loc 1 58 2 is_stmt 1 view .LVU21
+ 116              		.loc 1 58 5 is_stmt 0 view .LVU22
+ARM GAS  /tmp/ccLIpjUO.s 			page 4
+
+
+ 117 0020 256A     		ldr	r5, [r4, #32]	@ float
+ 118              		.loc 1 58 25 view .LVU23
+ 119 0022 0146     		mov	r1, r0
+ 120 0024 2069     		ldr	r0, [r4, #16]	@ float
+ 121              	.LVL7:
+ 122              		.loc 1 58 25 view .LVU24
+ 123 0026 FFF7FEFF 		bl	__aeabi_fmul
+ 124              	.LVL8:
+ 125              		.loc 1 58 25 view .LVU25
+ 126 002a 0146     		mov	r1, r0
+ 127              		.loc 1 58 13 view .LVU26
+ 128 002c 2846     		mov	r0, r5
+ 129 002e FFF7FEFF 		bl	__aeabi_fadd
+ 130              	.LVL9:
+ 131 0032 0746     		mov	r7, r0
+ 132 0034 2062     		str	r0, [r4, #32]	@ float
+  59:src/pid.c     **** 	if (pid->iterm > pid->omax)
+ 133              		.loc 1 59 2 is_stmt 1 view .LVU27
+ 134              		.loc 1 59 22 is_stmt 0 view .LVU28
+ 135 0036 E569     		ldr	r5, [r4, #28]	@ float
+ 136              		.loc 1 59 5 view .LVU29
+ 137 0038 2946     		mov	r1, r5
+ 138 003a FFF7FEFF 		bl	__aeabi_fcmpgt
+ 139              	.LVL10:
+ 140 003e 0028     		cmp	r0, #0
+ 141 0040 2BD0     		beq	.L12
+  60:src/pid.c     **** 		pid->iterm = pid->omax;
+ 142              		.loc 1 60 3 is_stmt 1 view .LVU30
+ 143              		.loc 1 60 14 is_stmt 0 view .LVU31
+ 144 0042 2562     		str	r5, [r4, #32]	@ float
+ 145              	.L7:
+  61:src/pid.c     **** 	else if (pid->iterm < pid->omin)
+  62:src/pid.c     **** 		pid->iterm = pid->omin;
+  63:src/pid.c     **** 	// Compute differential on input
+  64:src/pid.c     **** 	float dinput = in - pid->lastin;
+ 146              		.loc 1 64 2 is_stmt 1 view .LVU32
+ 147              		.loc 1 64 8 is_stmt 0 view .LVU33
+ 148 0044 616A     		ldr	r1, [r4, #36]	@ float
+ 149 0046 4046     		mov	r0, r8
+ 150 0048 FFF7FEFF 		bl	__aeabi_fsub
+ 151              	.LVL11:
+ 152 004c 0746     		mov	r7, r0
+ 153              	.LVL12:
+  65:src/pid.c     **** 	// Compute PID output
+  66:src/pid.c     **** 	float out = pid->Kp * error + pid->iterm - pid->Kd * dinput;
+ 154              		.loc 1 66 2 is_stmt 1 view .LVU34
+ 155              		.loc 1 66 22 is_stmt 0 view .LVU35
+ 156 004e 3146     		mov	r1, r6
+ 157 0050 E068     		ldr	r0, [r4, #12]	@ float
+ 158              	.LVL13:
+ 159              		.loc 1 66 22 view .LVU36
+ 160 0052 FFF7FEFF 		bl	__aeabi_fmul
+ 161              	.LVL14:
+ 162              		.loc 1 66 30 view .LVU37
+ 163 0056 216A     		ldr	r1, [r4, #32]	@ float
+ 164 0058 FFF7FEFF 		bl	__aeabi_fadd
+ 165              	.LVL15:
+ARM GAS  /tmp/ccLIpjUO.s 			page 5
+
+
+ 166 005c 0646     		mov	r6, r0
+ 167              	.LVL16:
+ 168              		.loc 1 66 53 view .LVU38
+ 169 005e 3946     		mov	r1, r7
+ 170 0060 6069     		ldr	r0, [r4, #20]	@ float
+ 171 0062 FFF7FEFF 		bl	__aeabi_fmul
+ 172              	.LVL17:
+ 173 0066 0146     		mov	r1, r0
+ 174              		.loc 1 66 8 view .LVU39
+ 175 0068 3046     		mov	r0, r6
+ 176 006a FFF7FEFF 		bl	__aeabi_fsub
+ 177              	.LVL18:
+ 178 006e 0646     		mov	r6, r0
+ 179              	.LVL19:
+  67:src/pid.c     **** 	// Apply limit to output value
+  68:src/pid.c     **** 	if (out > pid->omax)
+ 180              		.loc 1 68 2 is_stmt 1 view .LVU40
+ 181              		.loc 1 68 5 is_stmt 0 view .LVU41
+ 182 0070 0146     		mov	r1, r0
+ 183 0072 2846     		mov	r0, r5
+ 184              	.LVL20:
+ 185              		.loc 1 68 5 view .LVU42
+ 186 0074 FFF7FEFF 		bl	__aeabi_fcmplt
+ 187              	.LVL21:
+ 188              		.loc 1 68 5 view .LVU43
+ 189 0078 30B9     		cbnz	r0, .L9
+  69:src/pid.c     **** 		out = pid->omax;
+  70:src/pid.c     **** 	else if (out < pid->omin)
+ 190              		.loc 1 70 7 is_stmt 1 view .LVU44
+ 191              		.loc 1 70 20 is_stmt 0 view .LVU45
+ 192 007a A569     		ldr	r5, [r4, #24]	@ float
+ 193              		.loc 1 70 10 view .LVU46
+ 194 007c 3146     		mov	r1, r6
+ 195 007e 2846     		mov	r0, r5
+ 196 0080 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 197              	.LVL22:
+ 198 0084 00B9     		cbnz	r0, .L9
+  66:src/pid.c     **** 	// Apply limit to output value
+ 199              		.loc 1 66 8 view .LVU47
+ 200 0086 3546     		mov	r5, r6
+ 201              	.L9:
+ 202              	.LVL23:
+  71:src/pid.c     **** 		out = pid->omin;
+  72:src/pid.c     **** 	// Output to pointed variable
+  73:src/pid.c     **** 	(*pid->output) = out;
+ 203              		.loc 1 73 2 is_stmt 1 view .LVU48
+ 204              		.loc 1 73 7 is_stmt 0 view .LVU49
+ 205 0088 6368     		ldr	r3, [r4, #4]
+ 206              		.loc 1 73 17 view .LVU50
+ 207 008a 1D60     		str	r5, [r3]	@ float
+  74:src/pid.c     **** 	// Keep track of some variables for next execution
+  75:src/pid.c     **** 	pid->lastin = in;
+ 208              		.loc 1 75 2 is_stmt 1 view .LVU51
+ 209              		.loc 1 75 14 is_stmt 0 view .LVU52
+ 210 008c C4F82480 		str	r8, [r4, #36]	@ float
+  76:src/pid.c     **** 	pid->lasttime = tick_get();;
+ 211              		.loc 1 76 2 is_stmt 1 view .LVU53
+ARM GAS  /tmp/ccLIpjUO.s 			page 6
+
+
+ 212              		.loc 1 76 18 is_stmt 0 view .LVU54
+ 213 0090 FFF7FEFF 		bl	HAL_GetTick
+ 214              	.LVL24:
+ 215              		.loc 1 76 16 discriminator 1 view .LVU55
+ 216 0094 A062     		str	r0, [r4, #40]
+ 217              		.loc 1 76 29 is_stmt 1 discriminator 1 view .LVU56
+ 218              	.LVL25:
+ 219              	.L3:
+  77:src/pid.c     **** }
+ 220              		.loc 1 77 1 is_stmt 0 view .LVU57
+ 221 0096 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 222              	.LVL26:
+ 223              	.L12:
+  61:src/pid.c     **** 		pid->iterm = pid->omin;
+ 224              		.loc 1 61 7 is_stmt 1 view .LVU58
+  61:src/pid.c     **** 		pid->iterm = pid->omin;
+ 225              		.loc 1 61 27 is_stmt 0 view .LVU59
+ 226 009a D4F81890 		ldr	r9, [r4, #24]	@ float
+  61:src/pid.c     **** 		pid->iterm = pid->omin;
+ 227              		.loc 1 61 10 view .LVU60
+ 228 009e 4946     		mov	r1, r9
+ 229 00a0 3846     		mov	r0, r7
+ 230 00a2 FFF7FEFF 		bl	__aeabi_fcmplt
+ 231              	.LVL27:
+ 232 00a6 0028     		cmp	r0, #0
+ 233 00a8 CCD0     		beq	.L7
+  62:src/pid.c     **** 	// Compute differential on input
+ 234              		.loc 1 62 3 is_stmt 1 view .LVU61
+  62:src/pid.c     **** 	// Compute differential on input
+ 235              		.loc 1 62 14 is_stmt 0 view .LVU62
+ 236 00aa C4F82090 		str	r9, [r4, #32]	@ float
+ 237 00ae C9E7     		b	.L7
+ 238              		.cfi_endproc
+ 239              	.LFE68:
+ 241              		.global	__aeabi_ui2f
+ 242              		.global	__aeabi_fdiv
+ 243              		.section	.text.pid_tune,"ax",%progbits
+ 244              		.align	1
+ 245              		.global	pid_tune
+ 246              		.syntax unified
+ 247              		.thumb
+ 248              		.thumb_func
+ 250              	pid_tune:
+ 251              	.LVL28:
+ 252              	.LFB69:
+  78:src/pid.c     **** 
+  79:src/pid.c     **** void pid_tune(p_pid_controller pid, float kp, float ki, float kd)
+  80:src/pid.c     **** {
+ 253              		.loc 1 80 1 is_stmt 1 view -0
+ 254              		.cfi_startproc
+ 255              		@ args = 0, pretend = 0, frame = 0
+ 256              		@ frame_needed = 0, uses_anonymous_args = 0
+ 257              		.loc 1 80 1 is_stmt 0 view .LVU64
+ 258 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 259              	.LCFI2:
+ 260              		.cfi_def_cfa_offset 32
+ 261              		.cfi_offset 3, -32
+ARM GAS  /tmp/ccLIpjUO.s 			page 7
+
+
+ 262              		.cfi_offset 4, -28
+ 263              		.cfi_offset 5, -24
+ 264              		.cfi_offset 6, -20
+ 265              		.cfi_offset 7, -16
+ 266              		.cfi_offset 8, -12
+ 267              		.cfi_offset 9, -8
+ 268              		.cfi_offset 14, -4
+ 269 0004 0446     		mov	r4, r0
+ 270 0006 0D46     		mov	r5, r1
+ 271 0008 1646     		mov	r6, r2
+ 272 000a 1F46     		mov	r7, r3
+  81:src/pid.c     **** 	// Check for validity
+  82:src/pid.c     **** 	if (kp < 0 || ki < 0 || kd < 0)
+ 273              		.loc 1 82 2 is_stmt 1 view .LVU65
+ 274              		.loc 1 82 5 is_stmt 0 view .LVU66
+ 275 000c 0021     		movs	r1, #0
+ 276              	.LVL29:
+ 277              		.loc 1 82 5 view .LVU67
+ 278 000e 2846     		mov	r0, r5
+ 279              	.LVL30:
+ 280              		.loc 1 82 5 view .LVU68
+ 281 0010 FFF7FEFF 		bl	__aeabi_fcmplt
+ 282              	.LVL31:
+ 283              		.loc 1 82 5 view .LVU69
+ 284 0014 08BB     		cbnz	r0, .L14
+ 285              		.loc 1 82 13 discriminator 1 view .LVU70
+ 286 0016 0021     		movs	r1, #0
+ 287 0018 3046     		mov	r0, r6
+ 288 001a FFF7FEFF 		bl	__aeabi_fcmplt
+ 289              	.LVL32:
+ 290 001e E0B9     		cbnz	r0, .L14
+ 291              		.loc 1 82 23 discriminator 2 view .LVU71
+ 292 0020 0021     		movs	r1, #0
+ 293 0022 3846     		mov	r0, r7
+ 294 0024 FFF7FEFF 		bl	__aeabi_fcmplt
+ 295              	.LVL33:
+ 296 0028 B8B9     		cbnz	r0, .L14
+  83:src/pid.c     **** 		return;
+  84:src/pid.c     **** 	
+  85:src/pid.c     **** 	//Compute sample time in seconds
+  86:src/pid.c     **** 	float ssec = ((float) pid->sampletime) / ((float) TICK_SECOND);
+ 297              		.loc 1 86 2 is_stmt 1 view .LVU72
+ 298              		.loc 1 86 16 is_stmt 0 view .LVU73
+ 299 002a E06A     		ldr	r0, [r4, #44]
+ 300 002c FFF7FEFF 		bl	__aeabi_ui2f
+ 301              	.LVL34:
+ 302              		.loc 1 86 8 view .LVU74
+ 303 0030 1349     		ldr	r1, .L18
+ 304 0032 FFF7FEFF 		bl	__aeabi_fdiv
+ 305              	.LVL35:
+ 306 0036 8046     		mov	r8, r0
+ 307              	.LVL36:
+  87:src/pid.c     **** 
+  88:src/pid.c     **** 	pid->Kp = kp;
+ 308              		.loc 1 88 2 is_stmt 1 view .LVU75
+ 309              		.loc 1 88 10 is_stmt 0 view .LVU76
+ 310 0038 E560     		str	r5, [r4, #12]	@ float
+ARM GAS  /tmp/ccLIpjUO.s 			page 8
+
+
+  89:src/pid.c     **** 	pid->Ki = ki * ssec;
+ 311              		.loc 1 89 2 is_stmt 1 view .LVU77
+ 312              		.loc 1 89 15 is_stmt 0 view .LVU78
+ 313 003a 0146     		mov	r1, r0
+ 314 003c 3046     		mov	r0, r6
+ 315              	.LVL37:
+ 316              		.loc 1 89 15 view .LVU79
+ 317 003e FFF7FEFF 		bl	__aeabi_fmul
+ 318              	.LVL38:
+ 319              		.loc 1 89 15 view .LVU80
+ 320 0042 8146     		mov	r9, r0
+ 321              		.loc 1 89 10 view .LVU81
+ 322 0044 2061     		str	r0, [r4, #16]	@ float
+  90:src/pid.c     **** 	pid->Kd = kd / ssec;
+ 323              		.loc 1 90 2 is_stmt 1 view .LVU82
+ 324              		.loc 1 90 15 is_stmt 0 view .LVU83
+ 325 0046 4146     		mov	r1, r8
+ 326 0048 3846     		mov	r0, r7
+ 327 004a FFF7FEFF 		bl	__aeabi_fdiv
+ 328              	.LVL39:
+ 329 004e 0646     		mov	r6, r0
+ 330              	.LVL40:
+ 331              		.loc 1 90 10 view .LVU84
+ 332 0050 6061     		str	r0, [r4, #20]	@ float
+  91:src/pid.c     **** 
+  92:src/pid.c     **** 	if (pid->direction == E_PID_REVERSE) {
+ 333              		.loc 1 92 2 is_stmt 1 view .LVU85
+ 334              		.loc 1 92 9 is_stmt 0 view .LVU86
+ 335 0052 94F83130 		ldrb	r3, [r4, #49]	@ zero_extendqisi2
+ 336              		.loc 1 92 5 view .LVU87
+ 337 0056 012B     		cmp	r3, #1
+ 338 0058 01D0     		beq	.L17
+ 339              	.LVL41:
+ 340              	.L14:
+  93:src/pid.c     **** 		pid->Kp = 0 - pid->Kp;
+  94:src/pid.c     **** 		pid->Ki = 0 - pid->Ki;
+  95:src/pid.c     **** 		pid->Kd = 0 - pid->Kd;
+  96:src/pid.c     **** 	}
+  97:src/pid.c     **** }
+ 341              		.loc 1 97 1 view .LVU88
+ 342 005a BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 343              	.LVL42:
+ 344              	.L17:
+  93:src/pid.c     **** 		pid->Kp = 0 - pid->Kp;
+ 345              		.loc 1 93 3 is_stmt 1 view .LVU89
+  93:src/pid.c     **** 		pid->Kp = 0 - pid->Kp;
+ 346              		.loc 1 93 15 is_stmt 0 view .LVU90
+ 347 005e 2946     		mov	r1, r5
+ 348 0060 0020     		movs	r0, #0
+ 349 0062 FFF7FEFF 		bl	__aeabi_fsub
+ 350              	.LVL43:
+  93:src/pid.c     **** 		pid->Kp = 0 - pid->Kp;
+ 351              		.loc 1 93 11 view .LVU91
+ 352 0066 E060     		str	r0, [r4, #12]	@ float
+  94:src/pid.c     **** 		pid->Kd = 0 - pid->Kd;
+ 353              		.loc 1 94 3 is_stmt 1 view .LVU92
+  94:src/pid.c     **** 		pid->Kd = 0 - pid->Kd;
+ARM GAS  /tmp/ccLIpjUO.s 			page 9
+
+
+ 354              		.loc 1 94 15 is_stmt 0 view .LVU93
+ 355 0068 4946     		mov	r1, r9
+ 356 006a 0020     		movs	r0, #0
+ 357 006c FFF7FEFF 		bl	__aeabi_fsub
+ 358              	.LVL44:
+  94:src/pid.c     **** 		pid->Kd = 0 - pid->Kd;
+ 359              		.loc 1 94 11 view .LVU94
+ 360 0070 2061     		str	r0, [r4, #16]	@ float
+  95:src/pid.c     **** 	}
+ 361              		.loc 1 95 3 is_stmt 1 view .LVU95
+  95:src/pid.c     **** 	}
+ 362              		.loc 1 95 15 is_stmt 0 view .LVU96
+ 363 0072 3146     		mov	r1, r6
+ 364 0074 0020     		movs	r0, #0
+ 365 0076 FFF7FEFF 		bl	__aeabi_fsub
+ 366              	.LVL45:
+  95:src/pid.c     **** 	}
+ 367              		.loc 1 95 11 view .LVU97
+ 368 007a 6061     		str	r0, [r4, #20]	@ float
+ 369 007c EDE7     		b	.L14
+ 370              	.L19:
+ 371 007e 00BF     		.align	2
+ 372              	.L18:
+ 373 0080 00007A44 		.word	1148846080
+ 374              		.cfi_endproc
+ 375              	.LFE69:
+ 377              		.section	.text.pid_sample,"ax",%progbits
+ 378              		.align	1
+ 379              		.global	pid_sample
+ 380              		.syntax unified
+ 381              		.thumb
+ 382              		.thumb_func
+ 384              	pid_sample:
+ 385              	.LVL46:
+ 386              	.LFB70:
+  98:src/pid.c     **** 
+  99:src/pid.c     **** void pid_sample(p_pid_controller pid, uint32_t time)
+ 100:src/pid.c     **** {
+ 387              		.loc 1 100 1 is_stmt 1 view -0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 0
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101:src/pid.c     **** 	if (time > 0) {
+ 391              		.loc 1 101 2 view .LVU99
+ 392              		.loc 1 101 5 is_stmt 0 view .LVU100
+ 393 0000 D1B1     		cbz	r1, .L23
+ 100:src/pid.c     **** 	if (time > 0) {
+ 394              		.loc 1 100 1 view .LVU101
+ 395 0002 70B5     		push	{r4, r5, r6, lr}
+ 396              	.LCFI3:
+ 397              		.cfi_def_cfa_offset 16
+ 398              		.cfi_offset 4, -16
+ 399              		.cfi_offset 5, -12
+ 400              		.cfi_offset 6, -8
+ 401              		.cfi_offset 14, -4
+ 402 0004 0446     		mov	r4, r0
+ 403 0006 0E46     		mov	r6, r1
+ARM GAS  /tmp/ccLIpjUO.s 			page 10
+
+
+ 404              	.LBB2:
+ 102:src/pid.c     **** 		float ratio = (float) (time * (TICK_SECOND / 1000)) / (float) pid->sampletime;
+ 405              		.loc 1 102 3 is_stmt 1 view .LVU102
+ 406              		.loc 1 102 17 is_stmt 0 view .LVU103
+ 407 0008 0846     		mov	r0, r1
+ 408              	.LVL47:
+ 409              		.loc 1 102 17 view .LVU104
+ 410 000a FFF7FEFF 		bl	__aeabi_ui2f
+ 411              	.LVL48:
+ 412              		.loc 1 102 17 view .LVU105
+ 413 000e 0546     		mov	r5, r0
+ 414              		.loc 1 102 57 view .LVU106
+ 415 0010 E06A     		ldr	r0, [r4, #44]
+ 416 0012 FFF7FEFF 		bl	__aeabi_ui2f
+ 417              	.LVL49:
+ 418 0016 0146     		mov	r1, r0
+ 419              		.loc 1 102 9 view .LVU107
+ 420 0018 2846     		mov	r0, r5
+ 421 001a FFF7FEFF 		bl	__aeabi_fdiv
+ 422              	.LVL50:
+ 423 001e 0546     		mov	r5, r0
+ 424              	.LVL51:
+ 103:src/pid.c     **** 		pid->Ki *= ratio;
+ 425              		.loc 1 103 3 is_stmt 1 view .LVU108
+ 426              		.loc 1 103 11 is_stmt 0 view .LVU109
+ 427 0020 0146     		mov	r1, r0
+ 428 0022 2069     		ldr	r0, [r4, #16]	@ float
+ 429              	.LVL52:
+ 430              		.loc 1 103 11 view .LVU110
+ 431 0024 FFF7FEFF 		bl	__aeabi_fmul
+ 432              	.LVL53:
+ 433              		.loc 1 103 11 view .LVU111
+ 434 0028 2061     		str	r0, [r4, #16]	@ float
+ 104:src/pid.c     **** 		pid->Kd /= ratio;
+ 435              		.loc 1 104 3 is_stmt 1 view .LVU112
+ 436              		.loc 1 104 11 is_stmt 0 view .LVU113
+ 437 002a 2946     		mov	r1, r5
+ 438 002c 6069     		ldr	r0, [r4, #20]	@ float
+ 439 002e FFF7FEFF 		bl	__aeabi_fdiv
+ 440              	.LVL54:
+ 441 0032 6061     		str	r0, [r4, #20]	@ float
+ 105:src/pid.c     **** 		pid->sampletime = time * (TICK_SECOND / 1000);
+ 442              		.loc 1 105 3 is_stmt 1 view .LVU114
+ 443              		.loc 1 105 19 is_stmt 0 view .LVU115
+ 444 0034 E662     		str	r6, [r4, #44]
+ 445              	.LBE2:
+ 106:src/pid.c     **** 	}
+ 107:src/pid.c     **** }
+ 446              		.loc 1 107 1 view .LVU116
+ 447 0036 70BD     		pop	{r4, r5, r6, pc}
+ 448              	.LVL55:
+ 449              	.L23:
+ 450              	.LCFI4:
+ 451              		.cfi_def_cfa_offset 0
+ 452              		.cfi_restore 4
+ 453              		.cfi_restore 5
+ 454              		.cfi_restore 6
+ARM GAS  /tmp/ccLIpjUO.s 			page 11
+
+
+ 455              		.cfi_restore 14
+ 456              		.loc 1 107 1 view .LVU117
+ 457 0038 7047     		bx	lr
+ 458              		.cfi_endproc
+ 459              	.LFE70:
+ 461              		.global	__aeabi_fcmpge
+ 462              		.section	.text.pid_limits,"ax",%progbits
+ 463              		.align	1
+ 464              		.global	pid_limits
+ 465              		.syntax unified
+ 466              		.thumb
+ 467              		.thumb_func
+ 469              	pid_limits:
+ 470              	.LVL56:
+ 471              	.LFB71:
+ 108:src/pid.c     **** 
+ 109:src/pid.c     **** void pid_limits(p_pid_controller pid, float min, float max)
+ 110:src/pid.c     **** {
+ 472              		.loc 1 110 1 is_stmt 1 view -0
+ 473              		.cfi_startproc
+ 474              		@ args = 0, pretend = 0, frame = 0
+ 475              		@ frame_needed = 0, uses_anonymous_args = 0
+ 476              		.loc 1 110 1 is_stmt 0 view .LVU119
+ 477 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 478              	.LCFI5:
+ 479              		.cfi_def_cfa_offset 24
+ 480              		.cfi_offset 4, -24
+ 481              		.cfi_offset 5, -20
+ 482              		.cfi_offset 6, -16
+ 483              		.cfi_offset 7, -12
+ 484              		.cfi_offset 8, -8
+ 485              		.cfi_offset 14, -4
+ 486 0004 0446     		mov	r4, r0
+ 487 0006 0E46     		mov	r6, r1
+ 488 0008 1546     		mov	r5, r2
+ 111:src/pid.c     **** 	if (min >= max) return;
+ 489              		.loc 1 111 2 is_stmt 1 view .LVU120
+ 490              		.loc 1 111 5 is_stmt 0 view .LVU121
+ 491 000a 1146     		mov	r1, r2
+ 492              	.LVL57:
+ 493              		.loc 1 111 5 view .LVU122
+ 494 000c 3046     		mov	r0, r6
+ 495              	.LVL58:
+ 496              		.loc 1 111 5 view .LVU123
+ 497 000e FFF7FEFF 		bl	__aeabi_fcmpge
+ 498              	.LVL59:
+ 499              		.loc 1 111 5 view .LVU124
+ 500 0012 A8B9     		cbnz	r0, .L26
+ 112:src/pid.c     **** 	pid->omin = min;
+ 501              		.loc 1 112 2 is_stmt 1 view .LVU125
+ 502              		.loc 1 112 12 is_stmt 0 view .LVU126
+ 503 0014 A661     		str	r6, [r4, #24]	@ float
+ 113:src/pid.c     **** 	pid->omax = max;
+ 504              		.loc 1 113 2 is_stmt 1 view .LVU127
+ 505              		.loc 1 113 12 is_stmt 0 view .LVU128
+ 506 0016 E561     		str	r5, [r4, #28]	@ float
+ 114:src/pid.c     **** 	//Adjust output to new limits
+ARM GAS  /tmp/ccLIpjUO.s 			page 12
+
+
+ 115:src/pid.c     **** 	if (pid->automode) {
+ 507              		.loc 1 115 2 is_stmt 1 view .LVU129
+ 508              		.loc 1 115 9 is_stmt 0 view .LVU130
+ 509 0018 94F83030 		ldrb	r3, [r4, #48]	@ zero_extendqisi2
+ 510              		.loc 1 115 5 view .LVU131
+ 511 001c 83B1     		cbz	r3, .L26
+ 116:src/pid.c     **** 		if (*(pid->output) > pid->omax)
+ 512              		.loc 1 116 3 is_stmt 1 view .LVU132
+ 513              		.loc 1 116 12 is_stmt 0 view .LVU133
+ 514 001e 6768     		ldr	r7, [r4, #4]
+ 515              		.loc 1 116 7 view .LVU134
+ 516 0020 D7F80080 		ldr	r8, [r7]	@ float
+ 517              		.loc 1 116 6 view .LVU135
+ 518 0024 2946     		mov	r1, r5
+ 519 0026 4046     		mov	r0, r8
+ 520 0028 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 521              	.LVL60:
+ 522 002c 50B1     		cbz	r0, .L39
+ 117:src/pid.c     **** 			*(pid->output) = pid->omax;
+ 523              		.loc 1 117 4 is_stmt 1 view .LVU136
+ 524              		.loc 1 117 19 is_stmt 0 view .LVU137
+ 525 002e 3D60     		str	r5, [r7]	@ float
+ 526              	.L30:
+ 118:src/pid.c     **** 		else if (*(pid->output) < pid->omin)
+ 119:src/pid.c     **** 			*(pid->output) = pid->omin;
+ 120:src/pid.c     **** 
+ 121:src/pid.c     **** 		if (pid->iterm > pid->omax)
+ 527              		.loc 1 121 3 is_stmt 1 view .LVU138
+ 528              		.loc 1 121 10 is_stmt 0 view .LVU139
+ 529 0030 256A     		ldr	r5, [r4, #32]	@ float
+ 530              	.LVL61:
+ 531              		.loc 1 121 23 view .LVU140
+ 532 0032 E669     		ldr	r6, [r4, #28]	@ float
+ 533              	.LVL62:
+ 534              		.loc 1 121 6 view .LVU141
+ 535 0034 3146     		mov	r1, r6
+ 536 0036 2846     		mov	r0, r5
+ 537 0038 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 538              	.LVL63:
+ 539 003c 50B1     		cbz	r0, .L40
+ 122:src/pid.c     **** 			pid->iterm = pid->omax;
+ 540              		.loc 1 122 4 is_stmt 1 view .LVU142
+ 541              		.loc 1 122 15 is_stmt 0 view .LVU143
+ 542 003e 2662     		str	r6, [r4, #32]	@ float
+ 543              	.L26:
+ 123:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 124:src/pid.c     **** 			pid->iterm = pid->omin;
+ 125:src/pid.c     **** 	}
+ 126:src/pid.c     **** }
+ 544              		.loc 1 126 1 view .LVU144
+ 545 0040 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 546              	.LVL64:
+ 547              	.L39:
+ 118:src/pid.c     **** 			*(pid->output) = pid->omin;
+ 548              		.loc 1 118 8 is_stmt 1 view .LVU145
+ 118:src/pid.c     **** 			*(pid->output) = pid->omin;
+ 549              		.loc 1 118 11 is_stmt 0 view .LVU146
+ARM GAS  /tmp/ccLIpjUO.s 			page 13
+
+
+ 550 0044 3146     		mov	r1, r6
+ 551 0046 4046     		mov	r0, r8
+ 552 0048 FFF7FEFF 		bl	__aeabi_fcmplt
+ 553              	.LVL65:
+ 554 004c 0028     		cmp	r0, #0
+ 555 004e EFD0     		beq	.L30
+ 119:src/pid.c     **** 
+ 556              		.loc 1 119 4 is_stmt 1 view .LVU147
+ 119:src/pid.c     **** 
+ 557              		.loc 1 119 19 is_stmt 0 view .LVU148
+ 558 0050 3E60     		str	r6, [r7]	@ float
+ 559 0052 EDE7     		b	.L30
+ 560              	.LVL66:
+ 561              	.L40:
+ 123:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 562              		.loc 1 123 8 is_stmt 1 view .LVU149
+ 123:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 563              		.loc 1 123 28 is_stmt 0 view .LVU150
+ 564 0054 A669     		ldr	r6, [r4, #24]	@ float
+ 123:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 565              		.loc 1 123 11 view .LVU151
+ 566 0056 3146     		mov	r1, r6
+ 567 0058 2846     		mov	r0, r5
+ 568 005a FFF7FEFF 		bl	__aeabi_fcmplt
+ 569              	.LVL67:
+ 570 005e 0028     		cmp	r0, #0
+ 571 0060 EED0     		beq	.L26
+ 124:src/pid.c     **** 	}
+ 572              		.loc 1 124 4 is_stmt 1 view .LVU152
+ 124:src/pid.c     **** 	}
+ 573              		.loc 1 124 15 is_stmt 0 view .LVU153
+ 574 0062 2662     		str	r6, [r4, #32]	@ float
+ 575 0064 ECE7     		b	.L26
+ 576              		.cfi_endproc
+ 577              	.LFE71:
+ 579              		.section	.text.pid_auto,"ax",%progbits
+ 580              		.align	1
+ 581              		.global	pid_auto
+ 582              		.syntax unified
+ 583              		.thumb
+ 584              		.thumb_func
+ 586              	pid_auto:
+ 587              	.LVL68:
+ 588              	.LFB72:
+ 127:src/pid.c     **** 
+ 128:src/pid.c     **** void pid_auto(p_pid_controller pid)
+ 129:src/pid.c     **** {
+ 589              		.loc 1 129 1 is_stmt 1 view -0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 0
+ 592              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130:src/pid.c     **** 	// If going from manual to auto
+ 131:src/pid.c     **** 	if (!pid->automode) {
+ 593              		.loc 1 131 2 view .LVU155
+ 594              		.loc 1 131 10 is_stmt 0 view .LVU156
+ 595 0000 90F83030 		ldrb	r3, [r0, #48]	@ zero_extendqisi2
+ 596              		.loc 1 131 5 view .LVU157
+ARM GAS  /tmp/ccLIpjUO.s 			page 14
+
+
+ 597 0004 DBB9     		cbnz	r3, .L52
+ 129:src/pid.c     **** 	// If going from manual to auto
+ 598              		.loc 1 129 1 view .LVU158
+ 599 0006 70B5     		push	{r4, r5, r6, lr}
+ 600              	.LCFI6:
+ 601              		.cfi_def_cfa_offset 16
+ 602              		.cfi_offset 4, -16
+ 603              		.cfi_offset 5, -12
+ 604              		.cfi_offset 6, -8
+ 605              		.cfi_offset 14, -4
+ 606 0008 0446     		mov	r4, r0
+ 132:src/pid.c     **** 		pid->iterm = *(pid->output);
+ 607              		.loc 1 132 3 is_stmt 1 view .LVU159
+ 608              		.loc 1 132 21 is_stmt 0 view .LVU160
+ 609 000a 4368     		ldr	r3, [r0, #4]
+ 610              		.loc 1 132 16 view .LVU161
+ 611 000c 1D68     		ldr	r5, [r3]	@ float
+ 612              		.loc 1 132 14 view .LVU162
+ 613 000e 0562     		str	r5, [r0, #32]	@ float
+ 133:src/pid.c     **** 		pid->lastin = *(pid->input);
+ 614              		.loc 1 133 3 is_stmt 1 view .LVU163
+ 615              		.loc 1 133 22 is_stmt 0 view .LVU164
+ 616 0010 0368     		ldr	r3, [r0]
+ 617              		.loc 1 133 17 view .LVU165
+ 618 0012 1B68     		ldr	r3, [r3]	@ float
+ 619              		.loc 1 133 15 view .LVU166
+ 620 0014 4362     		str	r3, [r0, #36]	@ float
+ 134:src/pid.c     **** 		if (pid->iterm > pid->omax)
+ 621              		.loc 1 134 3 is_stmt 1 view .LVU167
+ 622              		.loc 1 134 23 is_stmt 0 view .LVU168
+ 623 0016 C669     		ldr	r6, [r0, #28]	@ float
+ 624              		.loc 1 134 6 view .LVU169
+ 625 0018 3146     		mov	r1, r6
+ 626 001a 2846     		mov	r0, r5
+ 627              	.LVL69:
+ 628              		.loc 1 134 6 view .LVU170
+ 629 001c FFF7FEFF 		bl	__aeabi_fcmpgt
+ 630              	.LVL70:
+ 631 0020 20B1     		cbz	r0, .L50
+ 135:src/pid.c     **** 			pid->iterm = pid->omax;
+ 632              		.loc 1 135 4 is_stmt 1 view .LVU171
+ 633              		.loc 1 135 15 is_stmt 0 view .LVU172
+ 634 0022 2662     		str	r6, [r4, #32]	@ float
+ 635              	.L46:
+ 136:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 137:src/pid.c     **** 			pid->iterm = pid->omin;
+ 138:src/pid.c     **** 		pid->automode = true;
+ 636              		.loc 1 138 3 is_stmt 1 view .LVU173
+ 637              		.loc 1 138 17 is_stmt 0 view .LVU174
+ 638 0024 0123     		movs	r3, #1
+ 639 0026 84F83030 		strb	r3, [r4, #48]
+ 139:src/pid.c     **** 	}
+ 140:src/pid.c     **** }
+ 640              		.loc 1 140 1 view .LVU175
+ 641 002a 70BD     		pop	{r4, r5, r6, pc}
+ 642              	.LVL71:
+ 643              	.L50:
+ARM GAS  /tmp/ccLIpjUO.s 			page 15
+
+
+ 136:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 644              		.loc 1 136 8 is_stmt 1 view .LVU176
+ 136:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 645              		.loc 1 136 28 is_stmt 0 view .LVU177
+ 646 002c A669     		ldr	r6, [r4, #24]	@ float
+ 136:src/pid.c     **** 		else if (pid->iterm < pid->omin)
+ 647              		.loc 1 136 11 view .LVU178
+ 648 002e 3146     		mov	r1, r6
+ 649 0030 2846     		mov	r0, r5
+ 650 0032 FFF7FEFF 		bl	__aeabi_fcmplt
+ 651              	.LVL72:
+ 652 0036 0028     		cmp	r0, #0
+ 653 0038 F4D0     		beq	.L46
+ 137:src/pid.c     **** 		pid->automode = true;
+ 654              		.loc 1 137 4 is_stmt 1 view .LVU179
+ 137:src/pid.c     **** 		pid->automode = true;
+ 655              		.loc 1 137 15 is_stmt 0 view .LVU180
+ 656 003a 2662     		str	r6, [r4, #32]	@ float
+ 657 003c F2E7     		b	.L46
+ 658              	.LVL73:
+ 659              	.L52:
+ 660              	.LCFI7:
+ 661              		.cfi_def_cfa_offset 0
+ 662              		.cfi_restore 4
+ 663              		.cfi_restore 5
+ 664              		.cfi_restore 6
+ 665              		.cfi_restore 14
+ 137:src/pid.c     **** 		pid->automode = true;
+ 666              		.loc 1 137 15 view .LVU181
+ 667 003e 7047     		bx	lr
+ 668              		.cfi_endproc
+ 669              	.LFE72:
+ 671              		.section	.text.pid_manual,"ax",%progbits
+ 672              		.align	1
+ 673              		.global	pid_manual
+ 674              		.syntax unified
+ 675              		.thumb
+ 676              		.thumb_func
+ 678              	pid_manual:
+ 679              	.LVL74:
+ 680              	.LFB73:
+ 141:src/pid.c     **** 
+ 142:src/pid.c     **** void pid_manual(p_pid_controller pid)
+ 143:src/pid.c     **** {
+ 681              		.loc 1 143 1 is_stmt 1 view -0
+ 682              		.cfi_startproc
+ 683              		@ args = 0, pretend = 0, frame = 0
+ 684              		@ frame_needed = 0, uses_anonymous_args = 0
+ 685              		@ link register save eliminated.
+ 144:src/pid.c     **** 	pid->automode = false;
+ 686              		.loc 1 144 2 view .LVU183
+ 687              		.loc 1 144 16 is_stmt 0 view .LVU184
+ 688 0000 0023     		movs	r3, #0
+ 689 0002 80F83030 		strb	r3, [r0, #48]
+ 145:src/pid.c     **** }
+ 690              		.loc 1 145 1 view .LVU185
+ 691 0006 7047     		bx	lr
+ARM GAS  /tmp/ccLIpjUO.s 			page 16
+
+
+ 692              		.cfi_endproc
+ 693              	.LFE73:
+ 695              		.section	.text.pid_direction,"ax",%progbits
+ 696              		.align	1
+ 697              		.global	pid_direction
+ 698              		.syntax unified
+ 699              		.thumb
+ 700              		.thumb_func
+ 702              	pid_direction:
+ 703              	.LVL75:
+ 704              	.LFB74:
+ 146:src/pid.c     **** 
+ 147:src/pid.c     **** void pid_direction(p_pid_controller pid, enum pid_control_directions dir)
+ 148:src/pid.c     **** {
+ 705              		.loc 1 148 1 is_stmt 1 view -0
+ 706              		.cfi_startproc
+ 707              		@ args = 0, pretend = 0, frame = 0
+ 708              		@ frame_needed = 0, uses_anonymous_args = 0
+ 709              		.loc 1 148 1 is_stmt 0 view .LVU187
+ 710 0000 38B5     		push	{r3, r4, r5, lr}
+ 711              	.LCFI8:
+ 712              		.cfi_def_cfa_offset 16
+ 713              		.cfi_offset 3, -16
+ 714              		.cfi_offset 4, -12
+ 715              		.cfi_offset 5, -8
+ 716              		.cfi_offset 14, -4
+ 717 0002 0446     		mov	r4, r0
+ 718 0004 0D46     		mov	r5, r1
+ 149:src/pid.c     **** 	if (pid->automode && pid->direction != dir) {
+ 719              		.loc 1 149 2 is_stmt 1 view .LVU188
+ 720              		.loc 1 149 9 is_stmt 0 view .LVU189
+ 721 0006 90F83030 		ldrb	r3, [r0, #48]	@ zero_extendqisi2
+ 722              		.loc 1 149 5 view .LVU190
+ 723 000a 93B1     		cbz	r3, .L57
+ 724              		.loc 1 149 26 discriminator 1 view .LVU191
+ 725 000c 90F83130 		ldrb	r3, [r0, #49]	@ zero_extendqisi2
+ 726              		.loc 1 149 20 discriminator 1 view .LVU192
+ 727 0010 8B42     		cmp	r3, r1
+ 728 0012 0ED0     		beq	.L57
+ 150:src/pid.c     **** 		pid->Kp = (0 - pid->Kp);
+ 729              		.loc 1 150 3 is_stmt 1 view .LVU193
+ 730              		.loc 1 150 16 is_stmt 0 view .LVU194
+ 731 0014 C168     		ldr	r1, [r0, #12]	@ float
+ 732              	.LVL76:
+ 733              		.loc 1 150 16 view .LVU195
+ 734 0016 0020     		movs	r0, #0
+ 735              	.LVL77:
+ 736              		.loc 1 150 16 view .LVU196
+ 737 0018 FFF7FEFF 		bl	__aeabi_fsub
+ 738              	.LVL78:
+ 739              		.loc 1 150 11 view .LVU197
+ 740 001c E060     		str	r0, [r4, #12]	@ float
+ 151:src/pid.c     **** 		pid->Ki = (0 - pid->Ki);
+ 741              		.loc 1 151 3 is_stmt 1 view .LVU198
+ 742              		.loc 1 151 16 is_stmt 0 view .LVU199
+ 743 001e 2169     		ldr	r1, [r4, #16]	@ float
+ 744 0020 0020     		movs	r0, #0
+ARM GAS  /tmp/ccLIpjUO.s 			page 17
+
+
+ 745 0022 FFF7FEFF 		bl	__aeabi_fsub
+ 746              	.LVL79:
+ 747              		.loc 1 151 11 view .LVU200
+ 748 0026 2061     		str	r0, [r4, #16]	@ float
+ 152:src/pid.c     **** 		pid->Kd = (0 - pid->Kd);
+ 749              		.loc 1 152 3 is_stmt 1 view .LVU201
+ 750              		.loc 1 152 16 is_stmt 0 view .LVU202
+ 751 0028 6169     		ldr	r1, [r4, #20]	@ float
+ 752 002a 0020     		movs	r0, #0
+ 753 002c FFF7FEFF 		bl	__aeabi_fsub
+ 754              	.LVL80:
+ 755              		.loc 1 152 11 view .LVU203
+ 756 0030 6061     		str	r0, [r4, #20]	@ float
+ 757              	.L57:
+ 153:src/pid.c     **** 	}
+ 154:src/pid.c     **** 	pid->direction = dir;
+ 758              		.loc 1 154 2 is_stmt 1 view .LVU204
+ 759              		.loc 1 154 17 is_stmt 0 view .LVU205
+ 760 0032 84F83150 		strb	r5, [r4, #49]
+ 155:src/pid.c     **** }...
+ 761              		.loc 1 155 1 view .LVU206
+ 762 0036 38BD     		pop	{r3, r4, r5, pc}
+ 763              		.loc 1 155 1 view .LVU207
+ 764              		.cfi_endproc
+ 765              	.LFE74:
+ 767              		.section	.text.pid_create,"ax",%progbits
+ 768              		.align	1
+ 769              		.global	pid_create
+ 770              		.syntax unified
+ 771              		.thumb
+ 772              		.thumb_func
+ 774              	pid_create:
+ 775              	.LVL81:
+ 776              	.LFB66:
+  23:src/pid.c     **** {
+ 777              		.loc 1 23 1 is_stmt 1 view -0
+ 778              		.cfi_startproc
+ 779              		@ args = 12, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:src/pid.c     **** {
+ 781              		.loc 1 23 1 is_stmt 0 view .LVU209
+ 782 0000 38B5     		push	{r3, r4, r5, lr}
+ 783              	.LCFI9:
+ 784              		.cfi_def_cfa_offset 16
+ 785              		.cfi_offset 3, -16
+ 786              		.cfi_offset 4, -12
+ 787              		.cfi_offset 5, -8
+ 788              		.cfi_offset 14, -4
+ 789 0002 0446     		mov	r4, r0
+  24:src/pid.c     **** 	pid->input = in;
+ 790              		.loc 1 24 2 is_stmt 1 view .LVU210
+  24:src/pid.c     **** 	pid->input = in;
+ 791              		.loc 1 24 13 is_stmt 0 view .LVU211
+ 792 0004 0160     		str	r1, [r0]
+  25:src/pid.c     **** 	pid->output = out;
+ 793              		.loc 1 25 2 is_stmt 1 view .LVU212
+  25:src/pid.c     **** 	pid->output = out;
+ARM GAS  /tmp/ccLIpjUO.s 			page 18
+
+
+ 794              		.loc 1 25 14 is_stmt 0 view .LVU213
+ 795 0006 4260     		str	r2, [r0, #4]
+  26:src/pid.c     **** 	pid->setpoint = set;
+ 796              		.loc 1 26 2 is_stmt 1 view .LVU214
+  26:src/pid.c     **** 	pid->setpoint = set;
+ 797              		.loc 1 26 16 is_stmt 0 view .LVU215
+ 798 0008 8360     		str	r3, [r0, #8]
+  27:src/pid.c     **** 	pid->automode = false;
+ 799              		.loc 1 27 2 is_stmt 1 view .LVU216
+  27:src/pid.c     **** 	pid->automode = false;
+ 800              		.loc 1 27 16 is_stmt 0 view .LVU217
+ 801 000a 0025     		movs	r5, #0
+ 802 000c 80F83050 		strb	r5, [r0, #48]
+  29:src/pid.c     **** 	pid_limits(pid, 0, 255);
+ 803              		.loc 1 29 2 is_stmt 1 view .LVU218
+ 804 0010 0B4A     		ldr	r2, .L61
+ 805              	.LVL82:
+  29:src/pid.c     **** 	pid_limits(pid, 0, 255);
+ 806              		.loc 1 29 2 is_stmt 0 view .LVU219
+ 807 0012 0021     		movs	r1, #0
+ 808              	.LVL83:
+  29:src/pid.c     **** 	pid_limits(pid, 0, 255);
+ 809              		.loc 1 29 2 view .LVU220
+ 810 0014 FFF7FEFF 		bl	pid_limits
+ 811              	.LVL84:
+  32:src/pid.c     **** 	pid->sampletime = 100 * (TICK_SECOND / 1000);
+ 812              		.loc 1 32 2 is_stmt 1 view .LVU221
+  32:src/pid.c     **** 	pid->sampletime = 100 * (TICK_SECOND / 1000);
+ 813              		.loc 1 32 18 is_stmt 0 view .LVU222
+ 814 0018 6423     		movs	r3, #100
+ 815 001a E362     		str	r3, [r4, #44]
+  34:src/pid.c     **** 	pid_direction(pid, E_PID_DIRECT);
+ 816              		.loc 1 34 2 is_stmt 1 view .LVU223
+ 817 001c 2946     		mov	r1, r5
+ 818 001e 2046     		mov	r0, r4
+ 819 0020 FFF7FEFF 		bl	pid_direction
+ 820              	.LVL85:
+  35:src/pid.c     **** 	pid_tune(pid, kp, ki, kd);
+ 821              		.loc 1 35 2 view .LVU224
+ 822 0024 069B     		ldr	r3, [sp, #24]	@ float
+ 823 0026 059A     		ldr	r2, [sp, #20]	@ float
+ 824 0028 0499     		ldr	r1, [sp, #16]	@ float
+ 825 002a 2046     		mov	r0, r4
+ 826 002c FFF7FEFF 		bl	pid_tune
+ 827              	.LVL86:
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+ 828              		.loc 1 37 2 view .LVU225
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+ 829              		.loc 1 37 18 is_stmt 0 view .LVU226
+ 830 0030 FFF7FEFF 		bl	HAL_GetTick
+ 831              	.LVL87:
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+ 832              		.loc 1 37 34 discriminator 1 view .LVU227
+ 833 0034 E36A     		ldr	r3, [r4, #44]
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+ 834              		.loc 1 37 29 discriminator 1 view .LVU228
+ 835 0036 C01A     		subs	r0, r0, r3
+ARM GAS  /tmp/ccLIpjUO.s 			page 19
+
+
+  37:src/pid.c     **** 	pid->lasttime = tick_get() - pid->sampletime;
+ 836              		.loc 1 37 16 discriminator 1 view .LVU229
+ 837 0038 A062     		str	r0, [r4, #40]
+  39:src/pid.c     **** 	return pid;
+ 838              		.loc 1 39 2 is_stmt 1 view .LVU230
+  40:src/pid.c     **** }
+ 839              		.loc 1 40 1 is_stmt 0 view .LVU231
+ 840 003a 2046     		mov	r0, r4
+ 841 003c 38BD     		pop	{r3, r4, r5, pc}
+ 842              	.LVL88:
+ 843              	.L62:
+  40:src/pid.c     **** }
+ 844              		.loc 1 40 1 view .LVU232
+ 845 003e 00BF     		.align	2
+ 846              	.L61:
+ 847 0040 00007F43 		.word	1132396544
+ 848              		.cfi_endproc
+ 849              	.LFE66:
+ 851              		.text
+ 852              	.Letext0:
+ 853              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 854              		.file 3 "inc/pid.h"
+ 855              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/ccLIpjUO.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pid.c
+     /tmp/ccLIpjUO.s:19     .text.pid_need_compute:00000000 $t
+     /tmp/ccLIpjUO.s:25     .text.pid_need_compute:00000000 pid_need_compute
+     /tmp/ccLIpjUO.s:65     .text.pid_compute:00000000 $t
+     /tmp/ccLIpjUO.s:71     .text.pid_compute:00000000 pid_compute
+     /tmp/ccLIpjUO.s:244    .text.pid_tune:00000000 $t
+     /tmp/ccLIpjUO.s:250    .text.pid_tune:00000000 pid_tune
+     /tmp/ccLIpjUO.s:373    .text.pid_tune:00000080 $d
+     /tmp/ccLIpjUO.s:378    .text.pid_sample:00000000 $t
+     /tmp/ccLIpjUO.s:384    .text.pid_sample:00000000 pid_sample
+     /tmp/ccLIpjUO.s:463    .text.pid_limits:00000000 $t
+     /tmp/ccLIpjUO.s:469    .text.pid_limits:00000000 pid_limits
+     /tmp/ccLIpjUO.s:580    .text.pid_auto:00000000 $t
+     /tmp/ccLIpjUO.s:586    .text.pid_auto:00000000 pid_auto
+     /tmp/ccLIpjUO.s:672    .text.pid_manual:00000000 $t
+     /tmp/ccLIpjUO.s:678    .text.pid_manual:00000000 pid_manual
+     /tmp/ccLIpjUO.s:696    .text.pid_direction:00000000 $t
+     /tmp/ccLIpjUO.s:702    .text.pid_direction:00000000 pid_direction
+     /tmp/ccLIpjUO.s:768    .text.pid_create:00000000 $t
+     /tmp/ccLIpjUO.s:774    .text.pid_create:00000000 pid_create
+     /tmp/ccLIpjUO.s:847    .text.pid_create:00000040 $d
+
+UNDEFINED SYMBOLS
+HAL_GetTick
+__aeabi_fsub
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_fcmpgt
+__aeabi_fcmplt
+__aeabi_ui2f
+__aeabi_fdiv
+__aeabi_fcmpge

@@ -1,0 +1,1480 @@
+ARM GAS  /tmp/ccQQXkbi.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ascii_protocol.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/hbprotocol/ascii_protocol.c"
+  18              		.section	.rodata.line_lock_ascii.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 41534349 		.ascii	"ASCII protocol locked.\015\012\000"
+  21      49207072 
+  21      6F746F63 
+  21      6F6C206C 
+  21      6F636B65 
+  22              		.section	.text.line_lock_ascii,"ax",%progbits
+  23              		.align	1
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	line_lock_ascii:
+  29              	.LVL0:
+  30              	.LFB4:
+   1:src/hbprotocol/ascii_protocol.c **** /*
+   2:src/hbprotocol/ascii_protocol.c **** * This file is part of the hoverboard-firmware-hack project.
+   3:src/hbprotocol/ascii_protocol.c **** *
+   4:src/hbprotocol/ascii_protocol.c **** * Copyright (C) 2018 Simon Hailes <btsimonh@googlemail.com>
+   5:src/hbprotocol/ascii_protocol.c **** *
+   6:src/hbprotocol/ascii_protocol.c **** * This program is free software: you can redistribute it and/or modify
+   7:src/hbprotocol/ascii_protocol.c **** * it under the terms of the GNU General Public License as published by
+   8:src/hbprotocol/ascii_protocol.c **** * the Free Software Foundation, either version 3 of the License, or
+   9:src/hbprotocol/ascii_protocol.c **** * (at your option) any later version.
+  10:src/hbprotocol/ascii_protocol.c **** *
+  11:src/hbprotocol/ascii_protocol.c **** * This program is distributed in the hope that it will be useful,
+  12:src/hbprotocol/ascii_protocol.c **** * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  13:src/hbprotocol/ascii_protocol.c **** * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  14:src/hbprotocol/ascii_protocol.c **** * GNU General Public License for more details.
+  15:src/hbprotocol/ascii_protocol.c **** *
+  16:src/hbprotocol/ascii_protocol.c **** * You should have received a copy of the GNU General Public License
+  17:src/hbprotocol/ascii_protocol.c **** * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  18:src/hbprotocol/ascii_protocol.c **** */
+  19:src/hbprotocol/ascii_protocol.c **** #include "protocol.h"
+  20:src/hbprotocol/ascii_protocol.c **** 
+  21:src/hbprotocol/ascii_protocol.c **** #include <string.h>
+  22:src/hbprotocol/ascii_protocol.c **** #include <stdlib.h>
+  23:src/hbprotocol/ascii_protocol.c **** #include <stdio.h>
+  24:src/hbprotocol/ascii_protocol.c **** 
+ARM GAS  /tmp/ccQQXkbi.s 			page 2
+
+
+  25:src/hbprotocol/ascii_protocol.c **** 
+  26:src/hbprotocol/ascii_protocol.c **** ///////////////////////////////////////////////////
+  27:src/hbprotocol/ascii_protocol.c **** // used in machine_protocol.c
+  28:src/hbprotocol/ascii_protocol.c **** void ascii_byte(PROTOCOL_STAT *s, unsigned char byte );
+  29:src/hbprotocol/ascii_protocol.c **** 
+  30:src/hbprotocol/ascii_protocol.c **** 
+  31:src/hbprotocol/ascii_protocol.c **** typedef struct ASCII_FUNCTION_tag {
+  32:src/hbprotocol/ascii_protocol.c ****     int (*fn)(PROTOCOL_STAT *s, char *line, char *ascii_out);
+  33:src/hbprotocol/ascii_protocol.c ****     char *description;
+  34:src/hbprotocol/ascii_protocol.c **** } ASCII_FUNCTION;
+  35:src/hbprotocol/ascii_protocol.c **** 
+  36:src/hbprotocol/ascii_protocol.c **** typedef struct ASCII_IMMEDIATE_FUNCTION_tag {
+  37:src/hbprotocol/ascii_protocol.c ****     int (*fn)(PROTOCOL_STAT *s, char byte,  char *ascii_out);
+  38:src/hbprotocol/ascii_protocol.c ****     char *description;
+  39:src/hbprotocol/ascii_protocol.c **** } ASCII_IMMEDIATE_FUNCTION;
+  40:src/hbprotocol/ascii_protocol.c **** 
+  41:src/hbprotocol/ascii_protocol.c **** static ASCII_IMMEDIATE_FUNCTION immediate_functions[256];
+  42:src/hbprotocol/ascii_protocol.c **** static ASCII_FUNCTION line_functions[256];
+  43:src/hbprotocol/ascii_protocol.c **** 
+  44:src/hbprotocol/ascii_protocol.c **** 
+  45:src/hbprotocol/ascii_protocol.c **** static char password[] = "unlockASCII";   // unlock password, has to start with an 'u'
+  46:src/hbprotocol/ascii_protocol.c **** static int line_unlock_ascii(PROTOCOL_STAT *s, char *cmd, char *ascii_out) {
+  47:src/hbprotocol/ascii_protocol.c **** //case 'u':
+  48:src/hbprotocol/ascii_protocol.c ****     if (strlen(cmd) < strlen(password)){
+  49:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+  50:src/hbprotocol/ascii_protocol.c ****     } else {
+  51:src/hbprotocol/ascii_protocol.c ****         for (int i = 0; i < strlen(password); i++){
+  52:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+  53:src/hbprotocol/ascii_protocol.c ****             sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n"
+  54:src/hbprotocol/ascii_protocol.c ****                 break;
+  55:src/hbprotocol/ascii_protocol.c ****             }
+  56:src/hbprotocol/ascii_protocol.c ****             if(i == 10) {
+  57:src/hbprotocol/ascii_protocol.c ****                 s->ascii.asciiProtocolUnlocked = 1;
+  58:src/hbprotocol/ascii_protocol.c ****                 sprintf(ascii_out, "ASCII input active. Type ? for help\r\n");
+  59:src/hbprotocol/ascii_protocol.c ****             }
+  60:src/hbprotocol/ascii_protocol.c ****         }
+  61:src/hbprotocol/ascii_protocol.c ****     }
+  62:src/hbprotocol/ascii_protocol.c ****     return 1;
+  63:src/hbprotocol/ascii_protocol.c **** }
+  64:src/hbprotocol/ascii_protocol.c **** 
+  65:src/hbprotocol/ascii_protocol.c **** static int line_lock_ascii(PROTOCOL_STAT *s, char *cmd, char *ascii_out) {
+  31              		.loc 1 65 74 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		@ link register save eliminated.
+  36              		.loc 1 65 74 is_stmt 0 view .LVU1
+  37 0000 10B4     		push	{r4}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 4
+  40              		.cfi_offset 4, -4
+  41 0002 9446     		mov	ip, r2
+  66:src/hbprotocol/ascii_protocol.c **** //case 'L':
+  67:src/hbprotocol/ascii_protocol.c ****     s->ascii.asciiProtocolUnlocked = 0;
+  42              		.loc 1 67 5 is_stmt 1 view .LVU2
+  43              		.loc 1 67 36 is_stmt 0 view .LVU3
+  44 0004 00F58050 		add	r0, r0, #4096
+ARM GAS  /tmp/ccQQXkbi.s 			page 3
+
+
+  45              	.LVL1:
+  46              		.loc 1 67 36 view .LVU4
+  47 0008 0023     		movs	r3, #0
+  48 000a 80F84C32 		strb	r3, [r0, #588]
+  68:src/hbprotocol/ascii_protocol.c ****     sprintf(ascii_out, "ASCII protocol locked.\r\n");
+  49              		.loc 1 68 5 is_stmt 1 view .LVU5
+  50 000e 0A4C     		ldr	r4, .L3
+  51 0010 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+  52              	.LVL2:
+  53              		.loc 1 68 5 is_stmt 0 view .LVU6
+  54 0012 CCF80000 		str	r0, [ip]	@ unaligned
+  55 0016 CCF80410 		str	r1, [ip, #4]	@ unaligned
+  56 001a CCF80820 		str	r2, [ip, #8]	@ unaligned
+  57 001e CCF80C30 		str	r3, [ip, #12]	@ unaligned
+  58 0022 03CC     		ldmia	r4!, {r0, r1}
+  59 0024 CCF81000 		str	r0, [ip, #16]	@ unaligned
+  60 0028 CCF81410 		str	r1, [ip, #20]	@ unaligned
+  61 002c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  62 002e 8CF81830 		strb	r3, [ip, #24]
+  69:src/hbprotocol/ascii_protocol.c ****     return 1;
+  63              		.loc 1 69 5 is_stmt 1 view .LVU7
+  70:src/hbprotocol/ascii_protocol.c **** }
+  64              		.loc 1 70 1 is_stmt 0 view .LVU8
+  65 0032 0120     		movs	r0, #1
+  66 0034 10BC     		pop	{r4}
+  67              	.LCFI1:
+  68              		.cfi_restore 4
+  69              		.cfi_def_cfa_offset 0
+  70 0036 7047     		bx	lr
+  71              	.L4:
+  72              		.align	2
+  73              	.L3:
+  74 0038 00000000 		.word	.LC0
+  75              		.cfi_endproc
+  76              	.LFE4:
+  78              		.section	.rodata.line_unlock_ascii.str1.4,"aMS",%progbits,1
+  79              		.align	2
+  80              	.LC1:
+  81 0000 57726F6E 		.ascii	"Wrong Password - Enter unlockASCII to enable ASCII "
+  81      67205061 
+  81      7373776F 
+  81      7264202D 
+  81      20456E74 
+  82 0033 696E7075 		.ascii	"input mode.\015\012\000"
+  82      74206D6F 
+  82      64652E0D 
+  82      0A00
+  83 0041 000000   		.align	2
+  84              	.LC2:
+  85 0044 41534349 		.ascii	"ASCII input active. Type ? for help\015\012\000"
+  85      4920696E 
+  85      70757420 
+  85      61637469 
+  85      76652E20 
+  86              		.section	.text.line_unlock_ascii,"ax",%progbits
+  87              		.align	1
+  88              		.syntax unified
+ARM GAS  /tmp/ccQQXkbi.s 			page 4
+
+
+  89              		.thumb
+  90              		.thumb_func
+  92              	line_unlock_ascii:
+  93              	.LVL3:
+  94              	.LFB3:
+  46:src/hbprotocol/ascii_protocol.c **** //case 'u':
+  95              		.loc 1 46 76 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  46:src/hbprotocol/ascii_protocol.c **** //case 'u':
+  99              		.loc 1 46 76 is_stmt 0 view .LVU10
+ 100 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 101              	.LCFI2:
+ 102              		.cfi_def_cfa_offset 32
+ 103              		.cfi_offset 3, -32
+ 104              		.cfi_offset 4, -28
+ 105              		.cfi_offset 5, -24
+ 106              		.cfi_offset 6, -20
+ 107              		.cfi_offset 7, -16
+ 108              		.cfi_offset 8, -12
+ 109              		.cfi_offset 9, -8
+ 110              		.cfi_offset 14, -4
+ 111 0004 8046     		mov	r8, r0
+ 112 0006 0E46     		mov	r6, r1
+ 113 0008 1746     		mov	r7, r2
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 114              		.loc 1 48 5 is_stmt 1 view .LVU11
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 115              		.loc 1 48 9 is_stmt 0 view .LVU12
+ 116 000a 0846     		mov	r0, r1
+ 117              	.LVL4:
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 118              		.loc 1 48 9 view .LVU13
+ 119 000c FFF7FEFF 		bl	strlen
+ 120              	.LVL5:
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 121              		.loc 1 48 9 view .LVU14
+ 122 0010 0446     		mov	r4, r0
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 123              		.loc 1 48 23 discriminator 1 view .LVU15
+ 124 0012 2248     		ldr	r0, .L16
+ 125 0014 FFF7FEFF 		bl	strlen
+ 126              	.LVL6:
+  48:src/hbprotocol/ascii_protocol.c ****         sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n");
+ 127              		.loc 1 48 8 discriminator 2 view .LVU16
+ 128 0018 8442     		cmp	r4, r0
+ 129 001a 01D3     		bcc	.L14
+ 130              	.LBB2:
+  51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+ 131              		.loc 1 51 18 view .LVU17
+ 132 001c 0024     		movs	r4, #0
+ 133 001e 26E0     		b	.L6
+ 134              	.L14:
+ 135              	.LBE2:
+  49:src/hbprotocol/ascii_protocol.c ****     } else {
+ 136              		.loc 1 49 9 is_stmt 1 view .LVU18
+ARM GAS  /tmp/ccQQXkbi.s 			page 5
+
+
+ 137 0020 4122     		movs	r2, #65
+ 138 0022 1F49     		ldr	r1, .L16+4
+ 139 0024 3846     		mov	r0, r7
+ 140 0026 FFF7FEFF 		bl	memcpy
+ 141              	.LVL7:
+ 142              	.L7:
+  62:src/hbprotocol/ascii_protocol.c **** }
+ 143              		.loc 1 62 5 view .LVU19
+  63:src/hbprotocol/ascii_protocol.c **** 
+ 144              		.loc 1 63 1 is_stmt 0 view .LVU20
+ 145 002a 0120     		movs	r0, #1
+ 146 002c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 147              	.LVL8:
+ 148              	.L15:
+ 149              	.LBB3:
+  53:src/hbprotocol/ascii_protocol.c ****                 break;
+ 150              		.loc 1 53 13 is_stmt 1 view .LVU21
+ 151 0030 4122     		movs	r2, #65
+ 152 0032 1B49     		ldr	r1, .L16+4
+ 153 0034 3846     		mov	r0, r7
+ 154 0036 FFF7FEFF 		bl	memcpy
+ 155              	.LVL9:
+  54:src/hbprotocol/ascii_protocol.c ****             }
+ 156              		.loc 1 54 17 view .LVU22
+ 157 003a F6E7     		b	.L7
+ 158              	.L10:
+  58:src/hbprotocol/ascii_protocol.c ****             }
+ 159              		.loc 1 58 17 is_stmt 0 view .LVU23
+ 160 003c AE46     		mov	lr, r5
+ 161 003e BEE80F00 		ldmia	lr!, {r0, r1, r2, r3}
+ 162 0042 CCF80000 		str	r0, [ip]	@ unaligned
+ 163 0046 CCF80410 		str	r1, [ip, #4]	@ unaligned
+ 164 004a CCF80820 		str	r2, [ip, #8]	@ unaligned
+ 165 004e CCF80C30 		str	r3, [ip, #12]	@ unaligned
+ 166 0052 7546     		mov	r5, lr
+ 167 0054 0CF1100C 		add	ip, ip, #16
+ 168 0058 CE45     		cmp	lr, r9
+ 169 005a EFD1     		bne	.L10
+ 170 005c DEF80000 		ldr	r0, [lr]
+ 171 0060 CCF80000 		str	r0, [ip]	@ unaligned
+ 172 0064 BEF80430 		ldrh	r3, [lr, #4]	@ unaligned
+ 173 0068 ACF80430 		strh	r3, [ip, #4]	@ unaligned
+ 174              	.L9:
+  51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+ 175              		.loc 1 51 48 is_stmt 1 discriminator 2 view .LVU24
+ 176 006c 0134     		adds	r4, r4, #1
+ 177              	.LVL10:
+ 178              	.L6:
+  51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+ 179              		.loc 1 51 27 discriminator 1 view .LVU25
+  51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+ 180              		.loc 1 51 29 is_stmt 0 discriminator 1 view .LVU26
+ 181 006e 0B48     		ldr	r0, .L16
+ 182 0070 FFF7FEFF 		bl	strlen
+ 183              	.LVL11:
+  51:src/hbprotocol/ascii_protocol.c ****             if(cmd[i] != password[i]) {
+ 184              		.loc 1 51 27 discriminator 1 view .LVU27
+ARM GAS  /tmp/ccQQXkbi.s 			page 6
+
+
+ 185 0074 A042     		cmp	r0, r4
+ 186 0076 D8D9     		bls	.L7
+  52:src/hbprotocol/ascii_protocol.c ****             sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n"
+ 187              		.loc 1 52 13 is_stmt 1 view .LVU28
+  52:src/hbprotocol/ascii_protocol.c ****             sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n"
+ 188              		.loc 1 52 19 is_stmt 0 view .LVU29
+ 189 0078 325D     		ldrb	r2, [r6, r4]	@ zero_extendqisi2
+  52:src/hbprotocol/ascii_protocol.c ****             sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n"
+ 190              		.loc 1 52 34 view .LVU30
+ 191 007a 084B     		ldr	r3, .L16
+ 192 007c 1B5D     		ldrb	r3, [r3, r4]	@ zero_extendqisi2
+  52:src/hbprotocol/ascii_protocol.c ****             sprintf(ascii_out, "Wrong Password - Enter unlockASCII to enable ASCII input mode.\r\n"
+ 193              		.loc 1 52 15 view .LVU31
+ 194 007e 9A42     		cmp	r2, r3
+ 195 0080 D6D1     		bne	.L15
+  56:src/hbprotocol/ascii_protocol.c ****                 s->ascii.asciiProtocolUnlocked = 1;
+ 196              		.loc 1 56 13 is_stmt 1 view .LVU32
+  56:src/hbprotocol/ascii_protocol.c ****                 s->ascii.asciiProtocolUnlocked = 1;
+ 197              		.loc 1 56 15 is_stmt 0 view .LVU33
+ 198 0082 0A2C     		cmp	r4, #10
+ 199 0084 F2D1     		bne	.L9
+  57:src/hbprotocol/ascii_protocol.c ****                 sprintf(ascii_out, "ASCII input active. Type ? for help\r\n");
+ 200              		.loc 1 57 17 is_stmt 1 view .LVU34
+  57:src/hbprotocol/ascii_protocol.c ****                 sprintf(ascii_out, "ASCII input active. Type ? for help\r\n");
+ 201              		.loc 1 57 48 is_stmt 0 view .LVU35
+ 202 0086 08F58053 		add	r3, r8, #4096
+ 203 008a 0122     		movs	r2, #1
+ 204 008c 83F84C22 		strb	r2, [r3, #588]
+  58:src/hbprotocol/ascii_protocol.c ****             }
+ 205              		.loc 1 58 17 is_stmt 1 view .LVU36
+ 206 0090 044D     		ldr	r5, .L16+8
+ 207 0092 BC46     		mov	ip, r7
+ 208 0094 05F12009 		add	r9, r5, #32
+ 209 0098 D0E7     		b	.L10
+ 210              	.L17:
+ 211 009a 00BF     		.align	2
+ 212              	.L16:
+ 213 009c 00000000 		.word	password
+ 214 00a0 00000000 		.word	.LC1
+ 215 00a4 44000000 		.word	.LC2
+ 216              	.LBE3:
+ 217              		.cfi_endproc
+ 218              	.LFE3:
+ 220              		.section	.rodata.line_help.str1.4,"aMS",%progbits,1
+ 221              		.align	2
+ 222              	.LC3:
+ 223 0000 2563202D 		.ascii	"%c - \000"
+ 223      2000
+ 224 0006 0000     		.align	2
+ 225              	.LC4:
+ 226 0008 0D0A00   		.ascii	"\015\012\000"
+ 227              		.section	.text.line_help,"ax",%progbits
+ 228              		.align	1
+ 229              		.syntax unified
+ 230              		.thumb
+ 231              		.thumb_func
+ 233              	line_help:
+ARM GAS  /tmp/ccQQXkbi.s 			page 7
+
+
+ 234              	.LVL12:
+ 235              	.LFB8:
+  71:src/hbprotocol/ascii_protocol.c **** 
+  72:src/hbprotocol/ascii_protocol.c **** 
+  73:src/hbprotocol/ascii_protocol.c **** void ascii_add_immediate( unsigned char letter, int (*fn)(PROTOCOL_STAT *s, char byte,  char *ascii
+  74:src/hbprotocol/ascii_protocol.c ****     immediate_functions[letter].fn = fn;
+  75:src/hbprotocol/ascii_protocol.c ****     immediate_functions[letter].description = description;
+  76:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+  77:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+  78:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].fn = fn;
+  79:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].description = NULL;
+  80:src/hbprotocol/ascii_protocol.c ****     }
+  81:src/hbprotocol/ascii_protocol.c **** }
+  82:src/hbprotocol/ascii_protocol.c **** 
+  83:src/hbprotocol/ascii_protocol.c **** void ascii_add_line_fn( unsigned char letter, int (*fn)(PROTOCOL_STAT *s, char *line, char *ascii_o
+  84:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].fn = fn;
+  85:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].description = description;
+  86:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+  87:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+  88:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].fn = fn;
+  89:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].description = NULL;
+  90:src/hbprotocol/ascii_protocol.c ****     }
+  91:src/hbprotocol/ascii_protocol.c **** }
+  92:src/hbprotocol/ascii_protocol.c **** 
+  93:src/hbprotocol/ascii_protocol.c **** void ascii_byte(PROTOCOL_STAT *s, unsigned char byte ){
+  94:src/hbprotocol/ascii_protocol.c ****     int skipchar = 0;
+  95:src/hbprotocol/ascii_protocol.c ****     // only if no characters buffered, process single keystorkes
+  96:src/hbprotocol/ascii_protocol.c ****     if (s->ascii.enable_immediate && (s->ascii.ascii_posn == 0)){
+  97:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+  98:src/hbprotocol/ascii_protocol.c ****         if (immediate_functions[byte].fn){
+  99:src/hbprotocol/ascii_protocol.c ****             skipchar = immediate_functions[byte].fn(s, byte, s->ascii.ascii_out);
+ 100:src/hbprotocol/ascii_protocol.c ****         } else {
+ 101:src/hbprotocol/ascii_protocol.c ****             skipchar = 0;
+ 102:src/hbprotocol/ascii_protocol.c ****         }
+ 103:src/hbprotocol/ascii_protocol.c ****     }
+ 104:src/hbprotocol/ascii_protocol.c **** 
+ 105:src/hbprotocol/ascii_protocol.c ****     if (!skipchar){
+ 106:src/hbprotocol/ascii_protocol.c ****         // on CR or LF, process gathered messages
+ 107:src/hbprotocol/ascii_protocol.c ****         if ((byte == '\r') || (byte == '\n')){
+ 108:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data((unsigned char *) &byte, 1);
+ 109:src/hbprotocol/ascii_protocol.c **** 
+ 110:src/hbprotocol/ascii_protocol.c **** 
+ 111:src/hbprotocol/ascii_protocol.c ****             if (s->ascii.ascii_posn > 0) {
+ 112:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn] = 0;
+ 113:src/hbprotocol/ascii_protocol.c ****                 sprintf(s->ascii.ascii_out, "- %s\r\n", s->ascii.ascii_cmd);
+ 114:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out
+ 115:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_out[0] = 0;
+ 116:src/hbprotocol/ascii_protocol.c **** 
+ 117:src/hbprotocol/ascii_protocol.c ****                 if (!s->ascii.asciiProtocolUnlocked && (s->ascii.ascii_cmd[0] != 'u')) {
+ 118:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ 119:src/hbprotocol/ascii_protocol.c ****                     s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii
+ 120:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_cmd[0] = 0;
+ 121:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_posn = 0;
+ 122:src/hbprotocol/ascii_protocol.c ****                     return;
+ 123:src/hbprotocol/ascii_protocol.c ****                 }
+ 124:src/hbprotocol/ascii_protocol.c **** 
+ 125:src/hbprotocol/ascii_protocol.c ****                 if (line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn){
+ARM GAS  /tmp/ccQQXkbi.s 			page 8
+
+
+ 126:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
+ 127:src/hbprotocol/ascii_protocol.c ****                 } else {
+ 128:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "No cmd %c - use ? for help\r\n", s->ascii.ascii_cm
+ 129:src/hbprotocol/ascii_protocol.c ****                 }
+ 130:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[0] = 0;
+ 131:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_posn = 0;
+ 132:src/hbprotocol/ascii_protocol.c ****                 // send prompt
+ 133:src/hbprotocol/ascii_protocol.c ****                 byte = '>';
+ 134:src/hbprotocol/ascii_protocol.c ****             } else {
+ 135:src/hbprotocol/ascii_protocol.c ****                 byte = '>';
+ 136:src/hbprotocol/ascii_protocol.c ****             }
+ 137:src/hbprotocol/ascii_protocol.c ****         } else {
+ 138:src/hbprotocol/ascii_protocol.c ****             if (s->ascii.ascii_posn < 20){
+ 139:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn++] = byte;
+ 140:src/hbprotocol/ascii_protocol.c ****             } else {
+ 141:src/hbprotocol/ascii_protocol.c ****                 //byte = '#';
+ 142:src/hbprotocol/ascii_protocol.c ****             }
+ 143:src/hbprotocol/ascii_protocol.c ****         }
+ 144:src/hbprotocol/ascii_protocol.c ****     } else {
+ 145:src/hbprotocol/ascii_protocol.c ****         // no echo for immediate.
+ 146:src/hbprotocol/ascii_protocol.c ****         // send prompt after immediate
+ 147:src/hbprotocol/ascii_protocol.c ****         byte = '>';
+ 148:src/hbprotocol/ascii_protocol.c ****     }
+ 149:src/hbprotocol/ascii_protocol.c ****     if (s->ascii.ascii_out[0]){
+ 150:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out));
+ 151:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ 152:src/hbprotocol/ascii_protocol.c ****     }
+ 153:src/hbprotocol/ascii_protocol.c **** 
+ 154:src/hbprotocol/ascii_protocol.c ****     // echo or prompt after processing
+ 155:src/hbprotocol/ascii_protocol.c ****     if (byte) {
+ 156:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) &byte, 1);
+ 157:src/hbprotocol/ascii_protocol.c ****     }
+ 158:src/hbprotocol/ascii_protocol.c **** }
+ 159:src/hbprotocol/ascii_protocol.c **** 
+ 160:src/hbprotocol/ascii_protocol.c **** 
+ 161:src/hbprotocol/ascii_protocol.c **** static int line_help(PROTOCOL_STAT *s, char *cmd, char *ascii_out) {
+ 236              		.loc 1 161 68 view -0
+ 237              		.cfi_startproc
+ 238              		@ args = 0, pretend = 0, frame = 512
+ 239              		@ frame_needed = 0, uses_anonymous_args = 0
+ 240              		.loc 1 161 68 is_stmt 0 view .LVU38
+ 241 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 242              	.LCFI3:
+ 243              		.cfi_def_cfa_offset 28
+ 244              		.cfi_offset 4, -28
+ 245              		.cfi_offset 5, -24
+ 246              		.cfi_offset 6, -20
+ 247              		.cfi_offset 7, -16
+ 248              		.cfi_offset 8, -12
+ 249              		.cfi_offset 9, -8
+ 250              		.cfi_offset 14, -4
+ 251 0004 ADF5017D 		sub	sp, sp, #516
+ 252              	.LCFI4:
+ 253              		.cfi_def_cfa_offset 544
+ 254 0008 8046     		mov	r8, r0
+ 255 000a 9146     		mov	r9, r2
+ 162:src/hbprotocol/ascii_protocol.c ****     char out[512];
+ARM GAS  /tmp/ccQQXkbi.s 			page 9
+
+
+ 256              		.loc 1 162 5 is_stmt 1 view .LVU39
+ 163:src/hbprotocol/ascii_protocol.c ****     out[0] = 0;
+ 257              		.loc 1 163 5 view .LVU40
+ 258              		.loc 1 163 12 is_stmt 0 view .LVU41
+ 259 000c 0027     		movs	r7, #0
+ 260 000e 8DF80070 		strb	r7, [sp]
+ 164:src/hbprotocol/ascii_protocol.c ****     for (int i = 0; i < 256; i++) {
+ 261              		.loc 1 164 5 is_stmt 1 view .LVU42
+ 262              	.LBB4:
+ 263              		.loc 1 164 10 view .LVU43
+ 264              	.LVL13:
+ 265              		.loc 1 164 5 is_stmt 0 view .LVU44
+ 266 0012 1CE0     		b	.L19
+ 267              	.LVL14:
+ 268              	.L25:
+ 269              	.LBB5:
+ 270              	.LBB6:
+ 165:src/hbprotocol/ascii_protocol.c ****         if (line_functions[i].description) {
+ 166:src/hbprotocol/ascii_protocol.c ****             int count = strlen(line_functions[i].description);
+ 167:src/hbprotocol/ascii_protocol.c ****             char *p = line_functions[i].description;
+ 168:src/hbprotocol/ascii_protocol.c ****             sprintf(out, "%c - ", (char)i);
+ 169:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data_wait((unsigned char *) out, strlen(out));
+ 170:src/hbprotocol/ascii_protocol.c ****             while(count > 0) {
+ 171:src/hbprotocol/ascii_protocol.c ****                 int len = count;
+ 172:src/hbprotocol/ascii_protocol.c ****                 if (len > 128){
+ 173:src/hbprotocol/ascii_protocol.c ****                     len = 128;
+ 271              		.loc 1 173 25 view .LVU45
+ 272 0014 8025     		movs	r5, #128
+ 273              	.L22:
+ 274              	.LVL15:
+ 174:src/hbprotocol/ascii_protocol.c ****                 }
+ 175:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data_wait((unsigned char *) p, len);
+ 275              		.loc 1 175 17 is_stmt 1 view .LVU46
+ 276              		.loc 1 175 18 is_stmt 0 view .LVU47
+ 277 0016 D8F82431 		ldr	r3, [r8, #292]
+ 278              		.loc 1 175 17 view .LVU48
+ 279 001a 2946     		mov	r1, r5
+ 280 001c 3046     		mov	r0, r6
+ 281 001e 9847     		blx	r3
+ 282              	.LVL16:
+ 176:src/hbprotocol/ascii_protocol.c ****                 p += len;
+ 283              		.loc 1 176 17 is_stmt 1 view .LVU49
+ 284              		.loc 1 176 19 is_stmt 0 view .LVU50
+ 285 0020 2E44     		add	r6, r6, r5
+ 286              	.LVL17:
+ 177:src/hbprotocol/ascii_protocol.c ****                 count -= len;
+ 287              		.loc 1 177 17 is_stmt 1 view .LVU51
+ 288              		.loc 1 177 23 is_stmt 0 view .LVU52
+ 289 0022 641B     		subs	r4, r4, r5
+ 290              	.LVL18:
+ 291              	.L21:
+ 292              		.loc 1 177 23 view .LVU53
+ 293              	.LBE6:
+ 170:src/hbprotocol/ascii_protocol.c ****                 int len = count;
+ 294              		.loc 1 170 25 is_stmt 1 view .LVU54
+ 295 0024 002C     		cmp	r4, #0
+ 296 0026 03DD     		ble	.L27
+ARM GAS  /tmp/ccQQXkbi.s 			page 10
+
+
+ 297              	.LBB7:
+ 171:src/hbprotocol/ascii_protocol.c ****                 if (len > 128){
+ 298              		.loc 1 171 17 view .LVU55
+ 299              	.LVL19:
+ 172:src/hbprotocol/ascii_protocol.c ****                     len = 128;
+ 300              		.loc 1 172 17 view .LVU56
+ 172:src/hbprotocol/ascii_protocol.c ****                     len = 128;
+ 301              		.loc 1 172 20 is_stmt 0 view .LVU57
+ 302 0028 802C     		cmp	r4, #128
+ 303 002a F3DC     		bgt	.L25
+ 171:src/hbprotocol/ascii_protocol.c ****                 if (len > 128){
+ 304              		.loc 1 171 21 view .LVU58
+ 305 002c 2546     		mov	r5, r4
+ 306 002e F2E7     		b	.L22
+ 307              	.LVL20:
+ 308              	.L27:
+ 171:src/hbprotocol/ascii_protocol.c ****                 if (len > 128){
+ 309              		.loc 1 171 21 view .LVU59
+ 310              	.LBE7:
+ 178:src/hbprotocol/ascii_protocol.c ****             }
+ 179:src/hbprotocol/ascii_protocol.c ****             strncpy(out, "\r\n", sizeof(out)-1);
+ 311              		.loc 1 179 13 is_stmt 1 view .LVU60
+ 312 0030 40F2FF12 		movw	r2, #511
+ 313 0034 1749     		ldr	r1, .L29
+ 314 0036 6846     		mov	r0, sp
+ 315 0038 FFF7FEFF 		bl	strncpy
+ 316              	.LVL21:
+ 180:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data_wait((unsigned char *) out, strlen(out));
+ 317              		.loc 1 180 13 view .LVU61
+ 318              		.loc 1 180 14 is_stmt 0 view .LVU62
+ 319 003c D8F82441 		ldr	r4, [r8, #292]
+ 320              	.LVL22:
+ 321              		.loc 1 180 61 view .LVU63
+ 322 0040 6846     		mov	r0, sp
+ 323 0042 FFF7FEFF 		bl	strlen
+ 324              	.LVL23:
+ 325 0046 0146     		mov	r1, r0
+ 326              		.loc 1 180 13 discriminator 1 view .LVU64
+ 327 0048 6846     		mov	r0, sp
+ 328 004a A047     		blx	r4
+ 329              	.LVL24:
+ 330              	.L20:
+ 331              		.loc 1 180 13 discriminator 1 view .LVU65
+ 332              	.LBE5:
+ 164:src/hbprotocol/ascii_protocol.c ****         if (line_functions[i].description) {
+ 333              		.loc 1 164 31 is_stmt 1 discriminator 2 view .LVU66
+ 334 004c 0137     		adds	r7, r7, #1
+ 335              	.LVL25:
+ 336              	.L19:
+ 164:src/hbprotocol/ascii_protocol.c ****         if (line_functions[i].description) {
+ 337              		.loc 1 164 23 discriminator 1 view .LVU67
+ 338 004e FF2F     		cmp	r7, #255
+ 339 0050 17DC     		bgt	.L28
+ 165:src/hbprotocol/ascii_protocol.c ****             int count = strlen(line_functions[i].description);
+ 340              		.loc 1 165 9 view .LVU68
+ 165:src/hbprotocol/ascii_protocol.c ****             int count = strlen(line_functions[i].description);
+ 341              		.loc 1 165 30 is_stmt 0 view .LVU69
+ARM GAS  /tmp/ccQQXkbi.s 			page 11
+
+
+ 342 0052 114B     		ldr	r3, .L29+4
+ 343 0054 03EBC703 		add	r3, r3, r7, lsl #3
+ 344 0058 5E68     		ldr	r6, [r3, #4]
+ 165:src/hbprotocol/ascii_protocol.c ****             int count = strlen(line_functions[i].description);
+ 345              		.loc 1 165 12 view .LVU70
+ 346 005a 002E     		cmp	r6, #0
+ 347 005c F6D0     		beq	.L20
+ 348              	.LBB8:
+ 166:src/hbprotocol/ascii_protocol.c ****             char *p = line_functions[i].description;
+ 349              		.loc 1 166 13 is_stmt 1 view .LVU71
+ 166:src/hbprotocol/ascii_protocol.c ****             char *p = line_functions[i].description;
+ 350              		.loc 1 166 25 is_stmt 0 view .LVU72
+ 351 005e 3046     		mov	r0, r6
+ 352 0060 FFF7FEFF 		bl	strlen
+ 353              	.LVL26:
+ 166:src/hbprotocol/ascii_protocol.c ****             char *p = line_functions[i].description;
+ 354              		.loc 1 166 17 discriminator 1 view .LVU73
+ 355 0064 0446     		mov	r4, r0
+ 356              	.LVL27:
+ 167:src/hbprotocol/ascii_protocol.c ****             sprintf(out, "%c - ", (char)i);
+ 357              		.loc 1 167 13 is_stmt 1 view .LVU74
+ 168:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data_wait((unsigned char *) out, strlen(out));
+ 358              		.loc 1 168 13 view .LVU75
+ 359 0066 FAB2     		uxtb	r2, r7
+ 360 0068 0C49     		ldr	r1, .L29+8
+ 361 006a 6846     		mov	r0, sp
+ 362              	.LVL28:
+ 168:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data_wait((unsigned char *) out, strlen(out));
+ 363              		.loc 1 168 13 is_stmt 0 view .LVU76
+ 364 006c FFF7FEFF 		bl	sprintf
+ 365              	.LVL29:
+ 169:src/hbprotocol/ascii_protocol.c ****             while(count > 0) {
+ 366              		.loc 1 169 13 is_stmt 1 view .LVU77
+ 169:src/hbprotocol/ascii_protocol.c ****             while(count > 0) {
+ 367              		.loc 1 169 14 is_stmt 0 view .LVU78
+ 368 0070 D8F82451 		ldr	r5, [r8, #292]
+ 169:src/hbprotocol/ascii_protocol.c ****             while(count > 0) {
+ 369              		.loc 1 169 61 view .LVU79
+ 370 0074 6846     		mov	r0, sp
+ 371 0076 FFF7FEFF 		bl	strlen
+ 372              	.LVL30:
+ 373 007a 0146     		mov	r1, r0
+ 169:src/hbprotocol/ascii_protocol.c ****             while(count > 0) {
+ 374              		.loc 1 169 13 discriminator 1 view .LVU80
+ 375 007c 6846     		mov	r0, sp
+ 376 007e A847     		blx	r5
+ 377              	.LVL31:
+ 170:src/hbprotocol/ascii_protocol.c ****                 int len = count;
+ 378              		.loc 1 170 13 is_stmt 1 view .LVU81
+ 170:src/hbprotocol/ascii_protocol.c ****                 int len = count;
+ 379              		.loc 1 170 18 is_stmt 0 view .LVU82
+ 380 0080 D0E7     		b	.L21
+ 381              	.LVL32:
+ 382              	.L28:
+ 170:src/hbprotocol/ascii_protocol.c ****                 int len = count;
+ 383              		.loc 1 170 18 view .LVU83
+ 384              	.LBE8:
+ARM GAS  /tmp/ccQQXkbi.s 			page 12
+
+
+ 385              	.LBE4:
+ 181:src/hbprotocol/ascii_protocol.c ****         }
+ 182:src/hbprotocol/ascii_protocol.c ****     }
+ 183:src/hbprotocol/ascii_protocol.c ****     ascii_out[0] = 0;
+ 386              		.loc 1 183 5 is_stmt 1 view .LVU84
+ 387              		.loc 1 183 18 is_stmt 0 view .LVU85
+ 388 0082 0023     		movs	r3, #0
+ 389 0084 89F80030 		strb	r3, [r9]
+ 184:src/hbprotocol/ascii_protocol.c ****     return 1;
+ 390              		.loc 1 184 5 is_stmt 1 view .LVU86
+ 185:src/hbprotocol/ascii_protocol.c **** }
+ 391              		.loc 1 185 1 is_stmt 0 view .LVU87
+ 392 0088 0120     		movs	r0, #1
+ 393 008a 0DF5017D 		add	sp, sp, #516
+ 394              	.LCFI5:
+ 395              		.cfi_def_cfa_offset 28
+ 396              		@ sp needed
+ 397 008e BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 398              	.LVL33:
+ 399              	.L30:
+ 400              		.loc 1 185 1 view .LVU88
+ 401 0092 00BF     		.align	2
+ 402              	.L29:
+ 403 0094 08000000 		.word	.LC4
+ 404 0098 00000000 		.word	line_functions
+ 405 009c 00000000 		.word	.LC3
+ 406              		.cfi_endproc
+ 407              	.LFE8:
+ 409              		.section	.text.ascii_add_immediate,"ax",%progbits
+ 410              		.align	1
+ 411              		.global	ascii_add_immediate
+ 412              		.syntax unified
+ 413              		.thumb
+ 414              		.thumb_func
+ 416              	ascii_add_immediate:
+ 417              	.LVL34:
+ 418              	.LFB5:
+  73:src/hbprotocol/ascii_protocol.c ****     immediate_functions[letter].fn = fn;
+ 419              		.loc 1 73 127 is_stmt 1 view -0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 0
+ 422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 423              		@ link register save eliminated.
+  74:src/hbprotocol/ascii_protocol.c ****     immediate_functions[letter].description = description;
+ 424              		.loc 1 74 5 view .LVU90
+  74:src/hbprotocol/ascii_protocol.c ****     immediate_functions[letter].description = description;
+ 425              		.loc 1 74 36 is_stmt 0 view .LVU91
+ 426 0000 0A4B     		ldr	r3, .L33
+ 427 0002 43F83010 		str	r1, [r3, r0, lsl #3]
+  75:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+ 428              		.loc 1 75 5 is_stmt 1 view .LVU92
+  75:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+ 429              		.loc 1 75 45 is_stmt 0 view .LVU93
+ 430 0006 03EBC003 		add	r3, r3, r0, lsl #3
+ 431 000a 5A60     		str	r2, [r3, #4]
+  76:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 432              		.loc 1 76 5 is_stmt 1 view .LVU94
+ARM GAS  /tmp/ccQQXkbi.s 			page 13
+
+
+  76:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 433              		.loc 1 76 25 is_stmt 0 view .LVU95
+ 434 000c A0F14103 		sub	r3, r0, #65
+ 435 0010 DBB2     		uxtb	r3, r3
+  76:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 436              		.loc 1 76 8 view .LVU96
+ 437 0012 192B     		cmp	r3, #25
+ 438 0014 08D8     		bhi	.L31
+  77:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].fn = fn;
+ 439              		.loc 1 77 9 is_stmt 1 view .LVU97
+  77:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].fn = fn;
+ 440              		.loc 1 77 16 is_stmt 0 view .LVU98
+ 441 0016 40F02000 		orr	r0, r0, #32
+ 442              	.LVL35:
+  78:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].description = NULL;
+ 443              		.loc 1 78 9 is_stmt 1 view .LVU99
+  78:src/hbprotocol/ascii_protocol.c ****         immediate_functions[letter].description = NULL;
+ 444              		.loc 1 78 40 is_stmt 0 view .LVU100
+ 445 001a 044B     		ldr	r3, .L33
+ 446 001c 43F83010 		str	r1, [r3, r0, lsl #3]
+  79:src/hbprotocol/ascii_protocol.c ****     }
+ 447              		.loc 1 79 9 is_stmt 1 view .LVU101
+  79:src/hbprotocol/ascii_protocol.c ****     }
+ 448              		.loc 1 79 49 is_stmt 0 view .LVU102
+ 449 0020 03EBC003 		add	r3, r3, r0, lsl #3
+ 450 0024 0022     		movs	r2, #0
+ 451              	.LVL36:
+  79:src/hbprotocol/ascii_protocol.c ****     }
+ 452              		.loc 1 79 49 view .LVU103
+ 453 0026 5A60     		str	r2, [r3, #4]
+ 454              	.LVL37:
+ 455              	.L31:
+  81:src/hbprotocol/ascii_protocol.c **** 
+ 456              		.loc 1 81 1 view .LVU104
+ 457 0028 7047     		bx	lr
+ 458              	.L34:
+ 459 002a 00BF     		.align	2
+ 460              	.L33:
+ 461 002c 00000000 		.word	immediate_functions
+ 462              		.cfi_endproc
+ 463              	.LFE5:
+ 465              		.section	.text.ascii_add_line_fn,"ax",%progbits
+ 466              		.align	1
+ 467              		.global	ascii_add_line_fn
+ 468              		.syntax unified
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	ascii_add_line_fn:
+ 473              	.LVL38:
+ 474              	.LFB6:
+  83:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].fn = fn;
+ 475              		.loc 1 83 125 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
+  84:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].description = description;
+ARM GAS  /tmp/ccQQXkbi.s 			page 14
+
+
+ 480              		.loc 1 84 5 view .LVU106
+  84:src/hbprotocol/ascii_protocol.c ****     line_functions[letter].description = description;
+ 481              		.loc 1 84 31 is_stmt 0 view .LVU107
+ 482 0000 0A4B     		ldr	r3, .L37
+ 483 0002 43F83010 		str	r1, [r3, r0, lsl #3]
+  85:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+ 484              		.loc 1 85 5 is_stmt 1 view .LVU108
+  85:src/hbprotocol/ascii_protocol.c ****     if ((letter >= 'A') && (letter <= 'Z')) {
+ 485              		.loc 1 85 40 is_stmt 0 view .LVU109
+ 486 0006 03EBC003 		add	r3, r3, r0, lsl #3
+ 487 000a 5A60     		str	r2, [r3, #4]
+  86:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 488              		.loc 1 86 5 is_stmt 1 view .LVU110
+  86:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 489              		.loc 1 86 25 is_stmt 0 view .LVU111
+ 490 000c A0F14103 		sub	r3, r0, #65
+ 491 0010 DBB2     		uxtb	r3, r3
+  86:src/hbprotocol/ascii_protocol.c ****         letter |= 0x20;
+ 492              		.loc 1 86 8 view .LVU112
+ 493 0012 192B     		cmp	r3, #25
+ 494 0014 08D8     		bhi	.L35
+  87:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].fn = fn;
+ 495              		.loc 1 87 9 is_stmt 1 view .LVU113
+  87:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].fn = fn;
+ 496              		.loc 1 87 16 is_stmt 0 view .LVU114
+ 497 0016 40F02000 		orr	r0, r0, #32
+ 498              	.LVL39:
+  88:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].description = NULL;
+ 499              		.loc 1 88 9 is_stmt 1 view .LVU115
+  88:src/hbprotocol/ascii_protocol.c ****         line_functions[letter].description = NULL;
+ 500              		.loc 1 88 35 is_stmt 0 view .LVU116
+ 501 001a 044B     		ldr	r3, .L37
+ 502 001c 43F83010 		str	r1, [r3, r0, lsl #3]
+  89:src/hbprotocol/ascii_protocol.c ****     }
+ 503              		.loc 1 89 9 is_stmt 1 view .LVU117
+  89:src/hbprotocol/ascii_protocol.c ****     }
+ 504              		.loc 1 89 44 is_stmt 0 view .LVU118
+ 505 0020 03EBC003 		add	r3, r3, r0, lsl #3
+ 506 0024 0022     		movs	r2, #0
+ 507              	.LVL40:
+  89:src/hbprotocol/ascii_protocol.c ****     }
+ 508              		.loc 1 89 44 view .LVU119
+ 509 0026 5A60     		str	r2, [r3, #4]
+ 510              	.LVL41:
+ 511              	.L35:
+  91:src/hbprotocol/ascii_protocol.c **** 
+ 512              		.loc 1 91 1 view .LVU120
+ 513 0028 7047     		bx	lr
+ 514              	.L38:
+ 515 002a 00BF     		.align	2
+ 516              	.L37:
+ 517 002c 00000000 		.word	line_functions
+ 518              		.cfi_endproc
+ 519              	.LFE6:
+ 521              		.section	.rodata.ascii_byte.str1.4,"aMS",%progbits,1
+ 522              		.align	2
+ 523              	.LC5:
+ARM GAS  /tmp/ccQQXkbi.s 			page 15
+
+
+ 524 0000 2D202573 		.ascii	"- %s\015\012\000"
+ 524      0D0A00
+ 525 0007 00       		.align	2
+ 526              	.LC6:
+ 527 0008 4C6F636B 		.ascii	"Locked. Enter unlockASCII to enable ASCII input mod"
+ 527      65642E20 
+ 527      456E7465 
+ 527      7220756E 
+ 527      6C6F636B 
+ 528 003b 652E0D0A 		.ascii	"e.\015\012>\000"
+ 528      3E00
+ 529 0041 000000   		.align	2
+ 530              	.LC7:
+ 531 0044 4E6F2063 		.ascii	"No cmd %c - use ? for help\015\012\000"
+ 531      6D642025 
+ 531      63202D20 
+ 531      75736520 
+ 531      3F20666F 
+ 532              		.section	.text.ascii_byte,"ax",%progbits
+ 533              		.align	1
+ 534              		.global	ascii_byte
+ 535              		.syntax unified
+ 536              		.thumb
+ 537              		.thumb_func
+ 539              	ascii_byte:
+ 540              	.LVL42:
+ 541              	.LFB7:
+  93:src/hbprotocol/ascii_protocol.c ****     int skipchar = 0;
+ 542              		.loc 1 93 55 is_stmt 1 view -0
+ 543              		.cfi_startproc
+ 544              		@ args = 0, pretend = 0, frame = 8
+ 545              		@ frame_needed = 0, uses_anonymous_args = 0
+  93:src/hbprotocol/ascii_protocol.c ****     int skipchar = 0;
+ 546              		.loc 1 93 55 is_stmt 0 view .LVU122
+ 547 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 548              	.LCFI6:
+ 549              		.cfi_def_cfa_offset 24
+ 550              		.cfi_offset 4, -24
+ 551              		.cfi_offset 5, -20
+ 552              		.cfi_offset 6, -16
+ 553              		.cfi_offset 7, -12
+ 554              		.cfi_offset 8, -8
+ 555              		.cfi_offset 14, -4
+ 556 0004 82B0     		sub	sp, sp, #8
+ 557              	.LCFI7:
+ 558              		.cfi_def_cfa_offset 32
+ 559 0006 0446     		mov	r4, r0
+ 560 0008 8DF80710 		strb	r1, [sp, #7]
+  94:src/hbprotocol/ascii_protocol.c ****     // only if no characters buffered, process single keystorkes
+ 561              		.loc 1 94 5 is_stmt 1 view .LVU123
+ 562              	.LVL43:
+  96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+ 563              		.loc 1 96 5 view .LVU124
+  96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+ 564              		.loc 1 96 17 is_stmt 0 view .LVU125
+ 565 000c 00F58053 		add	r3, r0, #4096
+ 566 0010 DB6A     		ldr	r3, [r3, #44]
+ARM GAS  /tmp/ccQQXkbi.s 			page 16
+
+
+  96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+ 567              		.loc 1 96 8 view .LVU126
+ 568 0012 83B1     		cbz	r3, .L40
+  96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+ 569              		.loc 1 96 47 discriminator 1 view .LVU127
+ 570 0014 00F58053 		add	r3, r0, #4096
+ 571 0018 D3F84832 		ldr	r3, [r3, #584]
+  96:src/hbprotocol/ascii_protocol.c ****         // returns 1 if char should not be kept in command buffer
+ 572              		.loc 1 96 35 discriminator 1 view .LVU128
+ 573 001c 5BB9     		cbnz	r3, .L40
+  98:src/hbprotocol/ascii_protocol.c ****             skipchar = immediate_functions[byte].fn(s, byte, s->ascii.ascii_out);
+ 574              		.loc 1 98 9 is_stmt 1 view .LVU129
+  98:src/hbprotocol/ascii_protocol.c ****             skipchar = immediate_functions[byte].fn(s, byte, s->ascii.ascii_out);
+ 575              		.loc 1 98 38 is_stmt 0 view .LVU130
+ 576 001e C9B2     		uxtb	r1, r1
+ 577              	.LVL44:
+  98:src/hbprotocol/ascii_protocol.c ****             skipchar = immediate_functions[byte].fn(s, byte, s->ascii.ascii_out);
+ 578              		.loc 1 98 38 view .LVU131
+ 579 0020 5B4B     		ldr	r3, .L55
+ 580 0022 53F83130 		ldr	r3, [r3, r1, lsl #3]
+  98:src/hbprotocol/ascii_protocol.c ****             skipchar = immediate_functions[byte].fn(s, byte, s->ascii.ascii_out);
+ 581              		.loc 1 98 12 view .LVU132
+ 582 0026 33B1     		cbz	r3, .L40
+  99:src/hbprotocol/ascii_protocol.c ****         } else {
+ 583              		.loc 1 99 13 is_stmt 1 view .LVU133
+  99:src/hbprotocol/ascii_protocol.c ****         } else {
+ 584              		.loc 1 99 24 is_stmt 0 view .LVU134
+ 585 0028 00F58252 		add	r2, r0, #4160
+ 586 002c 0832     		adds	r2, r2, #8
+ 587 002e 9847     		blx	r3
+ 588              	.LVL45:
+ 105:src/hbprotocol/ascii_protocol.c ****         // on CR or LF, process gathered messages
+ 589              		.loc 1 105 5 is_stmt 1 view .LVU135
+ 105:src/hbprotocol/ascii_protocol.c ****         // on CR or LF, process gathered messages
+ 590              		.loc 1 105 8 is_stmt 0 view .LVU136
+ 591 0030 0028     		cmp	r0, #0
+ 592 0032 40F0A980 		bne	.L41
+ 593              	.LVL46:
+ 594              	.L40:
+ 107:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data((unsigned char *) &byte, 1);
+ 595              		.loc 1 107 9 is_stmt 1 view .LVU137
+ 107:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data((unsigned char *) &byte, 1);
+ 596              		.loc 1 107 19 is_stmt 0 view .LVU138
+ 597 0036 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 107:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data((unsigned char *) &byte, 1);
+ 598              		.loc 1 107 12 view .LVU139
+ 599 003a 0D2B     		cmp	r3, #13
+ 600 003c 11D0     		beq	.L42
+ 107:src/hbprotocol/ascii_protocol.c ****             s->send_serial_data((unsigned char *) &byte, 1);
+ 601              		.loc 1 107 28 discriminator 1 view .LVU140
+ 602 003e 0A2B     		cmp	r3, #10
+ 603 0040 0FD0     		beq	.L42
+ 138:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn++] = byte;
+ 604              		.loc 1 138 13 is_stmt 1 view .LVU141
+ 138:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn++] = byte;
+ 605              		.loc 1 138 25 is_stmt 0 view .LVU142
+ 606 0042 04F58052 		add	r2, r4, #4096
+ARM GAS  /tmp/ccQQXkbi.s 			page 17
+
+
+ 607 0046 D2F84822 		ldr	r2, [r2, #584]
+ 138:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn++] = byte;
+ 608              		.loc 1 138 16 view .LVU143
+ 609 004a 132A     		cmp	r2, #19
+ 610 004c 18DC     		bgt	.L50
+ 139:src/hbprotocol/ascii_protocol.c ****             } else {
+ 611              		.loc 1 139 17 is_stmt 1 view .LVU144
+ 139:src/hbprotocol/ascii_protocol.c ****             } else {
+ 612              		.loc 1 139 55 is_stmt 0 view .LVU145
+ 613 004e 04F58051 		add	r1, r4, #4096
+ 614 0052 501C     		adds	r0, r2, #1
+ 615 0054 C1F84802 		str	r0, [r1, #584]
+ 139:src/hbprotocol/ascii_protocol.c ****             } else {
+ 616              		.loc 1 139 59 view .LVU146
+ 617 0058 2244     		add	r2, r2, r4
+ 618 005a 41F23401 		movw	r1, #4148
+ 619 005e 5354     		strb	r3, [r2, r1]
+ 620 0060 0EE0     		b	.L50
+ 621              	.L42:
+ 108:src/hbprotocol/ascii_protocol.c **** 
+ 622              		.loc 1 108 13 is_stmt 1 view .LVU147
+ 108:src/hbprotocol/ascii_protocol.c **** 
+ 623              		.loc 1 108 14 is_stmt 0 view .LVU148
+ 624 0062 D4F82031 		ldr	r3, [r4, #288]
+ 108:src/hbprotocol/ascii_protocol.c **** 
+ 625              		.loc 1 108 13 view .LVU149
+ 626 0066 0121     		movs	r1, #1
+ 627 0068 0DF10700 		add	r0, sp, #7
+ 628 006c 9847     		blx	r3
+ 629              	.LVL47:
+ 111:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn] = 0;
+ 630              		.loc 1 111 13 is_stmt 1 view .LVU150
+ 111:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn] = 0;
+ 631              		.loc 1 111 25 is_stmt 0 view .LVU151
+ 632 006e 04F58053 		add	r3, r4, #4096
+ 633 0072 D3F84832 		ldr	r3, [r3, #584]
+ 111:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_cmd[s->ascii.ascii_posn] = 0;
+ 634              		.loc 1 111 16 view .LVU152
+ 635 0076 002B     		cmp	r3, #0
+ 636 0078 23DC     		bgt	.L53
+ 135:src/hbprotocol/ascii_protocol.c ****             }
+ 637              		.loc 1 135 17 is_stmt 1 view .LVU153
+ 135:src/hbprotocol/ascii_protocol.c ****             }
+ 638              		.loc 1 135 22 is_stmt 0 view .LVU154
+ 639 007a 3E23     		movs	r3, #62
+ 640 007c 8DF80730 		strb	r3, [sp, #7]
+ 641              	.L50:
+ 149:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out));
+ 642              		.loc 1 149 5 is_stmt 1 view .LVU155
+ 149:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out));
+ 643              		.loc 1 149 27 is_stmt 0 view .LVU156
+ 644 0080 04F58053 		add	r3, r4, #4096
+ 645 0084 93F84830 		ldrb	r3, [r3, #72]	@ zero_extendqisi2
+ 149:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out));
+ 646              		.loc 1 149 8 view .LVU157
+ 647 0088 7BB1     		cbz	r3, .L51
+ 150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ARM GAS  /tmp/ccQQXkbi.s 			page 18
+
+
+ 648              		.loc 1 150 9 is_stmt 1 view .LVU158
+ 150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ 649              		.loc 1 150 10 is_stmt 0 view .LVU159
+ 650 008a D4F82061 		ldr	r6, [r4, #288]
+ 150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ 651              		.loc 1 150 47 view .LVU160
+ 652 008e 04F58255 		add	r5, r4, #4160
+ 653 0092 0835     		adds	r5, r5, #8
+ 150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ 654              		.loc 1 150 67 view .LVU161
+ 655 0094 2846     		mov	r0, r5
+ 656 0096 FFF7FEFF 		bl	strlen
+ 657              	.LVL48:
+ 658 009a 0146     		mov	r1, r0
+ 150:src/hbprotocol/ascii_protocol.c ****         s->ascii.ascii_out[0] = 0;
+ 659              		.loc 1 150 9 discriminator 1 view .LVU162
+ 660 009c 2846     		mov	r0, r5
+ 661 009e B047     		blx	r6
+ 662              	.LVL49:
+ 151:src/hbprotocol/ascii_protocol.c ****     }
+ 663              		.loc 1 151 9 is_stmt 1 view .LVU163
+ 151:src/hbprotocol/ascii_protocol.c ****     }
+ 664              		.loc 1 151 31 is_stmt 0 view .LVU164
+ 665 00a0 04F58053 		add	r3, r4, #4096
+ 666 00a4 0022     		movs	r2, #0
+ 667 00a6 83F84820 		strb	r2, [r3, #72]
+ 668              	.L51:
+ 155:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) &byte, 1);
+ 669              		.loc 1 155 5 is_stmt 1 view .LVU165
+ 155:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) &byte, 1);
+ 670              		.loc 1 155 9 is_stmt 0 view .LVU166
+ 671 00aa 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 155:src/hbprotocol/ascii_protocol.c ****         s->send_serial_data((unsigned char *) &byte, 1);
+ 672              		.loc 1 155 8 view .LVU167
+ 673 00ae 2BB1     		cbz	r3, .L39
+ 156:src/hbprotocol/ascii_protocol.c ****     }
+ 674              		.loc 1 156 9 is_stmt 1 view .LVU168
+ 156:src/hbprotocol/ascii_protocol.c ****     }
+ 675              		.loc 1 156 10 is_stmt 0 view .LVU169
+ 676 00b0 D4F82031 		ldr	r3, [r4, #288]
+ 156:src/hbprotocol/ascii_protocol.c ****     }
+ 677              		.loc 1 156 9 view .LVU170
+ 678 00b4 0121     		movs	r1, #1
+ 679 00b6 0DF10700 		add	r0, sp, #7
+ 680 00ba 9847     		blx	r3
+ 681              	.LVL50:
+ 682              	.L39:
+ 158:src/hbprotocol/ascii_protocol.c **** 
+ 683              		.loc 1 158 1 view .LVU171
+ 684 00bc 02B0     		add	sp, sp, #8
+ 685              	.LCFI8:
+ 686              		.cfi_remember_state
+ 687              		.cfi_def_cfa_offset 24
+ 688              		@ sp needed
+ 689 00be BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 690              	.LVL51:
+ 691              	.L53:
+ARM GAS  /tmp/ccQQXkbi.s 			page 19
+
+
+ 692              	.LCFI9:
+ 693              		.cfi_restore_state
+ 112:src/hbprotocol/ascii_protocol.c ****                 sprintf(s->ascii.ascii_out, "- %s\r\n", s->ascii.ascii_cmd);
+ 694              		.loc 1 112 17 is_stmt 1 view .LVU172
+ 112:src/hbprotocol/ascii_protocol.c ****                 sprintf(s->ascii.ascii_out, "- %s\r\n", s->ascii.ascii_cmd);
+ 695              		.loc 1 112 57 is_stmt 0 view .LVU173
+ 696 00c2 2344     		add	r3, r3, r4
+ 697 00c4 41F23401 		movw	r1, #4148
+ 698 00c8 0027     		movs	r7, #0
+ 699 00ca 5F54     		strb	r7, [r3, r1]
+ 113:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out
+ 700              		.loc 1 113 17 is_stmt 1 view .LVU174
+ 113:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out
+ 701              		.loc 1 113 33 is_stmt 0 view .LVU175
+ 702 00cc 04F58255 		add	r5, r4, #4160
+ 703 00d0 0835     		adds	r5, r5, #8
+ 113:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out
+ 704              		.loc 1 113 65 view .LVU176
+ 705 00d2 6618     		adds	r6, r4, r1
+ 113:src/hbprotocol/ascii_protocol.c ****                 s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii_out
+ 706              		.loc 1 113 17 view .LVU177
+ 707 00d4 3246     		mov	r2, r6
+ 708 00d6 2F49     		ldr	r1, .L55+4
+ 709 00d8 2846     		mov	r0, r5
+ 710 00da FFF7FEFF 		bl	sprintf
+ 711              	.LVL52:
+ 114:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_out[0] = 0;
+ 712              		.loc 1 114 17 is_stmt 1 view .LVU178
+ 114:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_out[0] = 0;
+ 713              		.loc 1 114 18 is_stmt 0 view .LVU179
+ 714 00de D4F82081 		ldr	r8, [r4, #288]
+ 114:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_out[0] = 0;
+ 715              		.loc 1 114 75 view .LVU180
+ 716 00e2 2846     		mov	r0, r5
+ 717 00e4 FFF7FEFF 		bl	strlen
+ 718              	.LVL53:
+ 719 00e8 0146     		mov	r1, r0
+ 114:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_out[0] = 0;
+ 720              		.loc 1 114 17 discriminator 1 view .LVU181
+ 721 00ea 2846     		mov	r0, r5
+ 722 00ec C047     		blx	r8
+ 723              	.LVL54:
+ 115:src/hbprotocol/ascii_protocol.c **** 
+ 724              		.loc 1 115 17 is_stmt 1 view .LVU182
+ 115:src/hbprotocol/ascii_protocol.c **** 
+ 725              		.loc 1 115 39 is_stmt 0 view .LVU183
+ 726 00ee 04F58053 		add	r3, r4, #4096
+ 727 00f2 83F84870 		strb	r7, [r3, #72]
+ 117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ 728              		.loc 1 117 17 is_stmt 1 view .LVU184
+ 117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ 729              		.loc 1 117 30 is_stmt 0 view .LVU185
+ 730 00f6 93F94C32 		ldrsb	r3, [r3, #588]
+ 117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ 731              		.loc 1 117 20 view .LVU186
+ 732 00fa 2BB9     		cbnz	r3, .L45
+ 117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ARM GAS  /tmp/ccQQXkbi.s 			page 20
+
+
+ 733              		.loc 1 117 75 discriminator 1 view .LVU187
+ 734 00fc 04F58053 		add	r3, r4, #4096
+ 735 0100 93F83430 		ldrb	r3, [r3, #52]	@ zero_extendqisi2
+ 117:src/hbprotocol/ascii_protocol.c ****                     sprintf(s->ascii.ascii_out, "Locked. Enter unlockASCII to enable ASCII input mo
+ 736              		.loc 1 117 53 discriminator 1 view .LVU188
+ 737 0104 752B     		cmp	r3, #117
+ 738 0106 16D1     		bne	.L54
+ 739              	.L45:
+ 125:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
+ 740              		.loc 1 125 17 is_stmt 1 view .LVU189
+ 125:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
+ 741              		.loc 1 125 69 is_stmt 0 view .LVU190
+ 742 0108 04F58053 		add	r3, r4, #4096
+ 743 010c 93F83420 		ldrb	r2, [r3, #52]	@ zero_extendqisi2
+ 125:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
+ 744              		.loc 1 125 73 view .LVU191
+ 745 0110 214B     		ldr	r3, .L55+8
+ 746 0112 53F83230 		ldr	r3, [r3, r2, lsl #3]
+ 125:src/hbprotocol/ascii_protocol.c ****                     line_functions[(unsigned char)s->ascii.ascii_cmd[0]].fn(s, s->ascii.ascii_cmd, 
+ 747              		.loc 1 125 20 view .LVU192
+ 748 0116 93B3     		cbz	r3, .L48
+ 126:src/hbprotocol/ascii_protocol.c ****                 } else {
+ 749              		.loc 1 126 21 is_stmt 1 view .LVU193
+ 750 0118 2A46     		mov	r2, r5
+ 751 011a 3146     		mov	r1, r6
+ 752 011c 2046     		mov	r0, r4
+ 753 011e 9847     		blx	r3
+ 754              	.LVL55:
+ 755              	.L49:
+ 130:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_posn = 0;
+ 756              		.loc 1 130 17 view .LVU194
+ 130:src/hbprotocol/ascii_protocol.c ****                 s->ascii.ascii_posn = 0;
+ 757              		.loc 1 130 39 is_stmt 0 view .LVU195
+ 758 0120 04F58053 		add	r3, r4, #4096
+ 759 0124 0022     		movs	r2, #0
+ 760 0126 83F83420 		strb	r2, [r3, #52]
+ 131:src/hbprotocol/ascii_protocol.c ****                 // send prompt
+ 761              		.loc 1 131 17 is_stmt 1 view .LVU196
+ 131:src/hbprotocol/ascii_protocol.c ****                 // send prompt
+ 762              		.loc 1 131 37 is_stmt 0 view .LVU197
+ 763 012a C3F84822 		str	r2, [r3, #584]
+ 133:src/hbprotocol/ascii_protocol.c ****             } else {
+ 764              		.loc 1 133 17 is_stmt 1 view .LVU198
+ 133:src/hbprotocol/ascii_protocol.c ****             } else {
+ 765              		.loc 1 133 22 is_stmt 0 view .LVU199
+ 766 012e 3E23     		movs	r3, #62
+ 767 0130 8DF80730 		strb	r3, [sp, #7]
+ 768 0134 A4E7     		b	.L50
+ 769              	.L54:
+ 118:src/hbprotocol/ascii_protocol.c ****                     s->send_serial_data((unsigned char *) s->ascii.ascii_out, strlen(s->ascii.ascii
+ 770              		.loc 1 118 21 is_stmt 1 view .LVU200
+ 771 0136 194F     		ldr	r7, .L55+12
+ 772 0138 2E46     		mov	r6, r5
+ 773 013a 07F1300E 		add	lr, r7, #48
+ 774              	.L46:
+ 775 013e BC46     		mov	ip, r7
+ 776 0140 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+ARM GAS  /tmp/ccQQXkbi.s 			page 21
+
+
+ 777 0144 3060     		str	r0, [r6]	@ unaligned
+ 778 0146 7160     		str	r1, [r6, #4]	@ unaligned
+ 779 0148 B260     		str	r2, [r6, #8]	@ unaligned
+ 780 014a F360     		str	r3, [r6, #12]	@ unaligned
+ 781 014c 6746     		mov	r7, ip
+ 782 014e 1036     		adds	r6, r6, #16
+ 783 0150 F445     		cmp	ip, lr
+ 784 0152 F4D1     		bne	.L46
+ 785 0154 03CF     		ldmia	r7!, {r0, r1}
+ 786 0156 3060     		str	r0, [r6]	@ unaligned
+ 787 0158 7160     		str	r1, [r6, #4]	@ unaligned
+ 788 015a 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 789 015c 3372     		strb	r3, [r6, #8]
+ 119:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_cmd[0] = 0;
+ 790              		.loc 1 119 21 view .LVU201
+ 119:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_cmd[0] = 0;
+ 791              		.loc 1 119 22 is_stmt 0 view .LVU202
+ 792 015e D4F82061 		ldr	r6, [r4, #288]
+ 119:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_cmd[0] = 0;
+ 793              		.loc 1 119 79 view .LVU203
+ 794 0162 2846     		mov	r0, r5
+ 795 0164 FFF7FEFF 		bl	strlen
+ 796              	.LVL56:
+ 797 0168 0146     		mov	r1, r0
+ 119:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_cmd[0] = 0;
+ 798              		.loc 1 119 21 discriminator 1 view .LVU204
+ 799 016a 2846     		mov	r0, r5
+ 800 016c B047     		blx	r6
+ 801              	.LVL57:
+ 120:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_posn = 0;
+ 802              		.loc 1 120 21 is_stmt 1 view .LVU205
+ 120:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_posn = 0;
+ 803              		.loc 1 120 43 is_stmt 0 view .LVU206
+ 804 016e 04F58054 		add	r4, r4, #4096
+ 805              	.LVL58:
+ 120:src/hbprotocol/ascii_protocol.c ****                     s->ascii.ascii_posn = 0;
+ 806              		.loc 1 120 43 view .LVU207
+ 807 0172 0023     		movs	r3, #0
+ 808 0174 84F83430 		strb	r3, [r4, #52]
+ 121:src/hbprotocol/ascii_protocol.c ****                     return;
+ 809              		.loc 1 121 21 is_stmt 1 view .LVU208
+ 121:src/hbprotocol/ascii_protocol.c ****                     return;
+ 810              		.loc 1 121 41 is_stmt 0 view .LVU209
+ 811 0178 C4F84832 		str	r3, [r4, #584]
+ 122:src/hbprotocol/ascii_protocol.c ****                 }
+ 812              		.loc 1 122 21 is_stmt 1 view .LVU210
+ 813 017c 9EE7     		b	.L39
+ 814              	.LVL59:
+ 815              	.L48:
+ 128:src/hbprotocol/ascii_protocol.c ****                 }
+ 816              		.loc 1 128 21 view .LVU211
+ 817 017e 0849     		ldr	r1, .L55+16
+ 818 0180 2846     		mov	r0, r5
+ 819 0182 FFF7FEFF 		bl	sprintf
+ 820              	.LVL60:
+ 821 0186 CBE7     		b	.L49
+ 822              	.LVL61:
+ARM GAS  /tmp/ccQQXkbi.s 			page 22
+
+
+ 823              	.L41:
+ 147:src/hbprotocol/ascii_protocol.c ****     }
+ 824              		.loc 1 147 9 view .LVU212
+ 147:src/hbprotocol/ascii_protocol.c ****     }
+ 825              		.loc 1 147 14 is_stmt 0 view .LVU213
+ 826 0188 3E23     		movs	r3, #62
+ 827 018a 8DF80730 		strb	r3, [sp, #7]
+ 828 018e 77E7     		b	.L50
+ 829              	.L56:
+ 830              		.align	2
+ 831              	.L55:
+ 832 0190 00000000 		.word	immediate_functions
+ 833 0194 00000000 		.word	.LC5
+ 834 0198 00000000 		.word	line_functions
+ 835 019c 08000000 		.word	.LC6
+ 836 01a0 44000000 		.word	.LC7
+ 837              		.cfi_endproc
+ 838              	.LFE7:
+ 840              		.section	.rodata.ascii_init.str1.4,"aMS",%progbits,1
+ 841              		.align	2
+ 842              	.LC8:
+ 843 0000 4C6F636B 		.ascii	"Lock ascii protocol\000"
+ 843      20617363 
+ 843      69692070 
+ 843      726F746F 
+ 843      636F6C00 
+ 844              		.align	2
+ 845              	.LC9:
+ 846 0014 756E6C6F 		.ascii	"unlockASCII - unlock ASCII protocol\000"
+ 846      636B4153 
+ 846      43494920 
+ 846      2D20756E 
+ 846      6C6F636B 
+ 847              		.align	2
+ 848              	.LC10:
+ 849 0038 64697370 		.ascii	"display help\000"
+ 849      6C617920 
+ 849      68656C70 
+ 849      00
+ 850              		.section	.text.ascii_init,"ax",%progbits
+ 851              		.align	1
+ 852              		.global	ascii_init
+ 853              		.syntax unified
+ 854              		.thumb
+ 855              		.thumb_func
+ 857              	ascii_init:
+ 858              	.LVL62:
+ 859              	.LFB9:
+ 186:src/hbprotocol/ascii_protocol.c **** 
+ 187:src/hbprotocol/ascii_protocol.c **** 
+ 188:src/hbprotocol/ascii_protocol.c **** 
+ 189:src/hbprotocol/ascii_protocol.c **** int ascii_init(PROTOCOL_STAT *s) {
+ 860              		.loc 1 189 34 is_stmt 1 view -0
+ 861              		.cfi_startproc
+ 862              		@ args = 0, pretend = 0, frame = 0
+ 863              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190:src/hbprotocol/ascii_protocol.c ****     if (!s->ascii.initialised) {
+ARM GAS  /tmp/ccQQXkbi.s 			page 23
+
+
+ 864              		.loc 1 190 5 view .LVU215
+ 865              		.loc 1 190 18 is_stmt 0 view .LVU216
+ 866 0000 00F58053 		add	r3, r0, #4096
+ 867 0004 1B6B     		ldr	r3, [r3, #48]
+ 868              		.loc 1 190 8 view .LVU217
+ 869 0006 0BB1     		cbz	r3, .L64
+ 191:src/hbprotocol/ascii_protocol.c ****         ascii_add_line_fn( 'L', line_lock_ascii, "Lock ascii protocol");
+ 192:src/hbprotocol/ascii_protocol.c ****         ascii_add_line_fn( 'u', line_unlock_ascii, "unlockASCII - unlock ASCII protocol");
+ 193:src/hbprotocol/ascii_protocol.c **** 
+ 194:src/hbprotocol/ascii_protocol.c ****         ascii_add_line_fn( '?', line_help, "display help");
+ 195:src/hbprotocol/ascii_protocol.c ****         s->ascii.initialised = 1;
+ 196:src/hbprotocol/ascii_protocol.c ****         return 1;
+ 197:src/hbprotocol/ascii_protocol.c ****     }
+ 198:src/hbprotocol/ascii_protocol.c ****     return 0;
+ 870              		.loc 1 198 12 view .LVU218
+ 871 0008 0020     		movs	r0, #0
+ 872              	.LVL63:
+ 199:src/hbprotocol/ascii_protocol.c **** }
+ 873              		.loc 1 199 1 view .LVU219
+ 874 000a 7047     		bx	lr
+ 875              	.LVL64:
+ 876              	.L64:
+ 189:src/hbprotocol/ascii_protocol.c ****     if (!s->ascii.initialised) {
+ 877              		.loc 1 189 34 view .LVU220
+ 878 000c 10B5     		push	{r4, lr}
+ 879              	.LCFI10:
+ 880              		.cfi_def_cfa_offset 8
+ 881              		.cfi_offset 4, -8
+ 882              		.cfi_offset 14, -4
+ 883 000e 0446     		mov	r4, r0
+ 191:src/hbprotocol/ascii_protocol.c ****         ascii_add_line_fn( 'L', line_lock_ascii, "Lock ascii protocol");
+ 884              		.loc 1 191 9 is_stmt 1 view .LVU221
+ 885 0010 094A     		ldr	r2, .L65
+ 886 0012 0A49     		ldr	r1, .L65+4
+ 887 0014 4C20     		movs	r0, #76
+ 888              	.LVL65:
+ 191:src/hbprotocol/ascii_protocol.c ****         ascii_add_line_fn( 'L', line_lock_ascii, "Lock ascii protocol");
+ 889              		.loc 1 191 9 is_stmt 0 view .LVU222
+ 890 0016 FFF7FEFF 		bl	ascii_add_line_fn
+ 891              	.LVL66:
+ 192:src/hbprotocol/ascii_protocol.c **** 
+ 892              		.loc 1 192 9 is_stmt 1 view .LVU223
+ 893 001a 094A     		ldr	r2, .L65+8
+ 894 001c 0949     		ldr	r1, .L65+12
+ 895 001e 7520     		movs	r0, #117
+ 896 0020 FFF7FEFF 		bl	ascii_add_line_fn
+ 897              	.LVL67:
+ 194:src/hbprotocol/ascii_protocol.c ****         s->ascii.initialised = 1;
+ 898              		.loc 1 194 9 view .LVU224
+ 899 0024 084A     		ldr	r2, .L65+16
+ 900 0026 0949     		ldr	r1, .L65+20
+ 901 0028 3F20     		movs	r0, #63
+ 902 002a FFF7FEFF 		bl	ascii_add_line_fn
+ 903              	.LVL68:
+ 195:src/hbprotocol/ascii_protocol.c ****         return 1;
+ 904              		.loc 1 195 9 view .LVU225
+ 195:src/hbprotocol/ascii_protocol.c ****         return 1;
+ARM GAS  /tmp/ccQQXkbi.s 			page 24
+
+
+ 905              		.loc 1 195 30 is_stmt 0 view .LVU226
+ 906 002e 04F58054 		add	r4, r4, #4096
+ 907              	.LVL69:
+ 195:src/hbprotocol/ascii_protocol.c ****         return 1;
+ 908              		.loc 1 195 30 view .LVU227
+ 909 0032 0120     		movs	r0, #1
+ 910 0034 2063     		str	r0, [r4, #48]
+ 196:src/hbprotocol/ascii_protocol.c ****     }
+ 911              		.loc 1 196 9 is_stmt 1 view .LVU228
+ 912              		.loc 1 199 1 is_stmt 0 view .LVU229
+ 913 0036 10BD     		pop	{r4, pc}
+ 914              	.LVL70:
+ 915              	.L66:
+ 916              		.loc 1 199 1 view .LVU230
+ 917              		.align	2
+ 918              	.L65:
+ 919 0038 00000000 		.word	.LC8
+ 920 003c 00000000 		.word	line_lock_ascii
+ 921 0040 14000000 		.word	.LC9
+ 922 0044 00000000 		.word	line_unlock_ascii
+ 923 0048 38000000 		.word	.LC10
+ 924 004c 00000000 		.word	line_help
+ 925              		.cfi_endproc
+ 926              	.LFE9:
+ 928              		.section	.data.password,"aw"
+ 929              		.align	2
+ 932              	password:
+ 933 0000 756E6C6F 		.ascii	"unlockASCII\000"
+ 933      636B4153 
+ 933      43494900 
+ 934              		.section	.bss.line_functions,"aw",%nobits
+ 935              		.align	2
+ 938              	line_functions:
+ 939 0000 00000000 		.space	2048
+ 939      00000000 
+ 939      00000000 
+ 939      00000000 
+ 939      00000000 
+ 940              		.section	.bss.immediate_functions,"aw",%nobits
+ 941              		.align	2
+ 944              	immediate_functions:
+ 945 0000 00000000 		.space	2048
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 946              		.text
+ 947              	.Letext0:
+ 948              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 949              		.file 3 "src/hbprotocol/protocol.h"
+ 950              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 951              		.file 5 "/usr/include/newlib/string.h"
+ 952              		.file 6 "/usr/include/newlib/stdio.h"
+ 953              		.file 7 "<built-in>"
+ARM GAS  /tmp/ccQQXkbi.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ascii_protocol.c
+     /tmp/ccQQXkbi.s:19     .rodata.line_lock_ascii.str1.4:00000000 $d
+     /tmp/ccQQXkbi.s:23     .text.line_lock_ascii:00000000 $t
+     /tmp/ccQQXkbi.s:28     .text.line_lock_ascii:00000000 line_lock_ascii
+     /tmp/ccQQXkbi.s:74     .text.line_lock_ascii:00000038 $d
+     /tmp/ccQQXkbi.s:79     .rodata.line_unlock_ascii.str1.4:00000000 $d
+     /tmp/ccQQXkbi.s:87     .text.line_unlock_ascii:00000000 $t
+     /tmp/ccQQXkbi.s:92     .text.line_unlock_ascii:00000000 line_unlock_ascii
+     /tmp/ccQQXkbi.s:213    .text.line_unlock_ascii:0000009c $d
+     /tmp/ccQQXkbi.s:932    .data.password:00000000 password
+     /tmp/ccQQXkbi.s:221    .rodata.line_help.str1.4:00000000 $d
+     /tmp/ccQQXkbi.s:228    .text.line_help:00000000 $t
+     /tmp/ccQQXkbi.s:233    .text.line_help:00000000 line_help
+     /tmp/ccQQXkbi.s:403    .text.line_help:00000094 $d
+     /tmp/ccQQXkbi.s:938    .bss.line_functions:00000000 line_functions
+     /tmp/ccQQXkbi.s:410    .text.ascii_add_immediate:00000000 $t
+     /tmp/ccQQXkbi.s:416    .text.ascii_add_immediate:00000000 ascii_add_immediate
+     /tmp/ccQQXkbi.s:461    .text.ascii_add_immediate:0000002c $d
+     /tmp/ccQQXkbi.s:944    .bss.immediate_functions:00000000 immediate_functions
+     /tmp/ccQQXkbi.s:466    .text.ascii_add_line_fn:00000000 $t
+     /tmp/ccQQXkbi.s:472    .text.ascii_add_line_fn:00000000 ascii_add_line_fn
+     /tmp/ccQQXkbi.s:517    .text.ascii_add_line_fn:0000002c $d
+     /tmp/ccQQXkbi.s:522    .rodata.ascii_byte.str1.4:00000000 $d
+     /tmp/ccQQXkbi.s:533    .text.ascii_byte:00000000 $t
+     /tmp/ccQQXkbi.s:539    .text.ascii_byte:00000000 ascii_byte
+     /tmp/ccQQXkbi.s:832    .text.ascii_byte:00000190 $d
+     /tmp/ccQQXkbi.s:841    .rodata.ascii_init.str1.4:00000000 $d
+     /tmp/ccQQXkbi.s:851    .text.ascii_init:00000000 $t
+     /tmp/ccQQXkbi.s:857    .text.ascii_init:00000000 ascii_init
+     /tmp/ccQQXkbi.s:919    .text.ascii_init:00000038 $d
+     /tmp/ccQQXkbi.s:929    .data.password:00000000 $d
+     /tmp/ccQQXkbi.s:935    .bss.line_functions:00000000 $d
+     /tmp/ccQQXkbi.s:941    .bss.immediate_functions:00000000 $d
+
+UNDEFINED SYMBOLS
+strlen
+memcpy
+strncpy
+sprintf

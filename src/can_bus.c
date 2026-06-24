@@ -411,8 +411,8 @@ void CAN_ProcessMessages(void) {
                        rx_frame.data[0] == 0xB0U && rx_frame.data[1] == 0x01U &&
                        rx_frame.data[2] == 0xB2U) {
                 // OTA reboot trigger — host sends magic frame to enter bootloader
-                extern void ota_reboot_to_bootloader(void);
-                ota_reboot_to_bootloader();
+                extern void ota_reboot_to_bootloader_export(void);
+                ota_reboot_to_bootloader_export();
             } else {
                 can_stats.rx_unknown++;
                 forceLog(" [UNKNOWN]");

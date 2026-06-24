@@ -1,0 +1,3133 @@
+ARM GAS  /tmp/cc6iGCGp.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mcp2515.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/mcp2515.c"
+  18              		.section	.text.MCP2515_Select,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	MCP2515_Select:
+  25              	.LFB82:
+   1:src/mcp2515.c **** #include "mcp2515.h"
+   2:src/mcp2515.c **** #include "software_spi.h"
+   3:src/mcp2515.c **** #include <string.h>
+   4:src/mcp2515.c **** #include <stdio.h>
+   5:src/mcp2515.c **** 
+   6:src/mcp2515.c **** // Private function prototypes
+   7:src/mcp2515.c **** static void MCP2515_Select(void);
+   8:src/mcp2515.c **** static void MCP2515_Deselect(void);
+   9:src/mcp2515.c **** static uint8_t MCP2515_SPITransfer(uint8_t data);
+  10:src/mcp2515.c **** 
+  11:src/mcp2515.c **** // MCP2515 Initialization and Detection
+  12:src/mcp2515.c **** bool MCP2515_Detect(void) {
+  13:src/mcp2515.c ****     // Initialize software SPI
+  14:src/mcp2515.c ****     SoftSPI_Init();
+  15:src/mcp2515.c ****     SoftSPI_SetMode(SPI_MODE0);
+  16:src/mcp2515.c ****     
+  17:src/mcp2515.c ****     // Small delay for MCP2515 to power up
+  18:src/mcp2515.c ****     HAL_Delay(10);
+  19:src/mcp2515.c ****     
+  20:src/mcp2515.c ****     // Try to read CANSTAT register (should be 0x80 after reset - CONFIG mode)
+  21:src/mcp2515.c ****     uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+  22:src/mcp2515.c ****     
+  23:src/mcp2515.c ****     if ((canstat & 0xE0) == 0x80) {
+  24:src/mcp2515.c ****         // CANSTAT indicates CONFIG mode - MCP2515 detected
+  25:src/mcp2515.c ****         return true;
+  26:src/mcp2515.c ****     }
+  27:src/mcp2515.c ****     
+  28:src/mcp2515.c ****     // Try resetting the chip
+  29:src/mcp2515.c ****     MCP2515_Reset();
+  30:src/mcp2515.c ****     HAL_Delay(10);
+  31:src/mcp2515.c ****     
+  32:src/mcp2515.c ****     // Check again
+  33:src/mcp2515.c ****     canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ARM GAS  /tmp/cc6iGCGp.s 			page 2
+
+
+  34:src/mcp2515.c ****     if ((canstat & 0xE0) == 0x80) {
+  35:src/mcp2515.c ****         return true;
+  36:src/mcp2515.c ****     }
+  37:src/mcp2515.c ****     
+  38:src/mcp2515.c ****     // Try read/write test to verify communication
+  39:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF1, 0xAA);
+  40:src/mcp2515.c ****     uint8_t test = MCP2515_ReadRegister(MCP2515_CNF1);
+  41:src/mcp2515.c ****     
+  42:src/mcp2515.c ****     if (test == 0xAA) {
+  43:src/mcp2515.c ****         MCP2515_WriteRegister(MCP2515_CNF1, 0x55);
+  44:src/mcp2515.c ****         test = MCP2515_ReadRegister(MCP2515_CNF1);
+  45:src/mcp2515.c ****         if (test == 0x55) {
+  46:src/mcp2515.c ****             return true;
+  47:src/mcp2515.c ****         }
+  48:src/mcp2515.c ****     }
+  49:src/mcp2515.c ****     
+  50:src/mcp2515.c ****     // No MCP2515 detected - deinitialize SPI
+  51:src/mcp2515.c ****     SoftSPI_Deinit();
+  52:src/mcp2515.c ****     return false;
+  53:src/mcp2515.c **** }
+  54:src/mcp2515.c **** 
+  55:src/mcp2515.c **** bool MCP2515_Init(uint8_t speed) {
+  56:src/mcp2515.c ****     // Reset MCP2515
+  57:src/mcp2515.c ****     MCP2515_Reset();
+  58:src/mcp2515.c ****     HAL_Delay(10);
+  59:src/mcp2515.c **** 
+  60:src/mcp2515.c ****     // Set configuration mode
+  61:src/mcp2515.c ****     if (!MCP2515_SetMode(MCP2515_MODE_CONFIG)) {
+  62:src/mcp2515.c ****         return false;
+  63:src/mcp2515.c ****     }
+  64:src/mcp2515.c **** 
+  65:src/mcp2515.c ****     // Configure bit timing
+  66:src/mcp2515.c ****     if (!MCP2515_SetBitrate(speed)) {
+  67:src/mcp2515.c ****         return false;
+  68:src/mcp2515.c ****     }
+  69:src/mcp2515.c **** 
+  70:src/mcp2515.c ****     // Configure RX buffers - receive all messages.
+  71:src/mcp2515.c ****     // RXB0CTRL: RXM=11 (accept all) | BUKT=1 (roll overflow into RXB1).
+  72:src/mcp2515.c ****     // Without BUKT=1 a second frame arriving while RXB0 is full is DROPPED
+  73:src/mcp2515.c ****     // (sets RX0OVR) instead of rolling over — silently loses CAN frames.
+  74:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_RXB0CTRL, 0x64);  // 0x60 | BUKT(bit2)
+  75:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_RXB1CTRL, 0x60);
+  76:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CANINTF, 0x00);
+  77:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CANINTE, 0x03);
+  78:src/mcp2515.c **** 
+  79:src/mcp2515.c ****     // Set normal mode
+  80:src/mcp2515.c ****     if (!MCP2515_SetMode(MCP2515_MODE_NORMAL)) {
+  81:src/mcp2515.c ****         return false;
+  82:src/mcp2515.c ****     }
+  83:src/mcp2515.c **** 
+  84:src/mcp2515.c ****     return true;
+  85:src/mcp2515.c **** }
+  86:src/mcp2515.c **** 
+  87:src/mcp2515.c **** void MCP2515_Reset(void) {
+  88:src/mcp2515.c ****     MCP2515_Select();
+  89:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RESET);
+  90:src/mcp2515.c ****     MCP2515_Deselect();
+ARM GAS  /tmp/cc6iGCGp.s 			page 3
+
+
+  91:src/mcp2515.c ****     HAL_Delay(10);
+  92:src/mcp2515.c **** }
+  93:src/mcp2515.c **** 
+  94:src/mcp2515.c **** bool MCP2515_SetMode(uint8_t mode) {
+  95:src/mcp2515.c ****     MCP2515_ModifyRegister(MCP2515_CANCTRL, 0xE0, mode);
+  96:src/mcp2515.c ****     
+  97:src/mcp2515.c ****     // Verify mode change
+  98:src/mcp2515.c ****     uint32_t timeout = HAL_GetTick() + 100;
+  99:src/mcp2515.c ****     while (HAL_GetTick() < timeout) {
+ 100:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 101:src/mcp2515.c ****         if ((canstat & 0xE0) == mode) {
+ 102:src/mcp2515.c ****             return true;
+ 103:src/mcp2515.c ****         }
+ 104:src/mcp2515.c ****         HAL_Delay(1);
+ 105:src/mcp2515.c ****     }
+ 106:src/mcp2515.c ****     
+ 107:src/mcp2515.c ****     return false;
+ 108:src/mcp2515.c **** }
+ 109:src/mcp2515.c **** 
+ 110:src/mcp2515.c **** bool MCP2515_SetBitrate(uint8_t speed) {
+ 111:src/mcp2515.c ****     // Bitrate configuration for 8 MHz crystal
+ 112:src/mcp2515.c ****     // CNF1: SJW=1, BRP
+ 113:src/mcp2515.c ****     // CNF2: BTLMODE=1, SAM=0, PHSEG1, PRSEG
+ 114:src/mcp2515.c ****     // CNF3: SOF=0, WAKFIL=0, PHSEG2
+ 115:src/mcp2515.c ****     
+ 116:src/mcp2515.c ****     uint8_t cnf1, cnf2, cnf3;
+ 117:src/mcp2515.c ****     
+ 118:src/mcp2515.c ****     switch (speed) {
+ 119:src/mcp2515.c ****         case MCP2515_SPEED_125KBPS:
+ 120:src/mcp2515.c ****             cnf1 = 0x01;  // BRP=1, SJW=1
+ 121:src/mcp2515.c ****             cnf2 = 0xB1;  // BTLMODE=1, PHSEG1=3, PRSEG=1
+ 122:src/mcp2515.c ****             cnf3 = 0x85;  // PHSEG2=5
+ 123:src/mcp2515.c ****             break;
+ 124:src/mcp2515.c ****             
+ 125:src/mcp2515.c ****         case MCP2515_SPEED_250KBPS:
+ 126:src/mcp2515.c ****             cnf1 = 0x00;  // BRP=0, SJW=1
+ 127:src/mcp2515.c ****             cnf2 = 0xB1;  // BTLMODE=1, PHSEG1=3, PRSEG=1
+ 128:src/mcp2515.c ****             cnf3 = 0x85;  // PHSEG2=5
+ 129:src/mcp2515.c ****             break;
+ 130:src/mcp2515.c ****             
+ 131:src/mcp2515.c ****         case MCP2515_SPEED_500KBPS:
+ 132:src/mcp2515.c ****             cnf1 = 0x00;  // BRP=0, SJW=1
+ 133:src/mcp2515.c ****             cnf2 = 0x90;  // BTLMODE=1, PHSEG1=2, PRSEG=0
+ 134:src/mcp2515.c ****             cnf3 = 0x82;  // PHSEG2=2
+ 135:src/mcp2515.c ****             break;
+ 136:src/mcp2515.c ****             
+ 137:src/mcp2515.c ****         case MCP2515_SPEED_1MBPS:
+ 138:src/mcp2515.c ****             cnf1 = 0x00;  // BRP=0, SJW=1
+ 139:src/mcp2515.c ****             cnf2 = 0x80;  // BTLMODE=1, PHSEG1=1, PRSEG=0
+ 140:src/mcp2515.c ****             cnf3 = 0x80;  // PHSEG2=1
+ 141:src/mcp2515.c ****             break;
+ 142:src/mcp2515.c ****             
+ 143:src/mcp2515.c ****         default:
+ 144:src/mcp2515.c ****             return false;
+ 145:src/mcp2515.c ****     }
+ 146:src/mcp2515.c ****     
+ 147:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF1, cnf1);
+ARM GAS  /tmp/cc6iGCGp.s 			page 4
+
+
+ 148:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
+ 149:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF3, cnf3);
+ 150:src/mcp2515.c ****     
+ 151:src/mcp2515.c ****     return true;
+ 152:src/mcp2515.c **** }
+ 153:src/mcp2515.c **** 
+ 154:src/mcp2515.c **** bool MCP2515_SendFrame(CAN_Frame *frame) {
+ 155:src/mcp2515.c ****     // Rotate through TXB0/TXB1/TXB2 so three rapid sends (speed + pos + batt)
+ 156:src/mcp2515.c ****     // never silently drop frames due to a still-pending buffer.
+ 157:src/mcp2515.c ****     // TXBnCTRL register addresses: TXB0=0x30, TXB1=0x40, TXB2=0x50.
+ 158:src/mcp2515.c ****     // TXBnSIDH load addresses:     TXB0=0x31, TXB1=0x41, TXB2=0x51.
+ 159:src/mcp2515.c ****     // RTS bitmask:                 TXB0=0x01, TXB1=0x02, TXB2=0x04.
+ 160:src/mcp2515.c ****     static uint8_t tx_slot = 0;
+ 161:src/mcp2515.c ****     static const uint8_t ctrl_addr[3] = { 0x30, 0x40, 0x50 };
+ 162:src/mcp2515.c ****     static const uint8_t sidh_addr[3] = { 0x31, 0x41, 0x51 };
+ 163:src/mcp2515.c ****     static const uint8_t rts_mask[3]  = { 0x01, 0x02, 0x04 };
+ 164:src/mcp2515.c **** 
+ 165:src/mcp2515.c ****     // Find a free TX buffer (TXREQ = bit2 = 0x04 per DS21801J §2.3).
+ 166:src/mcp2515.c ****     // WARNING: bit3 = TXERR (error flag), NOT TXREQ — using 0x08 would
+ 167:src/mcp2515.c ****     // treat error-flagged buffers as busy while missing genuinely busy ones.
+ 168:src/mcp2515.c ****     uint8_t slot = tx_slot;
+ 169:src/mcp2515.c ****     for (uint8_t attempt = 0; attempt < 3; attempt++) {
+ 170:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 171:src/mcp2515.c ****         if (!(ctrl & 0x04)) {   // TXREQ clear — buffer free
+ 172:src/mcp2515.c ****             // Also clear any previous TXERR/ABTF to allow reuse
+ 173:src/mcp2515.c ****             if (ctrl & 0x18) {
+ 174:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x18, 0x00);
+ 175:src/mcp2515.c ****             }
+ 176:src/mcp2515.c ****             break;
+ 177:src/mcp2515.c ****         }
+ 178:src/mcp2515.c ****         slot = (slot + 1) % 3;
+ 179:src/mcp2515.c ****         if (attempt == 2) {
+ 180:src/mcp2515.c ****             return false;   // All three buffers busy
+ 181:src/mcp2515.c ****         }
+ 182:src/mcp2515.c ****     }
+ 183:src/mcp2515.c ****     tx_slot = (slot + 1) % 3;  // Advance for next call
+ 184:src/mcp2515.c **** 
+ 185:src/mcp2515.c ****     // Build frame header
+ 186:src/mcp2515.c ****     uint8_t txbuf[13];
+ 187:src/mcp2515.c ****     uint8_t idx = 0;
+ 188:src/mcp2515.c **** 
+ 189:src/mcp2515.c ****     if (frame->extended) {
+ 190:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
+ 191:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(((frame->id >> 13) & 0xE0) |
+ 192:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 193:src/mcp2515.c ****                                   ((frame->id >> 16) & 0x03));
+ 194:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 8);
+ 195:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id);
+ 196:src/mcp2515.c ****     } else {
+ 197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 3);
+ 198:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
+ 199:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 200:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 201:src/mcp2515.c ****     }
+ 202:src/mcp2515.c ****     txbuf[idx++] = frame->rtr ? (0x40 | frame->dlc) : frame->dlc;
+ 203:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 204:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ARM GAS  /tmp/cc6iGCGp.s 			page 5
+
+
+ 205:src/mcp2515.c ****     }
+ 206:src/mcp2515.c **** 
+ 207:src/mcp2515.c ****     // Load TX buffer
+ 208:src/mcp2515.c ****     MCP2515_Select();
+ 209:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
+ 210:src/mcp2515.c ****     MCP2515_SPITransfer(sidh_addr[slot]);
+ 211:src/mcp2515.c ****     for (uint8_t i = 0; i < idx; i++) {
+ 212:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 213:src/mcp2515.c ****     }
+ 214:src/mcp2515.c ****     MCP2515_Deselect();
+ 215:src/mcp2515.c **** 
+ 216:src/mcp2515.c ****     // Request to send
+ 217:src/mcp2515.c ****     MCP2515_Select();
+ 218:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RTS | rts_mask[slot]);
+ 219:src/mcp2515.c ****     MCP2515_Deselect();
+ 220:src/mcp2515.c **** 
+ 221:src/mcp2515.c ****     // Post-RTS: check for immediate TXERR (bus-off or arbitration loss).
+ 222:src/mcp2515.c ****     // With OSM not set, MCP2515 auto-retries; poll is just a fast-fail
+ 223:src/mcp2515.c ****     // safety net after ~1ms so callers get an error code, not a silent hang.
+ 224:src/mcp2515.c ****     {
+ 225:src/mcp2515.c ****         volatile uint16_t timeout = 2000;
+ 226:src/mcp2515.c ****         while (timeout--) {
+ 227:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 228:src/mcp2515.c ****             if (!(ctrl & 0x04)) break;         // TXREQ cleared — sent OK
+ 229:src/mcp2515.c ****             if (ctrl & 0x10) {                 // TXERR set — abort
+ 230:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x08, 0x00); // clear TXREQ
+ 231:src/mcp2515.c ****                 return false;
+ 232:src/mcp2515.c ****             }
+ 233:src/mcp2515.c ****         }
+ 234:src/mcp2515.c ****     }
+ 235:src/mcp2515.c **** 
+ 236:src/mcp2515.c ****     return true;
+ 237:src/mcp2515.c **** }
+ 238:src/mcp2515.c **** 
+ 239:src/mcp2515.c **** bool MCP2515_ReceiveFrame(CAN_Frame *frame) {
+ 240:src/mcp2515.c ****     // Check RX status
+ 241:src/mcp2515.c ****     uint8_t status = MCP2515_GetRxStatus();
+ 242:src/mcp2515.c **** 
+ 243:src/mcp2515.c ****     if (!(status & 0xC0)) {
+ 244:src/mcp2515.c ****         // No message available
+ 245:src/mcp2515.c ****         return false;
+ 246:src/mcp2515.c ****     }
+ 247:src/mcp2515.c **** 
+ 248:src/mcp2515.c ****     uint8_t rxbuf[13];
+ 249:src/mcp2515.c **** 
+ 250:src/mcp2515.c ****     // Use "Read RX Buffer" instruction per DS21801J Table 12-2:
+ 251:src/mcp2515.c ****     //   0x90 = Read RXB0 from SIDH (RXB0 full, bit6 of RX_STATUS set)
+ 252:src/mcp2515.c ****     //   0x96 = Read RXB1 from SIDH (RXB1 full, bit7 set, bit6 clear)
+ 253:src/mcp2515.c ****     // Bug was 0x94 (Read RXB0 from data byte 0 — skips header, returns
+ 254:src/mcp2515.c ****     // garbage for RXB1 and does NOT auto-clear the RXB1 interrupt flag).
+ 255:src/mcp2515.c ****     uint8_t read_cmd = (status & 0x40) ? 0x90 : 0x96;
+ 256:src/mcp2515.c **** 
+ 257:src/mcp2515.c ****     MCP2515_Select();
+ 258:src/mcp2515.c ****     MCP2515_SPITransfer(read_cmd);
+ 259:src/mcp2515.c ****     for (uint8_t i = 0; i < 13; i++) {
+ 260:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 261:src/mcp2515.c ****     }
+ARM GAS  /tmp/cc6iGCGp.s 			page 6
+
+
+ 262:src/mcp2515.c ****     MCP2515_Deselect();
+ 263:src/mcp2515.c **** 
+ 264:src/mcp2515.c **** 
+ 265:src/mcp2515.c ****     // Parse frame
+ 266:src/mcp2515.c ****     if (rxbuf[1] & 0x08) {
+ 267:src/mcp2515.c ****         // Extended frame
+ 268:src/mcp2515.c ****         frame->extended = true;
+ 269:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 21) |
+ 270:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
+ 271:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0x03) << 16) |
+ 272:src/mcp2515.c ****                     ((uint32_t)rxbuf[2] << 8) |
+ 273:src/mcp2515.c ****                     rxbuf[3];
+ 274:src/mcp2515.c ****     } else {
+ 275:src/mcp2515.c ****         // Standard frame
+ 276:src/mcp2515.c ****         frame->extended = false;
+ 277:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 3) |
+ 278:src/mcp2515.c ****                     (rxbuf[1] >> 5);
+ 279:src/mcp2515.c ****     }
+ 280:src/mcp2515.c ****     
+ 281:src/mcp2515.c ****     frame->rtr = (rxbuf[4] & 0x40) ? true : false;
+ 282:src/mcp2515.c ****     frame->dlc = rxbuf[4] & 0x0F;
+ 283:src/mcp2515.c ****     
+ 284:src/mcp2515.c ****     // Copy data
+ 285:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 286:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 287:src/mcp2515.c ****     }
+ 288:src/mcp2515.c ****     
+ 289:src/mcp2515.c ****     // Clear interrupt flag
+ 290:src/mcp2515.c ****     if (status & 0x40) {
+ 291:src/mcp2515.c ****         MCP2515_ModifyRegister(MCP2515_CANINTF, 0x01, 0x00);  // Clear RXB0 flag
+ 292:src/mcp2515.c ****     } else {
+ 293:src/mcp2515.c ****         MCP2515_ModifyRegister(MCP2515_CANINTF, 0x02, 0x00);  // Clear RXB1 flag
+ 294:src/mcp2515.c ****     }
+ 295:src/mcp2515.c ****     
+ 296:src/mcp2515.c ****     return true;
+ 297:src/mcp2515.c **** }
+ 298:src/mcp2515.c **** 
+ 299:src/mcp2515.c **** bool MCP2515_Available(void) {
+ 300:src/mcp2515.c ****     uint8_t status = MCP2515_GetRxStatus();
+ 301:src/mcp2515.c ****     return (status & 0xC0) != 0;
+ 302:src/mcp2515.c **** }
+ 303:src/mcp2515.c **** 
+ 304:src/mcp2515.c **** uint8_t MCP2515_ReadRegister(uint8_t address) {
+ 305:src/mcp2515.c ****     uint8_t result;
+ 306:src/mcp2515.c ****     
+ 307:src/mcp2515.c ****     MCP2515_Select();
+ 308:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_READ);
+ 309:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 310:src/mcp2515.c ****     result = MCP2515_SPITransfer(0xFF);
+ 311:src/mcp2515.c ****     MCP2515_Deselect();
+ 312:src/mcp2515.c ****     
+ 313:src/mcp2515.c ****     return result;
+ 314:src/mcp2515.c **** }
+ 315:src/mcp2515.c **** 
+ 316:src/mcp2515.c **** void MCP2515_WriteRegister(uint8_t address, uint8_t value) {
+ 317:src/mcp2515.c ****     MCP2515_Select();
+ 318:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
+ARM GAS  /tmp/cc6iGCGp.s 			page 7
+
+
+ 319:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 320:src/mcp2515.c ****     MCP2515_SPITransfer(value);
+ 321:src/mcp2515.c ****     MCP2515_Deselect();
+ 322:src/mcp2515.c **** }
+ 323:src/mcp2515.c **** 
+ 324:src/mcp2515.c **** void MCP2515_ModifyRegister(uint8_t address, uint8_t mask, uint8_t value) {
+ 325:src/mcp2515.c ****     MCP2515_Select();
+ 326:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_BIT_MODIFY);
+ 327:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 328:src/mcp2515.c ****     MCP2515_SPITransfer(mask);
+ 329:src/mcp2515.c ****     MCP2515_SPITransfer(value);
+ 330:src/mcp2515.c ****     MCP2515_Deselect();
+ 331:src/mcp2515.c **** }
+ 332:src/mcp2515.c **** 
+ 333:src/mcp2515.c **** uint8_t MCP2515_GetStatus(void) {
+ 334:src/mcp2515.c ****     uint8_t status;
+ 335:src/mcp2515.c ****     
+ 336:src/mcp2515.c ****     MCP2515_Select();
+ 337:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_READ_STATUS);
+ 338:src/mcp2515.c ****     status = MCP2515_SPITransfer(0xFF);
+ 339:src/mcp2515.c ****     MCP2515_Deselect();
+ 340:src/mcp2515.c ****     
+ 341:src/mcp2515.c ****     return status;
+ 342:src/mcp2515.c **** }
+ 343:src/mcp2515.c **** 
+ 344:src/mcp2515.c **** uint8_t MCP2515_GetRxStatus(void) {
+ 345:src/mcp2515.c ****     uint8_t status;
+ 346:src/mcp2515.c **** 
+ 347:src/mcp2515.c ****     MCP2515_Select();
+ 348:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RX_STATUS);
+ 349:src/mcp2515.c ****     status = MCP2515_SPITransfer(0xFF);
+ 350:src/mcp2515.c ****     MCP2515_Deselect();
+ 351:src/mcp2515.c **** 
+ 352:src/mcp2515.c ****     return status;
+ 353:src/mcp2515.c **** }
+ 354:src/mcp2515.c **** 
+ 355:src/mcp2515.c **** uint8_t MCP2515_GetErrorFlags(void) {
+ 356:src/mcp2515.c ****     return MCP2515_ReadRegister(MCP2515_EFLG);
+ 357:src/mcp2515.c **** }
+ 358:src/mcp2515.c **** 
+ 359:src/mcp2515.c **** // Loopback test - call AFTER software serial is initialized
+ 360:src/mcp2515.c **** void MCP2515_LoopbackTest(void) {
+ 361:src/mcp2515.c ****     extern void forceLog(char *message);
+ 362:src/mcp2515.c ****     char msg[100];
+ 363:src/mcp2515.c **** 
+ 364:src/mcp2515.c ****     forceLog("\r\n=== LOOPBACK TEST ===\r\n");
+ 365:src/mcp2515.c **** 
+ 366:src/mcp2515.c ****     // Save current mode
+ 367:src/mcp2515.c ****     uint8_t saved_canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 368:src/mcp2515.c ****     sprintf(msg, "Current CANSTAT: 0x%02X\r\n", saved_canstat);
+ 369:src/mcp2515.c ****     forceLog(msg);
+ 370:src/mcp2515.c **** 
+ 371:src/mcp2515.c ****     // Enter config mode first
+ 372:src/mcp2515.c ****     if (!MCP2515_SetMode(MCP2515_MODE_CONFIG)) {
+ 373:src/mcp2515.c ****         forceLog("Failed to enter config mode!\r\n");
+ 374:src/mcp2515.c ****         return;
+ 375:src/mcp2515.c ****     }
+ARM GAS  /tmp/cc6iGCGp.s 			page 8
+
+
+ 376:src/mcp2515.c **** 
+ 377:src/mcp2515.c ****     // Clear any pending RX
+ 378:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CANINTF, 0x00);
+ 379:src/mcp2515.c **** 
+ 380:src/mcp2515.c ****     // Enter loopback mode
+ 381:src/mcp2515.c ****     if (!MCP2515_SetMode(MCP2515_MODE_LOOPBACK)) {
+ 382:src/mcp2515.c ****         forceLog("Failed to enter loopback mode!\r\n");
+ 383:src/mcp2515.c ****         MCP2515_SetMode(MCP2515_MODE_NORMAL);
+ 384:src/mcp2515.c ****         return;
+ 385:src/mcp2515.c ****     }
+ 386:src/mcp2515.c ****     forceLog("Loopback mode set, sending test frame...\r\n");
+ 387:src/mcp2515.c **** 
+ 388:src/mcp2515.c ****     // Send a test frame (will loop back to RX)
+ 389:src/mcp2515.c ****     CAN_Frame test_frame;
+ 390:src/mcp2515.c ****     test_frame.id = 0x123;
+ 391:src/mcp2515.c ****     test_frame.extended = false;
+ 392:src/mcp2515.c ****     test_frame.rtr = false;
+ 393:src/mcp2515.c ****     test_frame.dlc = 4;
+ 394:src/mcp2515.c ****     test_frame.data[0] = 0xDE;
+ 395:src/mcp2515.c ****     test_frame.data[1] = 0xAD;
+ 396:src/mcp2515.c ****     test_frame.data[2] = 0xBE;
+ 397:src/mcp2515.c ****     test_frame.data[3] = 0xEF;
+ 398:src/mcp2515.c **** 
+ 399:src/mcp2515.c ****     if (MCP2515_SendFrame(&test_frame)) {
+ 400:src/mcp2515.c ****         forceLog("Test frame sent, waiting for loopback...\r\n");
+ 401:src/mcp2515.c ****         HAL_Delay(50);  // Wait for loopback
+ 402:src/mcp2515.c **** 
+ 403:src/mcp2515.c ****         // Check if received
+ 404:src/mcp2515.c ****         uint8_t rxstat = MCP2515_GetRxStatus();
+ 405:src/mcp2515.c ****         sprintf(msg, "RX status after loopback: 0x%02X\r\n", rxstat);
+ 406:src/mcp2515.c ****         forceLog(msg);
+ 407:src/mcp2515.c **** 
+ 408:src/mcp2515.c ****         if (rxstat & 0xC0) {
+ 409:src/mcp2515.c ****             // Read the RX buffer manually
+ 410:src/mcp2515.c ****             uint8_t rxbuf[13];
+ 411:src/mcp2515.c ****             MCP2515_Select();
+ 412:src/mcp2515.c ****             MCP2515_SPITransfer(MCP2515_CMD_READ);
+ 413:src/mcp2515.c ****             MCP2515_SPITransfer(0x61);  // RXB0SIDH
+ 414:src/mcp2515.c ****             for (int i = 0; i < 13; i++) {
+ 415:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 416:src/mcp2515.c ****             }
+ 417:src/mcp2515.c ****             MCP2515_Deselect();
+ 418:src/mcp2515.c **** 
+ 419:src/mcp2515.c ****             sprintf(msg, "Loopback RX: %02X %02X %02X %02X %02X | %02X %02X %02X %02X\r\n",
+ 420:src/mcp2515.c ****                     rxbuf[0], rxbuf[1], rxbuf[2], rxbuf[3], rxbuf[4],
+ 421:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 422:src/mcp2515.c ****             forceLog(msg);
+ 423:src/mcp2515.c **** 
+ 424:src/mcp2515.c ****             // Expected for ID=0x123: SIDH=0x24, SIDL=0x60, data at [5-8]
+ 425:src/mcp2515.c ****             if (rxbuf[0] == 0x24 && rxbuf[1] == 0x60 &&
+ 426:src/mcp2515.c ****                 rxbuf[5] == 0xDE && rxbuf[6] == 0xAD) {
+ 427:src/mcp2515.c ****                 forceLog("*** LOOPBACK SUCCESS! ***\r\n");
+ 428:src/mcp2515.c ****                 forceLog("SPI RX buffer reads work correctly.\r\n");
+ 429:src/mcp2515.c ****                 forceLog("Problem must be CAN bus reception.\r\n");
+ 430:src/mcp2515.c ****             } else {
+ 431:src/mcp2515.c ****                 forceLog("*** LOOPBACK FAILED - DATA MISMATCH! ***\r\n");
+ 432:src/mcp2515.c ****                 sprintf(msg, "Expected: 24 60 xx xx 04 DE AD BE EF\r\n");
+ARM GAS  /tmp/cc6iGCGp.s 			page 9
+
+
+ 433:src/mcp2515.c ****                 forceLog(msg);
+ 434:src/mcp2515.c ****                 forceLog("SPI RX buffer reads are corrupted.\r\n");
+ 435:src/mcp2515.c ****             }
+ 436:src/mcp2515.c **** 
+ 437:src/mcp2515.c ****             // Clear RX flag
+ 438:src/mcp2515.c ****             MCP2515_ModifyRegister(MCP2515_CANINTF, 0x01, 0x00);
+ 439:src/mcp2515.c ****         } else {
+ 440:src/mcp2515.c ****             forceLog("No loopback message received!\r\n");
+ 441:src/mcp2515.c ****         }
+ 442:src/mcp2515.c ****     } else {
+ 443:src/mcp2515.c ****         forceLog("Failed to send test frame!\r\n");
+ 444:src/mcp2515.c ****     }
+ 445:src/mcp2515.c **** 
+ 446:src/mcp2515.c ****     forceLog("=== END LOOPBACK TEST ===\r\n");
+ 447:src/mcp2515.c **** 
+ 448:src/mcp2515.c ****     // Return to normal mode
+ 449:src/mcp2515.c ****     MCP2515_SetMode(MCP2515_MODE_NORMAL);
+ 450:src/mcp2515.c ****     forceLog("Returned to normal mode.\r\n\r\n");
+ 451:src/mcp2515.c **** }
+ 452:src/mcp2515.c **** 
+ 453:src/mcp2515.c **** // Private functions
+ 454:src/mcp2515.c **** static void MCP2515_Select(void) {
+  26              		.loc 1 454 34 view -0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 08B5     		push	{r3, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+ 455:src/mcp2515.c ****     SoftSPI_CS_Low();
+  35              		.loc 1 455 5 view .LVU1
+  36 0002 FFF7FEFF 		bl	SoftSPI_CS_Low
+  37              	.LVL0:
+ 456:src/mcp2515.c **** }
+  38              		.loc 1 456 1 is_stmt 0 view .LVU2
+  39 0006 08BD     		pop	{r3, pc}
+  40              		.cfi_endproc
+  41              	.LFE82:
+  43              		.section	.text.MCP2515_SPITransfer,"ax",%progbits
+  44              		.align	1
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  49              	MCP2515_SPITransfer:
+  50              	.LVL1:
+  51              	.LFB84:
+ 457:src/mcp2515.c **** 
+ 458:src/mcp2515.c **** static void MCP2515_Deselect(void) {
+ 459:src/mcp2515.c ****     SoftSPI_CS_High();
+ 460:src/mcp2515.c **** }
+ 461:src/mcp2515.c **** 
+ 462:src/mcp2515.c **** static uint8_t MCP2515_SPITransfer(uint8_t data) {
+  52              		.loc 1 462 50 is_stmt 1 view -0
+  53              		.cfi_startproc
+  54              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cc6iGCGp.s 			page 10
+
+
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56              		.loc 1 462 50 is_stmt 0 view .LVU4
+  57 0000 08B5     		push	{r3, lr}
+  58              	.LCFI1:
+  59              		.cfi_def_cfa_offset 8
+  60              		.cfi_offset 3, -8
+  61              		.cfi_offset 14, -4
+ 463:src/mcp2515.c ****     return SoftSPI_Transfer(data);
+  62              		.loc 1 463 5 is_stmt 1 view .LVU5
+  63              		.loc 1 463 12 is_stmt 0 view .LVU6
+  64 0002 FFF7FEFF 		bl	SoftSPI_Transfer
+  65              	.LVL2:
+ 464:src/mcp2515.c **** }
+  66              		.loc 1 464 1 view .LVU7
+  67 0006 08BD     		pop	{r3, pc}
+  68              		.cfi_endproc
+  69              	.LFE84:
+  71              		.section	.text.MCP2515_Deselect,"ax",%progbits
+  72              		.align	1
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	MCP2515_Deselect:
+  78              	.LFB83:
+ 458:src/mcp2515.c ****     SoftSPI_CS_High();
+  79              		.loc 1 458 36 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83 0000 08B5     		push	{r3, lr}
+  84              	.LCFI2:
+  85              		.cfi_def_cfa_offset 8
+  86              		.cfi_offset 3, -8
+  87              		.cfi_offset 14, -4
+ 459:src/mcp2515.c **** }
+  88              		.loc 1 459 5 view .LVU9
+  89 0002 FFF7FEFF 		bl	SoftSPI_CS_High
+  90              	.LVL3:
+ 460:src/mcp2515.c **** 
+  91              		.loc 1 460 1 is_stmt 0 view .LVU10
+  92 0006 08BD     		pop	{r3, pc}
+  93              		.cfi_endproc
+  94              	.LFE83:
+  96              		.section	.text.MCP2515_Reset,"ax",%progbits
+  97              		.align	1
+  98              		.global	MCP2515_Reset
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 103              	MCP2515_Reset:
+ 104              	.LFB69:
+  87:src/mcp2515.c ****     MCP2515_Select();
+ 105              		.loc 1 87 26 is_stmt 1 view -0
+ 106              		.cfi_startproc
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109 0000 08B5     		push	{r3, lr}
+ARM GAS  /tmp/cc6iGCGp.s 			page 11
+
+
+ 110              	.LCFI3:
+ 111              		.cfi_def_cfa_offset 8
+ 112              		.cfi_offset 3, -8
+ 113              		.cfi_offset 14, -4
+  88:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RESET);
+ 114              		.loc 1 88 5 view .LVU12
+ 115 0002 FFF7FEFF 		bl	MCP2515_Select
+ 116              	.LVL4:
+  89:src/mcp2515.c ****     MCP2515_Deselect();
+ 117              		.loc 1 89 5 view .LVU13
+ 118 0006 C020     		movs	r0, #192
+ 119 0008 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 120              	.LVL5:
+  90:src/mcp2515.c ****     HAL_Delay(10);
+ 121              		.loc 1 90 5 view .LVU14
+ 122 000c FFF7FEFF 		bl	MCP2515_Deselect
+ 123              	.LVL6:
+  91:src/mcp2515.c **** }
+ 124              		.loc 1 91 5 view .LVU15
+ 125 0010 0A20     		movs	r0, #10
+ 126 0012 FFF7FEFF 		bl	HAL_Delay
+ 127              	.LVL7:
+  92:src/mcp2515.c **** 
+ 128              		.loc 1 92 1 is_stmt 0 view .LVU16
+ 129 0016 08BD     		pop	{r3, pc}
+ 130              		.cfi_endproc
+ 131              	.LFE69:
+ 133              		.section	.text.MCP2515_ReadRegister,"ax",%progbits
+ 134              		.align	1
+ 135              		.global	MCP2515_ReadRegister
+ 136              		.syntax unified
+ 137              		.thumb
+ 138              		.thumb_func
+ 140              	MCP2515_ReadRegister:
+ 141              	.LVL8:
+ 142              	.LFB75:
+ 304:src/mcp2515.c ****     uint8_t result;
+ 143              		.loc 1 304 47 is_stmt 1 view -0
+ 144              		.cfi_startproc
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 304:src/mcp2515.c ****     uint8_t result;
+ 147              		.loc 1 304 47 is_stmt 0 view .LVU18
+ 148 0000 10B5     		push	{r4, lr}
+ 149              	.LCFI4:
+ 150              		.cfi_def_cfa_offset 8
+ 151              		.cfi_offset 4, -8
+ 152              		.cfi_offset 14, -4
+ 153 0002 0446     		mov	r4, r0
+ 305:src/mcp2515.c ****     
+ 154              		.loc 1 305 5 is_stmt 1 view .LVU19
+ 307:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_READ);
+ 155              		.loc 1 307 5 view .LVU20
+ 156 0004 FFF7FEFF 		bl	MCP2515_Select
+ 157              	.LVL9:
+ 308:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 158              		.loc 1 308 5 view .LVU21
+ARM GAS  /tmp/cc6iGCGp.s 			page 12
+
+
+ 159 0008 0320     		movs	r0, #3
+ 160 000a FFF7FEFF 		bl	MCP2515_SPITransfer
+ 161              	.LVL10:
+ 309:src/mcp2515.c ****     result = MCP2515_SPITransfer(0xFF);
+ 162              		.loc 1 309 5 view .LVU22
+ 163 000e 2046     		mov	r0, r4
+ 164 0010 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 165              	.LVL11:
+ 310:src/mcp2515.c ****     MCP2515_Deselect();
+ 166              		.loc 1 310 5 view .LVU23
+ 310:src/mcp2515.c ****     MCP2515_Deselect();
+ 167              		.loc 1 310 14 is_stmt 0 view .LVU24
+ 168 0014 FF20     		movs	r0, #255
+ 169 0016 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 170              	.LVL12:
+ 171 001a 0446     		mov	r4, r0
+ 172              	.LVL13:
+ 311:src/mcp2515.c ****     
+ 173              		.loc 1 311 5 is_stmt 1 view .LVU25
+ 174 001c FFF7FEFF 		bl	MCP2515_Deselect
+ 175              	.LVL14:
+ 313:src/mcp2515.c **** }
+ 176              		.loc 1 313 5 view .LVU26
+ 314:src/mcp2515.c **** 
+ 177              		.loc 1 314 1 is_stmt 0 view .LVU27
+ 178 0020 2046     		mov	r0, r4
+ 179 0022 10BD     		pop	{r4, pc}
+ 314:src/mcp2515.c **** 
+ 180              		.loc 1 314 1 view .LVU28
+ 181              		.cfi_endproc
+ 182              	.LFE75:
+ 184              		.section	.text.MCP2515_WriteRegister,"ax",%progbits
+ 185              		.align	1
+ 186              		.global	MCP2515_WriteRegister
+ 187              		.syntax unified
+ 188              		.thumb
+ 189              		.thumb_func
+ 191              	MCP2515_WriteRegister:
+ 192              	.LVL15:
+ 193              	.LFB76:
+ 316:src/mcp2515.c ****     MCP2515_Select();
+ 194              		.loc 1 316 60 is_stmt 1 view -0
+ 195              		.cfi_startproc
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 316:src/mcp2515.c ****     MCP2515_Select();
+ 198              		.loc 1 316 60 is_stmt 0 view .LVU30
+ 199 0000 38B5     		push	{r3, r4, r5, lr}
+ 200              	.LCFI5:
+ 201              		.cfi_def_cfa_offset 16
+ 202              		.cfi_offset 3, -16
+ 203              		.cfi_offset 4, -12
+ 204              		.cfi_offset 5, -8
+ 205              		.cfi_offset 14, -4
+ 206 0002 0546     		mov	r5, r0
+ 207 0004 0C46     		mov	r4, r1
+ 317:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
+ARM GAS  /tmp/cc6iGCGp.s 			page 13
+
+
+ 208              		.loc 1 317 5 is_stmt 1 view .LVU31
+ 209 0006 FFF7FEFF 		bl	MCP2515_Select
+ 210              	.LVL16:
+ 318:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 211              		.loc 1 318 5 view .LVU32
+ 212 000a 0220     		movs	r0, #2
+ 213 000c FFF7FEFF 		bl	MCP2515_SPITransfer
+ 214              	.LVL17:
+ 319:src/mcp2515.c ****     MCP2515_SPITransfer(value);
+ 215              		.loc 1 319 5 view .LVU33
+ 216 0010 2846     		mov	r0, r5
+ 217 0012 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 218              	.LVL18:
+ 320:src/mcp2515.c ****     MCP2515_Deselect();
+ 219              		.loc 1 320 5 view .LVU34
+ 220 0016 2046     		mov	r0, r4
+ 221 0018 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 222              	.LVL19:
+ 321:src/mcp2515.c **** }
+ 223              		.loc 1 321 5 view .LVU35
+ 224 001c FFF7FEFF 		bl	MCP2515_Deselect
+ 225              	.LVL20:
+ 322:src/mcp2515.c **** 
+ 226              		.loc 1 322 1 is_stmt 0 view .LVU36
+ 227 0020 38BD     		pop	{r3, r4, r5, pc}
+ 322:src/mcp2515.c **** 
+ 228              		.loc 1 322 1 view .LVU37
+ 229              		.cfi_endproc
+ 230              	.LFE76:
+ 232              		.section	.text.MCP2515_Detect,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	MCP2515_Detect
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 239              	MCP2515_Detect:
+ 240              	.LFB67:
+  12:src/mcp2515.c ****     // Initialize software SPI
+ 241              		.loc 1 12 27 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245 0000 08B5     		push	{r3, lr}
+ 246              	.LCFI6:
+ 247              		.cfi_def_cfa_offset 8
+ 248              		.cfi_offset 3, -8
+ 249              		.cfi_offset 14, -4
+  14:src/mcp2515.c ****     SoftSPI_SetMode(SPI_MODE0);
+ 250              		.loc 1 14 5 view .LVU39
+ 251 0002 FFF7FEFF 		bl	SoftSPI_Init
+ 252              	.LVL21:
+  15:src/mcp2515.c ****     
+ 253              		.loc 1 15 5 view .LVU40
+ 254 0006 0020     		movs	r0, #0
+ 255 0008 FFF7FEFF 		bl	SoftSPI_SetMode
+ 256              	.LVL22:
+  18:src/mcp2515.c ****     
+ARM GAS  /tmp/cc6iGCGp.s 			page 14
+
+
+ 257              		.loc 1 18 5 view .LVU41
+ 258 000c 0A20     		movs	r0, #10
+ 259 000e FFF7FEFF 		bl	HAL_Delay
+ 260              	.LVL23:
+  21:src/mcp2515.c ****     
+ 261              		.loc 1 21 5 view .LVU42
+  21:src/mcp2515.c ****     
+ 262              		.loc 1 21 23 is_stmt 0 view .LVU43
+ 263 0012 0E20     		movs	r0, #14
+ 264 0014 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 265              	.LVL24:
+  23:src/mcp2515.c ****         // CANSTAT indicates CONFIG mode - MCP2515 detected
+ 266              		.loc 1 23 5 is_stmt 1 view .LVU44
+  23:src/mcp2515.c ****         // CANSTAT indicates CONFIG mode - MCP2515 detected
+ 267              		.loc 1 23 8 is_stmt 0 view .LVU45
+ 268 0018 00F0E000 		and	r0, r0, #224
+ 269              	.LVL25:
+  23:src/mcp2515.c ****         // CANSTAT indicates CONFIG mode - MCP2515 detected
+ 270              		.loc 1 23 8 view .LVU46
+ 271 001c 8028     		cmp	r0, #128
+ 272 001e 23D0     		beq	.L16
+  29:src/mcp2515.c ****     HAL_Delay(10);
+ 273              		.loc 1 29 5 is_stmt 1 view .LVU47
+ 274 0020 FFF7FEFF 		bl	MCP2515_Reset
+ 275              	.LVL26:
+  30:src/mcp2515.c ****     
+ 276              		.loc 1 30 5 view .LVU48
+ 277 0024 0A20     		movs	r0, #10
+ 278 0026 FFF7FEFF 		bl	HAL_Delay
+ 279              	.LVL27:
+  33:src/mcp2515.c ****     if ((canstat & 0xE0) == 0x80) {
+ 280              		.loc 1 33 5 view .LVU49
+  33:src/mcp2515.c ****     if ((canstat & 0xE0) == 0x80) {
+ 281              		.loc 1 33 15 is_stmt 0 view .LVU50
+ 282 002a 0E20     		movs	r0, #14
+ 283 002c FFF7FEFF 		bl	MCP2515_ReadRegister
+ 284              	.LVL28:
+  34:src/mcp2515.c ****         return true;
+ 285              		.loc 1 34 5 is_stmt 1 view .LVU51
+  34:src/mcp2515.c ****         return true;
+ 286              		.loc 1 34 8 is_stmt 0 view .LVU52
+ 287 0030 00F0E000 		and	r0, r0, #224
+ 288              	.LVL29:
+  34:src/mcp2515.c ****         return true;
+ 289              		.loc 1 34 8 view .LVU53
+ 290 0034 8028     		cmp	r0, #128
+ 291 0036 19D0     		beq	.L17
+  39:src/mcp2515.c ****     uint8_t test = MCP2515_ReadRegister(MCP2515_CNF1);
+ 292              		.loc 1 39 5 is_stmt 1 view .LVU54
+ 293 0038 AA21     		movs	r1, #170
+ 294 003a 2A20     		movs	r0, #42
+ 295 003c FFF7FEFF 		bl	MCP2515_WriteRegister
+ 296              	.LVL30:
+  40:src/mcp2515.c ****     
+ 297              		.loc 1 40 5 view .LVU55
+  40:src/mcp2515.c ****     
+ 298              		.loc 1 40 20 is_stmt 0 view .LVU56
+ARM GAS  /tmp/cc6iGCGp.s 			page 15
+
+
+ 299 0040 2A20     		movs	r0, #42
+ 300 0042 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 301              	.LVL31:
+  42:src/mcp2515.c ****         MCP2515_WriteRegister(MCP2515_CNF1, 0x55);
+ 302              		.loc 1 42 5 is_stmt 1 view .LVU57
+  42:src/mcp2515.c ****         MCP2515_WriteRegister(MCP2515_CNF1, 0x55);
+ 303              		.loc 1 42 8 is_stmt 0 view .LVU58
+ 304 0046 AA28     		cmp	r0, #170
+ 305 0048 03D0     		beq	.L20
+ 306              	.L15:
+  51:src/mcp2515.c ****     return false;
+ 307              		.loc 1 51 5 is_stmt 1 view .LVU59
+ 308 004a FFF7FEFF 		bl	SoftSPI_Deinit
+ 309              	.LVL32:
+  52:src/mcp2515.c **** }
+ 310              		.loc 1 52 5 view .LVU60
+  52:src/mcp2515.c **** }
+ 311              		.loc 1 52 12 is_stmt 0 view .LVU61
+ 312 004e 0020     		movs	r0, #0
+ 313              	.LVL33:
+ 314              	.L14:
+  53:src/mcp2515.c **** 
+ 315              		.loc 1 53 1 view .LVU62
+ 316 0050 08BD     		pop	{r3, pc}
+ 317              	.LVL34:
+ 318              	.L20:
+  43:src/mcp2515.c ****         test = MCP2515_ReadRegister(MCP2515_CNF1);
+ 319              		.loc 1 43 9 is_stmt 1 view .LVU63
+ 320 0052 5521     		movs	r1, #85
+ 321 0054 2A20     		movs	r0, #42
+ 322              	.LVL35:
+  43:src/mcp2515.c ****         test = MCP2515_ReadRegister(MCP2515_CNF1);
+ 323              		.loc 1 43 9 is_stmt 0 view .LVU64
+ 324 0056 FFF7FEFF 		bl	MCP2515_WriteRegister
+ 325              	.LVL36:
+  44:src/mcp2515.c ****         if (test == 0x55) {
+ 326              		.loc 1 44 9 is_stmt 1 view .LVU65
+  44:src/mcp2515.c ****         if (test == 0x55) {
+ 327              		.loc 1 44 16 is_stmt 0 view .LVU66
+ 328 005a 2A20     		movs	r0, #42
+ 329 005c FFF7FEFF 		bl	MCP2515_ReadRegister
+ 330              	.LVL37:
+  45:src/mcp2515.c ****             return true;
+ 331              		.loc 1 45 9 is_stmt 1 view .LVU67
+  45:src/mcp2515.c ****             return true;
+ 332              		.loc 1 45 12 is_stmt 0 view .LVU68
+ 333 0060 5528     		cmp	r0, #85
+ 334 0062 F2D1     		bne	.L15
+  46:src/mcp2515.c ****         }
+ 335              		.loc 1 46 20 view .LVU69
+ 336 0064 0120     		movs	r0, #1
+ 337              	.LVL38:
+  46:src/mcp2515.c ****         }
+ 338              		.loc 1 46 20 view .LVU70
+ 339 0066 F3E7     		b	.L14
+ 340              	.LVL39:
+ 341              	.L16:
+ARM GAS  /tmp/cc6iGCGp.s 			page 16
+
+
+  25:src/mcp2515.c ****     }
+ 342              		.loc 1 25 16 view .LVU71
+ 343 0068 0120     		movs	r0, #1
+ 344 006a F1E7     		b	.L14
+ 345              	.L17:
+  35:src/mcp2515.c ****     }
+ 346              		.loc 1 35 16 view .LVU72
+ 347 006c 0120     		movs	r0, #1
+ 348 006e EFE7     		b	.L14
+ 349              		.cfi_endproc
+ 350              	.LFE67:
+ 352              		.section	.text.MCP2515_SetBitrate,"ax",%progbits
+ 353              		.align	1
+ 354              		.global	MCP2515_SetBitrate
+ 355              		.syntax unified
+ 356              		.thumb
+ 357              		.thumb_func
+ 359              	MCP2515_SetBitrate:
+ 360              	.LVL40:
+ 361              	.LFB71:
+ 110:src/mcp2515.c ****     // Bitrate configuration for 8 MHz crystal
+ 362              		.loc 1 110 40 is_stmt 1 view -0
+ 363              		.cfi_startproc
+ 364              		@ args = 0, pretend = 0, frame = 0
+ 365              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110:src/mcp2515.c ****     // Bitrate configuration for 8 MHz crystal
+ 366              		.loc 1 110 40 is_stmt 0 view .LVU74
+ 367 0000 38B5     		push	{r3, r4, r5, lr}
+ 368              	.LCFI7:
+ 369              		.cfi_def_cfa_offset 16
+ 370              		.cfi_offset 3, -16
+ 371              		.cfi_offset 4, -12
+ 372              		.cfi_offset 5, -8
+ 373              		.cfi_offset 14, -4
+ 116:src/mcp2515.c ****     
+ 374              		.loc 1 116 5 is_stmt 1 view .LVU75
+ 118:src/mcp2515.c ****         case MCP2515_SPEED_125KBPS:
+ 375              		.loc 1 118 5 view .LVU76
+ 376 0002 0328     		cmp	r0, #3
+ 377 0004 1FD8     		bhi	.L28
+ 378 0006 DFE800F0 		tbb	[pc, r0]
+ 379              	.L24:
+ 380 000a 02       		.byte	(.L27-.L24)/2
+ 381 000b 1A       		.byte	(.L29-.L24)/2
+ 382 000c 12       		.byte	(.L25-.L24)/2
+ 383 000d 16       		.byte	(.L23-.L24)/2
+ 384              		.p2align 1
+ 385              	.L27:
+ 386 000e 8524     		movs	r4, #133
+ 387 0010 B125     		movs	r5, #177
+ 388 0012 0121     		movs	r1, #1
+ 389              	.L26:
+ 390              	.LVL41:
+ 147:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
+ 391              		.loc 1 147 5 view .LVU77
+ 392 0014 2A20     		movs	r0, #42
+ 393              	.LVL42:
+ARM GAS  /tmp/cc6iGCGp.s 			page 17
+
+
+ 147:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF2, cnf2);
+ 394              		.loc 1 147 5 is_stmt 0 view .LVU78
+ 395 0016 FFF7FEFF 		bl	MCP2515_WriteRegister
+ 396              	.LVL43:
+ 148:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CNF3, cnf3);
+ 397              		.loc 1 148 5 is_stmt 1 view .LVU79
+ 398 001a 2946     		mov	r1, r5
+ 399 001c 2920     		movs	r0, #41
+ 400 001e FFF7FEFF 		bl	MCP2515_WriteRegister
+ 401              	.LVL44:
+ 149:src/mcp2515.c ****     
+ 402              		.loc 1 149 5 view .LVU80
+ 403 0022 2146     		mov	r1, r4
+ 404 0024 2820     		movs	r0, #40
+ 405 0026 FFF7FEFF 		bl	MCP2515_WriteRegister
+ 406              	.LVL45:
+ 151:src/mcp2515.c **** }
+ 407              		.loc 1 151 5 view .LVU81
+ 151:src/mcp2515.c **** }
+ 408              		.loc 1 151 12 is_stmt 0 view .LVU82
+ 409 002a 0120     		movs	r0, #1
+ 410              	.LVL46:
+ 411              	.L22:
+ 152:src/mcp2515.c **** 
+ 412              		.loc 1 152 1 view .LVU83
+ 413 002c 38BD     		pop	{r3, r4, r5, pc}
+ 414              	.LVL47:
+ 415              	.L25:
+ 132:src/mcp2515.c ****             cnf2 = 0x90;  // BTLMODE=1, PHSEG1=2, PRSEG=0
+ 416              		.loc 1 132 13 is_stmt 1 view .LVU84
+ 133:src/mcp2515.c ****             cnf3 = 0x82;  // PHSEG2=2
+ 417              		.loc 1 133 13 view .LVU85
+ 134:src/mcp2515.c ****             break;
+ 418              		.loc 1 134 13 view .LVU86
+ 135:src/mcp2515.c ****             
+ 419              		.loc 1 135 13 view .LVU87
+ 134:src/mcp2515.c ****             break;
+ 420              		.loc 1 134 18 is_stmt 0 view .LVU88
+ 421 002e 8224     		movs	r4, #130
+ 133:src/mcp2515.c ****             cnf3 = 0x82;  // PHSEG2=2
+ 422              		.loc 1 133 18 view .LVU89
+ 423 0030 9025     		movs	r5, #144
+ 132:src/mcp2515.c ****             cnf2 = 0x90;  // BTLMODE=1, PHSEG1=2, PRSEG=0
+ 424              		.loc 1 132 18 view .LVU90
+ 425 0032 0021     		movs	r1, #0
+ 135:src/mcp2515.c ****             
+ 426              		.loc 1 135 13 view .LVU91
+ 427 0034 EEE7     		b	.L26
+ 428              	.LVL48:
+ 429              	.L23:
+ 138:src/mcp2515.c ****             cnf2 = 0x80;  // BTLMODE=1, PHSEG1=1, PRSEG=0
+ 430              		.loc 1 138 13 is_stmt 1 view .LVU92
+ 139:src/mcp2515.c ****             cnf3 = 0x80;  // PHSEG2=1
+ 431              		.loc 1 139 13 view .LVU93
+ 140:src/mcp2515.c ****             break;
+ 432              		.loc 1 140 13 view .LVU94
+ 141:src/mcp2515.c ****             
+ARM GAS  /tmp/cc6iGCGp.s 			page 18
+
+
+ 433              		.loc 1 141 13 view .LVU95
+ 140:src/mcp2515.c ****             break;
+ 434              		.loc 1 140 18 is_stmt 0 view .LVU96
+ 435 0036 8024     		movs	r4, #128
+ 139:src/mcp2515.c ****             cnf3 = 0x80;  // PHSEG2=1
+ 436              		.loc 1 139 18 view .LVU97
+ 437 0038 2546     		mov	r5, r4
+ 138:src/mcp2515.c ****             cnf2 = 0x80;  // BTLMODE=1, PHSEG1=1, PRSEG=0
+ 438              		.loc 1 138 18 view .LVU98
+ 439 003a 0021     		movs	r1, #0
+ 141:src/mcp2515.c ****             
+ 440              		.loc 1 141 13 view .LVU99
+ 441 003c EAE7     		b	.L26
+ 442              	.LVL49:
+ 443              	.L29:
+ 128:src/mcp2515.c ****             break;
+ 444              		.loc 1 128 18 view .LVU100
+ 445 003e 8524     		movs	r4, #133
+ 127:src/mcp2515.c ****             cnf3 = 0x85;  // PHSEG2=5
+ 446              		.loc 1 127 18 view .LVU101
+ 447 0040 B125     		movs	r5, #177
+ 126:src/mcp2515.c ****             cnf2 = 0xB1;  // BTLMODE=1, PHSEG1=3, PRSEG=1
+ 448              		.loc 1 126 18 view .LVU102
+ 449 0042 0021     		movs	r1, #0
+ 450 0044 E6E7     		b	.L26
+ 451              	.L28:
+ 118:src/mcp2515.c ****         case MCP2515_SPEED_125KBPS:
+ 452              		.loc 1 118 5 view .LVU103
+ 453 0046 0020     		movs	r0, #0
+ 454              	.LVL50:
+ 118:src/mcp2515.c ****         case MCP2515_SPEED_125KBPS:
+ 455              		.loc 1 118 5 view .LVU104
+ 456 0048 F0E7     		b	.L22
+ 457              		.cfi_endproc
+ 458              	.LFE71:
+ 460              		.section	.text.MCP2515_ModifyRegister,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	MCP2515_ModifyRegister
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	MCP2515_ModifyRegister:
+ 468              	.LVL51:
+ 469              	.LFB77:
+ 324:src/mcp2515.c ****     MCP2515_Select();
+ 470              		.loc 1 324 75 is_stmt 1 view -0
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 0
+ 473              		@ frame_needed = 0, uses_anonymous_args = 0
+ 324:src/mcp2515.c ****     MCP2515_Select();
+ 474              		.loc 1 324 75 is_stmt 0 view .LVU106
+ 475 0000 70B5     		push	{r4, r5, r6, lr}
+ 476              	.LCFI8:
+ 477              		.cfi_def_cfa_offset 16
+ 478              		.cfi_offset 4, -16
+ 479              		.cfi_offset 5, -12
+ 480              		.cfi_offset 6, -8
+ARM GAS  /tmp/cc6iGCGp.s 			page 19
+
+
+ 481              		.cfi_offset 14, -4
+ 482 0002 0646     		mov	r6, r0
+ 483 0004 0D46     		mov	r5, r1
+ 484 0006 1446     		mov	r4, r2
+ 325:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_BIT_MODIFY);
+ 485              		.loc 1 325 5 is_stmt 1 view .LVU107
+ 486 0008 FFF7FEFF 		bl	MCP2515_Select
+ 487              	.LVL52:
+ 326:src/mcp2515.c ****     MCP2515_SPITransfer(address);
+ 488              		.loc 1 326 5 view .LVU108
+ 489 000c 0520     		movs	r0, #5
+ 490 000e FFF7FEFF 		bl	MCP2515_SPITransfer
+ 491              	.LVL53:
+ 327:src/mcp2515.c ****     MCP2515_SPITransfer(mask);
+ 492              		.loc 1 327 5 view .LVU109
+ 493 0012 3046     		mov	r0, r6
+ 494 0014 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 495              	.LVL54:
+ 328:src/mcp2515.c ****     MCP2515_SPITransfer(value);
+ 496              		.loc 1 328 5 view .LVU110
+ 497 0018 2846     		mov	r0, r5
+ 498 001a FFF7FEFF 		bl	MCP2515_SPITransfer
+ 499              	.LVL55:
+ 329:src/mcp2515.c ****     MCP2515_Deselect();
+ 500              		.loc 1 329 5 view .LVU111
+ 501 001e 2046     		mov	r0, r4
+ 502 0020 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 503              	.LVL56:
+ 330:src/mcp2515.c **** }
+ 504              		.loc 1 330 5 view .LVU112
+ 505 0024 FFF7FEFF 		bl	MCP2515_Deselect
+ 506              	.LVL57:
+ 331:src/mcp2515.c **** 
+ 507              		.loc 1 331 1 is_stmt 0 view .LVU113
+ 508 0028 70BD     		pop	{r4, r5, r6, pc}
+ 331:src/mcp2515.c **** 
+ 509              		.loc 1 331 1 view .LVU114
+ 510              		.cfi_endproc
+ 511              	.LFE77:
+ 513              		.section	.text.MCP2515_SetMode,"ax",%progbits
+ 514              		.align	1
+ 515              		.global	MCP2515_SetMode
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 520              	MCP2515_SetMode:
+ 521              	.LVL58:
+ 522              	.LFB70:
+  94:src/mcp2515.c ****     MCP2515_ModifyRegister(MCP2515_CANCTRL, 0xE0, mode);
+ 523              		.loc 1 94 36 is_stmt 1 view -0
+ 524              		.cfi_startproc
+ 525              		@ args = 0, pretend = 0, frame = 0
+ 526              		@ frame_needed = 0, uses_anonymous_args = 0
+  94:src/mcp2515.c ****     MCP2515_ModifyRegister(MCP2515_CANCTRL, 0xE0, mode);
+ 527              		.loc 1 94 36 is_stmt 0 view .LVU116
+ 528 0000 38B5     		push	{r3, r4, r5, lr}
+ 529              	.LCFI9:
+ARM GAS  /tmp/cc6iGCGp.s 			page 20
+
+
+ 530              		.cfi_def_cfa_offset 16
+ 531              		.cfi_offset 3, -16
+ 532              		.cfi_offset 4, -12
+ 533              		.cfi_offset 5, -8
+ 534              		.cfi_offset 14, -4
+ 535 0002 0446     		mov	r4, r0
+  95:src/mcp2515.c ****     
+ 536              		.loc 1 95 5 is_stmt 1 view .LVU117
+ 537 0004 0246     		mov	r2, r0
+ 538 0006 E021     		movs	r1, #224
+ 539 0008 0F20     		movs	r0, #15
+ 540              	.LVL59:
+  95:src/mcp2515.c ****     
+ 541              		.loc 1 95 5 is_stmt 0 view .LVU118
+ 542 000a FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 543              	.LVL60:
+  98:src/mcp2515.c ****     while (HAL_GetTick() < timeout) {
+ 544              		.loc 1 98 5 is_stmt 1 view .LVU119
+  98:src/mcp2515.c ****     while (HAL_GetTick() < timeout) {
+ 545              		.loc 1 98 24 is_stmt 0 view .LVU120
+ 546 000e FFF7FEFF 		bl	HAL_GetTick
+ 547              	.LVL61:
+  98:src/mcp2515.c ****     while (HAL_GetTick() < timeout) {
+ 548              		.loc 1 98 14 discriminator 1 view .LVU121
+ 549 0012 00F16405 		add	r5, r0, #100
+ 550              	.LVL62:
+  99:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 551              		.loc 1 99 5 is_stmt 1 view .LVU122
+  99:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 552              		.loc 1 99 11 is_stmt 0 view .LVU123
+ 553 0016 02E0     		b	.L34
+ 554              	.LVL63:
+ 555              	.L40:
+ 556              	.LBB2:
+ 104:src/mcp2515.c ****     }
+ 557              		.loc 1 104 9 is_stmt 1 view .LVU124
+ 558 0018 0120     		movs	r0, #1
+ 559 001a FFF7FEFF 		bl	HAL_Delay
+ 560              	.LVL64:
+ 561              	.L34:
+ 104:src/mcp2515.c ****     }
+ 562              		.loc 1 104 9 is_stmt 0 view .LVU125
+ 563              	.LBE2:
+  99:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 564              		.loc 1 99 26 is_stmt 1 view .LVU126
+  99:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 565              		.loc 1 99 12 is_stmt 0 view .LVU127
+ 566 001e FFF7FEFF 		bl	HAL_GetTick
+ 567              	.LVL65:
+  99:src/mcp2515.c ****         uint8_t canstat = MCP2515_ReadRegister(MCP2515_CANSTAT);
+ 568              		.loc 1 99 26 discriminator 1 view .LVU128
+ 569 0022 A842     		cmp	r0, r5
+ 570 0024 08D2     		bcs	.L39
+ 571              	.LBB3:
+ 100:src/mcp2515.c ****         if ((canstat & 0xE0) == mode) {
+ 572              		.loc 1 100 9 is_stmt 1 view .LVU129
+ 100:src/mcp2515.c ****         if ((canstat & 0xE0) == mode) {
+ARM GAS  /tmp/cc6iGCGp.s 			page 21
+
+
+ 573              		.loc 1 100 27 is_stmt 0 view .LVU130
+ 574 0026 0E20     		movs	r0, #14
+ 575 0028 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 576              	.LVL66:
+ 101:src/mcp2515.c ****             return true;
+ 577              		.loc 1 101 9 is_stmt 1 view .LVU131
+ 101:src/mcp2515.c ****             return true;
+ 578              		.loc 1 101 12 is_stmt 0 view .LVU132
+ 579 002c 00F0E000 		and	r0, r0, #224
+ 580              	.LVL67:
+ 101:src/mcp2515.c ****             return true;
+ 581              		.loc 1 101 12 view .LVU133
+ 582 0030 8442     		cmp	r4, r0
+ 583 0032 F1D1     		bne	.L40
+ 102:src/mcp2515.c ****         }
+ 584              		.loc 1 102 20 view .LVU134
+ 585 0034 0120     		movs	r0, #1
+ 586 0036 00E0     		b	.L35
+ 587              	.LVL68:
+ 588              	.L39:
+ 102:src/mcp2515.c ****         }
+ 589              		.loc 1 102 20 view .LVU135
+ 590              	.LBE3:
+ 107:src/mcp2515.c **** }
+ 591              		.loc 1 107 12 view .LVU136
+ 592 0038 0020     		movs	r0, #0
+ 593              	.L35:
+ 108:src/mcp2515.c **** 
+ 594              		.loc 1 108 1 view .LVU137
+ 595 003a 38BD     		pop	{r3, r4, r5, pc}
+ 108:src/mcp2515.c **** 
+ 596              		.loc 1 108 1 view .LVU138
+ 597              		.cfi_endproc
+ 598              	.LFE70:
+ 600              		.section	.text.MCP2515_Init,"ax",%progbits
+ 601              		.align	1
+ 602              		.global	MCP2515_Init
+ 603              		.syntax unified
+ 604              		.thumb
+ 605              		.thumb_func
+ 607              	MCP2515_Init:
+ 608              	.LVL69:
+ 609              	.LFB68:
+  55:src/mcp2515.c ****     // Reset MCP2515
+ 610              		.loc 1 55 34 is_stmt 1 view -0
+ 611              		.cfi_startproc
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+  55:src/mcp2515.c ****     // Reset MCP2515
+ 614              		.loc 1 55 34 is_stmt 0 view .LVU140
+ 615 0000 10B5     		push	{r4, lr}
+ 616              	.LCFI10:
+ 617              		.cfi_def_cfa_offset 8
+ 618              		.cfi_offset 4, -8
+ 619              		.cfi_offset 14, -4
+ 620 0002 0446     		mov	r4, r0
+  57:src/mcp2515.c ****     HAL_Delay(10);
+ARM GAS  /tmp/cc6iGCGp.s 			page 22
+
+
+ 621              		.loc 1 57 5 is_stmt 1 view .LVU141
+ 622 0004 FFF7FEFF 		bl	MCP2515_Reset
+ 623              	.LVL70:
+  58:src/mcp2515.c **** 
+ 624              		.loc 1 58 5 view .LVU142
+ 625 0008 0A20     		movs	r0, #10
+ 626 000a FFF7FEFF 		bl	HAL_Delay
+ 627              	.LVL71:
+  61:src/mcp2515.c ****         return false;
+ 628              		.loc 1 61 5 view .LVU143
+  61:src/mcp2515.c ****         return false;
+ 629              		.loc 1 61 10 is_stmt 0 view .LVU144
+ 630 000e 8020     		movs	r0, #128
+ 631 0010 FFF7FEFF 		bl	MCP2515_SetMode
+ 632              	.LVL72:
+  61:src/mcp2515.c ****         return false;
+ 633              		.loc 1 61 8 discriminator 1 view .LVU145
+ 634 0014 0346     		mov	r3, r0
+ 635 0016 08B9     		cbnz	r0, .L44
+ 636              	.L42:
+  85:src/mcp2515.c **** 
+ 637              		.loc 1 85 1 view .LVU146
+ 638 0018 1846     		mov	r0, r3
+ 639 001a 10BD     		pop	{r4, pc}
+ 640              	.LVL73:
+ 641              	.L44:
+  66:src/mcp2515.c ****         return false;
+ 642              		.loc 1 66 5 is_stmt 1 view .LVU147
+  66:src/mcp2515.c ****         return false;
+ 643              		.loc 1 66 10 is_stmt 0 view .LVU148
+ 644 001c 2046     		mov	r0, r4
+ 645 001e FFF7FEFF 		bl	MCP2515_SetBitrate
+ 646              	.LVL74:
+  66:src/mcp2515.c ****         return false;
+ 647              		.loc 1 66 8 discriminator 1 view .LVU149
+ 648 0022 0346     		mov	r3, r0
+ 649 0024 0028     		cmp	r0, #0
+ 650 0026 F7D0     		beq	.L42
+  74:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_RXB1CTRL, 0x60);
+ 651              		.loc 1 74 5 is_stmt 1 view .LVU150
+ 652 0028 6421     		movs	r1, #100
+ 653 002a 6020     		movs	r0, #96
+ 654 002c FFF7FEFF 		bl	MCP2515_WriteRegister
+ 655              	.LVL75:
+  75:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CANINTF, 0x00);
+ 656              		.loc 1 75 5 view .LVU151
+ 657 0030 6021     		movs	r1, #96
+ 658 0032 7020     		movs	r0, #112
+ 659 0034 FFF7FEFF 		bl	MCP2515_WriteRegister
+ 660              	.LVL76:
+  76:src/mcp2515.c ****     MCP2515_WriteRegister(MCP2515_CANINTE, 0x03);
+ 661              		.loc 1 76 5 view .LVU152
+ 662 0038 0021     		movs	r1, #0
+ 663 003a 2C20     		movs	r0, #44
+ 664 003c FFF7FEFF 		bl	MCP2515_WriteRegister
+ 665              	.LVL77:
+  77:src/mcp2515.c **** 
+ARM GAS  /tmp/cc6iGCGp.s 			page 23
+
+
+ 666              		.loc 1 77 5 view .LVU153
+ 667 0040 0321     		movs	r1, #3
+ 668 0042 2B20     		movs	r0, #43
+ 669 0044 FFF7FEFF 		bl	MCP2515_WriteRegister
+ 670              	.LVL78:
+  80:src/mcp2515.c ****         return false;
+ 671              		.loc 1 80 5 view .LVU154
+  80:src/mcp2515.c ****         return false;
+ 672              		.loc 1 80 10 is_stmt 0 view .LVU155
+ 673 0048 0020     		movs	r0, #0
+ 674 004a FFF7FEFF 		bl	MCP2515_SetMode
+ 675              	.LVL79:
+ 676 004e 0346     		mov	r3, r0
+ 677 0050 E2E7     		b	.L42
+ 678              		.cfi_endproc
+ 679              	.LFE68:
+ 681              		.section	.text.MCP2515_SendFrame,"ax",%progbits
+ 682              		.align	1
+ 683              		.global	MCP2515_SendFrame
+ 684              		.syntax unified
+ 685              		.thumb
+ 686              		.thumb_func
+ 688              	MCP2515_SendFrame:
+ 689              	.LVL80:
+ 690              	.LFB72:
+ 154:src/mcp2515.c ****     // Rotate through TXB0/TXB1/TXB2 so three rapid sends (speed + pos + batt)
+ 691              		.loc 1 154 42 is_stmt 1 view -0
+ 692              		.cfi_startproc
+ 693              		@ args = 0, pretend = 0, frame = 24
+ 694              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154:src/mcp2515.c ****     // Rotate through TXB0/TXB1/TXB2 so three rapid sends (speed + pos + batt)
+ 695              		.loc 1 154 42 is_stmt 0 view .LVU157
+ 696 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 697              	.LCFI11:
+ 698              		.cfi_def_cfa_offset 20
+ 699              		.cfi_offset 4, -20
+ 700              		.cfi_offset 5, -16
+ 701              		.cfi_offset 6, -12
+ 702              		.cfi_offset 7, -8
+ 703              		.cfi_offset 14, -4
+ 704 0002 87B0     		sub	sp, sp, #28
+ 705              	.LCFI12:
+ 706              		.cfi_def_cfa_offset 48
+ 707 0004 0446     		mov	r4, r0
+ 160:src/mcp2515.c ****     static const uint8_t ctrl_addr[3] = { 0x30, 0x40, 0x50 };
+ 708              		.loc 1 160 5 is_stmt 1 view .LVU158
+ 161:src/mcp2515.c ****     static const uint8_t sidh_addr[3] = { 0x31, 0x41, 0x51 };
+ 709              		.loc 1 161 5 view .LVU159
+ 162:src/mcp2515.c ****     static const uint8_t rts_mask[3]  = { 0x01, 0x02, 0x04 };
+ 710              		.loc 1 162 5 view .LVU160
+ 163:src/mcp2515.c **** 
+ 711              		.loc 1 163 5 view .LVU161
+ 168:src/mcp2515.c ****     for (uint8_t attempt = 0; attempt < 3; attempt++) {
+ 712              		.loc 1 168 5 view .LVU162
+ 168:src/mcp2515.c ****     for (uint8_t attempt = 0; attempt < 3; attempt++) {
+ 713              		.loc 1 168 13 is_stmt 0 view .LVU163
+ 714 0006 5D4B     		ldr	r3, .L68
+ARM GAS  /tmp/cc6iGCGp.s 			page 24
+
+
+ 715 0008 1E78     		ldrb	r6, [r3]	@ zero_extendqisi2
+ 716              	.LVL81:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 717              		.loc 1 169 5 is_stmt 1 view .LVU164
+ 718              	.LBB4:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 719              		.loc 1 169 10 view .LVU165
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 720              		.loc 1 169 18 is_stmt 0 view .LVU166
+ 721 000a 0025     		movs	r5, #0
+ 722              	.LVL82:
+ 723              	.L46:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 724              		.loc 1 169 39 is_stmt 1 discriminator 1 view .LVU167
+ 725 000c 022D     		cmp	r5, #2
+ 726 000e 1AD8     		bhi	.L48
+ 727              	.LBB5:
+ 170:src/mcp2515.c ****         if (!(ctrl & 0x04)) {   // TXREQ clear — buffer free
+ 728              		.loc 1 170 9 view .LVU168
+ 170:src/mcp2515.c ****         if (!(ctrl & 0x04)) {   // TXREQ clear — buffer free
+ 729              		.loc 1 170 54 is_stmt 0 view .LVU169
+ 730 0010 5B4B     		ldr	r3, .L68+4
+ 731 0012 9F5D     		ldrb	r7, [r3, r6]	@ zero_extendqisi2
+ 170:src/mcp2515.c ****         if (!(ctrl & 0x04)) {   // TXREQ clear — buffer free
+ 732              		.loc 1 170 24 view .LVU170
+ 733 0014 3846     		mov	r0, r7
+ 734 0016 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 735              	.LVL83:
+ 171:src/mcp2515.c ****             // Also clear any previous TXERR/ABTF to allow reuse
+ 736              		.loc 1 171 9 is_stmt 1 view .LVU171
+ 171:src/mcp2515.c ****             // Also clear any previous TXERR/ABTF to allow reuse
+ 737              		.loc 1 171 12 is_stmt 0 view .LVU172
+ 738 001a 10F0040F 		tst	r0, #4
+ 739 001e 0FD0     		beq	.L65
+ 178:src/mcp2515.c ****         if (attempt == 2) {
+ 740              		.loc 1 178 9 is_stmt 1 view .LVU173
+ 178:src/mcp2515.c ****         if (attempt == 2) {
+ 741              		.loc 1 178 22 is_stmt 0 view .LVU174
+ 742 0020 0136     		adds	r6, r6, #1
+ 743              	.LVL84:
+ 178:src/mcp2515.c ****         if (attempt == 2) {
+ 744              		.loc 1 178 27 view .LVU175
+ 745 0022 584B     		ldr	r3, .L68+8
+ 746 0024 83FB0623 		smull	r2, r3, r3, r6
+ 747 0028 A3EBE673 		sub	r3, r3, r6, asr #31
+ 748 002c 03EB4303 		add	r3, r3, r3, lsl #1
+ 749 0030 F31A     		subs	r3, r6, r3
+ 178:src/mcp2515.c ****         if (attempt == 2) {
+ 750              		.loc 1 178 14 view .LVU176
+ 751 0032 DEB2     		uxtb	r6, r3
+ 752              	.LVL85:
+ 179:src/mcp2515.c ****             return false;   // All three buffers busy
+ 753              		.loc 1 179 9 is_stmt 1 view .LVU177
+ 179:src/mcp2515.c ****             return false;   // All three buffers busy
+ 754              		.loc 1 179 12 is_stmt 0 view .LVU178
+ 755 0034 022D     		cmp	r5, #2
+ 756 0036 00F09C80 		beq	.L62
+ARM GAS  /tmp/cc6iGCGp.s 			page 25
+
+
+ 757              	.LBE5:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 758              		.loc 1 169 51 is_stmt 1 discriminator 2 view .LVU179
+ 759 003a 0135     		adds	r5, r5, #1
+ 760              	.LVL86:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 761              		.loc 1 169 51 is_stmt 0 discriminator 2 view .LVU180
+ 762 003c EDB2     		uxtb	r5, r5
+ 763              	.LVL87:
+ 169:src/mcp2515.c ****         uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 764              		.loc 1 169 51 discriminator 2 view .LVU181
+ 765 003e E5E7     		b	.L46
+ 766              	.L65:
+ 767              	.LBB6:
+ 173:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x18, 0x00);
+ 768              		.loc 1 173 13 is_stmt 1 view .LVU182
+ 173:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x18, 0x00);
+ 769              		.loc 1 173 16 is_stmt 0 view .LVU183
+ 770 0040 10F0180F 		tst	r0, #24
+ 771 0044 2CD1     		bne	.L66
+ 772              	.LVL88:
+ 773              	.L48:
+ 173:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x18, 0x00);
+ 774              		.loc 1 173 16 view .LVU184
+ 775              	.LBE6:
+ 776              	.LBE4:
+ 183:src/mcp2515.c **** 
+ 777              		.loc 1 183 5 is_stmt 1 view .LVU185
+ 183:src/mcp2515.c **** 
+ 778              		.loc 1 183 21 is_stmt 0 view .LVU186
+ 779 0046 3546     		mov	r5, r6
+ 780              	.LVL89:
+ 183:src/mcp2515.c **** 
+ 781              		.loc 1 183 21 view .LVU187
+ 782 0048 0136     		adds	r6, r6, #1
+ 783              	.LVL90:
+ 183:src/mcp2515.c **** 
+ 784              		.loc 1 183 26 view .LVU188
+ 785 004a 4E4B     		ldr	r3, .L68+8
+ 786 004c 83FB0623 		smull	r2, r3, r3, r6
+ 787 0050 A3EBE673 		sub	r3, r3, r6, asr #31
+ 788 0054 03EB4303 		add	r3, r3, r3, lsl #1
+ 789 0058 F31A     		subs	r3, r6, r3
+ 183:src/mcp2515.c **** 
+ 790              		.loc 1 183 13 view .LVU189
+ 791 005a 484A     		ldr	r2, .L68
+ 792 005c 1370     		strb	r3, [r2]
+ 186:src/mcp2515.c ****     uint8_t idx = 0;
+ 793              		.loc 1 186 5 is_stmt 1 view .LVU190
+ 187:src/mcp2515.c **** 
+ 794              		.loc 1 187 5 view .LVU191
+ 795              	.LVL91:
+ 189:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
+ 796              		.loc 1 189 5 view .LVU192
+ 189:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
+ 797              		.loc 1 189 14 is_stmt 0 view .LVU193
+ 798 005e 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ARM GAS  /tmp/cc6iGCGp.s 			page 26
+
+
+ 189:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 21);
+ 799              		.loc 1 189 8 view .LVU194
+ 800 0060 23B3     		cbz	r3, .L51
+ 190:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(((frame->id >> 13) & 0xE0) |
+ 801              		.loc 1 190 9 is_stmt 1 view .LVU195
+ 190:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(((frame->id >> 13) & 0xE0) |
+ 802              		.loc 1 190 39 is_stmt 0 view .LVU196
+ 803 0062 2268     		ldr	r2, [r4]
+ 804              	.LVL92:
+ 190:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(((frame->id >> 13) & 0xE0) |
+ 805              		.loc 1 190 24 view .LVU197
+ 806 0064 C2F34753 		ubfx	r3, r2, #21, #8
+ 190:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(((frame->id >> 13) & 0xE0) |
+ 807              		.loc 1 190 22 view .LVU198
+ 808 0068 8DF80830 		strb	r3, [sp, #8]
+ 191:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 809              		.loc 1 191 9 is_stmt 1 view .LVU199
+ 191:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 810              		.loc 1 191 46 is_stmt 0 view .LVU200
+ 811 006c 530B     		lsrs	r3, r2, #13
+ 191:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 812              		.loc 1 191 53 view .LVU201
+ 813 006e 03F0E003 		and	r3, r3, #224
+ 193:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id >> 8);
+ 814              		.loc 1 193 54 view .LVU202
+ 815 0072 C2F30141 		ubfx	r1, r2, #16, #2
+ 192:src/mcp2515.c ****                                   ((frame->id >> 16) & 0x03));
+ 816              		.loc 1 192 40 view .LVU203
+ 817 0076 0B43     		orrs	r3, r3, r1
+ 818              	.LVL93:
+ 191:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 819              		.loc 1 191 24 view .LVU204
+ 820 0078 43F00803 		orr	r3, r3, #8
+ 191:src/mcp2515.c ****                                   0x08 |                        // EXIDE bit
+ 821              		.loc 1 191 22 view .LVU205
+ 822 007c 8DF80930 		strb	r3, [sp, #9]
+ 194:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id);
+ 823              		.loc 1 194 9 is_stmt 1 view .LVU206
+ 824              	.LVL94:
+ 194:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id);
+ 825              		.loc 1 194 24 is_stmt 0 view .LVU207
+ 826 0080 C2F30723 		ubfx	r3, r2, #8, #8
+ 194:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id);
+ 827              		.loc 1 194 22 view .LVU208
+ 828 0084 8DF80A30 		strb	r3, [sp, #10]
+ 195:src/mcp2515.c ****     } else {
+ 829              		.loc 1 195 9 is_stmt 1 view .LVU209
+ 830              	.LVL95:
+ 195:src/mcp2515.c ****     } else {
+ 831              		.loc 1 195 22 is_stmt 0 view .LVU210
+ 832 0088 8DF80B20 		strb	r2, [sp, #11]
+ 833              	.L52:
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 834              		.loc 1 202 5 is_stmt 1 view .LVU211
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 835              		.loc 1 202 25 is_stmt 0 view .LVU212
+ 836 008c A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ARM GAS  /tmp/cc6iGCGp.s 			page 27
+
+
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 837              		.loc 1 202 18 view .LVU213
+ 838 008e DBB1     		cbz	r3, .L53
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 839              		.loc 1 202 46 discriminator 1 view .LVU214
+ 840 0090 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 841              		.loc 1 202 18 discriminator 1 view .LVU215
+ 842 0092 43F04003 		orr	r3, r3, #64
+ 843              	.L54:
+ 844              	.LVL96:
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 845              		.loc 1 202 18 discriminator 4 view .LVU216
+ 846 0096 8DF80C30 		strb	r3, [sp, #12]
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 847              		.loc 1 203 5 is_stmt 1 view .LVU217
+ 848              	.LBB9:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 849              		.loc 1 203 10 view .LVU218
+ 850              	.LVL97:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 851              		.loc 1 203 18 is_stmt 0 view .LVU219
+ 852 009a 0023     		movs	r3, #0
+ 853              	.LBE9:
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 854              		.loc 1 202 14 discriminator 4 view .LVU220
+ 855 009c 0526     		movs	r6, #5
+ 856              	.LBB10:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 857              		.loc 1 203 5 view .LVU221
+ 858 009e 21E0     		b	.L55
+ 859              	.LVL98:
+ 860              	.L66:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 861              		.loc 1 203 5 view .LVU222
+ 862              	.LBE10:
+ 863              	.LBB11:
+ 864              	.LBB7:
+ 174:src/mcp2515.c ****             }
+ 865              		.loc 1 174 17 is_stmt 1 view .LVU223
+ 866 00a0 0022     		movs	r2, #0
+ 867 00a2 1821     		movs	r1, #24
+ 868 00a4 3846     		mov	r0, r7
+ 869              	.LVL99:
+ 174:src/mcp2515.c ****             }
+ 870              		.loc 1 174 17 is_stmt 0 view .LVU224
+ 871 00a6 FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 872              	.LVL100:
+ 873 00aa CCE7     		b	.L48
+ 874              	.LVL101:
+ 875              	.L51:
+ 174:src/mcp2515.c ****             }
+ 876              		.loc 1 174 17 view .LVU225
+ 877              	.LBE7:
+ 878              	.LBE11:
+ 197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
+ 879              		.loc 1 197 9 is_stmt 1 view .LVU226
+ARM GAS  /tmp/cc6iGCGp.s 			page 28
+
+
+ 197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
+ 880              		.loc 1 197 39 is_stmt 0 view .LVU227
+ 881 00ac 2368     		ldr	r3, [r4]
+ 882              	.LVL102:
+ 197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
+ 883              		.loc 1 197 24 view .LVU228
+ 884 00ae C3F3C702 		ubfx	r2, r3, #3, #8
+ 197:src/mcp2515.c ****         txbuf[idx++] = (uint8_t)(frame->id << 5);
+ 885              		.loc 1 197 22 view .LVU229
+ 886 00b2 8DF80820 		strb	r2, [sp, #8]
+ 198:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 887              		.loc 1 198 9 is_stmt 1 view .LVU230
+ 888              	.LVL103:
+ 198:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 889              		.loc 1 198 24 is_stmt 0 view .LVU231
+ 890 00b6 5B01     		lsls	r3, r3, #5
+ 198:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 891              		.loc 1 198 22 view .LVU232
+ 892 00b8 8DF80930 		strb	r3, [sp, #9]
+ 199:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 893              		.loc 1 199 9 is_stmt 1 view .LVU233
+ 894              	.LVL104:
+ 199:src/mcp2515.c ****         txbuf[idx++] = 0x00;
+ 895              		.loc 1 199 22 is_stmt 0 view .LVU234
+ 896 00bc 0023     		movs	r3, #0
+ 897 00be 8DF80A30 		strb	r3, [sp, #10]
+ 200:src/mcp2515.c ****     }
+ 898              		.loc 1 200 9 is_stmt 1 view .LVU235
+ 899              	.LVL105:
+ 200:src/mcp2515.c ****     }
+ 900              		.loc 1 200 22 is_stmt 0 view .LVU236
+ 901 00c2 8DF80B30 		strb	r3, [sp, #11]
+ 902 00c6 E1E7     		b	.L52
+ 903              	.L53:
+ 202:src/mcp2515.c ****     for (uint8_t i = 0; i < frame->dlc && i < 8; i++) {
+ 904              		.loc 1 202 18 discriminator 2 view .LVU237
+ 905 00c8 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 906 00ca E4E7     		b	.L54
+ 907              	.LVL106:
+ 908              	.L57:
+ 909              	.LBB12:
+ 204:src/mcp2515.c ****     }
+ 910              		.loc 1 204 9 is_stmt 1 view .LVU238
+ 204:src/mcp2515.c ****     }
+ 911              		.loc 1 204 18 is_stmt 0 view .LVU239
+ 912 00cc 721C     		adds	r2, r6, #1
+ 913              	.LVL107:
+ 204:src/mcp2515.c ****     }
+ 914              		.loc 1 204 35 view .LVU240
+ 915 00ce E118     		adds	r1, r4, r3
+ 916 00d0 0979     		ldrb	r1, [r1, #4]	@ zero_extendqisi2
+ 204:src/mcp2515.c ****     }
+ 917              		.loc 1 204 22 view .LVU241
+ 918 00d2 06F11800 		add	r0, r6, #24
+ 919 00d6 0DEB0006 		add	r6, sp, r0
+ 920 00da 06F8101C 		strb	r1, [r6, #-16]
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ARM GAS  /tmp/cc6iGCGp.s 			page 29
+
+
+ 921              		.loc 1 203 51 is_stmt 1 discriminator 4 view .LVU242
+ 922 00de 0133     		adds	r3, r3, #1
+ 923              	.LVL108:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 924              		.loc 1 203 51 is_stmt 0 discriminator 4 view .LVU243
+ 925 00e0 DBB2     		uxtb	r3, r3
+ 926              	.LVL109:
+ 204:src/mcp2515.c ****     }
+ 927              		.loc 1 204 18 view .LVU244
+ 928 00e2 D6B2     		uxtb	r6, r2
+ 929              	.LVL110:
+ 930              	.L55:
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 931              		.loc 1 203 40 is_stmt 1 discriminator 1 view .LVU245
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 932              		.loc 1 203 34 is_stmt 0 discriminator 1 view .LVU246
+ 933 00e4 227B     		ldrb	r2, [r4, #12]	@ zero_extendqisi2
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 934              		.loc 1 203 40 discriminator 1 view .LVU247
+ 935 00e6 9A42     		cmp	r2, r3
+ 936 00e8 01D9     		bls	.L56
+ 203:src/mcp2515.c ****         txbuf[idx++] = frame->data[i];
+ 937              		.loc 1 203 40 discriminator 3 view .LVU248
+ 938 00ea 072B     		cmp	r3, #7
+ 939 00ec EED9     		bls	.L57
+ 940              	.L56:
+ 941              	.LBE12:
+ 208:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_WRITE);
+ 942              		.loc 1 208 5 is_stmt 1 view .LVU249
+ 943 00ee FFF7FEFF 		bl	MCP2515_Select
+ 944              	.LVL111:
+ 209:src/mcp2515.c ****     MCP2515_SPITransfer(sidh_addr[slot]);
+ 945              		.loc 1 209 5 view .LVU250
+ 946 00f2 0220     		movs	r0, #2
+ 947 00f4 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 948              	.LVL112:
+ 210:src/mcp2515.c ****     for (uint8_t i = 0; i < idx; i++) {
+ 949              		.loc 1 210 5 view .LVU251
+ 950 00f8 234B     		ldr	r3, .L68+12
+ 951 00fa 585D     		ldrb	r0, [r3, r5]	@ zero_extendqisi2
+ 952 00fc FFF7FEFF 		bl	MCP2515_SPITransfer
+ 953              	.LVL113:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 954              		.loc 1 211 5 view .LVU252
+ 955              	.LBB13:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 956              		.loc 1 211 10 view .LVU253
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 957              		.loc 1 211 18 is_stmt 0 view .LVU254
+ 958 0100 0024     		movs	r4, #0
+ 959              	.LVL114:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 960              		.loc 1 211 5 view .LVU255
+ 961 0102 08E0     		b	.L58
+ 962              	.LVL115:
+ 963              	.L59:
+ 212:src/mcp2515.c ****     }
+ARM GAS  /tmp/cc6iGCGp.s 			page 30
+
+
+ 964              		.loc 1 212 9 is_stmt 1 view .LVU256
+ 965 0104 04F11803 		add	r3, r4, #24
+ 966 0108 6B44     		add	r3, sp, r3
+ 967 010a 13F8100C 		ldrb	r0, [r3, #-16]	@ zero_extendqisi2
+ 968 010e FFF7FEFF 		bl	MCP2515_SPITransfer
+ 969              	.LVL116:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 970              		.loc 1 211 35 discriminator 3 view .LVU257
+ 971 0112 0134     		adds	r4, r4, #1
+ 972              	.LVL117:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 973              		.loc 1 211 35 is_stmt 0 discriminator 3 view .LVU258
+ 974 0114 E4B2     		uxtb	r4, r4
+ 975              	.LVL118:
+ 976              	.L58:
+ 211:src/mcp2515.c ****         MCP2515_SPITransfer(txbuf[i]);
+ 977              		.loc 1 211 27 is_stmt 1 discriminator 1 view .LVU259
+ 978 0116 A642     		cmp	r6, r4
+ 979 0118 F4D8     		bhi	.L59
+ 980              	.LBE13:
+ 214:src/mcp2515.c **** 
+ 981              		.loc 1 214 5 view .LVU260
+ 982 011a FFF7FEFF 		bl	MCP2515_Deselect
+ 983              	.LVL119:
+ 217:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RTS | rts_mask[slot]);
+ 984              		.loc 1 217 5 view .LVU261
+ 985 011e FFF7FEFF 		bl	MCP2515_Select
+ 986              	.LVL120:
+ 218:src/mcp2515.c ****     MCP2515_Deselect();
+ 987              		.loc 1 218 5 view .LVU262
+ 218:src/mcp2515.c ****     MCP2515_Deselect();
+ 988              		.loc 1 218 51 is_stmt 0 view .LVU263
+ 989 0122 1A4B     		ldr	r3, .L68+16
+ 990 0124 585D     		ldrb	r0, [r3, r5]	@ zero_extendqisi2
+ 218:src/mcp2515.c ****     MCP2515_Deselect();
+ 991              		.loc 1 218 5 view .LVU264
+ 992 0126 40F08000 		orr	r0, r0, #128
+ 993 012a FFF7FEFF 		bl	MCP2515_SPITransfer
+ 994              	.LVL121:
+ 219:src/mcp2515.c **** 
+ 995              		.loc 1 219 5 is_stmt 1 view .LVU265
+ 996 012e FFF7FEFF 		bl	MCP2515_Deselect
+ 997              	.LVL122:
+ 998              	.LBB14:
+ 225:src/mcp2515.c ****         while (timeout--) {
+ 999              		.loc 1 225 9 view .LVU266
+ 225:src/mcp2515.c ****         while (timeout--) {
+ 1000              		.loc 1 225 27 is_stmt 0 view .LVU267
+ 1001 0132 4FF4FA63 		mov	r3, #2000
+ 1002 0136 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 1003              		.loc 1 226 9 is_stmt 1 view .LVU268
+ 1004              	.LVL123:
+ 1005              	.L60:
+ 226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 1006              		.loc 1 226 16 view .LVU269
+ 226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ARM GAS  /tmp/cc6iGCGp.s 			page 31
+
+
+ 1007              		.loc 1 226 23 is_stmt 0 view .LVU270
+ 1008 013a BDF80630 		ldrh	r3, [sp, #6]
+ 1009 013e 9BB2     		uxth	r3, r3
+ 1010 0140 5A1E     		subs	r2, r3, #1
+ 1011 0142 92B2     		uxth	r2, r2
+ 1012 0144 ADF80620 		strh	r2, [sp, #6]	@ movhi
+ 226:src/mcp2515.c ****             uint8_t ctrl = MCP2515_ReadRegister(ctrl_addr[slot]);
+ 1013              		.loc 1 226 16 view .LVU271
+ 1014 0148 8BB1     		cbz	r3, .L67
+ 1015              	.LBB15:
+ 227:src/mcp2515.c ****             if (!(ctrl & 0x04)) break;         // TXREQ cleared — sent OK
+ 1016              		.loc 1 227 13 is_stmt 1 view .LVU272
+ 227:src/mcp2515.c ****             if (!(ctrl & 0x04)) break;         // TXREQ cleared — sent OK
+ 1017              		.loc 1 227 58 is_stmt 0 view .LVU273
+ 1018 014a 0D4B     		ldr	r3, .L68+4
+ 1019 014c 5C5D     		ldrb	r4, [r3, r5]	@ zero_extendqisi2
+ 227:src/mcp2515.c ****             if (!(ctrl & 0x04)) break;         // TXREQ cleared — sent OK
+ 1020              		.loc 1 227 28 view .LVU274
+ 1021 014e 2046     		mov	r0, r4
+ 1022 0150 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 1023              	.LVL124:
+ 228:src/mcp2515.c ****             if (ctrl & 0x10) {                 // TXERR set — abort
+ 1024              		.loc 1 228 13 is_stmt 1 view .LVU275
+ 228:src/mcp2515.c ****             if (ctrl & 0x10) {                 // TXERR set — abort
+ 1025              		.loc 1 228 16 is_stmt 0 view .LVU276
+ 1026 0154 10F0040F 		tst	r0, #4
+ 1027 0158 0ED0     		beq	.L63
+ 229:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x08, 0x00); // clear TXREQ
+ 1028              		.loc 1 229 13 is_stmt 1 view .LVU277
+ 229:src/mcp2515.c ****                 MCP2515_ModifyRegister(ctrl_addr[slot], 0x08, 0x00); // clear TXREQ
+ 1029              		.loc 1 229 16 is_stmt 0 view .LVU278
+ 1030 015a 10F0100F 		tst	r0, #16
+ 1031 015e ECD0     		beq	.L60
+ 230:src/mcp2515.c ****                 return false;
+ 1032              		.loc 1 230 17 is_stmt 1 view .LVU279
+ 1033 0160 0022     		movs	r2, #0
+ 1034 0162 0821     		movs	r1, #8
+ 1035 0164 2046     		mov	r0, r4
+ 1036              	.LVL125:
+ 230:src/mcp2515.c ****                 return false;
+ 1037              		.loc 1 230 17 is_stmt 0 view .LVU280
+ 1038 0166 FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 1039              	.LVL126:
+ 231:src/mcp2515.c ****             }
+ 1040              		.loc 1 231 17 is_stmt 1 view .LVU281
+ 231:src/mcp2515.c ****             }
+ 1041              		.loc 1 231 24 is_stmt 0 view .LVU282
+ 1042 016a 0020     		movs	r0, #0
+ 1043 016c 02E0     		b	.L49
+ 1044              	.LVL127:
+ 1045              	.L67:
+ 231:src/mcp2515.c ****             }
+ 1046              		.loc 1 231 24 view .LVU283
+ 1047              	.LBE15:
+ 1048              	.LBE14:
+ 236:src/mcp2515.c **** }
+ 1049              		.loc 1 236 12 view .LVU284
+ARM GAS  /tmp/cc6iGCGp.s 			page 32
+
+
+ 1050 016e 0120     		movs	r0, #1
+ 1051              	.LBB16:
+ 1052 0170 00E0     		b	.L49
+ 1053              	.LVL128:
+ 1054              	.L62:
+ 236:src/mcp2515.c **** }
+ 1055              		.loc 1 236 12 view .LVU285
+ 1056              	.LBE16:
+ 1057              	.LBB17:
+ 1058              	.LBB8:
+ 180:src/mcp2515.c ****         }
+ 1059              		.loc 1 180 20 view .LVU286
+ 1060 0172 0020     		movs	r0, #0
+ 1061              	.LVL129:
+ 1062              	.L49:
+ 180:src/mcp2515.c ****         }
+ 1063              		.loc 1 180 20 view .LVU287
+ 1064              	.LBE8:
+ 1065              	.LBE17:
+ 237:src/mcp2515.c **** 
+ 1066              		.loc 1 237 1 view .LVU288
+ 1067 0174 07B0     		add	sp, sp, #28
+ 1068              	.LCFI13:
+ 1069              		.cfi_remember_state
+ 1070              		.cfi_def_cfa_offset 20
+ 1071              		@ sp needed
+ 1072 0176 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1073              	.LVL130:
+ 1074              	.L63:
+ 1075              	.LCFI14:
+ 1076              		.cfi_restore_state
+ 236:src/mcp2515.c **** }
+ 1077              		.loc 1 236 12 view .LVU289
+ 1078 0178 0120     		movs	r0, #1
+ 1079              	.LVL131:
+ 236:src/mcp2515.c **** }
+ 1080              		.loc 1 236 12 view .LVU290
+ 1081 017a FBE7     		b	.L49
+ 1082              	.L69:
+ 1083              		.align	2
+ 1084              	.L68:
+ 1085 017c 00000000 		.word	tx_slot.3
+ 1086 0180 00000000 		.word	ctrl_addr.2
+ 1087 0184 56555555 		.word	1431655766
+ 1088 0188 00000000 		.word	sidh_addr.1
+ 1089 018c 00000000 		.word	rts_mask.0
+ 1090              		.cfi_endproc
+ 1091              	.LFE72:
+ 1093              		.section	.text.MCP2515_GetStatus,"ax",%progbits
+ 1094              		.align	1
+ 1095              		.global	MCP2515_GetStatus
+ 1096              		.syntax unified
+ 1097              		.thumb
+ 1098              		.thumb_func
+ 1100              	MCP2515_GetStatus:
+ 1101              	.LFB78:
+ 333:src/mcp2515.c ****     uint8_t status;
+ARM GAS  /tmp/cc6iGCGp.s 			page 33
+
+
+ 1102              		.loc 1 333 33 is_stmt 1 view -0
+ 1103              		.cfi_startproc
+ 1104              		@ args = 0, pretend = 0, frame = 0
+ 1105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1106 0000 10B5     		push	{r4, lr}
+ 1107              	.LCFI15:
+ 1108              		.cfi_def_cfa_offset 8
+ 1109              		.cfi_offset 4, -8
+ 1110              		.cfi_offset 14, -4
+ 334:src/mcp2515.c ****     
+ 1111              		.loc 1 334 5 view .LVU292
+ 336:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_READ_STATUS);
+ 1112              		.loc 1 336 5 view .LVU293
+ 1113 0002 FFF7FEFF 		bl	MCP2515_Select
+ 1114              	.LVL132:
+ 337:src/mcp2515.c ****     status = MCP2515_SPITransfer(0xFF);
+ 1115              		.loc 1 337 5 view .LVU294
+ 1116 0006 A020     		movs	r0, #160
+ 1117 0008 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1118              	.LVL133:
+ 338:src/mcp2515.c ****     MCP2515_Deselect();
+ 1119              		.loc 1 338 5 view .LVU295
+ 338:src/mcp2515.c ****     MCP2515_Deselect();
+ 1120              		.loc 1 338 14 is_stmt 0 view .LVU296
+ 1121 000c FF20     		movs	r0, #255
+ 1122 000e FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1123              	.LVL134:
+ 1124 0012 0446     		mov	r4, r0
+ 1125              	.LVL135:
+ 339:src/mcp2515.c ****     
+ 1126              		.loc 1 339 5 is_stmt 1 view .LVU297
+ 1127 0014 FFF7FEFF 		bl	MCP2515_Deselect
+ 1128              	.LVL136:
+ 341:src/mcp2515.c **** }
+ 1129              		.loc 1 341 5 view .LVU298
+ 342:src/mcp2515.c **** 
+ 1130              		.loc 1 342 1 is_stmt 0 view .LVU299
+ 1131 0018 2046     		mov	r0, r4
+ 1132 001a 10BD     		pop	{r4, pc}
+ 342:src/mcp2515.c **** 
+ 1133              		.loc 1 342 1 view .LVU300
+ 1134              		.cfi_endproc
+ 1135              	.LFE78:
+ 1137              		.section	.text.MCP2515_GetRxStatus,"ax",%progbits
+ 1138              		.align	1
+ 1139              		.global	MCP2515_GetRxStatus
+ 1140              		.syntax unified
+ 1141              		.thumb
+ 1142              		.thumb_func
+ 1144              	MCP2515_GetRxStatus:
+ 1145              	.LFB79:
+ 344:src/mcp2515.c ****     uint8_t status;
+ 1146              		.loc 1 344 35 is_stmt 1 view -0
+ 1147              		.cfi_startproc
+ 1148              		@ args = 0, pretend = 0, frame = 0
+ 1149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1150 0000 10B5     		push	{r4, lr}
+ARM GAS  /tmp/cc6iGCGp.s 			page 34
+
+
+ 1151              	.LCFI16:
+ 1152              		.cfi_def_cfa_offset 8
+ 1153              		.cfi_offset 4, -8
+ 1154              		.cfi_offset 14, -4
+ 345:src/mcp2515.c **** 
+ 1155              		.loc 1 345 5 view .LVU302
+ 347:src/mcp2515.c ****     MCP2515_SPITransfer(MCP2515_CMD_RX_STATUS);
+ 1156              		.loc 1 347 5 view .LVU303
+ 1157 0002 FFF7FEFF 		bl	MCP2515_Select
+ 1158              	.LVL137:
+ 348:src/mcp2515.c ****     status = MCP2515_SPITransfer(0xFF);
+ 1159              		.loc 1 348 5 view .LVU304
+ 1160 0006 B020     		movs	r0, #176
+ 1161 0008 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1162              	.LVL138:
+ 349:src/mcp2515.c ****     MCP2515_Deselect();
+ 1163              		.loc 1 349 5 view .LVU305
+ 349:src/mcp2515.c ****     MCP2515_Deselect();
+ 1164              		.loc 1 349 14 is_stmt 0 view .LVU306
+ 1165 000c FF20     		movs	r0, #255
+ 1166 000e FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1167              	.LVL139:
+ 1168 0012 0446     		mov	r4, r0
+ 1169              	.LVL140:
+ 350:src/mcp2515.c **** 
+ 1170              		.loc 1 350 5 is_stmt 1 view .LVU307
+ 1171 0014 FFF7FEFF 		bl	MCP2515_Deselect
+ 1172              	.LVL141:
+ 352:src/mcp2515.c **** }
+ 1173              		.loc 1 352 5 view .LVU308
+ 353:src/mcp2515.c **** 
+ 1174              		.loc 1 353 1 is_stmt 0 view .LVU309
+ 1175 0018 2046     		mov	r0, r4
+ 1176 001a 10BD     		pop	{r4, pc}
+ 353:src/mcp2515.c **** 
+ 1177              		.loc 1 353 1 view .LVU310
+ 1178              		.cfi_endproc
+ 1179              	.LFE79:
+ 1181              		.section	.text.MCP2515_ReceiveFrame,"ax",%progbits
+ 1182              		.align	1
+ 1183              		.global	MCP2515_ReceiveFrame
+ 1184              		.syntax unified
+ 1185              		.thumb
+ 1186              		.thumb_func
+ 1188              	MCP2515_ReceiveFrame:
+ 1189              	.LVL142:
+ 1190              	.LFB73:
+ 239:src/mcp2515.c ****     // Check RX status
+ 1191              		.loc 1 239 45 is_stmt 1 view -0
+ 1192              		.cfi_startproc
+ 1193              		@ args = 0, pretend = 0, frame = 16
+ 1194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239:src/mcp2515.c ****     // Check RX status
+ 1195              		.loc 1 239 45 is_stmt 0 view .LVU312
+ 1196 0000 70B5     		push	{r4, r5, r6, lr}
+ 1197              	.LCFI17:
+ 1198              		.cfi_def_cfa_offset 16
+ARM GAS  /tmp/cc6iGCGp.s 			page 35
+
+
+ 1199              		.cfi_offset 4, -16
+ 1200              		.cfi_offset 5, -12
+ 1201              		.cfi_offset 6, -8
+ 1202              		.cfi_offset 14, -4
+ 1203 0002 84B0     		sub	sp, sp, #16
+ 1204              	.LCFI18:
+ 1205              		.cfi_def_cfa_offset 32
+ 1206 0004 0546     		mov	r5, r0
+ 241:src/mcp2515.c **** 
+ 1207              		.loc 1 241 5 is_stmt 1 view .LVU313
+ 241:src/mcp2515.c **** 
+ 1208              		.loc 1 241 22 is_stmt 0 view .LVU314
+ 1209 0006 FFF7FEFF 		bl	MCP2515_GetRxStatus
+ 1210              	.LVL143:
+ 243:src/mcp2515.c ****         // No message available
+ 1211              		.loc 1 243 5 is_stmt 1 view .LVU315
+ 243:src/mcp2515.c ****         // No message available
+ 1212              		.loc 1 243 8 is_stmt 0 view .LVU316
+ 1213 000a 3F28     		cmp	r0, #63
+ 1214 000c 63D9     		bls	.L85
+ 248:src/mcp2515.c **** 
+ 1215              		.loc 1 248 5 is_stmt 1 view .LVU317
+ 255:src/mcp2515.c **** 
+ 1216              		.loc 1 255 5 view .LVU318
+ 255:src/mcp2515.c **** 
+ 1217              		.loc 1 255 13 is_stmt 0 view .LVU319
+ 1218 000e 10F04006 		ands	r6, r0, #64
+ 1219 0012 07D0     		beq	.L86
+ 255:src/mcp2515.c **** 
+ 1220              		.loc 1 255 13 discriminator 1 view .LVU320
+ 1221 0014 9024     		movs	r4, #144
+ 1222              	.L76:
+ 1223              	.LVL144:
+ 257:src/mcp2515.c ****     MCP2515_SPITransfer(read_cmd);
+ 1224              		.loc 1 257 5 is_stmt 1 view .LVU321
+ 1225 0016 FFF7FEFF 		bl	MCP2515_Select
+ 1226              	.LVL145:
+ 258:src/mcp2515.c ****     for (uint8_t i = 0; i < 13; i++) {
+ 1227              		.loc 1 258 5 view .LVU322
+ 1228 001a 2046     		mov	r0, r4
+ 1229 001c FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1230              	.LVL146:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1231              		.loc 1 259 5 view .LVU323
+ 1232              	.LBB18:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1233              		.loc 1 259 10 view .LVU324
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1234              		.loc 1 259 18 is_stmt 0 view .LVU325
+ 1235 0020 0024     		movs	r4, #0
+ 1236              	.LVL147:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1237              		.loc 1 259 5 view .LVU326
+ 1238 0022 0BE0     		b	.L77
+ 1239              	.LVL148:
+ 1240              	.L86:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ARM GAS  /tmp/cc6iGCGp.s 			page 36
+
+
+ 1241              		.loc 1 259 5 view .LVU327
+ 1242              	.LBE18:
+ 255:src/mcp2515.c **** 
+ 1243              		.loc 1 255 13 discriminator 2 view .LVU328
+ 1244 0024 9624     		movs	r4, #150
+ 1245 0026 F6E7     		b	.L76
+ 1246              	.LVL149:
+ 1247              	.L78:
+ 1248              	.LBB19:
+ 260:src/mcp2515.c ****     }
+ 1249              		.loc 1 260 9 is_stmt 1 view .LVU329
+ 260:src/mcp2515.c ****     }
+ 1250              		.loc 1 260 20 is_stmt 0 view .LVU330
+ 1251 0028 FF20     		movs	r0, #255
+ 1252 002a FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1253              	.LVL150:
+ 260:src/mcp2515.c ****     }
+ 1254              		.loc 1 260 18 discriminator 1 view .LVU331
+ 1255 002e 04F11003 		add	r3, r4, #16
+ 1256 0032 6B44     		add	r3, sp, r3
+ 1257 0034 03F8100C 		strb	r0, [r3, #-16]
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1258              		.loc 1 259 34 is_stmt 1 discriminator 3 view .LVU332
+ 1259 0038 0134     		adds	r4, r4, #1
+ 1260              	.LVL151:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1261              		.loc 1 259 34 is_stmt 0 discriminator 3 view .LVU333
+ 1262 003a E4B2     		uxtb	r4, r4
+ 1263              	.LVL152:
+ 1264              	.L77:
+ 259:src/mcp2515.c ****         rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1265              		.loc 1 259 27 is_stmt 1 discriminator 1 view .LVU334
+ 1266 003c 0C2C     		cmp	r4, #12
+ 1267 003e F3D9     		bls	.L78
+ 1268              	.LBE19:
+ 262:src/mcp2515.c **** 
+ 1269              		.loc 1 262 5 view .LVU335
+ 1270 0040 FFF7FEFF 		bl	MCP2515_Deselect
+ 1271              	.LVL153:
+ 266:src/mcp2515.c ****         // Extended frame
+ 1272              		.loc 1 266 5 view .LVU336
+ 266:src/mcp2515.c ****         // Extended frame
+ 1273              		.loc 1 266 14 is_stmt 0 view .LVU337
+ 1274 0044 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ 266:src/mcp2515.c ****         // Extended frame
+ 1275              		.loc 1 266 8 view .LVU338
+ 1276 0048 13F0080F 		tst	r3, #8
+ 1277 004c 1ED0     		beq	.L79
+ 268:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 21) |
+ 1278              		.loc 1 268 9 is_stmt 1 view .LVU339
+ 268:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 21) |
+ 1279              		.loc 1 268 25 is_stmt 0 view .LVU340
+ 1280 004e 0122     		movs	r2, #1
+ 1281 0050 6A73     		strb	r2, [r5, #13]
+ 269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
+ 1282              		.loc 1 269 9 is_stmt 1 view .LVU341
+ 269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
+ARM GAS  /tmp/cc6iGCGp.s 			page 37
+
+
+ 1283              		.loc 1 269 37 is_stmt 0 view .LVU342
+ 1284 0052 9DF80010 		ldrb	r1, [sp]	@ zero_extendqisi2
+ 270:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0x03) << 16) |
+ 1285              		.loc 1 270 50 view .LVU343
+ 1286 0056 5A03     		lsls	r2, r3, #13
+ 1287 0058 02F4E012 		and	r2, r2, #1835008
+ 269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
+ 1288              		.loc 1 269 48 view .LVU344
+ 1289 005c 42EA4152 		orr	r2, r2, r1, lsl #21
+ 271:src/mcp2515.c ****                     ((uint32_t)rxbuf[2] << 8) |
+ 1290              		.loc 1 271 50 view .LVU345
+ 1291 0060 1B04     		lsls	r3, r3, #16
+ 1292 0062 03F44033 		and	r3, r3, #196608
+ 270:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0x03) << 16) |
+ 1293              		.loc 1 270 57 view .LVU346
+ 1294 0066 1343     		orrs	r3, r3, r2
+ 272:src/mcp2515.c ****                     rxbuf[3];
+ 1295              		.loc 1 272 37 view .LVU347
+ 1296 0068 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 271:src/mcp2515.c ****                     ((uint32_t)rxbuf[2] << 8) |
+ 1297              		.loc 1 271 57 view .LVU348
+ 1298 006c 43EA0223 		orr	r3, r3, r2, lsl #8
+ 273:src/mcp2515.c ****     } else {
+ 1299              		.loc 1 273 26 view .LVU349
+ 1300 0070 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
+ 272:src/mcp2515.c ****                     rxbuf[3];
+ 1301              		.loc 1 272 47 view .LVU350
+ 1302 0074 1343     		orrs	r3, r3, r2
+ 269:src/mcp2515.c ****                     ((uint32_t)(rxbuf[1] & 0xE0) << 13) |
+ 1303              		.loc 1 269 19 view .LVU351
+ 1304 0076 2B60     		str	r3, [r5]
+ 1305              	.L80:
+ 281:src/mcp2515.c ****     frame->dlc = rxbuf[4] & 0x0F;
+ 1306              		.loc 1 281 5 is_stmt 1 view .LVU352
+ 281:src/mcp2515.c ****     frame->dlc = rxbuf[4] & 0x0F;
+ 1307              		.loc 1 281 24 is_stmt 0 view .LVU353
+ 1308 0078 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+ 281:src/mcp2515.c ****     frame->dlc = rxbuf[4] & 0x0F;
+ 1309              		.loc 1 281 43 view .LVU354
+ 1310 007c C1F38013 		ubfx	r3, r1, #6, #1
+ 281:src/mcp2515.c ****     frame->dlc = rxbuf[4] & 0x0F;
+ 1311              		.loc 1 281 16 view .LVU355
+ 1312 0080 AB73     		strb	r3, [r5, #14]
+ 282:src/mcp2515.c ****     
+ 1313              		.loc 1 282 5 is_stmt 1 view .LVU356
+ 282:src/mcp2515.c ****     
+ 1314              		.loc 1 282 27 is_stmt 0 view .LVU357
+ 1315 0082 01F00F01 		and	r1, r1, #15
+ 282:src/mcp2515.c ****     
+ 1316              		.loc 1 282 16 view .LVU358
+ 1317 0086 2973     		strb	r1, [r5, #12]
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1318              		.loc 1 285 5 is_stmt 1 view .LVU359
+ 1319              	.LBB20:
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1320              		.loc 1 285 10 view .LVU360
+ 1321              	.LVL154:
+ARM GAS  /tmp/cc6iGCGp.s 			page 38
+
+
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1322              		.loc 1 285 18 is_stmt 0 view .LVU361
+ 1323 0088 0023     		movs	r3, #0
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1324              		.loc 1 285 5 view .LVU362
+ 1325 008a 11E0     		b	.L81
+ 1326              	.LVL155:
+ 1327              	.L79:
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1328              		.loc 1 285 5 view .LVU363
+ 1329              	.LBE20:
+ 276:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 3) |
+ 1330              		.loc 1 276 9 is_stmt 1 view .LVU364
+ 276:src/mcp2515.c ****         frame->id = ((uint32_t)rxbuf[0] << 3) |
+ 1331              		.loc 1 276 25 is_stmt 0 view .LVU365
+ 1332 008c 0022     		movs	r2, #0
+ 1333 008e 6A73     		strb	r2, [r5, #13]
+ 277:src/mcp2515.c ****                     (rxbuf[1] >> 5);
+ 1334              		.loc 1 277 9 is_stmt 1 view .LVU366
+ 277:src/mcp2515.c ****                     (rxbuf[1] >> 5);
+ 1335              		.loc 1 277 37 is_stmt 0 view .LVU367
+ 1336 0090 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 278:src/mcp2515.c ****     }
+ 1337              		.loc 1 278 31 view .LVU368
+ 1338 0094 5B09     		lsrs	r3, r3, #5
+ 277:src/mcp2515.c ****                     (rxbuf[1] >> 5);
+ 1339              		.loc 1 277 47 view .LVU369
+ 1340 0096 43EAC203 		orr	r3, r3, r2, lsl #3
+ 277:src/mcp2515.c ****                     (rxbuf[1] >> 5);
+ 1341              		.loc 1 277 19 view .LVU370
+ 1342 009a 2B60     		str	r3, [r5]
+ 1343 009c ECE7     		b	.L80
+ 1344              	.LVL156:
+ 1345              	.L83:
+ 1346              	.LBB21:
+ 286:src/mcp2515.c ****     }
+ 1347              		.loc 1 286 9 is_stmt 1 view .LVU371
+ 286:src/mcp2515.c ****     }
+ 1348              		.loc 1 286 31 is_stmt 0 view .LVU372
+ 1349 009e 03F11502 		add	r2, r3, #21
+ 1350 00a2 6A44     		add	r2, sp, r2
+ 1351 00a4 12F8100C 		ldrb	r0, [r2, #-16]	@ zero_extendqisi2
+ 286:src/mcp2515.c ****     }
+ 1352              		.loc 1 286 24 view .LVU373
+ 1353 00a8 EA18     		adds	r2, r5, r3
+ 1354 00aa 1071     		strb	r0, [r2, #4]
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1355              		.loc 1 285 51 is_stmt 1 discriminator 4 view .LVU374
+ 1356 00ac 0133     		adds	r3, r3, #1
+ 1357              	.LVL157:
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1358              		.loc 1 285 51 is_stmt 0 discriminator 4 view .LVU375
+ 1359 00ae DBB2     		uxtb	r3, r3
+ 1360              	.LVL158:
+ 1361              	.L81:
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1362              		.loc 1 285 40 is_stmt 1 discriminator 1 view .LVU376
+ARM GAS  /tmp/cc6iGCGp.s 			page 39
+
+
+ 1363 00b0 9942     		cmp	r1, r3
+ 1364 00b2 01D9     		bls	.L82
+ 285:src/mcp2515.c ****         frame->data[i] = rxbuf[5 + i];
+ 1365              		.loc 1 285 40 is_stmt 0 discriminator 3 view .LVU377
+ 1366 00b4 072B     		cmp	r3, #7
+ 1367 00b6 F2D9     		bls	.L83
+ 1368              	.L82:
+ 1369              	.LBE21:
+ 290:src/mcp2515.c ****         MCP2515_ModifyRegister(MCP2515_CANINTF, 0x01, 0x00);  // Clear RXB0 flag
+ 1370              		.loc 1 290 5 is_stmt 1 view .LVU378
+ 290:src/mcp2515.c ****         MCP2515_ModifyRegister(MCP2515_CANINTF, 0x01, 0x00);  // Clear RXB0 flag
+ 1371              		.loc 1 290 8 is_stmt 0 view .LVU379
+ 1372 00b8 36B1     		cbz	r6, .L84
+ 291:src/mcp2515.c ****     } else {
+ 1373              		.loc 1 291 9 is_stmt 1 view .LVU380
+ 1374 00ba 0022     		movs	r2, #0
+ 1375 00bc 0121     		movs	r1, #1
+ 1376 00be 2C20     		movs	r0, #44
+ 1377 00c0 FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 1378              	.LVL159:
+ 296:src/mcp2515.c **** }
+ 1379              		.loc 1 296 12 is_stmt 0 view .LVU381
+ 1380 00c4 0120     		movs	r0, #1
+ 1381 00c6 07E0     		b	.L75
+ 1382              	.LVL160:
+ 1383              	.L84:
+ 293:src/mcp2515.c ****     }
+ 1384              		.loc 1 293 9 is_stmt 1 view .LVU382
+ 1385 00c8 0022     		movs	r2, #0
+ 1386 00ca 0221     		movs	r1, #2
+ 1387 00cc 2C20     		movs	r0, #44
+ 1388 00ce FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 1389              	.LVL161:
+ 296:src/mcp2515.c **** }
+ 1390              		.loc 1 296 12 is_stmt 0 view .LVU383
+ 1391 00d2 0120     		movs	r0, #1
+ 1392 00d4 00E0     		b	.L75
+ 1393              	.LVL162:
+ 1394              	.L85:
+ 245:src/mcp2515.c ****     }
+ 1395              		.loc 1 245 16 view .LVU384
+ 1396 00d6 0020     		movs	r0, #0
+ 1397              	.LVL163:
+ 1398              	.L75:
+ 297:src/mcp2515.c **** 
+ 1399              		.loc 1 297 1 view .LVU385
+ 1400 00d8 04B0     		add	sp, sp, #16
+ 1401              	.LCFI19:
+ 1402              		.cfi_def_cfa_offset 16
+ 1403              		@ sp needed
+ 1404 00da 70BD     		pop	{r4, r5, r6, pc}
+ 297:src/mcp2515.c **** 
+ 1405              		.loc 1 297 1 view .LVU386
+ 1406              		.cfi_endproc
+ 1407              	.LFE73:
+ 1409              		.section	.text.MCP2515_Available,"ax",%progbits
+ 1410              		.align	1
+ARM GAS  /tmp/cc6iGCGp.s 			page 40
+
+
+ 1411              		.global	MCP2515_Available
+ 1412              		.syntax unified
+ 1413              		.thumb
+ 1414              		.thumb_func
+ 1416              	MCP2515_Available:
+ 1417              	.LFB74:
+ 299:src/mcp2515.c ****     uint8_t status = MCP2515_GetRxStatus();
+ 1418              		.loc 1 299 30 is_stmt 1 view -0
+ 1419              		.cfi_startproc
+ 1420              		@ args = 0, pretend = 0, frame = 0
+ 1421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1422 0000 08B5     		push	{r3, lr}
+ 1423              	.LCFI20:
+ 1424              		.cfi_def_cfa_offset 8
+ 1425              		.cfi_offset 3, -8
+ 1426              		.cfi_offset 14, -4
+ 300:src/mcp2515.c ****     return (status & 0xC0) != 0;
+ 1427              		.loc 1 300 5 view .LVU388
+ 300:src/mcp2515.c ****     return (status & 0xC0) != 0;
+ 1428              		.loc 1 300 22 is_stmt 0 view .LVU389
+ 1429 0002 FFF7FEFF 		bl	MCP2515_GetRxStatus
+ 1430              	.LVL164:
+ 301:src/mcp2515.c **** }
+ 1431              		.loc 1 301 5 is_stmt 1 view .LVU390
+ 302:src/mcp2515.c **** 
+ 1432              		.loc 1 302 1 is_stmt 0 view .LVU391
+ 1433 0006 3F28     		cmp	r0, #63
+ 1434 0008 94BF     		ite	ls
+ 1435 000a 0020     		movls	r0, #0
+ 1436              	.LVL165:
+ 302:src/mcp2515.c **** 
+ 1437              		.loc 1 302 1 view .LVU392
+ 1438 000c 0120     		movhi	r0, #1
+ 1439 000e 08BD     		pop	{r3, pc}
+ 1440              		.cfi_endproc
+ 1441              	.LFE74:
+ 1443              		.section	.text.MCP2515_GetErrorFlags,"ax",%progbits
+ 1444              		.align	1
+ 1445              		.global	MCP2515_GetErrorFlags
+ 1446              		.syntax unified
+ 1447              		.thumb
+ 1448              		.thumb_func
+ 1450              	MCP2515_GetErrorFlags:
+ 1451              	.LFB80:
+ 355:src/mcp2515.c ****     return MCP2515_ReadRegister(MCP2515_EFLG);
+ 1452              		.loc 1 355 37 is_stmt 1 view -0
+ 1453              		.cfi_startproc
+ 1454              		@ args = 0, pretend = 0, frame = 0
+ 1455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1456 0000 08B5     		push	{r3, lr}
+ 1457              	.LCFI21:
+ 1458              		.cfi_def_cfa_offset 8
+ 1459              		.cfi_offset 3, -8
+ 1460              		.cfi_offset 14, -4
+ 356:src/mcp2515.c **** }
+ 1461              		.loc 1 356 5 view .LVU394
+ 356:src/mcp2515.c **** }
+ARM GAS  /tmp/cc6iGCGp.s 			page 41
+
+
+ 1462              		.loc 1 356 12 is_stmt 0 view .LVU395
+ 1463 0002 2D20     		movs	r0, #45
+ 1464 0004 FFF7FEFF 		bl	MCP2515_ReadRegister
+ 1465              	.LVL166:
+ 357:src/mcp2515.c **** 
+ 1466              		.loc 1 357 1 view .LVU396
+ 1467 0008 08BD     		pop	{r3, pc}
+ 1468              		.cfi_endproc
+ 1469              	.LFE80:
+ 1471              		.section	.rodata.MCP2515_LoopbackTest.str1.4,"aMS",%progbits,1
+ 1472              		.align	2
+ 1473              	.LC0:
+ 1474 0000 0D0A3D3D 		.ascii	"\015\012=== LOOPBACK TEST ===\015\012\000"
+ 1474      3D204C4F 
+ 1474      4F504241 
+ 1474      434B2054 
+ 1474      45535420 
+ 1475 001a 0000     		.align	2
+ 1476              	.LC1:
+ 1477 001c 43757272 		.ascii	"Current CANSTAT: 0x%02X\015\012\000"
+ 1477      656E7420 
+ 1477      43414E53 
+ 1477      5441543A 
+ 1477      20307825 
+ 1478 0036 0000     		.align	2
+ 1479              	.LC2:
+ 1480 0038 4661696C 		.ascii	"Failed to enter config mode!\015\012\000"
+ 1480      65642074 
+ 1480      6F20656E 
+ 1480      74657220 
+ 1480      636F6E66 
+ 1481 0057 00       		.align	2
+ 1482              	.LC3:
+ 1483 0058 4661696C 		.ascii	"Failed to enter loopback mode!\015\012\000"
+ 1483      65642074 
+ 1483      6F20656E 
+ 1483      74657220 
+ 1483      6C6F6F70 
+ 1484 0079 000000   		.align	2
+ 1485              	.LC4:
+ 1486 007c 4C6F6F70 		.ascii	"Loopback mode set, sending test frame...\015\012\000"
+ 1486      6261636B 
+ 1486      206D6F64 
+ 1486      65207365 
+ 1486      742C2073 
+ 1487 00a7 00       		.align	2
+ 1488              	.LC5:
+ 1489 00a8 54657374 		.ascii	"Test frame sent, waiting for loopback...\015\012\000"
+ 1489      20667261 
+ 1489      6D652073 
+ 1489      656E742C 
+ 1489      20776169 
+ 1490 00d3 00       		.align	2
+ 1491              	.LC6:
+ 1492 00d4 52582073 		.ascii	"RX status after loopback: 0x%02X\015\012\000"
+ 1492      74617475 
+ 1492      73206166 
+ARM GAS  /tmp/cc6iGCGp.s 			page 42
+
+
+ 1492      74657220 
+ 1492      6C6F6F70 
+ 1493 00f7 00       		.align	2
+ 1494              	.LC7:
+ 1495 00f8 4C6F6F70 		.ascii	"Loopback RX: %02X %02X %02X %02X %02X | %02X %02X %"
+ 1495      6261636B 
+ 1495      2052583A 
+ 1495      20253032 
+ 1495      58202530 
+ 1496 012b 30325820 		.ascii	"02X %02X\015\012\000"
+ 1496      25303258 
+ 1496      0D0A00
+ 1497 0136 0000     		.align	2
+ 1498              	.LC8:
+ 1499 0138 2A2A2A20 		.ascii	"*** LOOPBACK SUCCESS! ***\015\012\000"
+ 1499      4C4F4F50 
+ 1499      4241434B 
+ 1499      20535543 
+ 1499      43455353 
+ 1500              		.align	2
+ 1501              	.LC9:
+ 1502 0154 53504920 		.ascii	"SPI RX buffer reads work correctly.\015\012\000"
+ 1502      52582062 
+ 1502      75666665 
+ 1502      72207265 
+ 1502      61647320 
+ 1503 017a 0000     		.align	2
+ 1504              	.LC10:
+ 1505 017c 50726F62 		.ascii	"Problem must be CAN bus reception.\015\012\000"
+ 1505      6C656D20 
+ 1505      6D757374 
+ 1505      20626520 
+ 1505      43414E20 
+ 1506 01a1 000000   		.align	2
+ 1507              	.LC11:
+ 1508 01a4 2A2A2A20 		.ascii	"*** LOOPBACK FAILED - DATA MISMATCH! ***\015\012\000"
+ 1508      4C4F4F50 
+ 1508      4241434B 
+ 1508      20464149 
+ 1508      4C454420 
+ 1509 01cf 00       		.align	2
+ 1510              	.LC12:
+ 1511 01d0 45787065 		.ascii	"Expected: 24 60 xx xx 04 DE AD BE EF\015\012\000"
+ 1511      63746564 
+ 1511      3A203234 
+ 1511      20363020 
+ 1511      78782078 
+ 1512 01f7 00       		.align	2
+ 1513              	.LC13:
+ 1514 01f8 53504920 		.ascii	"SPI RX buffer reads are corrupted.\015\012\000"
+ 1514      52582062 
+ 1514      75666665 
+ 1514      72207265 
+ 1514      61647320 
+ 1515 021d 000000   		.align	2
+ 1516              	.LC14:
+ 1517 0220 4E6F206C 		.ascii	"No loopback message received!\015\012\000"
+ARM GAS  /tmp/cc6iGCGp.s 			page 43
+
+
+ 1517      6F6F7062 
+ 1517      61636B20 
+ 1517      6D657373 
+ 1517      61676520 
+ 1518              		.align	2
+ 1519              	.LC15:
+ 1520 0240 4661696C 		.ascii	"Failed to send test frame!\015\012\000"
+ 1520      65642074 
+ 1520      6F207365 
+ 1520      6E642074 
+ 1520      65737420 
+ 1521 025d 000000   		.align	2
+ 1522              	.LC16:
+ 1523 0260 3D3D3D20 		.ascii	"=== END LOOPBACK TEST ===\015\012\000"
+ 1523      454E4420 
+ 1523      4C4F4F50 
+ 1523      4241434B 
+ 1523      20544553 
+ 1524              		.align	2
+ 1525              	.LC17:
+ 1526 027c 52657475 		.ascii	"Returned to normal mode.\015\012\015\012\000"
+ 1526      726E6564 
+ 1526      20746F20 
+ 1526      6E6F726D 
+ 1526      616C206D 
+ 1527              		.section	.text.MCP2515_LoopbackTest,"ax",%progbits
+ 1528              		.align	1
+ 1529              		.global	MCP2515_LoopbackTest
+ 1530              		.syntax unified
+ 1531              		.thumb
+ 1532              		.thumb_func
+ 1534              	MCP2515_LoopbackTest:
+ 1535              	.LFB81:
+ 360:src/mcp2515.c ****     extern void forceLog(char *message);
+ 1536              		.loc 1 360 33 is_stmt 1 view -0
+ 1537              		.cfi_startproc
+ 1538              		@ args = 0, pretend = 0, frame = 136
+ 1539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1540 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1541              	.LCFI22:
+ 1542              		.cfi_def_cfa_offset 20
+ 1543              		.cfi_offset 4, -20
+ 1544              		.cfi_offset 5, -16
+ 1545              		.cfi_offset 6, -12
+ 1546              		.cfi_offset 7, -8
+ 1547              		.cfi_offset 14, -4
+ 1548 0002 ABB0     		sub	sp, sp, #172
+ 1549              	.LCFI23:
+ 1550              		.cfi_def_cfa_offset 192
+ 361:src/mcp2515.c ****     char msg[100];
+ 1551              		.loc 1 361 5 view .LVU398
+ 362:src/mcp2515.c **** 
+ 1552              		.loc 1 362 5 view .LVU399
+ 364:src/mcp2515.c **** 
+ 1553              		.loc 1 364 5 view .LVU400
+ 1554 0004 6A48     		ldr	r0, .L108
+ 1555 0006 FFF7FEFF 		bl	forceLog
+ARM GAS  /tmp/cc6iGCGp.s 			page 44
+
+
+ 1556              	.LVL167:
+ 367:src/mcp2515.c ****     sprintf(msg, "Current CANSTAT: 0x%02X\r\n", saved_canstat);
+ 1557              		.loc 1 367 5 view .LVU401
+ 367:src/mcp2515.c ****     sprintf(msg, "Current CANSTAT: 0x%02X\r\n", saved_canstat);
+ 1558              		.loc 1 367 29 is_stmt 0 view .LVU402
+ 1559 000a 0E20     		movs	r0, #14
+ 1560 000c FFF7FEFF 		bl	MCP2515_ReadRegister
+ 1561              	.LVL168:
+ 1562 0010 0246     		mov	r2, r0
+ 1563              	.LVL169:
+ 368:src/mcp2515.c ****     forceLog(msg);
+ 1564              		.loc 1 368 5 is_stmt 1 view .LVU403
+ 1565 0012 6849     		ldr	r1, .L108+4
+ 1566 0014 11A8     		add	r0, sp, #68
+ 1567 0016 FFF7FEFF 		bl	sprintf
+ 1568              	.LVL170:
+ 369:src/mcp2515.c **** 
+ 1569              		.loc 1 369 5 view .LVU404
+ 1570 001a 11A8     		add	r0, sp, #68
+ 1571 001c FFF7FEFF 		bl	forceLog
+ 1572              	.LVL171:
+ 372:src/mcp2515.c ****         forceLog("Failed to enter config mode!\r\n");
+ 1573              		.loc 1 372 5 view .LVU405
+ 372:src/mcp2515.c ****         forceLog("Failed to enter config mode!\r\n");
+ 1574              		.loc 1 372 10 is_stmt 0 view .LVU406
+ 1575 0020 8020     		movs	r0, #128
+ 1576 0022 FFF7FEFF 		bl	MCP2515_SetMode
+ 1577              	.LVL172:
+ 372:src/mcp2515.c ****         forceLog("Failed to enter config mode!\r\n");
+ 1578              		.loc 1 372 8 discriminator 1 view .LVU407
+ 1579 0026 0028     		cmp	r0, #0
+ 1580 0028 45D0     		beq	.L105
+ 378:src/mcp2515.c **** 
+ 1581              		.loc 1 378 5 is_stmt 1 view .LVU408
+ 1582 002a 0021     		movs	r1, #0
+ 1583 002c 2C20     		movs	r0, #44
+ 1584 002e FFF7FEFF 		bl	MCP2515_WriteRegister
+ 1585              	.LVL173:
+ 381:src/mcp2515.c ****         forceLog("Failed to enter loopback mode!\r\n");
+ 1586              		.loc 1 381 5 view .LVU409
+ 381:src/mcp2515.c ****         forceLog("Failed to enter loopback mode!\r\n");
+ 1587              		.loc 1 381 10 is_stmt 0 view .LVU410
+ 1588 0032 4020     		movs	r0, #64
+ 1589 0034 FFF7FEFF 		bl	MCP2515_SetMode
+ 1590              	.LVL174:
+ 381:src/mcp2515.c ****         forceLog("Failed to enter loopback mode!\r\n");
+ 1591              		.loc 1 381 8 discriminator 1 view .LVU411
+ 1592 0038 0028     		cmp	r0, #0
+ 1593 003a 40D0     		beq	.L106
+ 386:src/mcp2515.c **** 
+ 1594              		.loc 1 386 5 is_stmt 1 view .LVU412
+ 1595 003c 5E48     		ldr	r0, .L108+8
+ 1596 003e FFF7FEFF 		bl	forceLog
+ 1597              	.LVL175:
+ 389:src/mcp2515.c ****     test_frame.id = 0x123;
+ 1598              		.loc 1 389 5 view .LVU413
+ 390:src/mcp2515.c ****     test_frame.extended = false;
+ARM GAS  /tmp/cc6iGCGp.s 			page 45
+
+
+ 1599              		.loc 1 390 5 view .LVU414
+ 390:src/mcp2515.c ****     test_frame.extended = false;
+ 1600              		.loc 1 390 19 is_stmt 0 view .LVU415
+ 1601 0042 40F22313 		movw	r3, #291
+ 1602 0046 0D93     		str	r3, [sp, #52]
+ 391:src/mcp2515.c ****     test_frame.rtr = false;
+ 1603              		.loc 1 391 5 is_stmt 1 view .LVU416
+ 391:src/mcp2515.c ****     test_frame.rtr = false;
+ 1604              		.loc 1 391 25 is_stmt 0 view .LVU417
+ 1605 0048 0023     		movs	r3, #0
+ 1606 004a 8DF84130 		strb	r3, [sp, #65]
+ 392:src/mcp2515.c ****     test_frame.dlc = 4;
+ 1607              		.loc 1 392 5 is_stmt 1 view .LVU418
+ 392:src/mcp2515.c ****     test_frame.dlc = 4;
+ 1608              		.loc 1 392 20 is_stmt 0 view .LVU419
+ 1609 004e 8DF84230 		strb	r3, [sp, #66]
+ 393:src/mcp2515.c ****     test_frame.data[0] = 0xDE;
+ 1610              		.loc 1 393 5 is_stmt 1 view .LVU420
+ 393:src/mcp2515.c ****     test_frame.data[0] = 0xDE;
+ 1611              		.loc 1 393 20 is_stmt 0 view .LVU421
+ 1612 0052 0423     		movs	r3, #4
+ 1613 0054 8DF84030 		strb	r3, [sp, #64]
+ 394:src/mcp2515.c ****     test_frame.data[1] = 0xAD;
+ 1614              		.loc 1 394 5 is_stmt 1 view .LVU422
+ 394:src/mcp2515.c ****     test_frame.data[1] = 0xAD;
+ 1615              		.loc 1 394 24 is_stmt 0 view .LVU423
+ 1616 0058 DE23     		movs	r3, #222
+ 1617 005a 8DF83830 		strb	r3, [sp, #56]
+ 395:src/mcp2515.c ****     test_frame.data[2] = 0xBE;
+ 1618              		.loc 1 395 5 is_stmt 1 view .LVU424
+ 395:src/mcp2515.c ****     test_frame.data[2] = 0xBE;
+ 1619              		.loc 1 395 24 is_stmt 0 view .LVU425
+ 1620 005e AD23     		movs	r3, #173
+ 1621 0060 8DF83930 		strb	r3, [sp, #57]
+ 396:src/mcp2515.c ****     test_frame.data[3] = 0xEF;
+ 1622              		.loc 1 396 5 is_stmt 1 view .LVU426
+ 396:src/mcp2515.c ****     test_frame.data[3] = 0xEF;
+ 1623              		.loc 1 396 24 is_stmt 0 view .LVU427
+ 1624 0064 BE23     		movs	r3, #190
+ 1625 0066 8DF83A30 		strb	r3, [sp, #58]
+ 397:src/mcp2515.c **** 
+ 1626              		.loc 1 397 5 is_stmt 1 view .LVU428
+ 397:src/mcp2515.c **** 
+ 1627              		.loc 1 397 24 is_stmt 0 view .LVU429
+ 1628 006a EF23     		movs	r3, #239
+ 1629 006c 8DF83B30 		strb	r3, [sp, #59]
+ 399:src/mcp2515.c ****         forceLog("Test frame sent, waiting for loopback...\r\n");
+ 1630              		.loc 1 399 5 is_stmt 1 view .LVU430
+ 399:src/mcp2515.c ****         forceLog("Test frame sent, waiting for loopback...\r\n");
+ 1631              		.loc 1 399 9 is_stmt 0 view .LVU431
+ 1632 0070 0DA8     		add	r0, sp, #52
+ 1633 0072 FFF7FEFF 		bl	MCP2515_SendFrame
+ 1634              	.LVL176:
+ 399:src/mcp2515.c ****         forceLog("Test frame sent, waiting for loopback...\r\n");
+ 1635              		.loc 1 399 8 discriminator 1 view .LVU432
+ 1636 0076 0028     		cmp	r0, #0
+ 1637 0078 00F08B80 		beq	.L96
+ARM GAS  /tmp/cc6iGCGp.s 			page 46
+
+
+ 1638              	.LBB22:
+ 400:src/mcp2515.c ****         HAL_Delay(50);  // Wait for loopback
+ 1639              		.loc 1 400 9 is_stmt 1 view .LVU433
+ 1640 007c 4F48     		ldr	r0, .L108+12
+ 1641 007e FFF7FEFF 		bl	forceLog
+ 1642              	.LVL177:
+ 401:src/mcp2515.c **** 
+ 1643              		.loc 1 401 9 view .LVU434
+ 1644 0082 3220     		movs	r0, #50
+ 1645 0084 FFF7FEFF 		bl	HAL_Delay
+ 1646              	.LVL178:
+ 404:src/mcp2515.c ****         sprintf(msg, "RX status after loopback: 0x%02X\r\n", rxstat);
+ 1647              		.loc 1 404 9 view .LVU435
+ 404:src/mcp2515.c ****         sprintf(msg, "RX status after loopback: 0x%02X\r\n", rxstat);
+ 1648              		.loc 1 404 26 is_stmt 0 view .LVU436
+ 1649 0088 FFF7FEFF 		bl	MCP2515_GetRxStatus
+ 1650              	.LVL179:
+ 1651 008c 0446     		mov	r4, r0
+ 1652              	.LVL180:
+ 405:src/mcp2515.c ****         forceLog(msg);
+ 1653              		.loc 1 405 9 is_stmt 1 view .LVU437
+ 1654 008e 0246     		mov	r2, r0
+ 1655 0090 4B49     		ldr	r1, .L108+16
+ 1656 0092 11A8     		add	r0, sp, #68
+ 1657              	.LVL181:
+ 405:src/mcp2515.c ****         forceLog(msg);
+ 1658              		.loc 1 405 9 is_stmt 0 view .LVU438
+ 1659 0094 FFF7FEFF 		bl	sprintf
+ 1660              	.LVL182:
+ 406:src/mcp2515.c **** 
+ 1661              		.loc 1 406 9 is_stmt 1 view .LVU439
+ 1662 0098 11A8     		add	r0, sp, #68
+ 1663 009a FFF7FEFF 		bl	forceLog
+ 1664              	.LVL183:
+ 408:src/mcp2515.c ****             // Read the RX buffer manually
+ 1665              		.loc 1 408 9 view .LVU440
+ 408:src/mcp2515.c ****             // Read the RX buffer manually
+ 1666              		.loc 1 408 12 is_stmt 0 view .LVU441
+ 1667 009e 3F2C     		cmp	r4, #63
+ 1668 00a0 73D9     		bls	.L97
+ 1669              	.LBB23:
+ 410:src/mcp2515.c ****             MCP2515_Select();
+ 1670              		.loc 1 410 13 is_stmt 1 view .LVU442
+ 411:src/mcp2515.c ****             MCP2515_SPITransfer(MCP2515_CMD_READ);
+ 1671              		.loc 1 411 13 view .LVU443
+ 1672 00a2 FFF7FEFF 		bl	MCP2515_Select
+ 1673              	.LVL184:
+ 412:src/mcp2515.c ****             MCP2515_SPITransfer(0x61);  // RXB0SIDH
+ 1674              		.loc 1 412 13 view .LVU444
+ 1675 00a6 0320     		movs	r0, #3
+ 1676 00a8 FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1677              	.LVL185:
+ 413:src/mcp2515.c ****             for (int i = 0; i < 13; i++) {
+ 1678              		.loc 1 413 13 view .LVU445
+ 1679 00ac 6120     		movs	r0, #97
+ 1680 00ae FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1681              	.LVL186:
+ARM GAS  /tmp/cc6iGCGp.s 			page 47
+
+
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1682              		.loc 1 414 13 view .LVU446
+ 1683              	.LBB24:
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1684              		.loc 1 414 18 view .LVU447
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1685              		.loc 1 414 22 is_stmt 0 view .LVU448
+ 1686 00b2 0024     		movs	r4, #0
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1687              		.loc 1 414 13 view .LVU449
+ 1688 00b4 13E0     		b	.L98
+ 1689              	.LVL187:
+ 1690              	.L105:
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1691              		.loc 1 414 13 view .LVU450
+ 1692              	.LBE24:
+ 1693              	.LBE23:
+ 1694              	.LBE22:
+ 373:src/mcp2515.c ****         return;
+ 1695              		.loc 1 373 9 is_stmt 1 view .LVU451
+ 1696 00b6 4348     		ldr	r0, .L108+20
+ 1697 00b8 FFF7FEFF 		bl	forceLog
+ 1698              	.LVL188:
+ 374:src/mcp2515.c ****     }
+ 1699              		.loc 1 374 9 view .LVU452
+ 1700 00bc 75E0     		b	.L92
+ 1701              	.L106:
+ 382:src/mcp2515.c ****         MCP2515_SetMode(MCP2515_MODE_NORMAL);
+ 1702              		.loc 1 382 9 view .LVU453
+ 1703 00be 4248     		ldr	r0, .L108+24
+ 1704 00c0 FFF7FEFF 		bl	forceLog
+ 1705              	.LVL189:
+ 383:src/mcp2515.c ****         return;
+ 1706              		.loc 1 383 9 view .LVU454
+ 1707 00c4 0020     		movs	r0, #0
+ 1708 00c6 FFF7FEFF 		bl	MCP2515_SetMode
+ 1709              	.LVL190:
+ 384:src/mcp2515.c ****     }
+ 1710              		.loc 1 384 9 view .LVU455
+ 1711 00ca 6EE0     		b	.L92
+ 1712              	.LVL191:
+ 1713              	.L99:
+ 1714              	.LBB28:
+ 1715              	.LBB26:
+ 1716              	.LBB25:
+ 415:src/mcp2515.c ****             }
+ 1717              		.loc 1 415 17 view .LVU456
+ 415:src/mcp2515.c ****             }
+ 1718              		.loc 1 415 28 is_stmt 0 view .LVU457
+ 1719 00cc FF20     		movs	r0, #255
+ 1720 00ce FFF7FEFF 		bl	MCP2515_SPITransfer
+ 1721              	.LVL192:
+ 415:src/mcp2515.c ****             }
+ 1722              		.loc 1 415 26 discriminator 1 view .LVU458
+ 1723 00d2 04F1A803 		add	r3, r4, #168
+ 1724 00d6 6B44     		add	r3, sp, r3
+ 1725 00d8 03F8840C 		strb	r0, [r3, #-132]
+ARM GAS  /tmp/cc6iGCGp.s 			page 48
+
+
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1726              		.loc 1 414 38 is_stmt 1 discriminator 3 view .LVU459
+ 1727 00dc 0134     		adds	r4, r4, #1
+ 1728              	.LVL193:
+ 1729              	.L98:
+ 414:src/mcp2515.c ****                 rxbuf[i] = MCP2515_SPITransfer(0xFF);
+ 1730              		.loc 1 414 31 discriminator 1 view .LVU460
+ 1731 00de 0C2C     		cmp	r4, #12
+ 1732 00e0 F4DD     		ble	.L99
+ 1733              	.LBE25:
+ 417:src/mcp2515.c **** 
+ 1734              		.loc 1 417 13 view .LVU461
+ 1735 00e2 FFF7FEFF 		bl	MCP2515_Deselect
+ 1736              	.LVL194:
+ 419:src/mcp2515.c ****                     rxbuf[0], rxbuf[1], rxbuf[2], rxbuf[3], rxbuf[4],
+ 1737              		.loc 1 419 13 view .LVU462
+ 420:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 1738              		.loc 1 420 26 is_stmt 0 view .LVU463
+ 1739 00e6 9DF82440 		ldrb	r4, [sp, #36]	@ zero_extendqisi2
+ 1740              	.LVL195:
+ 420:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 1741              		.loc 1 420 36 view .LVU464
+ 1742 00ea 9DF82550 		ldrb	r5, [sp, #37]	@ zero_extendqisi2
+ 420:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 1743              		.loc 1 420 46 view .LVU465
+ 1744 00ee 9DF82630 		ldrb	r3, [sp, #38]	@ zero_extendqisi2
+ 420:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 1745              		.loc 1 420 56 view .LVU466
+ 1746 00f2 9DF82720 		ldrb	r2, [sp, #39]	@ zero_extendqisi2
+ 420:src/mcp2515.c ****                     rxbuf[5], rxbuf[6], rxbuf[7], rxbuf[8]);
+ 1747              		.loc 1 420 66 view .LVU467
+ 1748 00f6 9DF82810 		ldrb	r1, [sp, #40]	@ zero_extendqisi2
+ 421:src/mcp2515.c ****             forceLog(msg);
+ 1749              		.loc 1 421 26 view .LVU468
+ 1750 00fa 9DF82960 		ldrb	r6, [sp, #41]	@ zero_extendqisi2
+ 421:src/mcp2515.c ****             forceLog(msg);
+ 1751              		.loc 1 421 36 view .LVU469
+ 1752 00fe 9DF82A70 		ldrb	r7, [sp, #42]	@ zero_extendqisi2
+ 421:src/mcp2515.c ****             forceLog(msg);
+ 1753              		.loc 1 421 46 view .LVU470
+ 1754 0102 9DF82B00 		ldrb	r0, [sp, #43]	@ zero_extendqisi2
+ 421:src/mcp2515.c ****             forceLog(msg);
+ 1755              		.loc 1 421 56 view .LVU471
+ 1756 0106 9DF82CC0 		ldrb	ip, [sp, #44]	@ zero_extendqisi2
+ 419:src/mcp2515.c ****                     rxbuf[0], rxbuf[1], rxbuf[2], rxbuf[3], rxbuf[4],
+ 1757              		.loc 1 419 13 view .LVU472
+ 1758 010a CDF818C0 		str	ip, [sp, #24]
+ 1759 010e 0590     		str	r0, [sp, #20]
+ 1760 0110 0497     		str	r7, [sp, #16]
+ 1761 0112 0396     		str	r6, [sp, #12]
+ 1762 0114 0291     		str	r1, [sp, #8]
+ 1763 0116 0192     		str	r2, [sp, #4]
+ 1764 0118 0093     		str	r3, [sp]
+ 1765 011a 2B46     		mov	r3, r5
+ 1766 011c 2246     		mov	r2, r4
+ 1767 011e 2B49     		ldr	r1, .L108+28
+ 1768 0120 11A8     		add	r0, sp, #68
+ARM GAS  /tmp/cc6iGCGp.s 			page 49
+
+
+ 1769 0122 FFF7FEFF 		bl	sprintf
+ 1770              	.LVL196:
+ 422:src/mcp2515.c **** 
+ 1771              		.loc 1 422 13 is_stmt 1 view .LVU473
+ 1772 0126 11A8     		add	r0, sp, #68
+ 1773 0128 FFF7FEFF 		bl	forceLog
+ 1774              	.LVL197:
+ 425:src/mcp2515.c ****                 rxbuf[5] == 0xDE && rxbuf[6] == 0xAD) {
+ 1775              		.loc 1 425 13 view .LVU474
+ 425:src/mcp2515.c ****                 rxbuf[5] == 0xDE && rxbuf[6] == 0xAD) {
+ 1776              		.loc 1 425 16 is_stmt 0 view .LVU475
+ 1777 012c 242C     		cmp	r4, #36
+ 1778 012e 01D1     		bne	.L100
+ 425:src/mcp2515.c ****                 rxbuf[5] == 0xDE && rxbuf[6] == 0xAD) {
+ 1779              		.loc 1 425 34 discriminator 1 view .LVU476
+ 1780 0130 602D     		cmp	r5, #96
+ 1781 0132 1CD0     		beq	.L107
+ 1782              	.L100:
+ 431:src/mcp2515.c ****                 sprintf(msg, "Expected: 24 60 xx xx 04 DE AD BE EF\r\n");
+ 1783              		.loc 1 431 17 is_stmt 1 view .LVU477
+ 1784 0134 2648     		ldr	r0, .L108+32
+ 1785 0136 FFF7FEFF 		bl	forceLog
+ 1786              	.LVL198:
+ 432:src/mcp2515.c ****                 forceLog(msg);
+ 1787              		.loc 1 432 17 view .LVU478
+ 1788 013a 11AC     		add	r4, sp, #68
+ 1789 013c 254D     		ldr	r5, .L108+36
+ 1790 013e 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 1791 0140 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 1792 0142 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 1793 0144 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 1794 0146 95E80300 		ldm	r5, {r0, r1}
+ 1795 014a 44F8040B 		str	r0, [r4], #4
+ 1796 014e 24F8021B 		strh	r1, [r4], #2	@ movhi
+ 1797 0152 090C     		lsrs	r1, r1, #16
+ 1798 0154 2170     		strb	r1, [r4]
+ 433:src/mcp2515.c ****                 forceLog("SPI RX buffer reads are corrupted.\r\n");
+ 1799              		.loc 1 433 17 view .LVU479
+ 1800 0156 11A8     		add	r0, sp, #68
+ 1801 0158 FFF7FEFF 		bl	forceLog
+ 1802              	.LVL199:
+ 434:src/mcp2515.c ****             }
+ 1803              		.loc 1 434 17 view .LVU480
+ 1804 015c 1E48     		ldr	r0, .L108+40
+ 1805 015e FFF7FEFF 		bl	forceLog
+ 1806              	.LVL200:
+ 1807              	.L101:
+ 438:src/mcp2515.c ****         } else {
+ 1808              		.loc 1 438 13 view .LVU481
+ 1809 0162 0022     		movs	r2, #0
+ 1810 0164 0121     		movs	r1, #1
+ 1811 0166 2C20     		movs	r0, #44
+ 1812 0168 FFF7FEFF 		bl	MCP2515_ModifyRegister
+ 1813              	.LVL201:
+ 1814              	.LBE26:
+ 1815 016c 14E0     		b	.L102
+ 1816              	.L107:
+ARM GAS  /tmp/cc6iGCGp.s 			page 50
+
+
+ 1817              	.LBB27:
+ 425:src/mcp2515.c ****                 rxbuf[5] == 0xDE && rxbuf[6] == 0xAD) {
+ 1818              		.loc 1 425 54 is_stmt 0 discriminator 2 view .LVU482
+ 1819 016e DE2E     		cmp	r6, #222
+ 1820 0170 E0D1     		bne	.L100
+ 426:src/mcp2515.c ****                 forceLog("*** LOOPBACK SUCCESS! ***\r\n");
+ 1821              		.loc 1 426 34 view .LVU483
+ 1822 0172 AD2F     		cmp	r7, #173
+ 1823 0174 DED1     		bne	.L100
+ 427:src/mcp2515.c ****                 forceLog("SPI RX buffer reads work correctly.\r\n");
+ 1824              		.loc 1 427 17 is_stmt 1 view .LVU484
+ 1825 0176 1948     		ldr	r0, .L108+44
+ 1826 0178 FFF7FEFF 		bl	forceLog
+ 1827              	.LVL202:
+ 428:src/mcp2515.c ****                 forceLog("Problem must be CAN bus reception.\r\n");
+ 1828              		.loc 1 428 17 view .LVU485
+ 1829 017c 1848     		ldr	r0, .L108+48
+ 1830 017e FFF7FEFF 		bl	forceLog
+ 1831              	.LVL203:
+ 429:src/mcp2515.c ****             } else {
+ 1832              		.loc 1 429 17 view .LVU486
+ 1833 0182 1848     		ldr	r0, .L108+52
+ 1834 0184 FFF7FEFF 		bl	forceLog
+ 1835              	.LVL204:
+ 1836 0188 EBE7     		b	.L101
+ 1837              	.LVL205:
+ 1838              	.L97:
+ 429:src/mcp2515.c ****             } else {
+ 1839              		.loc 1 429 17 is_stmt 0 view .LVU487
+ 1840              	.LBE27:
+ 440:src/mcp2515.c ****         }
+ 1841              		.loc 1 440 13 is_stmt 1 view .LVU488
+ 1842 018a 1748     		ldr	r0, .L108+56
+ 1843 018c FFF7FEFF 		bl	forceLog
+ 1844              	.LVL206:
+ 1845 0190 02E0     		b	.L102
+ 1846              	.LVL207:
+ 1847              	.L96:
+ 440:src/mcp2515.c ****         }
+ 1848              		.loc 1 440 13 is_stmt 0 view .LVU489
+ 1849              	.LBE28:
+ 443:src/mcp2515.c ****     }
+ 1850              		.loc 1 443 9 is_stmt 1 view .LVU490
+ 1851 0192 1648     		ldr	r0, .L108+60
+ 1852 0194 FFF7FEFF 		bl	forceLog
+ 1853              	.LVL208:
+ 1854              	.L102:
+ 446:src/mcp2515.c **** 
+ 1855              		.loc 1 446 5 view .LVU491
+ 1856 0198 1548     		ldr	r0, .L108+64
+ 1857 019a FFF7FEFF 		bl	forceLog
+ 1858              	.LVL209:
+ 449:src/mcp2515.c ****     forceLog("Returned to normal mode.\r\n\r\n");
+ 1859              		.loc 1 449 5 view .LVU492
+ 1860 019e 0020     		movs	r0, #0
+ 1861 01a0 FFF7FEFF 		bl	MCP2515_SetMode
+ 1862              	.LVL210:
+ARM GAS  /tmp/cc6iGCGp.s 			page 51
+
+
+ 450:src/mcp2515.c **** }
+ 1863              		.loc 1 450 5 view .LVU493
+ 1864 01a4 1348     		ldr	r0, .L108+68
+ 1865 01a6 FFF7FEFF 		bl	forceLog
+ 1866              	.LVL211:
+ 1867              	.L92:
+ 451:src/mcp2515.c **** 
+ 1868              		.loc 1 451 1 is_stmt 0 view .LVU494
+ 1869 01aa 2BB0     		add	sp, sp, #172
+ 1870              	.LCFI24:
+ 1871              		.cfi_def_cfa_offset 20
+ 1872              		@ sp needed
+ 1873 01ac F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1874              	.L109:
+ 1875 01ae 00BF     		.align	2
+ 1876              	.L108:
+ 1877 01b0 00000000 		.word	.LC0
+ 1878 01b4 1C000000 		.word	.LC1
+ 1879 01b8 7C000000 		.word	.LC4
+ 1880 01bc A8000000 		.word	.LC5
+ 1881 01c0 D4000000 		.word	.LC6
+ 1882 01c4 38000000 		.word	.LC2
+ 1883 01c8 58000000 		.word	.LC3
+ 1884 01cc F8000000 		.word	.LC7
+ 1885 01d0 A4010000 		.word	.LC11
+ 1886 01d4 D0010000 		.word	.LC12
+ 1887 01d8 F8010000 		.word	.LC13
+ 1888 01dc 38010000 		.word	.LC8
+ 1889 01e0 54010000 		.word	.LC9
+ 1890 01e4 7C010000 		.word	.LC10
+ 1891 01e8 20020000 		.word	.LC14
+ 1892 01ec 40020000 		.word	.LC15
+ 1893 01f0 60020000 		.word	.LC16
+ 1894 01f4 7C020000 		.word	.LC17
+ 1895              		.cfi_endproc
+ 1896              	.LFE81:
+ 1898              		.section	.rodata.rts_mask.0,"a"
+ 1899              		.align	2
+ 1902              	rts_mask.0:
+ 1903 0000 010204   		.ascii	"\001\002\004"
+ 1904              		.section	.rodata.sidh_addr.1,"a"
+ 1905              		.align	2
+ 1908              	sidh_addr.1:
+ 1909 0000 314151   		.ascii	"1AQ"
+ 1910              		.section	.rodata.ctrl_addr.2,"a"
+ 1911              		.align	2
+ 1914              	ctrl_addr.2:
+ 1915 0000 304050   		.ascii	"0@P"
+ 1916              		.section	.bss.tx_slot.3,"aw",%nobits
+ 1919              	tx_slot.3:
+ 1920 0000 00       		.space	1
+ 1921              		.text
+ 1922              	.Letext0:
+ 1923              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 1924              		.file 3 "inc/mcp2515.h"
+ 1925              		.file 4 "/usr/include/newlib/stdio.h"
+ 1926              		.file 5 "inc/software_spi.h"
+ARM GAS  /tmp/cc6iGCGp.s 			page 52
+
+
+ 1927              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/cc6iGCGp.s 			page 53
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mcp2515.c
+     /tmp/cc6iGCGp.s:19     .text.MCP2515_Select:00000000 $t
+     /tmp/cc6iGCGp.s:24     .text.MCP2515_Select:00000000 MCP2515_Select
+     /tmp/cc6iGCGp.s:44     .text.MCP2515_SPITransfer:00000000 $t
+     /tmp/cc6iGCGp.s:49     .text.MCP2515_SPITransfer:00000000 MCP2515_SPITransfer
+     /tmp/cc6iGCGp.s:72     .text.MCP2515_Deselect:00000000 $t
+     /tmp/cc6iGCGp.s:77     .text.MCP2515_Deselect:00000000 MCP2515_Deselect
+     /tmp/cc6iGCGp.s:97     .text.MCP2515_Reset:00000000 $t
+     /tmp/cc6iGCGp.s:103    .text.MCP2515_Reset:00000000 MCP2515_Reset
+     /tmp/cc6iGCGp.s:134    .text.MCP2515_ReadRegister:00000000 $t
+     /tmp/cc6iGCGp.s:140    .text.MCP2515_ReadRegister:00000000 MCP2515_ReadRegister
+     /tmp/cc6iGCGp.s:185    .text.MCP2515_WriteRegister:00000000 $t
+     /tmp/cc6iGCGp.s:191    .text.MCP2515_WriteRegister:00000000 MCP2515_WriteRegister
+     /tmp/cc6iGCGp.s:233    .text.MCP2515_Detect:00000000 $t
+     /tmp/cc6iGCGp.s:239    .text.MCP2515_Detect:00000000 MCP2515_Detect
+     /tmp/cc6iGCGp.s:353    .text.MCP2515_SetBitrate:00000000 $t
+     /tmp/cc6iGCGp.s:359    .text.MCP2515_SetBitrate:00000000 MCP2515_SetBitrate
+     /tmp/cc6iGCGp.s:380    .text.MCP2515_SetBitrate:0000000a $d
+     /tmp/cc6iGCGp.s:384    .text.MCP2515_SetBitrate:0000000e $t
+     /tmp/cc6iGCGp.s:461    .text.MCP2515_ModifyRegister:00000000 $t
+     /tmp/cc6iGCGp.s:467    .text.MCP2515_ModifyRegister:00000000 MCP2515_ModifyRegister
+     /tmp/cc6iGCGp.s:514    .text.MCP2515_SetMode:00000000 $t
+     /tmp/cc6iGCGp.s:520    .text.MCP2515_SetMode:00000000 MCP2515_SetMode
+     /tmp/cc6iGCGp.s:601    .text.MCP2515_Init:00000000 $t
+     /tmp/cc6iGCGp.s:607    .text.MCP2515_Init:00000000 MCP2515_Init
+     /tmp/cc6iGCGp.s:682    .text.MCP2515_SendFrame:00000000 $t
+     /tmp/cc6iGCGp.s:688    .text.MCP2515_SendFrame:00000000 MCP2515_SendFrame
+     /tmp/cc6iGCGp.s:1085   .text.MCP2515_SendFrame:0000017c $d
+     /tmp/cc6iGCGp.s:1919   .bss.tx_slot.3:00000000 tx_slot.3
+     /tmp/cc6iGCGp.s:1914   .rodata.ctrl_addr.2:00000000 ctrl_addr.2
+     /tmp/cc6iGCGp.s:1908   .rodata.sidh_addr.1:00000000 sidh_addr.1
+     /tmp/cc6iGCGp.s:1902   .rodata.rts_mask.0:00000000 rts_mask.0
+     /tmp/cc6iGCGp.s:1094   .text.MCP2515_GetStatus:00000000 $t
+     /tmp/cc6iGCGp.s:1100   .text.MCP2515_GetStatus:00000000 MCP2515_GetStatus
+     /tmp/cc6iGCGp.s:1138   .text.MCP2515_GetRxStatus:00000000 $t
+     /tmp/cc6iGCGp.s:1144   .text.MCP2515_GetRxStatus:00000000 MCP2515_GetRxStatus
+     /tmp/cc6iGCGp.s:1182   .text.MCP2515_ReceiveFrame:00000000 $t
+     /tmp/cc6iGCGp.s:1188   .text.MCP2515_ReceiveFrame:00000000 MCP2515_ReceiveFrame
+     /tmp/cc6iGCGp.s:1410   .text.MCP2515_Available:00000000 $t
+     /tmp/cc6iGCGp.s:1416   .text.MCP2515_Available:00000000 MCP2515_Available
+     /tmp/cc6iGCGp.s:1444   .text.MCP2515_GetErrorFlags:00000000 $t
+     /tmp/cc6iGCGp.s:1450   .text.MCP2515_GetErrorFlags:00000000 MCP2515_GetErrorFlags
+     /tmp/cc6iGCGp.s:1472   .rodata.MCP2515_LoopbackTest.str1.4:00000000 $d
+     /tmp/cc6iGCGp.s:1528   .text.MCP2515_LoopbackTest:00000000 $t
+     /tmp/cc6iGCGp.s:1534   .text.MCP2515_LoopbackTest:00000000 MCP2515_LoopbackTest
+     /tmp/cc6iGCGp.s:1877   .text.MCP2515_LoopbackTest:000001b0 $d
+     /tmp/cc6iGCGp.s:1899   .rodata.rts_mask.0:00000000 $d
+     /tmp/cc6iGCGp.s:1905   .rodata.sidh_addr.1:00000000 $d
+     /tmp/cc6iGCGp.s:1911   .rodata.ctrl_addr.2:00000000 $d
+     /tmp/cc6iGCGp.s:1920   .bss.tx_slot.3:00000000 $d
+
+UNDEFINED SYMBOLS
+SoftSPI_CS_Low
+SoftSPI_Transfer
+SoftSPI_CS_High
+HAL_Delay
+ARM GAS  /tmp/cc6iGCGp.s 			page 54
+
+
+SoftSPI_Init
+SoftSPI_SetMode
+SoftSPI_Deinit
+HAL_GetTick
+forceLog
+sprintf

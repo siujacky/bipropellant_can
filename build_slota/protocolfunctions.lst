@@ -1,0 +1,2929 @@
+ARM GAS  /tmp/cc0kyNAB.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"protocolfunctions.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/protocolfunctions.c"
+  18              		.section	.text.fn_enable,"ax",%progbits
+  19              		.align	1
+  20              		.global	fn_enable
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	fn_enable:
+  26              	.LVL0:
+  27              	.LFB66:
+   1:src/protocolfunctions.c **** #include "defines.h"
+   2:src/protocolfunctions.c **** #include "config.h"
+   3:src/protocolfunctions.c **** #include "protocolfunctions.h"
+   4:src/protocolfunctions.c **** #include "bldc.h"
+   5:src/protocolfunctions.c **** #include "softwareserial.h"
+   6:src/protocolfunctions.c **** #include "flashcontent.h"
+   7:src/protocolfunctions.c **** #include "flashaccess.h"
+   8:src/protocolfunctions.c **** #include "comms.h"
+   9:src/protocolfunctions.c **** 
+  10:src/protocolfunctions.c **** #include "stm32f1xx_hal.h"
+  11:src/protocolfunctions.c **** #include <stdbool.h>  // For bool type
+  12:src/protocolfunctions.c **** #ifdef CONTROL_SENSOR
+  13:src/protocolfunctions.c ****     #include "sensorcoms.h"
+  14:src/protocolfunctions.c **** #endif
+  15:src/protocolfunctions.c **** #include "hallinterrupts.h"
+  16:src/protocolfunctions.c **** #include "deadreckoner.h"
+  17:src/protocolfunctions.c **** 
+  18:src/protocolfunctions.c **** #include <string.h>
+  19:src/protocolfunctions.c **** #include <stdlib.h>
+  20:src/protocolfunctions.c **** 
+  21:src/protocolfunctions.c **** #include "control_structures.h"
+  22:src/protocolfunctions.c **** 
+  23:src/protocolfunctions.c **** #ifdef SOFTWARE_SERIAL
+  24:src/protocolfunctions.c ****     PROTOCOL_STAT sSoftwareSerial;
+  25:src/protocolfunctions.c **** #endif
+  26:src/protocolfunctions.c **** #if defined(SERIAL_USART2_IT)
+  27:src/protocolfunctions.c ****     PROTOCOL_STAT sUSART2;
+  28:src/protocolfunctions.c **** #endif
+  29:src/protocolfunctions.c **** #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
+  30:src/protocolfunctions.c ****     PROTOCOL_STAT sUSART3;
+  31:src/protocolfunctions.c **** #endif
+ARM GAS  /tmp/cc0kyNAB.s 			page 2
+
+
+  32:src/protocolfunctions.c **** 
+  33:src/protocolfunctions.c **** extern volatile uint32_t input_timeout_counter; // global variable for input timeout
+  34:src/protocolfunctions.c **** 
+  35:src/protocolfunctions.c **** 
+  36:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+  37:src/protocolfunctions.c **** // Variable & Functions for 0x09 enable
+  38:src/protocolfunctions.c **** 
+  39:src/protocolfunctions.c **** extern uint8_t enable; // global variable for motor enable
+  40:src/protocolfunctions.c **** extern void init_PID_control(); // from main
+  41:src/protocolfunctions.c **** extern int main_ascii_init(PROTOCOL_STAT *s); // from ascii_proto_funcs.c
+  42:src/protocolfunctions.c **** 
+  43:src/protocolfunctions.c **** //////////////////////////////////////////////
+  44:src/protocolfunctions.c **** // make values safe before we change enable...
+  45:src/protocolfunctions.c **** 
+  46:src/protocolfunctions.c **** char protocol_enable = 0;
+  47:src/protocolfunctions.c **** void fn_enable ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg ) {
+  28              		.loc 1 47 98 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 47 98 is_stmt 0 view .LVU1
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0646     		mov	r6, r0
+  43 0004 0F46     		mov	r7, r1
+  44 0006 1446     		mov	r4, r2
+  45 0008 1D46     		mov	r5, r3
+  48:src/protocolfunctions.c ****     switch (cmd) {
+  46              		.loc 1 48 5 is_stmt 1 view .LVU2
+  47 000a 722A     		cmp	r2, #114
+  48 000c 04D0     		beq	.L2
+  49 000e 0BD8     		bhi	.L3
+  50 0010 522A     		cmp	r2, #82
+  51 0012 0BD0     		beq	.L4
+  52 0014 572A     		cmp	r2, #87
+  53 0016 0DD1     		bne	.L5
+  54              	.L2:
+  49:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+  50:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
+  51:src/protocolfunctions.c ****             protocol_enable = enable;
+  52:src/protocolfunctions.c ****             break;
+  53:src/protocolfunctions.c **** 
+  54:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+  55:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+  56:src/protocolfunctions.c ****             if (!protocol_enable) {
+  55              		.loc 1 56 13 view .LVU3
+  56              		.loc 1 56 17 is_stmt 0 view .LVU4
+  57 0018 124B     		ldr	r3, .L9
+  58              	.LVL1:
+  59              		.loc 1 56 17 view .LVU5
+ARM GAS  /tmp/cc0kyNAB.s 			page 3
+
+
+  60 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  61              		.loc 1 56 16 view .LVU6
+  62 001c 8BB1     		cbz	r3, .L8
+  63              	.LVL2:
+  64              	.L6:
+  57:src/protocolfunctions.c ****                 // assume we will enable,
+  58:src/protocolfunctions.c ****                 // set wanted posn to current posn, else we may rush into a wall
+  59:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[0] = HallData[0].HallPosn_mm;
+  60:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
+  61:src/protocolfunctions.c **** 
+  62:src/protocolfunctions.c ****                 // clear speeds to zero
+  63:src/protocolfunctions.c ****                 SpeedData.wanted_speed_mm_per_sec[0] = 0;
+  64:src/protocolfunctions.c ****                 SpeedData.wanted_speed_mm_per_sec[1] = 0;
+  65:src/protocolfunctions.c ****                 PWMData.pwm[0] = 0;
+  66:src/protocolfunctions.c ****                 PWMData.pwm[1] = 0;
+  67:src/protocolfunctions.c ****                 init_PID_control();
+  68:src/protocolfunctions.c ****             }
+  69:src/protocolfunctions.c ****             enable = protocol_enable;
+  65              		.loc 1 69 13 is_stmt 1 view .LVU7
+  66              		.loc 1 69 20 is_stmt 0 view .LVU8
+  67 001e 114B     		ldr	r3, .L9
+  68 0020 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  69 0022 114B     		ldr	r3, .L9+4
+  70 0024 1A70     		strb	r2, [r3]
+  70:src/protocolfunctions.c ****             break;
+  71              		.loc 1 70 13 is_stmt 1 view .LVU9
+  72 0026 05E0     		b	.L5
+  73              	.LVL3:
+  74              	.L3:
+  48:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+  75              		.loc 1 48 5 is_stmt 0 view .LVU10
+  76 0028 732A     		cmp	r2, #115
+  77 002a 03D1     		bne	.L5
+  78              	.L4:
+  51:src/protocolfunctions.c ****             break;
+  79              		.loc 1 51 13 is_stmt 1 view .LVU11
+  51:src/protocolfunctions.c ****             break;
+  80              		.loc 1 51 29 is_stmt 0 view .LVU12
+  81 002c 0E4B     		ldr	r3, .L9+4
+  82              	.LVL4:
+  51:src/protocolfunctions.c ****             break;
+  83              		.loc 1 51 29 view .LVU13
+  84 002e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  85              	.LVL5:
+  51:src/protocolfunctions.c ****             break;
+  86              		.loc 1 51 29 view .LVU14
+  87 0030 0C4B     		ldr	r3, .L9
+  88 0032 1A70     		strb	r2, [r3]
+  52:src/protocolfunctions.c **** 
+  89              		.loc 1 52 13 is_stmt 1 view .LVU15
+  90              	.LVL6:
+  91              	.L5:
+  71:src/protocolfunctions.c ****     }
+  72:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+  92              		.loc 1 72 5 view .LVU16
+  93 0034 2B46     		mov	r3, r5
+  94 0036 2246     		mov	r2, r4
+ARM GAS  /tmp/cc0kyNAB.s 			page 4
+
+
+  95 0038 3946     		mov	r1, r7
+  96 003a 3046     		mov	r0, r6
+  97 003c FFF7FEFF 		bl	fn_defaultProcessing
+  98              	.LVL7:
+  73:src/protocolfunctions.c **** }
+  99              		.loc 1 73 1 is_stmt 0 view .LVU17
+ 100 0040 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 101              	.LVL8:
+ 102              	.L8:
+  59:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
+ 103              		.loc 1 59 17 is_stmt 1 view .LVU18
+  59:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
+ 104              		.loc 1 59 57 is_stmt 0 view .LVU19
+ 105 0042 0A4A     		ldr	r2, .L9+8
+ 106              	.LVL9:
+  59:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
+ 107              		.loc 1 59 57 view .LVU20
+ 108 0044 1169     		ldr	r1, [r2, #16]
+ 109              	.LVL10:
+  59:src/protocolfunctions.c ****                 PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
+ 110              		.loc 1 59 44 view .LVU21
+ 111 0046 0A4B     		ldr	r3, .L9+12
+ 112 0048 1960     		str	r1, [r3]
+  60:src/protocolfunctions.c **** 
+ 113              		.loc 1 60 17 is_stmt 1 view .LVU22
+  60:src/protocolfunctions.c **** 
+ 114              		.loc 1 60 57 is_stmt 0 view .LVU23
+ 115 004a 526B     		ldr	r2, [r2, #52]
+  60:src/protocolfunctions.c **** 
+ 116              		.loc 1 60 44 view .LVU24
+ 117 004c 5A60     		str	r2, [r3, #4]
+  63:src/protocolfunctions.c ****                 SpeedData.wanted_speed_mm_per_sec[1] = 0;
+ 118              		.loc 1 63 17 is_stmt 1 view .LVU25
+  63:src/protocolfunctions.c ****                 SpeedData.wanted_speed_mm_per_sec[1] = 0;
+ 119              		.loc 1 63 54 is_stmt 0 view .LVU26
+ 120 004e 094A     		ldr	r2, .L9+16
+ 121 0050 0023     		movs	r3, #0
+ 122 0052 1360     		str	r3, [r2]
+  64:src/protocolfunctions.c ****                 PWMData.pwm[0] = 0;
+ 123              		.loc 1 64 17 is_stmt 1 view .LVU27
+  64:src/protocolfunctions.c ****                 PWMData.pwm[0] = 0;
+ 124              		.loc 1 64 54 is_stmt 0 view .LVU28
+ 125 0054 5360     		str	r3, [r2, #4]
+  65:src/protocolfunctions.c ****                 PWMData.pwm[1] = 0;
+ 126              		.loc 1 65 17 is_stmt 1 view .LVU29
+  65:src/protocolfunctions.c ****                 PWMData.pwm[1] = 0;
+ 127              		.loc 1 65 32 is_stmt 0 view .LVU30
+ 128 0056 084A     		ldr	r2, .L9+20
+ 129 0058 1360     		str	r3, [r2]
+  66:src/protocolfunctions.c ****                 init_PID_control();
+ 130              		.loc 1 66 17 is_stmt 1 view .LVU31
+  66:src/protocolfunctions.c ****                 init_PID_control();
+ 131              		.loc 1 66 32 is_stmt 0 view .LVU32
+ 132 005a 5360     		str	r3, [r2, #4]
+  67:src/protocolfunctions.c ****             }
+ 133              		.loc 1 67 17 is_stmt 1 view .LVU33
+ 134 005c FFF7FEFF 		bl	init_PID_control
+ARM GAS  /tmp/cc0kyNAB.s 			page 5
+
+
+ 135              	.LVL11:
+  67:src/protocolfunctions.c ****             }
+ 136              		.loc 1 67 17 is_stmt 0 view .LVU34
+ 137 0060 DDE7     		b	.L6
+ 138              	.L10:
+ 139 0062 00BF     		.align	2
+ 140              	.L9:
+ 141 0064 00000000 		.word	protocol_enable
+ 142 0068 00000000 		.word	enable
+ 143 006c 00000000 		.word	HallData
+ 144 0070 00000000 		.word	PosnData
+ 145 0074 00000000 		.word	SpeedData
+ 146 0078 00000000 		.word	PWMData
+ 147              		.cfi_endproc
+ 148              	.LFE66:
+ 150              		.section	.text.fn_SpeedData,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	fn_SpeedData
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 157              	fn_SpeedData:
+ 158              	.LVL12:
+ 159              	.LFB68:
+  74:src/protocolfunctions.c **** 
+  75:src/protocolfunctions.c **** 
+  76:src/protocolfunctions.c **** #ifdef CONTROL_SENSOR
+  77:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+  78:src/protocolfunctions.c **** // Variable & Functions for 0x01 sensor_data
+  79:src/protocolfunctions.c **** 
+  80:src/protocolfunctions.c **** extern SENSOR_DATA sensor_data[2];
+  81:src/protocolfunctions.c **** 
+  82:src/protocolfunctions.c **** // used to send only pertinent data, not the whole structure
+  83:src/protocolfunctions.c **** PROTOCOL_SENSOR_FRAME sensor_copy[2];
+  84:src/protocolfunctions.c **** 
+  85:src/protocolfunctions.c **** void fn_SensorData ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg 
+  86:src/protocolfunctions.c ****     switch (cmd) {
+  87:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+  88:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
+  89:src/protocolfunctions.c ****             // copy just sensor input data
+  90:src/protocolfunctions.c ****             memcpy(&sensor_copy[0], &sensor_data[0].complete, sizeof(sensor_copy[0]));
+  91:src/protocolfunctions.c ****             memcpy(&sensor_copy[1], &sensor_data[1].complete, sizeof(sensor_copy[1]));
+  92:src/protocolfunctions.c ****             break;
+  93:src/protocolfunctions.c ****     }
+  94:src/protocolfunctions.c ****     fn_defaultProcessingReadOnly(s, param, cmd, msg);
+  95:src/protocolfunctions.c **** }
+  96:src/protocolfunctions.c **** 
+  97:src/protocolfunctions.c **** #endif
+  98:src/protocolfunctions.c **** 
+  99:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 100:src/protocolfunctions.c **** // Variable & Functions for 0x02 HallData
+ 101:src/protocolfunctions.c **** 
+ 102:src/protocolfunctions.c **** /* see hallinterrupts.h */
+ 103:src/protocolfunctions.c **** 
+ 104:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 105:src/protocolfunctions.c **** // Variable & Functions for 0x03 SpeedData
+ 106:src/protocolfunctions.c **** 
+ARM GAS  /tmp/cc0kyNAB.s 			page 6
+
+
+ 107:src/protocolfunctions.c **** PROTOCOL_SPEED_DATA SpeedData = {
+ 108:src/protocolfunctions.c ****     {0, 0},
+ 109:src/protocolfunctions.c **** 
+ 110:src/protocolfunctions.c ****     600, // max power (PWM)
+ 111:src/protocolfunctions.c ****     -600,  // min power
+ 112:src/protocolfunctions.c ****     40 // minimum mm/s which we can ask for
+ 113:src/protocolfunctions.c **** };
+ 114:src/protocolfunctions.c **** 
+ 115:src/protocolfunctions.c **** 
+ 116:src/protocolfunctions.c **** void fn_SpeedData ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg )
+ 160              		.loc 1 116 101 is_stmt 1 view -0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		.loc 1 116 101 is_stmt 0 view .LVU36
+ 165 0000 38B5     		push	{r3, r4, r5, lr}
+ 166              	.LCFI1:
+ 167              		.cfi_def_cfa_offset 16
+ 168              		.cfi_offset 3, -16
+ 169              		.cfi_offset 4, -12
+ 170              		.cfi_offset 5, -8
+ 171              		.cfi_offset 14, -4
+ 117:src/protocolfunctions.c ****     switch (cmd) {
+ 172              		.loc 1 117 5 is_stmt 1 view .LVU37
+ 173 0002 572A     		cmp	r2, #87
+ 174 0004 01D0     		beq	.L12
+ 175 0006 722A     		cmp	r2, #114
+ 176 0008 05D1     		bne	.L13
+ 177              	.L12:
+ 118:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 119:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 120:src/protocolfunctions.c ****             control_type = CONTROL_TYPE_SPEED;
+ 178              		.loc 1 120 13 view .LVU38
+ 179              		.loc 1 120 26 is_stmt 0 view .LVU39
+ 180 000a 044C     		ldr	r4, .L15
+ 181 000c 0225     		movs	r5, #2
+ 182 000e 2560     		str	r5, [r4]
+ 121:src/protocolfunctions.c ****             input_timeout_counter = 0;
+ 183              		.loc 1 121 13 is_stmt 1 view .LVU40
+ 184              		.loc 1 121 35 is_stmt 0 view .LVU41
+ 185 0010 034C     		ldr	r4, .L15+4
+ 186 0012 0025     		movs	r5, #0
+ 187 0014 2560     		str	r5, [r4]
+ 122:src/protocolfunctions.c ****             break;
+ 188              		.loc 1 122 13 is_stmt 1 view .LVU42
+ 189              	.L13:
+ 123:src/protocolfunctions.c ****     }
+ 124:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 190              		.loc 1 124 5 view .LVU43
+ 191 0016 FFF7FEFF 		bl	fn_defaultProcessing
+ 192              	.LVL13:
+ 125:src/protocolfunctions.c **** }
+ 193              		.loc 1 125 1 is_stmt 0 view .LVU44
+ 194 001a 38BD     		pop	{r3, r4, r5, pc}
+ 195              	.L16:
+ 196              		.align	2
+ 197              	.L15:
+ARM GAS  /tmp/cc0kyNAB.s 			page 7
+
+
+ 198 001c 00000000 		.word	control_type
+ 199 0020 00000000 		.word	input_timeout_counter
+ 200              		.cfi_endproc
+ 201              	.LFE68:
+ 203              		.section	.text.fn_Position,"ax",%progbits
+ 204              		.align	1
+ 205              		.global	fn_Position
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 210              	fn_Position:
+ 211              	.LVL14:
+ 212              	.LFB69:
+ 126:src/protocolfunctions.c **** 
+ 127:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 128:src/protocolfunctions.c **** // Variable & Functions for 0x04 Position
+ 129:src/protocolfunctions.c **** 
+ 130:src/protocolfunctions.c **** POSN Position;
+ 131:src/protocolfunctions.c **** 
+ 132:src/protocolfunctions.c **** void fn_Position ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg ) 
+ 213              		.loc 1 132 100 is_stmt 1 view -0
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217              		.loc 1 132 100 is_stmt 0 view .LVU46
+ 218 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 219              	.LCFI2:
+ 220              		.cfi_def_cfa_offset 24
+ 221              		.cfi_offset 3, -24
+ 222              		.cfi_offset 4, -20
+ 223              		.cfi_offset 5, -16
+ 224              		.cfi_offset 6, -12
+ 225              		.cfi_offset 7, -8
+ 226              		.cfi_offset 14, -4
+ 227 0002 0D46     		mov	r5, r1
+ 228 0004 1446     		mov	r4, r2
+ 133:src/protocolfunctions.c ****     switch (cmd) {
+ 229              		.loc 1 133 5 is_stmt 1 view .LVU47
+ 230 0006 522A     		cmp	r2, #82
+ 231 0008 01D0     		beq	.L18
+ 232 000a 732A     		cmp	r2, #115
+ 233 000c 10D1     		bne	.L19
+ 234              	.L18:
+ 134:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+ 135:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
+ 136:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->LeftAbsolute = HallData[0].HallPosn_mm;
+ 235              		.loc 1 136 13 view .LVU48
+ 236              		.loc 1 136 28 is_stmt 0 view .LVU49
+ 237 000e 2969     		ldr	r1, [r5, #16]
+ 238              	.LVL15:
+ 239              		.loc 1 136 63 view .LVU50
+ 240 0010 0F4A     		ldr	r2, .L23
+ 241              	.LVL16:
+ 242              		.loc 1 136 63 view .LVU51
+ 243 0012 1669     		ldr	r6, [r2, #16]
+ 244              		.loc 1 136 50 view .LVU52
+ 245 0014 0E60     		str	r6, [r1]
+ARM GAS  /tmp/cc0kyNAB.s 			page 8
+
+
+ 137:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn_mm - HallData[0].HallPosn_mm_
+ 246              		.loc 1 137 13 is_stmt 1 view .LVU53
+ 247              		.loc 1 137 61 is_stmt 0 view .LVU54
+ 248 0016 1169     		ldr	r1, [r2, #16]
+ 249              		.loc 1 137 87 view .LVU55
+ 250 0018 5769     		ldr	r7, [r2, #20]
+ 251              		.loc 1 137 28 view .LVU56
+ 252 001a 2E69     		ldr	r6, [r5, #16]
+ 253              		.loc 1 137 74 view .LVU57
+ 254 001c C91B     		subs	r1, r1, r7
+ 255              		.loc 1 137 48 view .LVU58
+ 256 001e B160     		str	r1, [r6, #8]
+ 138:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->RightAbsolute = HallData[1].HallPosn_mm;
+ 257              		.loc 1 138 13 is_stmt 1 view .LVU59
+ 258              		.loc 1 138 28 is_stmt 0 view .LVU60
+ 259 0020 2969     		ldr	r1, [r5, #16]
+ 260              		.loc 1 138 64 view .LVU61
+ 261 0022 566B     		ldr	r6, [r2, #52]
+ 262              		.loc 1 138 51 view .LVU62
+ 263 0024 4E60     		str	r6, [r1, #4]
+ 139:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->RightOffset = HallData[1].HallPosn_mm - HallData[1].HallPosn_mm
+ 264              		.loc 1 139 13 is_stmt 1 view .LVU63
+ 265              		.loc 1 139 62 is_stmt 0 view .LVU64
+ 266 0026 516B     		ldr	r1, [r2, #52]
+ 267              		.loc 1 139 88 view .LVU65
+ 268 0028 926B     		ldr	r2, [r2, #56]
+ 269              		.loc 1 139 75 view .LVU66
+ 270 002a 8A1A     		subs	r2, r1, r2
+ 271              		.loc 1 139 49 view .LVU67
+ 272 002c 2969     		ldr	r1, [r5, #16]
+ 273 002e CA60     		str	r2, [r1, #12]
+ 140:src/protocolfunctions.c ****             break;
+ 274              		.loc 1 140 13 is_stmt 1 view .LVU68
+ 275              	.L19:
+ 141:src/protocolfunctions.c ****     }
+ 142:src/protocolfunctions.c **** 
+ 143:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 276              		.loc 1 143 5 view .LVU69
+ 277 0030 2246     		mov	r2, r4
+ 278 0032 2946     		mov	r1, r5
+ 279 0034 FFF7FEFF 		bl	fn_defaultProcessing
+ 280              	.LVL17:
+ 144:src/protocolfunctions.c **** 
+ 145:src/protocolfunctions.c ****     switch (cmd) {
+ 281              		.loc 1 145 5 view .LVU70
+ 282 0038 572C     		cmp	r4, #87
+ 283 003a 01D0     		beq	.L20
+ 284 003c 722C     		cmp	r4, #114
+ 285 003e 06D1     		bne	.L17
+ 286              	.L20:
+ 146:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 147:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 148:src/protocolfunctions.c ****             HallData[0].HallPosn_mm_lastread = ((POSN*) (param->ptr))->LeftAbsolute;
+ 287              		.loc 1 148 13 view .LVU71
+ 288              		.loc 1 148 63 is_stmt 0 view .LVU72
+ 289 0040 2B69     		ldr	r3, [r5, #16]
+ 290              		.loc 1 148 70 view .LVU73
+ARM GAS  /tmp/cc0kyNAB.s 			page 9
+
+
+ 291 0042 1A68     		ldr	r2, [r3]
+ 292              		.loc 1 148 46 view .LVU74
+ 293 0044 024B     		ldr	r3, .L23
+ 294 0046 5A61     		str	r2, [r3, #20]
+ 149:src/protocolfunctions.c ****             HallData[1].HallPosn_mm_lastread = ((POSN*) (param->ptr))->RightAbsolute;
+ 295              		.loc 1 149 13 is_stmt 1 view .LVU75
+ 296              		.loc 1 149 63 is_stmt 0 view .LVU76
+ 297 0048 2A69     		ldr	r2, [r5, #16]
+ 298              		.loc 1 149 70 view .LVU77
+ 299 004a 5268     		ldr	r2, [r2, #4]
+ 300              		.loc 1 149 46 view .LVU78
+ 301 004c 9A63     		str	r2, [r3, #56]
+ 150:src/protocolfunctions.c ****             break;
+ 302              		.loc 1 150 13 is_stmt 1 view .LVU79
+ 303              	.L17:
+ 151:src/protocolfunctions.c ****     }
+ 152:src/protocolfunctions.c **** }
+ 304              		.loc 1 152 1 is_stmt 0 view .LVU80
+ 305 004e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 306              	.LVL18:
+ 307              	.L24:
+ 308              		.loc 1 152 1 view .LVU81
+ 309              		.align	2
+ 310              	.L23:
+ 311 0050 00000000 		.word	HallData
+ 312              		.cfi_endproc
+ 313              	.LFE69:
+ 315              		.section	.text.fn_PositionIncr,"ax",%progbits
+ 316              		.align	1
+ 317              		.global	fn_PositionIncr
+ 318              		.syntax unified
+ 319              		.thumb
+ 320              		.thumb_func
+ 322              	fn_PositionIncr:
+ 323              	.LVL19:
+ 324              	.LFB70:
+ 153:src/protocolfunctions.c **** 
+ 154:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 155:src/protocolfunctions.c **** // Variable & Functions for 0x05 PositionIncr
+ 156:src/protocolfunctions.c **** 
+ 157:src/protocolfunctions.c **** POSN_INCR PositionIncr;
+ 158:src/protocolfunctions.c **** 
+ 159:src/protocolfunctions.c **** void fn_PositionIncr ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *ms
+ 325              		.loc 1 159 104 is_stmt 1 view -0
+ 326              		.cfi_startproc
+ 327              		@ args = 0, pretend = 0, frame = 0
+ 328              		@ frame_needed = 0, uses_anonymous_args = 0
+ 329              		.loc 1 159 104 is_stmt 0 view .LVU83
+ 330 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 331              	.LCFI3:
+ 332              		.cfi_def_cfa_offset 24
+ 333              		.cfi_offset 3, -24
+ 334              		.cfi_offset 4, -20
+ 335              		.cfi_offset 5, -16
+ 336              		.cfi_offset 6, -12
+ 337              		.cfi_offset 7, -8
+ 338              		.cfi_offset 14, -4
+ARM GAS  /tmp/cc0kyNAB.s 			page 10
+
+
+ 339 0002 0746     		mov	r7, r0
+ 340 0004 0E46     		mov	r6, r1
+ 341 0006 1446     		mov	r4, r2
+ 342 0008 1D46     		mov	r5, r3
+ 160:src/protocolfunctions.c **** 
+ 161:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 343              		.loc 1 161 5 is_stmt 1 view .LVU84
+ 344 000a FFF7FEFF 		bl	fn_defaultProcessing
+ 345              	.LVL20:
+ 162:src/protocolfunctions.c **** 
+ 163:src/protocolfunctions.c ****     switch (cmd) {
+ 346              		.loc 1 163 5 view .LVU85
+ 347 000e 572C     		cmp	r4, #87
+ 348 0010 01D0     		beq	.L26
+ 349 0012 722C     		cmp	r4, #114
+ 350 0014 1FD1     		bne	.L25
+ 351              	.L26:
+ 164:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 165:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 166:src/protocolfunctions.c ****             // if switching to control type POSITION,
+ 167:src/protocolfunctions.c ****             if ((control_type != CONTROL_TYPE_POSITION) || !enable) {
+ 352              		.loc 1 167 13 view .LVU86
+ 353              		.loc 1 167 31 is_stmt 0 view .LVU87
+ 354 0016 104B     		ldr	r3, .L31
+ 355 0018 1B68     		ldr	r3, [r3]
+ 356              		.loc 1 167 16 view .LVU88
+ 357 001a 012B     		cmp	r3, #1
+ 358 001c 02D1     		bne	.L28
+ 359              		.loc 1 167 60 discriminator 1 view .LVU89
+ 360 001e 0F4B     		ldr	r3, .L31+4
+ 361 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 362              		.loc 1 167 57 discriminator 1 view .LVU90
+ 363 0022 43B9     		cbnz	r3, .L29
+ 364              	.L28:
+ 168:src/protocolfunctions.c ****                 control_type = CONTROL_TYPE_POSITION;
+ 365              		.loc 1 168 17 is_stmt 1 view .LVU91
+ 366              		.loc 1 168 30 is_stmt 0 view .LVU92
+ 367 0024 0C4B     		ldr	r3, .L31
+ 368 0026 0122     		movs	r2, #1
+ 369 0028 1A60     		str	r2, [r3]
+ 169:src/protocolfunctions.c ****                 // then make sure we won't rush off somwehere strange
+ 170:src/protocolfunctions.c ****                 // by setting our wanted posn to where we currently are...
+ 171:src/protocolfunctions.c ****                 fn_enable( s, param, PROTOCOL_CMD_READVALRESPONSE, msg); // TODO: I don't like call
+ 370              		.loc 1 171 17 is_stmt 1 view .LVU93
+ 371 002a 2B46     		mov	r3, r5
+ 372 002c 7222     		movs	r2, #114
+ 373 002e 3146     		mov	r1, r6
+ 374 0030 3846     		mov	r0, r7
+ 375 0032 FFF7FEFF 		bl	fn_enable
+ 376              	.LVL21:
+ 377              	.L29:
+ 172:src/protocolfunctions.c ****             }
+ 173:src/protocolfunctions.c **** 
+ 174:src/protocolfunctions.c ****             enable = 1;
+ 378              		.loc 1 174 13 view .LVU94
+ 379              		.loc 1 174 20 is_stmt 0 view .LVU95
+ 380 0036 094B     		ldr	r3, .L31+4
+ARM GAS  /tmp/cc0kyNAB.s 			page 11
+
+
+ 381 0038 0122     		movs	r2, #1
+ 382 003a 1A70     		strb	r2, [r3]
+ 175:src/protocolfunctions.c ****             input_timeout_counter = 0;
+ 383              		.loc 1 175 13 is_stmt 1 view .LVU96
+ 384              		.loc 1 175 35 is_stmt 0 view .LVU97
+ 385 003c 084B     		ldr	r3, .L31+8
+ 386 003e 0022     		movs	r2, #0
+ 387 0040 1A60     		str	r2, [r3]
+ 176:src/protocolfunctions.c **** 
+ 177:src/protocolfunctions.c ****             // increment our wanted position
+ 178:src/protocolfunctions.c ****             PosnData.wanted_posn_mm[0] += ((POSN_INCR*) (param->ptr))->Left;
+ 388              		.loc 1 178 13 is_stmt 1 view .LVU98
+ 389              		.loc 1 178 36 is_stmt 0 view .LVU99
+ 390 0042 084B     		ldr	r3, .L31+12
+ 391 0044 1A68     		ldr	r2, [r3]
+ 392              		.loc 1 178 63 view .LVU100
+ 393 0046 3169     		ldr	r1, [r6, #16]
+ 394              		.loc 1 178 70 view .LVU101
+ 395 0048 0868     		ldr	r0, [r1]
+ 396              		.loc 1 178 40 view .LVU102
+ 397 004a 0244     		add	r2, r2, r0
+ 398 004c 1A60     		str	r2, [r3]
+ 179:src/protocolfunctions.c ****             PosnData.wanted_posn_mm[1] += ((POSN_INCR*) (param->ptr))->Right;
+ 399              		.loc 1 179 13 is_stmt 1 view .LVU103
+ 400              		.loc 1 179 36 is_stmt 0 view .LVU104
+ 401 004e 5A68     		ldr	r2, [r3, #4]
+ 402              		.loc 1 179 70 view .LVU105
+ 403 0050 4968     		ldr	r1, [r1, #4]
+ 404              		.loc 1 179 40 view .LVU106
+ 405 0052 0A44     		add	r2, r2, r1
+ 406 0054 5A60     		str	r2, [r3, #4]
+ 180:src/protocolfunctions.c ****             break;
+ 407              		.loc 1 180 13 is_stmt 1 view .LVU107
+ 408              	.L25:
+ 181:src/protocolfunctions.c ****     }
+ 182:src/protocolfunctions.c **** }
+ 409              		.loc 1 182 1 is_stmt 0 view .LVU108
+ 410 0056 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 411              	.LVL22:
+ 412              	.L32:
+ 413              		.loc 1 182 1 view .LVU109
+ 414              		.align	2
+ 415              	.L31:
+ 416 0058 00000000 		.word	control_type
+ 417 005c 00000000 		.word	enable
+ 418 0060 00000000 		.word	input_timeout_counter
+ 419 0064 00000000 		.word	PosnData
+ 420              		.cfi_endproc
+ 421              	.LFE70:
+ 423              		.section	.text.fn_RawPosition,"ax",%progbits
+ 424              		.align	1
+ 425              		.global	fn_RawPosition
+ 426              		.syntax unified
+ 427              		.thumb
+ 428              		.thumb_func
+ 430              	fn_RawPosition:
+ 431              	.LVL23:
+ARM GAS  /tmp/cc0kyNAB.s 			page 12
+
+
+ 432              	.LFB71:
+ 183:src/protocolfunctions.c **** 
+ 184:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 185:src/protocolfunctions.c **** // Variable & Functions for 0x06 PosnData
+ 186:src/protocolfunctions.c **** 
+ 187:src/protocolfunctions.c **** PROTOCOL_POSN_DATA PosnData = {
+ 188:src/protocolfunctions.c ****     {0, 0},
+ 189:src/protocolfunctions.c **** 
+ 190:src/protocolfunctions.c ****     200, // max pwm in posn mode
+ 191:src/protocolfunctions.c ****     70, // min pwm in posn mode
+ 192:src/protocolfunctions.c **** };
+ 193:src/protocolfunctions.c **** 
+ 194:src/protocolfunctions.c **** 
+ 195:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 196:src/protocolfunctions.c **** // Variable & Functions for 0x07 RawPosition
+ 197:src/protocolfunctions.c **** 
+ 198:src/protocolfunctions.c **** PROTOCOL_POSN RawPosition;
+ 199:src/protocolfunctions.c **** 
+ 200:src/protocolfunctions.c **** void fn_RawPosition ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg
+ 433              		.loc 1 200 103 is_stmt 1 view -0
+ 434              		.cfi_startproc
+ 435              		@ args = 0, pretend = 0, frame = 0
+ 436              		@ frame_needed = 0, uses_anonymous_args = 0
+ 437              		.loc 1 200 103 is_stmt 0 view .LVU111
+ 438 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 439              	.LCFI4:
+ 440              		.cfi_def_cfa_offset 24
+ 441              		.cfi_offset 3, -24
+ 442              		.cfi_offset 4, -20
+ 443              		.cfi_offset 5, -16
+ 444              		.cfi_offset 6, -12
+ 445              		.cfi_offset 7, -8
+ 446              		.cfi_offset 14, -4
+ 447 0002 0D46     		mov	r5, r1
+ 448 0004 1446     		mov	r4, r2
+ 201:src/protocolfunctions.c ****     switch (cmd) {
+ 449              		.loc 1 201 5 is_stmt 1 view .LVU112
+ 450 0006 522A     		cmp	r2, #82
+ 451 0008 01D0     		beq	.L34
+ 452 000a 732A     		cmp	r2, #115
+ 453 000c 10D1     		bne	.L35
+ 454              	.L34:
+ 202:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+ 203:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
+ 204:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->LeftAbsolute = HallData[0].HallPosn;
+ 455              		.loc 1 204 13 view .LVU113
+ 456              		.loc 1 204 37 is_stmt 0 view .LVU114
+ 457 000e 2969     		ldr	r1, [r5, #16]
+ 458              	.LVL24:
+ 459              		.loc 1 204 72 view .LVU115
+ 460 0010 0F4A     		ldr	r2, .L39
+ 461              	.LVL25:
+ 462              		.loc 1 204 72 view .LVU116
+ 463 0012 1668     		ldr	r6, [r2]
+ 464              		.loc 1 204 59 view .LVU117
+ 465 0014 0E60     		str	r6, [r1]
+ 205:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn - HallData[0].HallPo
+ARM GAS  /tmp/cc0kyNAB.s 			page 13
+
+
+ 466              		.loc 1 205 13 is_stmt 1 view .LVU118
+ 467              		.loc 1 205 70 is_stmt 0 view .LVU119
+ 468 0016 1168     		ldr	r1, [r2]
+ 469              		.loc 1 205 93 view .LVU120
+ 470 0018 D768     		ldr	r7, [r2, #12]
+ 471              		.loc 1 205 37 view .LVU121
+ 472 001a 2E69     		ldr	r6, [r5, #16]
+ 473              		.loc 1 205 80 view .LVU122
+ 474 001c C91B     		subs	r1, r1, r7
+ 475              		.loc 1 205 57 view .LVU123
+ 476 001e B160     		str	r1, [r6, #8]
+ 206:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->RightAbsolute = HallData[1].HallPosn;
+ 477              		.loc 1 206 13 is_stmt 1 view .LVU124
+ 478              		.loc 1 206 37 is_stmt 0 view .LVU125
+ 479 0020 2969     		ldr	r1, [r5, #16]
+ 480              		.loc 1 206 73 view .LVU126
+ 481 0022 566A     		ldr	r6, [r2, #36]
+ 482              		.loc 1 206 60 view .LVU127
+ 483 0024 4E60     		str	r6, [r1, #4]
+ 207:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->RightOffset = HallData[1].HallPosn - HallData[1].HallP
+ 484              		.loc 1 207 13 is_stmt 1 view .LVU128
+ 485              		.loc 1 207 71 is_stmt 0 view .LVU129
+ 486 0026 516A     		ldr	r1, [r2, #36]
+ 487              		.loc 1 207 94 view .LVU130
+ 488 0028 126B     		ldr	r2, [r2, #48]
+ 489              		.loc 1 207 81 view .LVU131
+ 490 002a 8A1A     		subs	r2, r1, r2
+ 491              		.loc 1 207 58 view .LVU132
+ 492 002c 2969     		ldr	r1, [r5, #16]
+ 493 002e CA60     		str	r2, [r1, #12]
+ 208:src/protocolfunctions.c ****             break;
+ 494              		.loc 1 208 13 is_stmt 1 view .LVU133
+ 495              	.L35:
+ 209:src/protocolfunctions.c ****     }
+ 210:src/protocolfunctions.c **** 
+ 211:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 496              		.loc 1 211 5 view .LVU134
+ 497 0030 2246     		mov	r2, r4
+ 498 0032 2946     		mov	r1, r5
+ 499 0034 FFF7FEFF 		bl	fn_defaultProcessing
+ 500              	.LVL26:
+ 212:src/protocolfunctions.c **** 
+ 213:src/protocolfunctions.c ****     switch (cmd) {
+ 501              		.loc 1 213 5 view .LVU135
+ 502 0038 572C     		cmp	r4, #87
+ 503 003a 01D0     		beq	.L36
+ 504 003c 722C     		cmp	r4, #114
+ 505 003e 05D1     		bne	.L33
+ 506              	.L36:
+ 214:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 215:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 216:src/protocolfunctions.c ****             HallData[0].HallPosn_lastread = ((PROTOCOL_POSN*) (param->ptr))->LeftAbsolute;
+ 507              		.loc 1 216 13 view .LVU136
+ 508              		.loc 1 216 69 is_stmt 0 view .LVU137
+ 509 0040 2A69     		ldr	r2, [r5, #16]
+ 510              		.loc 1 216 76 view .LVU138
+ 511 0042 1168     		ldr	r1, [r2]
+ARM GAS  /tmp/cc0kyNAB.s 			page 14
+
+
+ 512              		.loc 1 216 43 view .LVU139
+ 513 0044 024B     		ldr	r3, .L39
+ 514 0046 D960     		str	r1, [r3, #12]
+ 217:src/protocolfunctions.c ****             HallData[1].HallPosn_lastread = ((PROTOCOL_POSN*) (param->ptr))->RightAbsolute;
+ 515              		.loc 1 217 13 is_stmt 1 view .LVU140
+ 516              		.loc 1 217 76 is_stmt 0 view .LVU141
+ 517 0048 5268     		ldr	r2, [r2, #4]
+ 518              		.loc 1 217 43 view .LVU142
+ 519 004a 1A63     		str	r2, [r3, #48]
+ 218:src/protocolfunctions.c ****             break;
+ 520              		.loc 1 218 13 is_stmt 1 view .LVU143
+ 521              	.L33:
+ 219:src/protocolfunctions.c ****     }
+ 220:src/protocolfunctions.c **** }
+ 522              		.loc 1 220 1 is_stmt 0 view .LVU144
+ 523 004c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 524              	.LVL27:
+ 525              	.L40:
+ 526              		.loc 1 220 1 view .LVU145
+ 527 004e 00BF     		.align	2
+ 528              	.L39:
+ 529 0050 00000000 		.word	HallData
+ 530              		.cfi_endproc
+ 531              	.LFE71:
+ 533              		.section	.text.fn_PWMData,"ax",%progbits
+ 534              		.align	1
+ 535              		.global	fn_PWMData
+ 536              		.syntax unified
+ 537              		.thumb
+ 538              		.thumb_func
+ 540              	fn_PWMData:
+ 541              	.LVL28:
+ 542              	.LFB73:
+ 221:src/protocolfunctions.c **** 
+ 222:src/protocolfunctions.c **** 
+ 223:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 224:src/protocolfunctions.c **** // Variable & Functions for 0x0A disablepoweroff
+ 225:src/protocolfunctions.c **** 
+ 226:src/protocolfunctions.c **** extern uint8_t disablepoweroff;
+ 227:src/protocolfunctions.c **** 
+ 228:src/protocolfunctions.c **** 
+ 229:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 230:src/protocolfunctions.c **** // Variable & Functions for 0x0B debug_out
+ 231:src/protocolfunctions.c **** 
+ 232:src/protocolfunctions.c **** extern uint8_t debug_out;
+ 233:src/protocolfunctions.c **** 
+ 234:src/protocolfunctions.c **** 
+ 235:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 236:src/protocolfunctions.c **** // Variable & Functions for 0x0C xytPosn
+ 237:src/protocolfunctions.c **** 
+ 238:src/protocolfunctions.c **** // ded reckoning posn
+ 239:src/protocolfunctions.c **** extern INTEGER_XYT_POSN xytPosn;
+ 240:src/protocolfunctions.c **** 
+ 241:src/protocolfunctions.c **** void fn_xytPosn ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg ) {
+ 242:src/protocolfunctions.c **** 
+ 243:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 244:src/protocolfunctions.c **** 
+ARM GAS  /tmp/cc0kyNAB.s 			page 15
+
+
+ 245:src/protocolfunctions.c ****     switch (cmd) {
+ 246:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 247:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 248:src/protocolfunctions.c ****             if (deadreconer) {
+ 249:src/protocolfunctions.c ****                 // reset xyt
+ 250:src/protocolfunctions.c ****                 reset( deadreconer, 1 );
+ 251:src/protocolfunctions.c ****             }
+ 252:src/protocolfunctions.c ****             break;
+ 253:src/protocolfunctions.c ****     }
+ 254:src/protocolfunctions.c **** 
+ 255:src/protocolfunctions.c **** }
+ 256:src/protocolfunctions.c **** 
+ 257:src/protocolfunctions.c **** 
+ 258:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 259:src/protocolfunctions.c **** // Variable & Functions for 0x0D PWMData and 0x0E PWMData.pwm
+ 260:src/protocolfunctions.c **** 
+ 261:src/protocolfunctions.c **** PROTOCOL_PWM_DATA PWMData = {
+ 262:src/protocolfunctions.c ****     .pwm[0] = 0,
+ 263:src/protocolfunctions.c ****     .pwm[1] = 0,
+ 264:src/protocolfunctions.c ****     .speed_max_power =  600,
+ 265:src/protocolfunctions.c ****     .speed_min_power = -600,
+ 266:src/protocolfunctions.c ****     .speed_minimum_pwm = 40 // guard value, below this set to zero
+ 267:src/protocolfunctions.c **** };
+ 268:src/protocolfunctions.c **** 
+ 269:src/protocolfunctions.c **** extern int pwms[2];
+ 270:src/protocolfunctions.c **** 
+ 271:src/protocolfunctions.c **** void fn_PWMData ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg ) {
+ 543              		.loc 1 271 99 is_stmt 1 view -0
+ 544              		.cfi_startproc
+ 545              		@ args = 0, pretend = 0, frame = 0
+ 546              		@ frame_needed = 0, uses_anonymous_args = 0
+ 547              		.loc 1 271 99 is_stmt 0 view .LVU147
+ 548 0000 38B5     		push	{r3, r4, r5, lr}
+ 549              	.LCFI5:
+ 550              		.cfi_def_cfa_offset 16
+ 551              		.cfi_offset 3, -16
+ 552              		.cfi_offset 4, -12
+ 553              		.cfi_offset 5, -8
+ 554              		.cfi_offset 14, -4
+ 555 0002 0C46     		mov	r4, r1
+ 556 0004 1546     		mov	r5, r2
+ 272:src/protocolfunctions.c ****     switch (cmd) {
+ 557              		.loc 1 272 5 is_stmt 1 view .LVU148
+ 558 0006 572A     		cmp	r2, #87
+ 559 0008 01D0     		beq	.L42
+ 560 000a 722A     		cmp	r2, #114
+ 561 000c 05D1     		bne	.L43
+ 562              	.L42:
+ 273:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 274:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 275:src/protocolfunctions.c ****             control_type = CONTROL_TYPE_PWM;
+ 563              		.loc 1 275 13 view .LVU149
+ 564              		.loc 1 275 26 is_stmt 0 view .LVU150
+ 565 000e 1F4A     		ldr	r2, .L57
+ 566              	.LVL29:
+ 567              		.loc 1 275 26 view .LVU151
+ 568 0010 0321     		movs	r1, #3
+ARM GAS  /tmp/cc0kyNAB.s 			page 16
+
+
+ 569              	.LVL30:
+ 570              		.loc 1 275 26 view .LVU152
+ 571 0012 1160     		str	r1, [r2]
+ 276:src/protocolfunctions.c ****             input_timeout_counter = 0;
+ 572              		.loc 1 276 13 is_stmt 1 view .LVU153
+ 573              		.loc 1 276 35 is_stmt 0 view .LVU154
+ 574 0014 1E4A     		ldr	r2, .L57+4
+ 575 0016 0021     		movs	r1, #0
+ 576 0018 1160     		str	r1, [r2]
+ 277:src/protocolfunctions.c ****             break;
+ 577              		.loc 1 277 13 is_stmt 1 view .LVU155
+ 578              	.L43:
+ 278:src/protocolfunctions.c ****     }
+ 279:src/protocolfunctions.c **** 
+ 280:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 579              		.loc 1 280 5 view .LVU156
+ 580 001a 2A46     		mov	r2, r5
+ 581 001c 2146     		mov	r1, r4
+ 582 001e FFF7FEFF 		bl	fn_defaultProcessing
+ 583              	.LVL31:
+ 281:src/protocolfunctions.c **** 
+ 282:src/protocolfunctions.c ****     switch (cmd) {
+ 584              		.loc 1 282 5 view .LVU157
+ 585 0022 572D     		cmp	r5, #87
+ 586 0024 2ED0     		beq	.L52
+ 587 0026 722D     		cmp	r5, #114
+ 588 0028 2ED0     		beq	.L55
+ 589              	.L41:
+ 283:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 284:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 285:src/protocolfunctions.c ****             for (int i = 0; i < 2; i++) {
+ 286:src/protocolfunctions.c ****                 if (((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] > ((PROTOCOL_PWM_DATA*) (param->ptr
+ 287:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 288:src/protocolfunctions.c ****                 }
+ 289:src/protocolfunctions.c ****                 if (((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] < ((PROTOCOL_PWM_DATA*) (param->ptr
+ 290:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 291:src/protocolfunctions.c ****                 }
+ 292:src/protocolfunctions.c ****                 if ((((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] > 0) && (((PROTOCOL_PWM_DATA*) (pa
+ 293:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 294:src/protocolfunctions.c ****                 }
+ 295:src/protocolfunctions.c ****                 if ((((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] < 0) && (((PROTOCOL_PWM_DATA*) (pa
+ 296:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 297:src/protocolfunctions.c ****                 }
+ 298:src/protocolfunctions.c ****             }
+ 299:src/protocolfunctions.c ****             break;
+ 300:src/protocolfunctions.c ****     }
+ 301:src/protocolfunctions.c **** }
+ 590              		.loc 1 301 1 is_stmt 0 view .LVU158
+ 591 002a 38BD     		pop	{r3, r4, r5, pc}
+ 592              	.LVL32:
+ 593              	.L48:
+ 594              	.LBB2:
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 595              		.loc 1 295 17 is_stmt 1 view .LVU159
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 596              		.loc 1 295 50 is_stmt 0 view .LVU160
+ 597 002c 2269     		ldr	r2, [r4, #16]
+ARM GAS  /tmp/cc0kyNAB.s 			page 17
+
+
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 598              		.loc 1 295 62 view .LVU161
+ 599 002e 52F82310 		ldr	r1, [r2, r3, lsl #2]
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 600              		.loc 1 295 20 view .LVU162
+ 601 0032 0029     		cmp	r1, #0
+ 602 0034 1EDB     		blt	.L56
+ 603              	.L49:
+ 285:src/protocolfunctions.c ****                 if (((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] > ((PROTOCOL_PWM_DATA*) (param->ptr
+ 604              		.loc 1 285 37 is_stmt 1 discriminator 2 view .LVU163
+ 605 0036 0133     		adds	r3, r3, #1
+ 606              	.LVL33:
+ 607              	.L50:
+ 285:src/protocolfunctions.c ****                 if (((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] > ((PROTOCOL_PWM_DATA*) (param->ptr
+ 608              		.loc 1 285 31 discriminator 1 view .LVU164
+ 609 0038 012B     		cmp	r3, #1
+ 610 003a F6DC     		bgt	.L41
+ 286:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 611              		.loc 1 286 17 view .LVU165
+ 286:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 612              		.loc 1 286 49 is_stmt 0 view .LVU166
+ 613 003c 2269     		ldr	r2, [r4, #16]
+ 286:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 614              		.loc 1 286 61 view .LVU167
+ 615 003e 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 286:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 616              		.loc 1 286 102 view .LVU168
+ 617 0042 9168     		ldr	r1, [r2, #8]
+ 286:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 618              		.loc 1 286 20 view .LVU169
+ 619 0044 8842     		cmp	r0, r1
+ 620 0046 01DD     		ble	.L46
+ 287:src/protocolfunctions.c ****                 }
+ 621              		.loc 1 287 21 is_stmt 1 view .LVU170
+ 287:src/protocolfunctions.c ****                 }
+ 622              		.loc 1 287 65 is_stmt 0 view .LVU171
+ 623 0048 42F82310 		str	r1, [r2, r3, lsl #2]
+ 624              	.L46:
+ 289:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 625              		.loc 1 289 17 is_stmt 1 view .LVU172
+ 289:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 626              		.loc 1 289 49 is_stmt 0 view .LVU173
+ 627 004c 2269     		ldr	r2, [r4, #16]
+ 289:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 628              		.loc 1 289 61 view .LVU174
+ 629 004e 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 289:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 630              		.loc 1 289 102 view .LVU175
+ 631 0052 D168     		ldr	r1, [r2, #12]
+ 289:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = ((PROTOCOL_PWM_DATA*) (param->ptr
+ 632              		.loc 1 289 20 view .LVU176
+ 633 0054 8842     		cmp	r0, r1
+ 634 0056 01DA     		bge	.L47
+ 290:src/protocolfunctions.c ****                 }
+ 635              		.loc 1 290 21 is_stmt 1 view .LVU177
+ 290:src/protocolfunctions.c ****                 }
+ 636              		.loc 1 290 65 is_stmt 0 view .LVU178
+ARM GAS  /tmp/cc0kyNAB.s 			page 18
+
+
+ 637 0058 42F82310 		str	r1, [r2, r3, lsl #2]
+ 638              	.L47:
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 639              		.loc 1 292 17 is_stmt 1 view .LVU179
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 640              		.loc 1 292 50 is_stmt 0 view .LVU180
+ 641 005c 2269     		ldr	r2, [r4, #16]
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 642              		.loc 1 292 62 view .LVU181
+ 643 005e 52F82310 		ldr	r1, [r2, r3, lsl #2]
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 644              		.loc 1 292 20 view .LVU182
+ 645 0062 0029     		cmp	r1, #0
+ 646 0064 E2DD     		ble	.L48
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 647              		.loc 1 292 156 discriminator 1 view .LVU183
+ 648 0066 1069     		ldr	r0, [r2, #16]
+ 292:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 649              		.loc 1 292 71 discriminator 1 view .LVU184
+ 650 0068 8142     		cmp	r1, r0
+ 651 006a DFDA     		bge	.L48
+ 293:src/protocolfunctions.c ****                 }
+ 652              		.loc 1 293 21 is_stmt 1 view .LVU185
+ 293:src/protocolfunctions.c ****                 }
+ 653              		.loc 1 293 65 is_stmt 0 view .LVU186
+ 654 006c 0021     		movs	r1, #0
+ 655 006e 42F82310 		str	r1, [r2, r3, lsl #2]
+ 656 0072 DBE7     		b	.L48
+ 657              	.L56:
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 658              		.loc 1 295 157 discriminator 1 view .LVU187
+ 659 0074 1069     		ldr	r0, [r2, #16]
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 660              		.loc 1 295 121 discriminator 1 view .LVU188
+ 661 0076 4042     		rsbs	r0, r0, #0
+ 295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
+ 662              		.loc 1 295 71 discriminator 1 view .LVU189
+ 663 0078 8142     		cmp	r1, r0
+ 664 007a DCDD     		ble	.L49
+ 296:src/protocolfunctions.c ****                 }
+ 665              		.loc 1 296 21 is_stmt 1 view .LVU190
+ 296:src/protocolfunctions.c ****                 }
+ 666              		.loc 1 296 65 is_stmt 0 view .LVU191
+ 667 007c 0021     		movs	r1, #0
+ 668 007e 42F82310 		str	r1, [r2, r3, lsl #2]
+ 669 0082 D8E7     		b	.L49
+ 670              	.LVL34:
+ 671              	.L52:
+ 296:src/protocolfunctions.c ****                 }
+ 672              		.loc 1 296 65 view .LVU192
+ 673              	.LBE2:
+ 282:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 674              		.loc 1 282 5 view .LVU193
+ 675 0084 0023     		movs	r3, #0
+ 676 0086 D7E7     		b	.L50
+ 677              	.L55:
+ 678 0088 0023     		movs	r3, #0
+ARM GAS  /tmp/cc0kyNAB.s 			page 19
+
+
+ 679 008a D5E7     		b	.L50
+ 680              	.L58:
+ 681              		.align	2
+ 682              	.L57:
+ 683 008c 00000000 		.word	control_type
+ 684 0090 00000000 		.word	input_timeout_counter
+ 685              		.cfi_endproc
+ 686              	.LFE73:
+ 688              		.section	.text.fn_BuzzerData,"ax",%progbits
+ 689              		.align	1
+ 690              		.global	fn_BuzzerData
+ 691              		.syntax unified
+ 692              		.thumb
+ 693              		.thumb_func
+ 695              	fn_BuzzerData:
+ 696              	.LVL35:
+ 697              	.LFB74:
+ 302:src/protocolfunctions.c **** 
+ 303:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 304:src/protocolfunctions.c **** // Variable & Functions for 0x21 BuzzerData
+ 305:src/protocolfunctions.c **** 
+ 306:src/protocolfunctions.c **** PROTOCOL_BUZZER_DATA BuzzerData = {
+ 307:src/protocolfunctions.c ****     .buzzerFreq = 0,
+ 308:src/protocolfunctions.c ****     .buzzerPattern = 0,
+ 309:src/protocolfunctions.c ****     .buzzerLen = 0,
+ 310:src/protocolfunctions.c **** };
+ 311:src/protocolfunctions.c **** 
+ 312:src/protocolfunctions.c **** extern uint8_t buzzerFreq;    // global variable for the buzzer pitch. can be 1, 2, 3, 4, 5, 6, 7..
+ 313:src/protocolfunctions.c **** extern uint8_t buzzerPattern; // global variable for the buzzer pattern. can be 1, 2, 3, 4, 5, 6, 7
+ 314:src/protocolfunctions.c **** extern uint16_t buzzerLen;
+ 315:src/protocolfunctions.c **** 
+ 316:src/protocolfunctions.c **** void fn_BuzzerData ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full *msg 
+ 698              		.loc 1 316 102 is_stmt 1 view -0
+ 699              		.cfi_startproc
+ 700              		@ args = 0, pretend = 0, frame = 0
+ 701              		@ frame_needed = 0, uses_anonymous_args = 0
+ 702              		.loc 1 316 102 is_stmt 0 view .LVU195
+ 703 0000 38B5     		push	{r3, r4, r5, lr}
+ 704              	.LCFI6:
+ 705              		.cfi_def_cfa_offset 16
+ 706              		.cfi_offset 3, -16
+ 707              		.cfi_offset 4, -12
+ 708              		.cfi_offset 5, -8
+ 709              		.cfi_offset 14, -4
+ 710 0002 0D46     		mov	r5, r1
+ 711 0004 1446     		mov	r4, r2
+ 317:src/protocolfunctions.c ****     switch (cmd) {
+ 712              		.loc 1 317 5 is_stmt 1 view .LVU196
+ 713 0006 522A     		cmp	r2, #82
+ 714 0008 01D0     		beq	.L60
+ 715 000a 732A     		cmp	r2, #115
+ 716 000c 0BD1     		bne	.L61
+ 717              	.L60:
+ 318:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+ 319:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
+ 320:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerFreq       = buzzerFreq;
+ 718              		.loc 1 320 13 view .LVU197
+ARM GAS  /tmp/cc0kyNAB.s 			page 20
+
+
+ 719              		.loc 1 320 44 is_stmt 0 view .LVU198
+ 720 000e 2A69     		ldr	r2, [r5, #16]
+ 721              	.LVL36:
+ 722              		.loc 1 320 70 view .LVU199
+ 723 0010 0E49     		ldr	r1, .L65
+ 724              	.LVL37:
+ 725              		.loc 1 320 70 view .LVU200
+ 726 0012 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 727 0014 1170     		strb	r1, [r2]
+ 321:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerLen        = buzzerLen;
+ 728              		.loc 1 321 13 is_stmt 1 view .LVU201
+ 729              		.loc 1 321 44 is_stmt 0 view .LVU202
+ 730 0016 2A69     		ldr	r2, [r5, #16]
+ 731              		.loc 1 321 70 view .LVU203
+ 732 0018 0D49     		ldr	r1, .L65+4
+ 733 001a 0988     		ldrh	r1, [r1]
+ 734 001c 5180     		strh	r1, [r2, #2]	@ unaligned
+ 322:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerPattern    = buzzerPattern;
+ 735              		.loc 1 322 13 is_stmt 1 view .LVU204
+ 736              		.loc 1 322 44 is_stmt 0 view .LVU205
+ 737 001e 2A69     		ldr	r2, [r5, #16]
+ 738              		.loc 1 322 70 view .LVU206
+ 739 0020 0C49     		ldr	r1, .L65+8
+ 740 0022 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 741 0024 5170     		strb	r1, [r2, #1]
+ 323:src/protocolfunctions.c ****             break;
+ 742              		.loc 1 323 13 is_stmt 1 view .LVU207
+ 743              	.L61:
+ 324:src/protocolfunctions.c ****     }
+ 325:src/protocolfunctions.c **** 
+ 326:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 744              		.loc 1 326 5 view .LVU208
+ 745 0026 2246     		mov	r2, r4
+ 746 0028 2946     		mov	r1, r5
+ 747 002a FFF7FEFF 		bl	fn_defaultProcessing
+ 748              	.LVL38:
+ 327:src/protocolfunctions.c **** 
+ 328:src/protocolfunctions.c ****     switch (cmd) {
+ 749              		.loc 1 328 5 view .LVU209
+ 750 002e 572C     		cmp	r4, #87
+ 751 0030 01D0     		beq	.L62
+ 752 0032 722C     		cmp	r4, #114
+ 753 0034 09D1     		bne	.L59
+ 754              	.L62:
+ 329:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 330:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 331:src/protocolfunctions.c ****             buzzerFreq      = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerFreq;
+ 755              		.loc 1 331 13 view .LVU210
+ 756              		.loc 1 331 62 is_stmt 0 view .LVU211
+ 757 0036 2B69     		ldr	r3, [r5, #16]
+ 758              		.loc 1 331 69 view .LVU212
+ 759 0038 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 760              		.loc 1 331 29 view .LVU213
+ 761 003a 044A     		ldr	r2, .L65
+ 762 003c 1170     		strb	r1, [r2]
+ 332:src/protocolfunctions.c ****             buzzerLen       = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerLen;
+ 763              		.loc 1 332 13 is_stmt 1 view .LVU214
+ARM GAS  /tmp/cc0kyNAB.s 			page 21
+
+
+ 764              		.loc 1 332 69 is_stmt 0 view .LVU215
+ 765 003e 5988     		ldrh	r1, [r3, #2]	@ unaligned
+ 766              		.loc 1 332 29 view .LVU216
+ 767 0040 034A     		ldr	r2, .L65+4
+ 768 0042 1180     		strh	r1, [r2]	@ movhi
+ 333:src/protocolfunctions.c ****             buzzerPattern   = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerPattern;
+ 769              		.loc 1 333 13 is_stmt 1 view .LVU217
+ 770              		.loc 1 333 69 is_stmt 0 view .LVU218
+ 771 0044 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 772              		.loc 1 333 29 view .LVU219
+ 773 0046 034B     		ldr	r3, .L65+8
+ 774 0048 1A70     		strb	r2, [r3]
+ 334:src/protocolfunctions.c ****             break;
+ 775              		.loc 1 334 13 is_stmt 1 view .LVU220
+ 776              	.L59:
+ 335:src/protocolfunctions.c ****     }
+ 336:src/protocolfunctions.c **** }
+ 777              		.loc 1 336 1 is_stmt 0 view .LVU221
+ 778 004a 38BD     		pop	{r3, r4, r5, pc}
+ 779              	.LVL39:
+ 780              	.L66:
+ 781              		.loc 1 336 1 view .LVU222
+ 782              		.align	2
+ 783              	.L65:
+ 784 004c 00000000 		.word	buzzerFreq
+ 785 0050 00000000 		.word	buzzerLen
+ 786 0054 00000000 		.word	buzzerPattern
+ 787              		.cfi_endproc
+ 788              	.LFE74:
+ 790              		.section	.text.fn_FlashContentMaxCurrLim,"ax",%progbits
+ 791              		.align	1
+ 792              		.global	fn_FlashContentMaxCurrLim
+ 793              		.syntax unified
+ 794              		.thumb
+ 795              		.thumb_func
+ 797              	fn_FlashContentMaxCurrLim:
+ 798              	.LVL40:
+ 799              	.LFB77:
+ 337:src/protocolfunctions.c **** 
+ 338:src/protocolfunctions.c **** 
+ 339:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 340:src/protocolfunctions.c **** // Variable & Functions for 0x80 to 0xA0 FlashContent
+ 341:src/protocolfunctions.c **** 
+ 342:src/protocolfunctions.c **** // from main.c
+ 343:src/protocolfunctions.c **** extern void change_PID_constants();
+ 344:src/protocolfunctions.c **** extern void init_PID_control();
+ 345:src/protocolfunctions.c **** 
+ 346:src/protocolfunctions.c **** extern volatile ELECTRICAL_PARAMS electrical_measurements;
+ 347:src/protocolfunctions.c **** 
+ 348:src/protocolfunctions.c **** void fn_FlashContentMagic ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3ful
+ 349:src/protocolfunctions.c **** 
+ 350:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 351:src/protocolfunctions.c **** 
+ 352:src/protocolfunctions.c ****     switch (cmd) {
+ 353:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 354:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 355:src/protocolfunctions.c ****             if (FlashContent.magic != CURRENT_MAGIC){
+ARM GAS  /tmp/cc0kyNAB.s 			page 22
+
+
+ 356:src/protocolfunctions.c ****                 char temp[128];
+ 357:src/protocolfunctions.c ****                 sprintf(temp, "incorrect magic %d, should be %d\r\nFlash not written\r\n", FlashCon
+ 358:src/protocolfunctions.c ****                 consoleLog(temp);
+ 359:src/protocolfunctions.c ****                 FlashContent.magic = CURRENT_MAGIC;
+ 360:src/protocolfunctions.c ****                 return;
+ 361:src/protocolfunctions.c ****             }
+ 362:src/protocolfunctions.c ****             writeFlash( (unsigned char *)&FlashContent, sizeof(FlashContent) );
+ 363:src/protocolfunctions.c ****             consoleLog("wrote flash\r\n");
+ 364:src/protocolfunctions.c ****             break;
+ 365:src/protocolfunctions.c ****     }
+ 366:src/protocolfunctions.c **** }
+ 367:src/protocolfunctions.c **** 
+ 368:src/protocolfunctions.c **** void fn_FlashContentPID ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MSG3full 
+ 369:src/protocolfunctions.c **** 
+ 370:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 371:src/protocolfunctions.c **** 
+ 372:src/protocolfunctions.c ****     switch (cmd) {
+ 373:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 374:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 375:src/protocolfunctions.c ****             change_PID_constants();
+ 376:src/protocolfunctions.c ****             break;
+ 377:src/protocolfunctions.c ****     }
+ 378:src/protocolfunctions.c **** }
+ 379:src/protocolfunctions.c **** 
+ 380:src/protocolfunctions.c **** void fn_FlashContentMaxCurrLim ( PROTOCOL_STAT *s, PARAMSTAT *param, unsigned char cmd, PROTOCOL_MS
+ 800              		.loc 1 380 114 is_stmt 1 view -0
+ 801              		.cfi_startproc
+ 802              		@ args = 0, pretend = 0, frame = 0
+ 803              		@ frame_needed = 0, uses_anonymous_args = 0
+ 804              		.loc 1 380 114 is_stmt 0 view .LVU224
+ 805 0000 10B5     		push	{r4, lr}
+ 806              	.LCFI7:
+ 807              		.cfi_def_cfa_offset 8
+ 808              		.cfi_offset 4, -8
+ 809              		.cfi_offset 14, -4
+ 810 0002 1446     		mov	r4, r2
+ 381:src/protocolfunctions.c **** 
+ 382:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
+ 811              		.loc 1 382 5 is_stmt 1 view .LVU225
+ 812 0004 FFF7FEFF 		bl	fn_defaultProcessing
+ 813              	.LVL41:
+ 383:src/protocolfunctions.c **** 
+ 384:src/protocolfunctions.c ****     switch (cmd) {
+ 814              		.loc 1 384 5 view .LVU226
+ 815 0008 572C     		cmp	r4, #87
+ 816 000a 01D0     		beq	.L68
+ 817 000c 722C     		cmp	r4, #114
+ 818 000e 0CD1     		bne	.L67
+ 819              	.L68:
+ 385:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 386:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
+ 387:src/protocolfunctions.c ****             electrical_measurements.dcCurLim = MIN(DC_CUR_LIMIT, FlashContent.MaxCurrLim / 100);
+ 820              		.loc 1 387 13 view .LVU227
+ 821              		.loc 1 387 48 is_stmt 0 view .LVU228
+ 822 0010 064B     		ldr	r3, .L73
+ 823 0012 5B8A     		ldrh	r3, [r3, #18]
+ 824 0014 B3F5C86F 		cmp	r3, #1600
+ARM GAS  /tmp/cc0kyNAB.s 			page 23
+
+
+ 825 0018 04D2     		bcs	.L71
+ 826              		.loc 1 387 48 discriminator 1 view .LVU229
+ 827 001a 054A     		ldr	r2, .L73+4
+ 828 001c A2FB0323 		umull	r2, r3, r2, r3
+ 829 0020 5B09     		lsrs	r3, r3, #5
+ 830 0022 00E0     		b	.L70
+ 831              	.L71:
+ 832              		.loc 1 387 48 discriminator 2 view .LVU230
+ 833 0024 0F23     		movs	r3, #15
+ 834              	.L70:
+ 835              		.loc 1 387 46 discriminator 4 view .LVU231
+ 836 0026 034A     		ldr	r2, .L73+8
+ 837 0028 9361     		str	r3, [r2, #24]
+ 388:src/protocolfunctions.c ****             break;
+ 838              		.loc 1 388 13 is_stmt 1 view .LVU232
+ 839              	.L67:
+ 389:src/protocolfunctions.c ****     }
+ 390:src/protocolfunctions.c **** }
+ 840              		.loc 1 390 1 is_stmt 0 view .LVU233
+ 841 002a 10BD     		pop	{r4, pc}
+ 842              	.LVL42:
+ 843              	.L74:
+ 844              		.loc 1 390 1 view .LVU234
+ 845              		.align	2
+ 846              	.L73:
+ 847 002c 00000000 		.word	FlashContent
+ 848 0030 1F85EB51 		.word	1374389535
+ 849 0034 00000000 		.word	electrical_measurements
+ 850              		.cfi_endproc
+ 851              	.LFE77:
+ 853              		.section	.text.fn_SensorData,"ax",%progbits
+ 854              		.align	1
+ 855              		.global	fn_SensorData
+ 856              		.syntax unified
+ 857              		.thumb
+ 858              		.thumb_func
+ 860              	fn_SensorData:
+ 861              	.LVL43:
+ 862              	.LFB67:
+  85:src/protocolfunctions.c ****     switch (cmd) {
+ 863              		.loc 1 85 102 is_stmt 1 view -0
+ 864              		.cfi_startproc
+ 865              		@ args = 0, pretend = 0, frame = 0
+ 866              		@ frame_needed = 0, uses_anonymous_args = 0
+  85:src/protocolfunctions.c ****     switch (cmd) {
+ 867              		.loc 1 85 102 is_stmt 0 view .LVU236
+ 868 0000 38B5     		push	{r3, r4, r5, lr}
+ 869              	.LCFI8:
+ 870              		.cfi_def_cfa_offset 16
+ 871              		.cfi_offset 3, -16
+ 872              		.cfi_offset 4, -12
+ 873              		.cfi_offset 5, -8
+ 874              		.cfi_offset 14, -4
+  86:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVAL:
+ 875              		.loc 1 86 5 is_stmt 1 view .LVU237
+ 876 0002 522A     		cmp	r2, #82
+ 877 0004 01D0     		beq	.L76
+ARM GAS  /tmp/cc0kyNAB.s 			page 24
+
+
+ 878 0006 732A     		cmp	r2, #115
+ 879 0008 18D1     		bne	.L77
+ 880              	.L76:
+  90:src/protocolfunctions.c ****             memcpy(&sensor_copy[1], &sensor_data[1].complete, sizeof(sensor_copy[1]));
+ 881              		.loc 1 90 13 view .LVU238
+ 882 000a 0E4C     		ldr	r4, .L79
+ 883 000c 0E4D     		ldr	r5, .L79+4
+ 884 000e D5F81CE0 		ldr	lr, [r5, #28]	@ unaligned
+ 885 0012 D5F820C0 		ldr	ip, [r5, #32]	@ unaligned
+ 886 0016 C4F800E0 		str	lr, [r4]	@ unaligned
+ 887 001a C4F804C0 		str	ip, [r4, #4]	@ unaligned
+ 888 001e B5F824C0 		ldrh	ip, [r5, #36]	@ unaligned
+ 889 0022 A4F808C0 		strh	ip, [r4, #8]	@ unaligned
+  91:src/protocolfunctions.c ****             break;
+ 890              		.loc 1 91 13 view .LVU239
+ 891 0026 D5F866E0 		ldr	lr, [r5, #102]	@ unaligned
+ 892 002a D5F86AC0 		ldr	ip, [r5, #106]	@ unaligned
+ 893 002e C4F80AE0 		str	lr, [r4, #10]	@ unaligned
+ 894 0032 C4F80EC0 		str	ip, [r4, #14]	@ unaligned
+ 895 0036 B5F86E50 		ldrh	r5, [r5, #110]	@ unaligned
+ 896 003a 6582     		strh	r5, [r4, #18]	@ unaligned
+  92:src/protocolfunctions.c ****     }
+ 897              		.loc 1 92 13 view .LVU240
+ 898              	.L77:
+  94:src/protocolfunctions.c **** }
+ 899              		.loc 1 94 5 view .LVU241
+ 900 003c FFF7FEFF 		bl	fn_defaultProcessingReadOnly
+ 901              	.LVL44:
+  95:src/protocolfunctions.c **** 
+ 902              		.loc 1 95 1 is_stmt 0 view .LVU242
+ 903 0040 38BD     		pop	{r3, r4, r5, pc}
+ 904              	.L80:
+ 905 0042 00BF     		.align	2
+ 906              	.L79:
+ 907 0044 00000000 		.word	sensor_copy
+ 908 0048 00000000 		.word	sensor_data
+ 909              		.cfi_endproc
+ 910              	.LFE67:
+ 912              		.section	.text.fn_xytPosn,"ax",%progbits
+ 913              		.align	1
+ 914              		.global	fn_xytPosn
+ 915              		.syntax unified
+ 916              		.thumb
+ 917              		.thumb_func
+ 919              	fn_xytPosn:
+ 920              	.LVL45:
+ 921              	.LFB72:
+ 241:src/protocolfunctions.c **** 
+ 922              		.loc 1 241 99 is_stmt 1 view -0
+ 923              		.cfi_startproc
+ 924              		@ args = 0, pretend = 0, frame = 0
+ 925              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241:src/protocolfunctions.c **** 
+ 926              		.loc 1 241 99 is_stmt 0 view .LVU244
+ 927 0000 10B5     		push	{r4, lr}
+ 928              	.LCFI9:
+ 929              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/cc0kyNAB.s 			page 25
+
+
+ 930              		.cfi_offset 4, -8
+ 931              		.cfi_offset 14, -4
+ 932 0002 1446     		mov	r4, r2
+ 243:src/protocolfunctions.c **** 
+ 933              		.loc 1 243 5 is_stmt 1 view .LVU245
+ 934 0004 FFF7FEFF 		bl	fn_defaultProcessing
+ 935              	.LVL46:
+ 245:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 936              		.loc 1 245 5 view .LVU246
+ 937 0008 572C     		cmp	r4, #87
+ 938 000a 02D0     		beq	.L82
+ 939 000c 722C     		cmp	r4, #114
+ 940 000e 00D0     		beq	.L82
+ 941              	.L81:
+ 255:src/protocolfunctions.c **** 
+ 942              		.loc 1 255 1 is_stmt 0 view .LVU247
+ 943 0010 10BD     		pop	{r4, pc}
+ 944              	.LVL47:
+ 945              	.L82:
+ 248:src/protocolfunctions.c ****                 // reset xyt
+ 946              		.loc 1 248 13 is_stmt 1 view .LVU248
+ 248:src/protocolfunctions.c ****                 // reset xyt
+ 947              		.loc 1 248 17 is_stmt 0 view .LVU249
+ 948 0012 044B     		ldr	r3, .L85
+ 949 0014 1868     		ldr	r0, [r3]
+ 248:src/protocolfunctions.c ****                 // reset xyt
+ 950              		.loc 1 248 16 view .LVU250
+ 951 0016 0028     		cmp	r0, #0
+ 952 0018 FAD0     		beq	.L81
+ 250:src/protocolfunctions.c ****             }
+ 953              		.loc 1 250 17 is_stmt 1 view .LVU251
+ 954 001a 0121     		movs	r1, #1
+ 955 001c FFF7FEFF 		bl	reset
+ 956              	.LVL48:
+ 255:src/protocolfunctions.c **** 
+ 957              		.loc 1 255 1 is_stmt 0 view .LVU252
+ 958 0020 F6E7     		b	.L81
+ 959              	.L86:
+ 960 0022 00BF     		.align	2
+ 961              	.L85:
+ 962 0024 00000000 		.word	deadreconer
+ 963              		.cfi_endproc
+ 964              	.LFE72:
+ 966              		.section	.text.fn_FlashContentPID,"ax",%progbits
+ 967              		.align	1
+ 968              		.global	fn_FlashContentPID
+ 969              		.syntax unified
+ 970              		.thumb
+ 971              		.thumb_func
+ 973              	fn_FlashContentPID:
+ 974              	.LVL49:
+ 975              	.LFB76:
+ 368:src/protocolfunctions.c **** 
+ 976              		.loc 1 368 107 is_stmt 1 view -0
+ 977              		.cfi_startproc
+ 978              		@ args = 0, pretend = 0, frame = 0
+ 979              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cc0kyNAB.s 			page 26
+
+
+ 368:src/protocolfunctions.c **** 
+ 980              		.loc 1 368 107 is_stmt 0 view .LVU254
+ 981 0000 10B5     		push	{r4, lr}
+ 982              	.LCFI10:
+ 983              		.cfi_def_cfa_offset 8
+ 984              		.cfi_offset 4, -8
+ 985              		.cfi_offset 14, -4
+ 986 0002 1446     		mov	r4, r2
+ 370:src/protocolfunctions.c **** 
+ 987              		.loc 1 370 5 is_stmt 1 view .LVU255
+ 988 0004 FFF7FEFF 		bl	fn_defaultProcessing
+ 989              	.LVL50:
+ 372:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 990              		.loc 1 372 5 view .LVU256
+ 991 0008 572C     		cmp	r4, #87
+ 992 000a 02D0     		beq	.L88
+ 993 000c 722C     		cmp	r4, #114
+ 994 000e 00D0     		beq	.L88
+ 995              	.L87:
+ 378:src/protocolfunctions.c **** 
+ 996              		.loc 1 378 1 is_stmt 0 view .LVU257
+ 997 0010 10BD     		pop	{r4, pc}
+ 998              	.LVL51:
+ 999              	.L88:
+ 375:src/protocolfunctions.c ****             break;
+ 1000              		.loc 1 375 13 is_stmt 1 view .LVU258
+ 1001 0012 FFF7FEFF 		bl	change_PID_constants
+ 1002              	.LVL52:
+ 376:src/protocolfunctions.c ****     }
+ 1003              		.loc 1 376 13 view .LVU259
+ 378:src/protocolfunctions.c **** 
+ 1004              		.loc 1 378 1 is_stmt 0 view .LVU260
+ 1005 0016 FBE7     		b	.L87
+ 1006              		.cfi_endproc
+ 1007              	.LFE76:
+ 1009              		.section	.text.setup_protocol,"ax",%progbits
+ 1010              		.align	1
+ 1011              		.global	setup_protocol
+ 1012              		.syntax unified
+ 1013              		.thumb
+ 1014              		.thumb_func
+ 1016              	setup_protocol:
+ 1017              	.LVL53:
+ 1018              	.LFB78:
+ 391:src/protocolfunctions.c **** 
+ 392:src/protocolfunctions.c **** 
+ 393:src/protocolfunctions.c **** 
+ 394:src/protocolfunctions.c **** 
+ 395:src/protocolfunctions.c **** 
+ 396:src/protocolfunctions.c **** 
+ 397:src/protocolfunctions.c **** 
+ 398:src/protocolfunctions.c **** 
+ 399:src/protocolfunctions.c **** 
+ 400:src/protocolfunctions.c **** 
+ 401:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
+ 402:src/protocolfunctions.c **** // initialize protocol and register functions
+ 403:src/protocolfunctions.c **** int setup_protocol(PROTOCOL_STAT *s) {
+ARM GAS  /tmp/cc0kyNAB.s 			page 27
+
+
+ 1019              		.loc 1 403 38 is_stmt 1 view -0
+ 1020              		.cfi_startproc
+ 1021              		@ args = 0, pretend = 0, frame = 0
+ 1022              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1023              		.loc 1 403 38 is_stmt 0 view .LVU262
+ 1024 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1025              	.LCFI11:
+ 1026              		.cfi_def_cfa_offset 32
+ 1027              		.cfi_offset 4, -32
+ 1028              		.cfi_offset 5, -28
+ 1029              		.cfi_offset 6, -24
+ 1030              		.cfi_offset 7, -20
+ 1031              		.cfi_offset 8, -16
+ 1032              		.cfi_offset 9, -12
+ 1033              		.cfi_offset 10, -8
+ 1034              		.cfi_offset 14, -4
+ 1035 0004 82B0     		sub	sp, sp, #8
+ 1036              	.LCFI12:
+ 1037              		.cfi_def_cfa_offset 40
+ 1038 0006 0546     		mov	r5, r0
+ 404:src/protocolfunctions.c **** 
+ 405:src/protocolfunctions.c ****     protocol_GetTick = HAL_GetTick;
+ 1039              		.loc 1 405 5 is_stmt 1 view .LVU263
+ 1040              		.loc 1 405 22 is_stmt 0 view .LVU264
+ 1041 0008 E04B     		ldr	r3, .L93
+ 1042 000a E14A     		ldr	r2, .L93+4
+ 1043 000c 1A60     		str	r2, [r3]
+ 406:src/protocolfunctions.c ****     protocol_Delay = HAL_Delay;
+ 1044              		.loc 1 406 5 is_stmt 1 view .LVU265
+ 1045              		.loc 1 406 20 is_stmt 0 view .LVU266
+ 1046 000e E14B     		ldr	r3, .L93+8
+ 1047 0010 E14A     		ldr	r2, .L93+12
+ 1048 0012 1A60     		str	r2, [r3]
+ 407:src/protocolfunctions.c ****     protocol_SystemReset =HAL_NVIC_SystemReset;
+ 1049              		.loc 1 407 5 is_stmt 1 view .LVU267
+ 1050              		.loc 1 407 26 is_stmt 0 view .LVU268
+ 1051 0014 E14B     		ldr	r3, .L93+16
+ 1052 0016 E24A     		ldr	r2, .L93+20
+ 1053 0018 1A60     		str	r2, [r3]
+ 408:src/protocolfunctions.c **** 
+ 409:src/protocolfunctions.c **** 
+ 410:src/protocolfunctions.c ****     int errors = 0;
+ 1054              		.loc 1 410 5 is_stmt 1 view .LVU269
+ 1055              	.LVL54:
+ 411:src/protocolfunctions.c **** 
+ 412:src/protocolfunctions.c **** 
+ 413:src/protocolfunctions.c ****     #ifdef SOFTWARE_SERIAL
+ 414:src/protocolfunctions.c **** 
+ 415:src/protocolfunctions.c ****       errors += protocol_init(&sSoftwareSerial);
+ 1056              		.loc 1 415 7 view .LVU270
+ 1057              		.loc 1 415 17 is_stmt 0 view .LVU271
+ 1058 001a E24E     		ldr	r6, .L93+24
+ 1059 001c 3046     		mov	r0, r6
+ 1060              	.LVL55:
+ 1061              		.loc 1 415 17 view .LVU272
+ 1062 001e FFF7FEFF 		bl	protocol_init
+ 1063              	.LVL56:
+ARM GAS  /tmp/cc0kyNAB.s 			page 28
+
+
+ 1064 0022 0446     		mov	r4, r0
+ 1065              	.LVL57:
+ 416:src/protocolfunctions.c **** 
+ 417:src/protocolfunctions.c ****       sSoftwareSerial.send_serial_data=softwareserial_Send;
+ 1066              		.loc 1 417 7 is_stmt 1 view .LVU273
+ 1067              		.loc 1 417 39 is_stmt 0 view .LVU274
+ 1068 0024 E04B     		ldr	r3, .L93+28
+ 1069 0026 C6F82031 		str	r3, [r6, #288]
+ 418:src/protocolfunctions.c ****       sSoftwareSerial.send_serial_data_wait=softwareserial_Send_Wait;
+ 1070              		.loc 1 418 7 is_stmt 1 view .LVU275
+ 1071              		.loc 1 418 44 is_stmt 0 view .LVU276
+ 1072 002a E04B     		ldr	r3, .L93+32
+ 1073 002c C6F82431 		str	r3, [r6, #292]
+ 419:src/protocolfunctions.c ****       sSoftwareSerial.timeout1 = 500;
+ 1074              		.loc 1 419 7 is_stmt 1 view .LVU277
+ 1075              		.loc 1 419 32 is_stmt 0 view .LVU278
+ 1076 0030 4FF4FA78 		mov	r8, #500
+ 1077 0034 C6F81881 		str	r8, [r6, #280]
+ 420:src/protocolfunctions.c ****       sSoftwareSerial.timeout2 = 100;
+ 1078              		.loc 1 420 7 is_stmt 1 view .LVU279
+ 1079              		.loc 1 420 32 is_stmt 0 view .LVU280
+ 1080 0038 6427     		movs	r7, #100
+ 1081 003a C6F81C71 		str	r7, [r6, #284]
+ 421:src/protocolfunctions.c ****       sSoftwareSerial.allow_ascii = 1;
+ 1082              		.loc 1 421 7 is_stmt 1 view .LVU281
+ 1083              		.loc 1 421 35 is_stmt 0 view .LVU282
+ 1084 003e 4FF00109 		mov	r9, #1
+ 1085 0042 86F80090 		strb	r9, [r6]
+ 422:src/protocolfunctions.c **** 
+ 423:src/protocolfunctions.c ****     #endif
+ 424:src/protocolfunctions.c **** 
+ 425:src/protocolfunctions.c ****     #if defined(SERIAL_USART2_IT)
+ 426:src/protocolfunctions.c ****       // initialise, even if CONTROL_SENSOR, as we may switch vuia software to use this....
+ 427:src/protocolfunctions.c ****       extern int USART2_IT_send(unsigned char *data, int len);
+ 1086              		.loc 1 427 7 is_stmt 1 view .LVU283
+ 428:src/protocolfunctions.c **** 
+ 429:src/protocolfunctions.c ****       errors += protocol_init(&sUSART2);
+ 1087              		.loc 1 429 7 view .LVU284
+ 1088              		.loc 1 429 17 is_stmt 0 view .LVU285
+ 1089 0046 DA4E     		ldr	r6, .L93+36
+ 1090 0048 3046     		mov	r0, r6
+ 1091              	.LVL58:
+ 1092              		.loc 1 429 17 view .LVU286
+ 1093 004a FFF7FEFF 		bl	protocol_init
+ 1094              	.LVL59:
+ 1095              		.loc 1 429 14 discriminator 1 view .LVU287
+ 1096 004e 0444     		add	r4, r4, r0
+ 1097              	.LVL60:
+ 430:src/protocolfunctions.c **** 
+ 431:src/protocolfunctions.c ****       sUSART2.send_serial_data=USART2_IT_send;
+ 1098              		.loc 1 431 7 is_stmt 1 view .LVU288
+ 1099              		.loc 1 431 31 is_stmt 0 view .LVU289
+ 1100 0050 D84B     		ldr	r3, .L93+40
+ 1101 0052 C6F82031 		str	r3, [r6, #288]
+ 432:src/protocolfunctions.c ****       sUSART2.send_serial_data_wait=USART2_IT_send;
+ 1102              		.loc 1 432 7 is_stmt 1 view .LVU290
+ 1103              		.loc 1 432 36 is_stmt 0 view .LVU291
+ARM GAS  /tmp/cc0kyNAB.s 			page 29
+
+
+ 1104 0056 C6F82431 		str	r3, [r6, #292]
+ 433:src/protocolfunctions.c ****       sUSART2.timeout1 = 500;
+ 1105              		.loc 1 433 7 is_stmt 1 view .LVU292
+ 1106              		.loc 1 433 24 is_stmt 0 view .LVU293
+ 1107 005a C6F81881 		str	r8, [r6, #280]
+ 434:src/protocolfunctions.c ****       sUSART2.timeout2 = 100;
+ 1108              		.loc 1 434 7 is_stmt 1 view .LVU294
+ 1109              		.loc 1 434 24 is_stmt 0 view .LVU295
+ 1110 005e C6F81C71 		str	r7, [r6, #284]
+ 435:src/protocolfunctions.c ****       sUSART2.allow_ascii = 1;
+ 1111              		.loc 1 435 7 is_stmt 1 view .LVU296
+ 1112              		.loc 1 435 27 is_stmt 0 view .LVU297
+ 1113 0062 86F80090 		strb	r9, [r6]
+ 436:src/protocolfunctions.c **** 
+ 437:src/protocolfunctions.c ****     #endif
+ 438:src/protocolfunctions.c **** 
+ 439:src/protocolfunctions.c ****     #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
+ 440:src/protocolfunctions.c **** 
+ 441:src/protocolfunctions.c ****       extern int USART3_IT_send(unsigned char *data, int len);
+ 442:src/protocolfunctions.c **** 
+ 443:src/protocolfunctions.c ****       errors += protocol_init(&sUSART3);
+ 444:src/protocolfunctions.c **** 
+ 445:src/protocolfunctions.c ****       sUSART3.send_serial_data=USART3_IT_send;
+ 446:src/protocolfunctions.c ****       sUSART3.send_serial_data_wait=USART3_IT_send;
+ 447:src/protocolfunctions.c ****       sUSART3.timeout1 = 500;
+ 448:src/protocolfunctions.c ****       sUSART3.timeout2 = 100;
+ 449:src/protocolfunctions.c ****       sUSART3.allow_ascii = 1;
+ 450:src/protocolfunctions.c **** 
+ 451:src/protocolfunctions.c ****     #endif
+ 452:src/protocolfunctions.c **** 
+ 453:src/protocolfunctions.c **** 
+ 454:src/protocolfunctions.c ****     // initialise ascii protocol functions
+ 455:src/protocolfunctions.c ****     main_ascii_init(s);
+ 1114              		.loc 1 455 5 is_stmt 1 view .LVU298
+ 1115 0066 2846     		mov	r0, r5
+ 1116 0068 FFF7FEFF 		bl	main_ascii_init
+ 1117              	.LVL61:
+ 456:src/protocolfunctions.c **** 
+ 457:src/protocolfunctions.c **** 
+ 458:src/protocolfunctions.c ****     #ifdef CONTROL_SENSOR
+ 459:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x01, UI_NONE, &sensor_copy, sizeof(sensor_copy) );
+ 1118              		.loc 1 459 9 view .LVU299
+ 1119              		.loc 1 459 19 is_stmt 0 view .LVU300
+ 1120 006c 4FF01408 		mov	r8, #20
+ 1121 0070 CDF80080 		str	r8, [sp]
+ 1122 0074 D04B     		ldr	r3, .L93+44
+ 1123 0076 0022     		movs	r2, #0
+ 1124 0078 4946     		mov	r1, r9
+ 1125 007a 2846     		mov	r0, r5
+ 1126 007c FFF7FEFF 		bl	setParamVariable
+ 1127              	.LVL62:
+ 1128              		.loc 1 459 16 discriminator 1 view .LVU301
+ 1129 0080 0444     		add	r4, r4, r0
+ 1130              	.LVL63:
+ 460:src/protocolfunctions.c ****         setParamHandler( s, 0x01, fn_SensorData );
+ 1131              		.loc 1 460 9 is_stmt 1 view .LVU302
+ 1132 0082 CE4A     		ldr	r2, .L93+48
+ARM GAS  /tmp/cc0kyNAB.s 			page 30
+
+
+ 1133 0084 4946     		mov	r1, r9
+ 1134 0086 2846     		mov	r0, r5
+ 1135 0088 FFF7FEFF 		bl	setParamHandler
+ 1136              	.LVL64:
+ 461:src/protocolfunctions.c ****     #endif
+ 462:src/protocolfunctions.c **** 
+ 463:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x02, UI_NONE, (void *)&HallData, sizeof(HallData) );
+ 1137              		.loc 1 463 9 view .LVU303
+ 1138              		.loc 1 463 19 is_stmt 0 view .LVU304
+ 1139 008c 4823     		movs	r3, #72
+ 1140 008e 0093     		str	r3, [sp]
+ 1141 0090 CB4B     		ldr	r3, .L93+52
+ 1142 0092 0022     		movs	r2, #0
+ 1143 0094 0221     		movs	r1, #2
+ 1144 0096 2846     		mov	r0, r5
+ 1145 0098 FFF7FEFF 		bl	setParamVariable
+ 1146              	.LVL65:
+ 1147              		.loc 1 463 16 discriminator 1 view .LVU305
+ 1148 009c 0444     		add	r4, r4, r0
+ 1149              	.LVL66:
+ 464:src/protocolfunctions.c **** 
+ 465:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x03, UI_NONE, &SpeedData, sizeof(SpeedData) );
+ 1150              		.loc 1 465 9 is_stmt 1 view .LVU306
+ 1151              		.loc 1 465 19 is_stmt 0 view .LVU307
+ 1152 009e 2427     		movs	r7, #36
+ 1153 00a0 0097     		str	r7, [sp]
+ 1154 00a2 C84B     		ldr	r3, .L93+56
+ 1155 00a4 0022     		movs	r2, #0
+ 1156 00a6 0321     		movs	r1, #3
+ 1157 00a8 2846     		mov	r0, r5
+ 1158 00aa FFF7FEFF 		bl	setParamVariable
+ 1159              	.LVL67:
+ 1160              		.loc 1 465 16 discriminator 1 view .LVU308
+ 1161 00ae 0444     		add	r4, r4, r0
+ 1162              	.LVL68:
+ 466:src/protocolfunctions.c ****         setParamHandler( s, 0x03, fn_SpeedData );
+ 1163              		.loc 1 466 9 is_stmt 1 view .LVU309
+ 1164 00b0 C54A     		ldr	r2, .L93+60
+ 1165 00b2 0321     		movs	r1, #3
+ 1166 00b4 2846     		mov	r0, r5
+ 1167 00b6 FFF7FEFF 		bl	setParamHandler
+ 1168              	.LVL69:
+ 467:src/protocolfunctions.c **** 
+ 468:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x04, UI_NONE, &Position, sizeof(Position) );
+ 1169              		.loc 1 468 9 view .LVU310
+ 1170              		.loc 1 468 19 is_stmt 0 view .LVU311
+ 1171 00ba 4FF0100A 		mov	r10, #16
+ 1172 00be CDF800A0 		str	r10, [sp]
+ 1173 00c2 C24B     		ldr	r3, .L93+64
+ 1174 00c4 0022     		movs	r2, #0
+ 1175 00c6 0421     		movs	r1, #4
+ 1176 00c8 2846     		mov	r0, r5
+ 1177 00ca FFF7FEFF 		bl	setParamVariable
+ 1178              	.LVL70:
+ 1179              		.loc 1 468 16 discriminator 1 view .LVU312
+ 1180 00ce 0444     		add	r4, r4, r0
+ 1181              	.LVL71:
+ARM GAS  /tmp/cc0kyNAB.s 			page 31
+
+
+ 469:src/protocolfunctions.c ****         setParamHandler( s, 0x04, fn_Position );
+ 1182              		.loc 1 469 9 is_stmt 1 view .LVU313
+ 1183 00d0 BF4A     		ldr	r2, .L93+68
+ 1184 00d2 0421     		movs	r1, #4
+ 1185 00d4 2846     		mov	r0, r5
+ 1186 00d6 FFF7FEFF 		bl	setParamHandler
+ 1187              	.LVL72:
+ 470:src/protocolfunctions.c **** 
+ 471:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x05, UI_NONE, &PositionIncr, sizeof(PositionIncr) );
+ 1188              		.loc 1 471 9 view .LVU314
+ 1189              		.loc 1 471 19 is_stmt 0 view .LVU315
+ 1190 00da 0826     		movs	r6, #8
+ 1191 00dc 0096     		str	r6, [sp]
+ 1192 00de BD4B     		ldr	r3, .L93+72
+ 1193 00e0 0022     		movs	r2, #0
+ 1194 00e2 0521     		movs	r1, #5
+ 1195 00e4 2846     		mov	r0, r5
+ 1196 00e6 FFF7FEFF 		bl	setParamVariable
+ 1197              	.LVL73:
+ 1198              		.loc 1 471 16 discriminator 1 view .LVU316
+ 1199 00ea 0444     		add	r4, r4, r0
+ 1200              	.LVL74:
+ 472:src/protocolfunctions.c ****         setParamHandler( s, 0x05, fn_PositionIncr );
+ 1201              		.loc 1 472 9 is_stmt 1 view .LVU317
+ 1202 00ec BA4A     		ldr	r2, .L93+76
+ 1203 00ee 0521     		movs	r1, #5
+ 1204 00f0 2846     		mov	r0, r5
+ 1205 00f2 FFF7FEFF 		bl	setParamHandler
+ 1206              	.LVL75:
+ 473:src/protocolfunctions.c **** 
+ 474:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x06, UI_NONE, &PosnData, sizeof(PosnData) );
+ 1207              		.loc 1 474 9 view .LVU318
+ 1208              		.loc 1 474 19 is_stmt 0 view .LVU319
+ 1209 00f6 2023     		movs	r3, #32
+ 1210 00f8 0093     		str	r3, [sp]
+ 1211 00fa B84B     		ldr	r3, .L93+80
+ 1212 00fc 0022     		movs	r2, #0
+ 1213 00fe 0621     		movs	r1, #6
+ 1214 0100 2846     		mov	r0, r5
+ 1215 0102 FFF7FEFF 		bl	setParamVariable
+ 1216              	.LVL76:
+ 1217              		.loc 1 474 16 discriminator 1 view .LVU320
+ 1218 0106 0444     		add	r4, r4, r0
+ 1219              	.LVL77:
+ 475:src/protocolfunctions.c **** 
+ 476:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x07, UI_NONE, &RawPosition, sizeof(RawPosition) );
+ 1220              		.loc 1 476 9 is_stmt 1 view .LVU321
+ 1221              		.loc 1 476 19 is_stmt 0 view .LVU322
+ 1222 0108 CDF800A0 		str	r10, [sp]
+ 1223 010c B44B     		ldr	r3, .L93+84
+ 1224 010e 0022     		movs	r2, #0
+ 1225 0110 0721     		movs	r1, #7
+ 1226 0112 2846     		mov	r0, r5
+ 1227 0114 FFF7FEFF 		bl	setParamVariable
+ 1228              	.LVL78:
+ 1229              		.loc 1 476 16 discriminator 1 view .LVU323
+ 1230 0118 0444     		add	r4, r4, r0
+ARM GAS  /tmp/cc0kyNAB.s 			page 32
+
+
+ 1231              	.LVL79:
+ 477:src/protocolfunctions.c ****         setParamHandler( s, 0x07, fn_RawPosition );
+ 1232              		.loc 1 477 9 is_stmt 1 view .LVU324
+ 1233 011a B24A     		ldr	r2, .L93+88
+ 1234 011c 0721     		movs	r1, #7
+ 1235 011e 2846     		mov	r0, r5
+ 1236 0120 FFF7FEFF 		bl	setParamHandler
+ 1237              	.LVL80:
+ 478:src/protocolfunctions.c **** 
+ 479:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x08, UI_NONE, (void *)&electrical_measurements, sizeof(ELEC
+ 1238              		.loc 1 479 9 view .LVU325
+ 1239              		.loc 1 479 19 is_stmt 0 view .LVU326
+ 1240 0124 7823     		movs	r3, #120
+ 1241 0126 0093     		str	r3, [sp]
+ 1242 0128 AF4B     		ldr	r3, .L93+92
+ 1243 012a 0022     		movs	r2, #0
+ 1244 012c 3146     		mov	r1, r6
+ 1245 012e 2846     		mov	r0, r5
+ 1246 0130 FFF7FEFF 		bl	setParamVariable
+ 1247              	.LVL81:
+ 1248              		.loc 1 479 16 discriminator 1 view .LVU327
+ 1249 0134 0444     		add	r4, r4, r0
+ 1250              	.LVL82:
+ 480:src/protocolfunctions.c **** 
+ 481:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x09, UI_CHAR, &protocol_enable, sizeof(enable) );
+ 1251              		.loc 1 481 9 is_stmt 1 view .LVU328
+ 1252              		.loc 1 481 19 is_stmt 0 view .LVU329
+ 1253 0136 CDF80090 		str	r9, [sp]
+ 1254 013a AC4B     		ldr	r3, .L93+96
+ 1255 013c 1122     		movs	r2, #17
+ 1256 013e 0921     		movs	r1, #9
+ 1257 0140 2846     		mov	r0, r5
+ 1258 0142 FFF7FEFF 		bl	setParamVariable
+ 1259              	.LVL83:
+ 1260              		.loc 1 481 16 discriminator 1 view .LVU330
+ 1261 0146 0444     		add	r4, r4, r0
+ 1262              	.LVL84:
+ 482:src/protocolfunctions.c ****         setParamHandler( s, 0x09, fn_enable );
+ 1263              		.loc 1 482 9 is_stmt 1 view .LVU331
+ 1264 0148 A94A     		ldr	r2, .L93+100
+ 1265 014a 0921     		movs	r1, #9
+ 1266 014c 2846     		mov	r0, r5
+ 1267 014e FFF7FEFF 		bl	setParamHandler
+ 1268              	.LVL85:
+ 483:src/protocolfunctions.c **** 
+ 484:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0A, UI_CHAR, &disablepoweroff, sizeof(disablepoweroff) );
+ 1269              		.loc 1 484 9 view .LVU332
+ 1270              		.loc 1 484 19 is_stmt 0 view .LVU333
+ 1271 0152 CDF80090 		str	r9, [sp]
+ 1272 0156 A74B     		ldr	r3, .L93+104
+ 1273 0158 1122     		movs	r2, #17
+ 1274 015a 0A21     		movs	r1, #10
+ 1275 015c 2846     		mov	r0, r5
+ 1276 015e FFF7FEFF 		bl	setParamVariable
+ 1277              	.LVL86:
+ 1278              		.loc 1 484 16 discriminator 1 view .LVU334
+ 1279 0162 0444     		add	r4, r4, r0
+ARM GAS  /tmp/cc0kyNAB.s 			page 33
+
+
+ 1280              	.LVL87:
+ 485:src/protocolfunctions.c **** 
+ 486:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0B, UI_CHAR, &debug_out, sizeof(debug_out) );
+ 1281              		.loc 1 486 9 is_stmt 1 view .LVU335
+ 1282              		.loc 1 486 19 is_stmt 0 view .LVU336
+ 1283 0164 CDF80090 		str	r9, [sp]
+ 1284 0168 A34B     		ldr	r3, .L93+108
+ 1285 016a 1122     		movs	r2, #17
+ 1286 016c 0B21     		movs	r1, #11
+ 1287 016e 2846     		mov	r0, r5
+ 1288 0170 FFF7FEFF 		bl	setParamVariable
+ 1289              	.LVL88:
+ 1290              		.loc 1 486 16 discriminator 1 view .LVU337
+ 1291 0174 0444     		add	r4, r4, r0
+ 1292              	.LVL89:
+ 487:src/protocolfunctions.c **** 
+ 488:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0C, UI_3LONG, &xytPosn, sizeof(xytPosn) );
+ 1293              		.loc 1 488 9 is_stmt 1 view .LVU338
+ 1294              		.loc 1 488 19 is_stmt 0 view .LVU339
+ 1295 0176 4FF00C09 		mov	r9, #12
+ 1296 017a CDF80090 		str	r9, [sp]
+ 1297 017e 9F4B     		ldr	r3, .L93+112
+ 1298 0180 3422     		movs	r2, #52
+ 1299 0182 4946     		mov	r1, r9
+ 1300 0184 2846     		mov	r0, r5
+ 1301 0186 FFF7FEFF 		bl	setParamVariable
+ 1302              	.LVL90:
+ 1303              		.loc 1 488 16 discriminator 1 view .LVU340
+ 1304 018a 0444     		add	r4, r4, r0
+ 1305              	.LVL91:
+ 489:src/protocolfunctions.c ****         setParamHandler( s, 0x0C, fn_xytPosn );
+ 1306              		.loc 1 489 9 is_stmt 1 view .LVU341
+ 1307 018c 9C4A     		ldr	r2, .L93+116
+ 1308 018e 4946     		mov	r1, r9
+ 1309 0190 2846     		mov	r0, r5
+ 1310 0192 FFF7FEFF 		bl	setParamHandler
+ 1311              	.LVL92:
+ 490:src/protocolfunctions.c **** 
+ 491:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0D, UI_NONE, &PWMData, sizeof(PWMData) );
+ 1312              		.loc 1 491 9 view .LVU342
+ 1313              		.loc 1 491 19 is_stmt 0 view .LVU343
+ 1314 0196 DFF86C92 		ldr	r9, .L93+120
+ 1315 019a CDF80080 		str	r8, [sp]
+ 1316 019e 4B46     		mov	r3, r9
+ 1317 01a0 0022     		movs	r2, #0
+ 1318 01a2 0D21     		movs	r1, #13
+ 1319 01a4 2846     		mov	r0, r5
+ 1320 01a6 FFF7FEFF 		bl	setParamVariable
+ 1321              	.LVL93:
+ 1322              		.loc 1 491 16 discriminator 1 view .LVU344
+ 1323 01aa 0444     		add	r4, r4, r0
+ 1324              	.LVL94:
+ 492:src/protocolfunctions.c ****         setParamHandler( s, 0x0D, fn_PWMData );
+ 1325              		.loc 1 492 9 is_stmt 1 view .LVU345
+ 1326 01ac DFF85882 		ldr	r8, .L93+124
+ 1327 01b0 4246     		mov	r2, r8
+ 1328 01b2 0D21     		movs	r1, #13
+ARM GAS  /tmp/cc0kyNAB.s 			page 34
+
+
+ 1329 01b4 2846     		mov	r0, r5
+ 1330 01b6 FFF7FEFF 		bl	setParamHandler
+ 1331              	.LVL95:
+ 493:src/protocolfunctions.c **** 
+ 494:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x0E, UI_2LONG, &(PWMData.pwm), sizeof(PWMData.pwm) );
+ 1332              		.loc 1 494 9 view .LVU346
+ 1333              		.loc 1 494 19 is_stmt 0 view .LVU347
+ 1334 01ba 0096     		str	r6, [sp]
+ 1335 01bc 4B46     		mov	r3, r9
+ 1336 01be 3A46     		mov	r2, r7
+ 1337 01c0 0E21     		movs	r1, #14
+ 1338 01c2 2846     		mov	r0, r5
+ 1339 01c4 FFF7FEFF 		bl	setParamVariable
+ 1340              	.LVL96:
+ 1341              		.loc 1 494 16 discriminator 1 view .LVU348
+ 1342 01c8 0444     		add	r4, r4, r0
+ 1343              	.LVL97:
+ 495:src/protocolfunctions.c ****         setParamHandler( s, 0x0E, fn_PWMData );
+ 1344              		.loc 1 495 9 is_stmt 1 view .LVU349
+ 1345 01ca 4246     		mov	r2, r8
+ 1346 01cc 0E21     		movs	r1, #14
+ 1347 01ce 2846     		mov	r0, r5
+ 1348 01d0 FFF7FEFF 		bl	setParamHandler
+ 1349              	.LVL98:
+ 496:src/protocolfunctions.c **** 
+ 497:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x21, UI_NONE, &BuzzerData, sizeof(BuzzerData) );
+ 1350              		.loc 1 497 9 view .LVU350
+ 1351              		.loc 1 497 19 is_stmt 0 view .LVU351
+ 1352 01d4 0423     		movs	r3, #4
+ 1353 01d6 0093     		str	r3, [sp]
+ 1354 01d8 8C4B     		ldr	r3, .L93+128
+ 1355 01da 0022     		movs	r2, #0
+ 1356 01dc 2121     		movs	r1, #33
+ 1357 01de 2846     		mov	r0, r5
+ 1358 01e0 FFF7FEFF 		bl	setParamVariable
+ 1359              	.LVL99:
+ 1360              		.loc 1 497 16 discriminator 1 view .LVU352
+ 1361 01e4 0444     		add	r4, r4, r0
+ 1362              	.LVL100:
+ 498:src/protocolfunctions.c ****         setParamHandler( s, 0x21, fn_BuzzerData );
+ 1363              		.loc 1 498 9 is_stmt 1 view .LVU353
+ 1364 01e6 8A4A     		ldr	r2, .L93+132
+ 1365 01e8 2121     		movs	r1, #33
+ 1366 01ea 2846     		mov	r0, r5
+ 1367 01ec FFF7FEFF 		bl	setParamHandler
+ 1368              	.LVL101:
+ 499:src/protocolfunctions.c **** 
+ 500:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x80, UI_SHORT, &FlashContent.magic, sizeof(short) );
+ 1369              		.loc 1 500 9 view .LVU354
+ 1370              		.loc 1 500 19 is_stmt 0 view .LVU355
+ 1371 01f0 884E     		ldr	r6, .L93+136
+ 1372 01f2 0227     		movs	r7, #2
+ 1373 01f4 0097     		str	r7, [sp]
+ 1374 01f6 3346     		mov	r3, r6
+ 1375 01f8 1222     		movs	r2, #18
+ 1376 01fa 8021     		movs	r1, #128
+ 1377 01fc 2846     		mov	r0, r5
+ARM GAS  /tmp/cc0kyNAB.s 			page 35
+
+
+ 1378 01fe FFF7FEFF 		bl	setParamVariable
+ 1379              	.LVL102:
+ 1380              		.loc 1 500 16 discriminator 1 view .LVU356
+ 1381 0202 0444     		add	r4, r4, r0
+ 1382              	.LVL103:
+ 501:src/protocolfunctions.c ****         setParamHandler( s, 0x80, fn_FlashContentMagic );
+ 1383              		.loc 1 501 9 is_stmt 1 view .LVU357
+ 1384 0204 DFF81082 		ldr	r8, .L93+140
+ 1385 0208 4246     		mov	r2, r8
+ 1386 020a 8021     		movs	r1, #128
+ 1387 020c 2846     		mov	r0, r5
+ 1388 020e FFF7FEFF 		bl	setParamHandler
+ 1389              	.LVL104:
+ 502:src/protocolfunctions.c **** 
+ 503:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x81, UI_SHORT, &FlashContent.PositionKpx100, sizeof(short) 
+ 1390              		.loc 1 503 9 view .LVU358
+ 1391              		.loc 1 503 19 is_stmt 0 view .LVU359
+ 1392 0212 0097     		str	r7, [sp]
+ 1393 0214 F319     		adds	r3, r6, r7
+ 1394 0216 1222     		movs	r2, #18
+ 1395 0218 8121     		movs	r1, #129
+ 1396 021a 2846     		mov	r0, r5
+ 1397 021c FFF7FEFF 		bl	setParamVariable
+ 1398              	.LVL105:
+ 1399              		.loc 1 503 16 discriminator 1 view .LVU360
+ 1400 0220 0444     		add	r4, r4, r0
+ 1401              	.LVL106:
+ 504:src/protocolfunctions.c ****         setParamHandler( s, 0x81, fn_FlashContentPID );
+ 1402              		.loc 1 504 9 is_stmt 1 view .LVU361
+ 1403 0222 DFF8F891 		ldr	r9, .L93+144
+ 1404 0226 4A46     		mov	r2, r9
+ 1405 0228 8121     		movs	r1, #129
+ 1406 022a 2846     		mov	r0, r5
+ 1407 022c FFF7FEFF 		bl	setParamHandler
+ 1408              	.LVL107:
+ 505:src/protocolfunctions.c **** 
+ 506:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x82, UI_SHORT, &FlashContent.PositionKix100, sizeof(short) 
+ 1409              		.loc 1 506 9 view .LVU362
+ 1410              		.loc 1 506 19 is_stmt 0 view .LVU363
+ 1411 0230 0097     		str	r7, [sp]
+ 1412 0232 331D     		adds	r3, r6, #4
+ 1413 0234 1222     		movs	r2, #18
+ 1414 0236 8221     		movs	r1, #130
+ 1415 0238 2846     		mov	r0, r5
+ 1416 023a FFF7FEFF 		bl	setParamVariable
+ 1417              	.LVL108:
+ 1418              		.loc 1 506 16 discriminator 1 view .LVU364
+ 1419 023e 0444     		add	r4, r4, r0
+ 1420              	.LVL109:
+ 507:src/protocolfunctions.c ****         setParamHandler( s, 0x82, fn_FlashContentPID );
+ 1421              		.loc 1 507 9 is_stmt 1 view .LVU365
+ 1422 0240 4A46     		mov	r2, r9
+ 1423 0242 8221     		movs	r1, #130
+ 1424 0244 2846     		mov	r0, r5
+ 1425 0246 FFF7FEFF 		bl	setParamHandler
+ 1426              	.LVL110:
+ 508:src/protocolfunctions.c **** 
+ARM GAS  /tmp/cc0kyNAB.s 			page 36
+
+
+ 509:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x83, UI_SHORT, &FlashContent.PositionKdx100, sizeof(short) 
+ 1427              		.loc 1 509 9 view .LVU366
+ 1428              		.loc 1 509 19 is_stmt 0 view .LVU367
+ 1429 024a 0097     		str	r7, [sp]
+ 1430 024c B31D     		adds	r3, r6, #6
+ 1431 024e 1222     		movs	r2, #18
+ 1432 0250 8321     		movs	r1, #131
+ 1433 0252 2846     		mov	r0, r5
+ 1434 0254 FFF7FEFF 		bl	setParamVariable
+ 1435              	.LVL111:
+ 1436              		.loc 1 509 16 discriminator 1 view .LVU368
+ 1437 0258 0444     		add	r4, r4, r0
+ 1438              	.LVL112:
+ 510:src/protocolfunctions.c ****         setParamHandler( s, 0x83, fn_FlashContentPID );
+ 1439              		.loc 1 510 9 is_stmt 1 view .LVU369
+ 1440 025a 4A46     		mov	r2, r9
+ 1441 025c 8321     		movs	r1, #131
+ 1442 025e 2846     		mov	r0, r5
+ 1443 0260 FFF7FEFF 		bl	setParamHandler
+ 1444              	.LVL113:
+ 511:src/protocolfunctions.c **** 
+ 512:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x84, UI_SHORT, &FlashContent.PositionPWMLimit, sizeof(short
+ 1445              		.loc 1 512 9 view .LVU370
+ 1446              		.loc 1 512 19 is_stmt 0 view .LVU371
+ 1447 0264 0097     		str	r7, [sp]
+ 1448 0266 06F10803 		add	r3, r6, #8
+ 1449 026a 1222     		movs	r2, #18
+ 1450 026c 8421     		movs	r1, #132
+ 1451 026e 2846     		mov	r0, r5
+ 1452 0270 FFF7FEFF 		bl	setParamVariable
+ 1453              	.LVL114:
+ 1454              		.loc 1 512 16 discriminator 1 view .LVU372
+ 1455 0274 0444     		add	r4, r4, r0
+ 1456              	.LVL115:
+ 513:src/protocolfunctions.c ****         setParamHandler( s, 0x84, fn_FlashContentPID );
+ 1457              		.loc 1 513 9 is_stmt 1 view .LVU373
+ 1458 0276 4A46     		mov	r2, r9
+ 1459 0278 8421     		movs	r1, #132
+ 1460 027a 2846     		mov	r0, r5
+ 1461 027c FFF7FEFF 		bl	setParamHandler
+ 1462              	.LVL116:
+ 514:src/protocolfunctions.c **** 
+ 515:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x85, UI_SHORT, &FlashContent.SpeedKpx100, sizeof(short) );
+ 1463              		.loc 1 515 9 view .LVU374
+ 1464              		.loc 1 515 19 is_stmt 0 view .LVU375
+ 1465 0280 0097     		str	r7, [sp]
+ 1466 0282 06F10A03 		add	r3, r6, #10
+ 1467 0286 1222     		movs	r2, #18
+ 1468 0288 8521     		movs	r1, #133
+ 1469 028a 2846     		mov	r0, r5
+ 1470 028c FFF7FEFF 		bl	setParamVariable
+ 1471              	.LVL117:
+ 1472              		.loc 1 515 16 discriminator 1 view .LVU376
+ 1473 0290 0444     		add	r4, r4, r0
+ 1474              	.LVL118:
+ 516:src/protocolfunctions.c ****         setParamHandler( s, 0x85, fn_FlashContentPID );
+ 1475              		.loc 1 516 9 is_stmt 1 view .LVU377
+ARM GAS  /tmp/cc0kyNAB.s 			page 37
+
+
+ 1476 0292 4A46     		mov	r2, r9
+ 1477 0294 8521     		movs	r1, #133
+ 1478 0296 2846     		mov	r0, r5
+ 1479 0298 FFF7FEFF 		bl	setParamHandler
+ 1480              	.LVL119:
+ 517:src/protocolfunctions.c **** 
+ 518:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x86, UI_SHORT, &FlashContent.SpeedKix100, sizeof(short) );
+ 1481              		.loc 1 518 9 view .LVU378
+ 1482              		.loc 1 518 19 is_stmt 0 view .LVU379
+ 1483 029c 0097     		str	r7, [sp]
+ 1484 029e 06F10C03 		add	r3, r6, #12
+ 1485 02a2 1222     		movs	r2, #18
+ 1486 02a4 8621     		movs	r1, #134
+ 1487 02a6 2846     		mov	r0, r5
+ 1488 02a8 FFF7FEFF 		bl	setParamVariable
+ 1489              	.LVL120:
+ 1490              		.loc 1 518 16 discriminator 1 view .LVU380
+ 1491 02ac 0444     		add	r4, r4, r0
+ 1492              	.LVL121:
+ 519:src/protocolfunctions.c ****         setParamHandler( s, 0x86, fn_FlashContentPID );
+ 1493              		.loc 1 519 9 is_stmt 1 view .LVU381
+ 1494 02ae 4A46     		mov	r2, r9
+ 1495 02b0 8621     		movs	r1, #134
+ 1496 02b2 2846     		mov	r0, r5
+ 1497 02b4 FFF7FEFF 		bl	setParamHandler
+ 1498              	.LVL122:
+ 520:src/protocolfunctions.c **** 
+ 521:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x87, UI_SHORT, &FlashContent.SpeedKdx100, sizeof(short) );
+ 1499              		.loc 1 521 9 view .LVU382
+ 1500              		.loc 1 521 19 is_stmt 0 view .LVU383
+ 1501 02b8 0097     		str	r7, [sp]
+ 1502 02ba 06F10E03 		add	r3, r6, #14
+ 1503 02be 1222     		movs	r2, #18
+ 1504 02c0 8721     		movs	r1, #135
+ 1505 02c2 2846     		mov	r0, r5
+ 1506 02c4 FFF7FEFF 		bl	setParamVariable
+ 1507              	.LVL123:
+ 1508              		.loc 1 521 16 discriminator 1 view .LVU384
+ 1509 02c8 0444     		add	r4, r4, r0
+ 1510              	.LVL124:
+ 522:src/protocolfunctions.c ****         setParamHandler( s, 0x87, fn_FlashContentPID );
+ 1511              		.loc 1 522 9 is_stmt 1 view .LVU385
+ 1512 02ca 4A46     		mov	r2, r9
+ 1513 02cc 8721     		movs	r1, #135
+ 1514 02ce 2846     		mov	r0, r5
+ 1515 02d0 FFF7FEFF 		bl	setParamHandler
+ 1516              	.LVL125:
+ 523:src/protocolfunctions.c **** 
+ 524:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x88, UI_SHORT, &FlashContent.SpeedPWMIncrementLimit, sizeof
+ 1517              		.loc 1 524 9 view .LVU386
+ 1518              		.loc 1 524 19 is_stmt 0 view .LVU387
+ 1519 02d4 0097     		str	r7, [sp]
+ 1520 02d6 06EB0A03 		add	r3, r6, r10
+ 1521 02da 1222     		movs	r2, #18
+ 1522 02dc 8821     		movs	r1, #136
+ 1523 02de 2846     		mov	r0, r5
+ 1524 02e0 FFF7FEFF 		bl	setParamVariable
+ARM GAS  /tmp/cc0kyNAB.s 			page 38
+
+
+ 1525              	.LVL126:
+ 1526              		.loc 1 524 16 discriminator 1 view .LVU388
+ 1527 02e4 0444     		add	r4, r4, r0
+ 1528              	.LVL127:
+ 525:src/protocolfunctions.c ****         setParamHandler( s, 0x88, fn_FlashContentPID );
+ 1529              		.loc 1 525 9 is_stmt 1 view .LVU389
+ 1530 02e6 4A46     		mov	r2, r9
+ 1531 02e8 8821     		movs	r1, #136
+ 1532 02ea 2846     		mov	r0, r5
+ 1533 02ec FFF7FEFF 		bl	setParamHandler
+ 1534              	.LVL128:
+ 526:src/protocolfunctions.c **** 
+ 527:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x89, UI_SHORT, &FlashContent.MaxCurrLim, sizeof(short) );
+ 1535              		.loc 1 527 9 view .LVU390
+ 1536              		.loc 1 527 19 is_stmt 0 view .LVU391
+ 1537 02f0 0097     		str	r7, [sp]
+ 1538 02f2 06F11203 		add	r3, r6, #18
+ 1539 02f6 1222     		movs	r2, #18
+ 1540 02f8 8921     		movs	r1, #137
+ 1541 02fa 2846     		mov	r0, r5
+ 1542 02fc FFF7FEFF 		bl	setParamVariable
+ 1543              	.LVL129:
+ 1544              		.loc 1 527 16 discriminator 1 view .LVU392
+ 1545 0300 0444     		add	r4, r4, r0
+ 1546              	.LVL130:
+ 528:src/protocolfunctions.c ****         setParamHandler( s, 0x89, fn_FlashContentMaxCurrLim );
+ 1547              		.loc 1 528 9 is_stmt 1 view .LVU393
+ 1548 0302 474A     		ldr	r2, .L93+148
+ 1549 0304 8921     		movs	r1, #137
+ 1550 0306 2846     		mov	r0, r5
+ 1551 0308 FFF7FEFF 		bl	setParamHandler
+ 1552              	.LVL131:
+ 529:src/protocolfunctions.c **** 
+ 530:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x90, UI_NONE, &FlashContent.adc, sizeof(PROTOCOL_ADC_SETTIN
+ 1553              		.loc 1 530 9 view .LVU394
+ 1554              		.loc 1 530 19 is_stmt 0 view .LVU395
+ 1555 030c 2C23     		movs	r3, #44
+ 1556 030e 0093     		str	r3, [sp]
+ 1557 0310 06F12203 		add	r3, r6, #34
+ 1558 0314 0022     		movs	r2, #0
+ 1559 0316 9021     		movs	r1, #144
+ 1560 0318 2846     		mov	r0, r5
+ 1561 031a FFF7FEFF 		bl	setParamVariable
+ 1562              	.LVL132:
+ 1563              		.loc 1 530 16 discriminator 1 view .LVU396
+ 1564 031e 0444     		add	r4, r4, r0
+ 1565              	.LVL133:
+ 531:src/protocolfunctions.c **** 
+ 532:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xA0, UI_SHORT, &FlashContent.HoverboardEnable, sizeof(short
+ 1566              		.loc 1 532 9 is_stmt 1 view .LVU397
+ 1567              		.loc 1 532 19 is_stmt 0 view .LVU398
+ 1568 0320 0097     		str	r7, [sp]
+ 1569 0322 06F11403 		add	r3, r6, #20
+ 1570 0326 1222     		movs	r2, #18
+ 1571 0328 A021     		movs	r1, #160
+ 1572 032a 2846     		mov	r0, r5
+ 1573 032c FFF7FEFF 		bl	setParamVariable
+ARM GAS  /tmp/cc0kyNAB.s 			page 39
+
+
+ 1574              	.LVL134:
+ 1575              		.loc 1 532 16 discriminator 1 view .LVU399
+ 1576 0330 0444     		add	r4, r4, r0
+ 1577              	.LVL135:
+ 533:src/protocolfunctions.c ****         
+ 534:src/protocolfunctions.c ****         // CAN bus configuration parameters
+ 535:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC0, UI_SHORT, &FlashContent.CAN_BoardID, sizeof(short) );
+ 1578              		.loc 1 535 9 is_stmt 1 view .LVU400
+ 1579              		.loc 1 535 19 is_stmt 0 view .LVU401
+ 1580 0332 0097     		str	r7, [sp]
+ 1581 0334 06F11C03 		add	r3, r6, #28
+ 1582 0338 1222     		movs	r2, #18
+ 1583 033a C021     		movs	r1, #192
+ 1584 033c 2846     		mov	r0, r5
+ 1585 033e FFF7FEFF 		bl	setParamVariable
+ 1586              	.LVL136:
+ 1587              		.loc 1 535 16 discriminator 1 view .LVU402
+ 1588 0342 0444     		add	r4, r4, r0
+ 1589              	.LVL137:
+ 536:src/protocolfunctions.c ****         setParamHandler( s, 0xC0, fn_FlashContentMagic );
+ 1590              		.loc 1 536 9 is_stmt 1 view .LVU403
+ 1591 0344 4246     		mov	r2, r8
+ 1592 0346 C021     		movs	r1, #192
+ 1593 0348 2846     		mov	r0, r5
+ 1594 034a FFF7FEFF 		bl	setParamHandler
+ 1595              	.LVL138:
+ 537:src/protocolfunctions.c ****         
+ 538:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC1, UI_SHORT, &FlashContent.CAN_BaseID_CMD, sizeof(short) 
+ 1596              		.loc 1 538 9 view .LVU404
+ 1597              		.loc 1 538 19 is_stmt 0 view .LVU405
+ 1598 034e 0097     		str	r7, [sp]
+ 1599 0350 06F11E03 		add	r3, r6, #30
+ 1600 0354 1222     		movs	r2, #18
+ 1601 0356 C121     		movs	r1, #193
+ 1602 0358 2846     		mov	r0, r5
+ 1603 035a FFF7FEFF 		bl	setParamVariable
+ 1604              	.LVL139:
+ 1605              		.loc 1 538 16 discriminator 1 view .LVU406
+ 1606 035e 0444     		add	r4, r4, r0
+ 1607              	.LVL140:
+ 539:src/protocolfunctions.c ****         setParamHandler( s, 0xC1, fn_FlashContentMagic );
+ 1608              		.loc 1 539 9 is_stmt 1 view .LVU407
+ 1609 0360 4246     		mov	r2, r8
+ 1610 0362 C121     		movs	r1, #193
+ 1611 0364 2846     		mov	r0, r5
+ 1612 0366 FFF7FEFF 		bl	setParamHandler
+ 1613              	.LVL141:
+ 540:src/protocolfunctions.c ****         
+ 541:src/protocolfunctions.c ****         errors += setParamVariable( s, 0xC2, UI_SHORT, &FlashContent.CAN_BaseID_STATUS, sizeof(shor
+ 1614              		.loc 1 541 9 view .LVU408
+ 1615              		.loc 1 541 19 is_stmt 0 view .LVU409
+ 1616 036a 0097     		str	r7, [sp]
+ 1617 036c 06F12003 		add	r3, r6, #32
+ 1618 0370 1222     		movs	r2, #18
+ 1619 0372 C221     		movs	r1, #194
+ 1620 0374 2846     		mov	r0, r5
+ 1621 0376 FFF7FEFF 		bl	setParamVariable
+ARM GAS  /tmp/cc0kyNAB.s 			page 40
+
+
+ 1622              	.LVL142:
+ 1623              		.loc 1 541 16 discriminator 1 view .LVU410
+ 1624 037a 0444     		add	r4, r4, r0
+ 1625              	.LVL143:
+ 542:src/protocolfunctions.c ****         setParamHandler( s, 0xC2, fn_FlashContentMagic );
+ 1626              		.loc 1 542 9 is_stmt 1 view .LVU411
+ 1627 037c 4246     		mov	r2, r8
+ 1628 037e C221     		movs	r1, #194
+ 1629 0380 2846     		mov	r0, r5
+ 1630 0382 FFF7FEFF 		bl	setParamHandler
+ 1631              	.LVL144:
+ 543:src/protocolfunctions.c ****         
+ 544:src/protocolfunctions.c ****     return errors;
+ 1632              		.loc 1 544 5 view .LVU412
+ 545:src/protocolfunctions.c **** 
+ 546:src/protocolfunctions.c **** }
+ 1633              		.loc 1 546 1 is_stmt 0 view .LVU413
+ 1634 0386 2046     		mov	r0, r4
+ 1635 0388 4CE0     		b	.L94
+ 1636              	.L95:
+ 1637 038a 00BF     		.align	2
+ 1638              	.L93:
+ 1639 038c 00000000 		.word	protocol_GetTick
+ 1640 0390 00000000 		.word	HAL_GetTick
+ 1641 0394 00000000 		.word	protocol_Delay
+ 1642 0398 00000000 		.word	HAL_Delay
+ 1643 039c 00000000 		.word	protocol_SystemReset
+ 1644 03a0 00000000 		.word	HAL_NVIC_SystemReset
+ 1645 03a4 00000000 		.word	sSoftwareSerial
+ 1646 03a8 00000000 		.word	softwareserial_Send
+ 1647 03ac 00000000 		.word	softwareserial_Send_Wait
+ 1648 03b0 00000000 		.word	sUSART2
+ 1649 03b4 00000000 		.word	USART2_IT_send
+ 1650 03b8 00000000 		.word	sensor_copy
+ 1651 03bc 00000000 		.word	fn_SensorData
+ 1652 03c0 00000000 		.word	HallData
+ 1653 03c4 00000000 		.word	SpeedData
+ 1654 03c8 00000000 		.word	fn_SpeedData
+ 1655 03cc 00000000 		.word	Position
+ 1656 03d0 00000000 		.word	fn_Position
+ 1657 03d4 00000000 		.word	PositionIncr
+ 1658 03d8 00000000 		.word	fn_PositionIncr
+ 1659 03dc 00000000 		.word	PosnData
+ 1660 03e0 00000000 		.word	RawPosition
+ 1661 03e4 00000000 		.word	fn_RawPosition
+ 1662 03e8 00000000 		.word	electrical_measurements
+ 1663 03ec 00000000 		.word	protocol_enable
+ 1664 03f0 00000000 		.word	fn_enable
+ 1665 03f4 00000000 		.word	disablepoweroff
+ 1666 03f8 00000000 		.word	debug_out
+ 1667 03fc 00000000 		.word	xytPosn
+ 1668 0400 00000000 		.word	fn_xytPosn
+ 1669 0404 00000000 		.word	PWMData
+ 1670 0408 00000000 		.word	fn_PWMData
+ 1671 040c 00000000 		.word	BuzzerData
+ 1672 0410 00000000 		.word	fn_BuzzerData
+ 1673 0414 00000000 		.word	FlashContent
+ARM GAS  /tmp/cc0kyNAB.s 			page 41
+
+
+ 1674 0418 00000000 		.word	fn_FlashContentMagic
+ 1675 041c 00000000 		.word	fn_FlashContentPID
+ 1676 0420 00000000 		.word	fn_FlashContentMaxCurrLim
+ 1677              	.L94:
+ 1678 0424 02B0     		add	sp, sp, #8
+ 1679              	.LCFI13:
+ 1680              		.cfi_def_cfa_offset 32
+ 1681              		@ sp needed
+ 1682 0426 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1683              		.loc 1 546 1 view .LVU414
+ 1684              		.cfi_endproc
+ 1685              	.LFE78:
+ 1687 042a 00BF     		.section	.text.consoleLog,"ax",%progbits
+ 1688              		.align	1
+ 1689              		.global	consoleLog
+ 1690              		.syntax unified
+ 1691              		.thumb
+ 1692              		.thumb_func
+ 1694              	consoleLog:
+ 1695              	.LVL145:
+ 1696              	.LFB79:
+ 547:src/protocolfunctions.c **** 
+ 548:src/protocolfunctions.c **** 
+ 549:src/protocolfunctions.c **** void consoleLog(char *message) {
+ 1697              		.loc 1 549 32 is_stmt 1 view -0
+ 1698              		.cfi_startproc
+ 1699              		@ args = 0, pretend = 0, frame = 0
+ 1700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1701              		.loc 1 549 32 is_stmt 0 view .LVU416
+ 1702 0000 10B5     		push	{r4, lr}
+ 1703              	.LCFI14:
+ 1704              		.cfi_def_cfa_offset 8
+ 1705              		.cfi_offset 4, -8
+ 1706              		.cfi_offset 14, -4
+ 1707 0002 0446     		mov	r4, r0
+ 550:src/protocolfunctions.c ****     #ifdef DEBUG_SOFTWARE_SERIAL
+ 551:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sSoftwareSerial, message, PROTOCOL_SOM_NOACK);
+ 1708              		.loc 1 551 9 is_stmt 1 view .LVU417
+ 1709              		.loc 1 551 13 is_stmt 0 view .LVU418
+ 1710 0004 094B     		ldr	r3, .L102
+ 1711 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1712              		.loc 1 551 12 view .LVU419
+ 1713 0008 1BB9     		cbnz	r3, .L100
+ 1714              	.LVL146:
+ 1715              	.L97:
+ 552:src/protocolfunctions.c ****     #endif
+ 553:src/protocolfunctions.c **** 
+ 554:src/protocolfunctions.c ****     #ifdef SERIAL_USART2_IT
+ 555:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sUSART2, message, PROTOCOL_SOM_NOACK);
+ 1716              		.loc 1 555 9 is_stmt 1 view .LVU420
+ 1717              		.loc 1 555 13 is_stmt 0 view .LVU421
+ 1718 000a 084B     		ldr	r3, .L102
+ 1719 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1720              		.loc 1 555 12 view .LVU422
+ 1721 000e 33B9     		cbnz	r3, .L101
+ 1722              	.L96:
+ 556:src/protocolfunctions.c ****     #endif
+ARM GAS  /tmp/cc0kyNAB.s 			page 42
+
+
+ 557:src/protocolfunctions.c **** 
+ 558:src/protocolfunctions.c ****     #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
+ 559:src/protocolfunctions.c ****         if (debug_out) protocol_send_text(&sUSART3, message, PROTOCOL_SOM_NOACK);
+ 560:src/protocolfunctions.c ****     #endif
+ 561:src/protocolfunctions.c **** }
+ 1723              		.loc 1 561 1 view .LVU423
+ 1724 0010 10BD     		pop	{r4, pc}
+ 1725              	.LVL147:
+ 1726              	.L100:
+ 551:src/protocolfunctions.c ****     #endif
+ 1727              		.loc 1 551 24 is_stmt 1 discriminator 1 view .LVU424
+ 1728 0012 0422     		movs	r2, #4
+ 1729 0014 0146     		mov	r1, r0
+ 1730 0016 0648     		ldr	r0, .L102+4
+ 1731              	.LVL148:
+ 551:src/protocolfunctions.c ****     #endif
+ 1732              		.loc 1 551 24 is_stmt 0 discriminator 1 view .LVU425
+ 1733 0018 FFF7FEFF 		bl	protocol_send_text
+ 1734              	.LVL149:
+ 1735 001c F5E7     		b	.L97
+ 1736              	.L101:
+ 555:src/protocolfunctions.c ****     #endif
+ 1737              		.loc 1 555 24 is_stmt 1 discriminator 1 view .LVU426
+ 1738 001e 0422     		movs	r2, #4
+ 1739 0020 2146     		mov	r1, r4
+ 1740 0022 0448     		ldr	r0, .L102+8
+ 1741 0024 FFF7FEFF 		bl	protocol_send_text
+ 1742              	.LVL150:
+ 1743              		.loc 1 561 1 is_stmt 0 view .LVU427
+ 1744 0028 F2E7     		b	.L96
+ 1745              	.L103:
+ 1746 002a 00BF     		.align	2
+ 1747              	.L102:
+ 1748 002c 00000000 		.word	debug_out
+ 1749 0030 00000000 		.word	sSoftwareSerial
+ 1750 0034 00000000 		.word	sUSART2
+ 1751              		.cfi_endproc
+ 1752              	.LFE79:
+ 1754              		.section	.rodata.fn_FlashContentMagic.str1.4,"aMS",%progbits,1
+ 1755              		.align	2
+ 1756              	.LC0:
+ 1757 0000 696E636F 		.ascii	"incorrect magic %d, should be %d\015\012Flash not w"
+ 1757      72726563 
+ 1757      74206D61 
+ 1757      67696320 
+ 1757      25642C20 
+ 1758 002d 72697474 		.ascii	"ritten\015\012\000"
+ 1758      656E0D0A 
+ 1758      00
+ 1759 0036 0000     		.align	2
+ 1760              	.LC1:
+ 1761 0038 77726F74 		.ascii	"wrote flash\015\012\000"
+ 1761      6520666C 
+ 1761      6173680D 
+ 1761      0A00
+ 1762              		.section	.text.fn_FlashContentMagic,"ax",%progbits
+ 1763              		.align	1
+ARM GAS  /tmp/cc0kyNAB.s 			page 43
+
+
+ 1764              		.global	fn_FlashContentMagic
+ 1765              		.syntax unified
+ 1766              		.thumb
+ 1767              		.thumb_func
+ 1769              	fn_FlashContentMagic:
+ 1770              	.LVL151:
+ 1771              	.LFB75:
+ 348:src/protocolfunctions.c **** 
+ 1772              		.loc 1 348 109 is_stmt 1 view -0
+ 1773              		.cfi_startproc
+ 1774              		@ args = 0, pretend = 0, frame = 128
+ 1775              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348:src/protocolfunctions.c **** 
+ 1776              		.loc 1 348 109 is_stmt 0 view .LVU429
+ 1777 0000 10B5     		push	{r4, lr}
+ 1778              	.LCFI15:
+ 1779              		.cfi_def_cfa_offset 8
+ 1780              		.cfi_offset 4, -8
+ 1781              		.cfi_offset 14, -4
+ 1782 0002 A0B0     		sub	sp, sp, #128
+ 1783              	.LCFI16:
+ 1784              		.cfi_def_cfa_offset 136
+ 1785 0004 1446     		mov	r4, r2
+ 350:src/protocolfunctions.c **** 
+ 1786              		.loc 1 350 5 is_stmt 1 view .LVU430
+ 1787 0006 FFF7FEFF 		bl	fn_defaultProcessing
+ 1788              	.LVL152:
+ 352:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
+ 1789              		.loc 1 352 5 view .LVU431
+ 1790 000a 572C     		cmp	r4, #87
+ 1791 000c 03D0     		beq	.L105
+ 1792 000e 722C     		cmp	r4, #114
+ 1793 0010 01D0     		beq	.L105
+ 1794              	.L104:
+ 366:src/protocolfunctions.c **** 
+ 1795              		.loc 1 366 1 is_stmt 0 view .LVU432
+ 1796 0012 20B0     		add	sp, sp, #128
+ 1797              	.LCFI17:
+ 1798              		.cfi_remember_state
+ 1799              		.cfi_def_cfa_offset 8
+ 1800              		@ sp needed
+ 1801 0014 10BD     		pop	{r4, pc}
+ 1802              	.LVL153:
+ 1803              	.L105:
+ 1804              	.LCFI18:
+ 1805              		.cfi_restore_state
+ 355:src/protocolfunctions.c ****                 char temp[128];
+ 1806              		.loc 1 355 13 is_stmt 1 view .LVU433
+ 355:src/protocolfunctions.c ****                 char temp[128];
+ 1807              		.loc 1 355 29 is_stmt 0 view .LVU434
+ 1808 0016 0D4B     		ldr	r3, .L109
+ 1809 0018 1A88     		ldrh	r2, [r3]
+ 355:src/protocolfunctions.c ****                 char temp[128];
+ 1810              		.loc 1 355 16 view .LVU435
+ 1811 001a 40F2D643 		movw	r3, #1238
+ 1812 001e 9A42     		cmp	r2, r3
+ 1813 0020 0BD0     		beq	.L107
+ARM GAS  /tmp/cc0kyNAB.s 			page 44
+
+
+ 1814              	.LBB3:
+ 356:src/protocolfunctions.c ****                 sprintf(temp, "incorrect magic %d, should be %d\r\nFlash not written\r\n", FlashCon
+ 1815              		.loc 1 356 17 is_stmt 1 view .LVU436
+ 357:src/protocolfunctions.c ****                 consoleLog(temp);
+ 1816              		.loc 1 357 17 view .LVU437
+ 1817 0022 0B49     		ldr	r1, .L109+4
+ 1818 0024 6846     		mov	r0, sp
+ 1819 0026 FFF7FEFF 		bl	sprintf
+ 1820              	.LVL154:
+ 358:src/protocolfunctions.c ****                 FlashContent.magic = CURRENT_MAGIC;
+ 1821              		.loc 1 358 17 view .LVU438
+ 1822 002a 6846     		mov	r0, sp
+ 1823 002c FFF7FEFF 		bl	consoleLog
+ 1824              	.LVL155:
+ 359:src/protocolfunctions.c ****                 return;
+ 1825              		.loc 1 359 17 view .LVU439
+ 359:src/protocolfunctions.c ****                 return;
+ 1826              		.loc 1 359 36 is_stmt 0 view .LVU440
+ 1827 0030 064B     		ldr	r3, .L109
+ 1828 0032 40F2D642 		movw	r2, #1238
+ 1829 0036 1A80     		strh	r2, [r3]	@ movhi
+ 360:src/protocolfunctions.c ****             }
+ 1830              		.loc 1 360 17 is_stmt 1 view .LVU441
+ 1831 0038 EBE7     		b	.L104
+ 1832              	.L107:
+ 1833              	.LBE3:
+ 362:src/protocolfunctions.c ****             consoleLog("wrote flash\r\n");
+ 1834              		.loc 1 362 13 view .LVU442
+ 1835 003a 4E21     		movs	r1, #78
+ 1836 003c 0348     		ldr	r0, .L109
+ 1837 003e FFF7FEFF 		bl	writeFlash
+ 1838              	.LVL156:
+ 363:src/protocolfunctions.c ****             break;
+ 1839              		.loc 1 363 13 view .LVU443
+ 1840 0042 0448     		ldr	r0, .L109+8
+ 1841 0044 FFF7FEFF 		bl	consoleLog
+ 1842              	.LVL157:
+ 364:src/protocolfunctions.c ****     }
+ 1843              		.loc 1 364 13 view .LVU444
+ 1844 0048 E3E7     		b	.L104
+ 1845              	.L110:
+ 1846 004a 00BF     		.align	2
+ 1847              	.L109:
+ 1848 004c 00000000 		.word	FlashContent
+ 1849 0050 00000000 		.word	.LC0
+ 1850 0054 38000000 		.word	.LC1
+ 1851              		.cfi_endproc
+ 1852              	.LFE75:
+ 1854              		.section	.text.consoleLogRaw,"ax",%progbits
+ 1855              		.align	1
+ 1856              		.global	consoleLogRaw
+ 1857              		.syntax unified
+ 1858              		.thumb
+ 1859              		.thumb_func
+ 1861              	consoleLogRaw:
+ 1862              	.LVL158:
+ 1863              	.LFB80:
+ARM GAS  /tmp/cc0kyNAB.s 			page 45
+
+
+ 562:src/protocolfunctions.c **** 
+ 563:src/protocolfunctions.c **** // Raw console output without protocol framing (for CAN debug messages)
+ 564:src/protocolfunctions.c **** void consoleLogRaw(char *message) {
+ 1864              		.loc 1 564 35 view -0
+ 1865              		.cfi_startproc
+ 1866              		@ args = 0, pretend = 0, frame = 0
+ 1867              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1868              		.loc 1 564 35 is_stmt 0 view .LVU446
+ 1869 0000 38B5     		push	{r3, r4, r5, lr}
+ 1870              	.LCFI19:
+ 1871              		.cfi_def_cfa_offset 16
+ 1872              		.cfi_offset 3, -16
+ 1873              		.cfi_offset 4, -12
+ 1874              		.cfi_offset 5, -8
+ 1875              		.cfi_offset 14, -4
+ 1876 0002 0546     		mov	r5, r0
+ 565:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart2;
+ 1877              		.loc 1 565 5 is_stmt 1 view .LVU447
+ 566:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart3;
+ 1878              		.loc 1 566 5 view .LVU448
+ 567:src/protocolfunctions.c ****     
+ 568:src/protocolfunctions.c ****     uint16_t len = 0;
+ 1879              		.loc 1 568 5 view .LVU449
+ 1880              	.LVL159:
+ 569:src/protocolfunctions.c ****     while(message[len] != '\0' && len < 512) len++;
+ 1881              		.loc 1 569 5 view .LVU450
+ 568:src/protocolfunctions.c ****     while(message[len] != '\0' && len < 512) len++;
+ 1882              		.loc 1 568 14 is_stmt 0 view .LVU451
+ 1883 0004 0024     		movs	r4, #0
+ 1884              	.LVL160:
+ 1885              	.L112:
+ 1886              		.loc 1 569 32 is_stmt 1 discriminator 1 view .LVU452
+ 1887              		.loc 1 569 18 is_stmt 0 discriminator 1 view .LVU453
+ 1888 0006 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 1889              		.loc 1 569 32 discriminator 1 view .LVU454
+ 1890 0008 2BB1     		cbz	r3, .L113
+ 1891              		.loc 1 569 32 discriminator 2 view .LVU455
+ 1892 000a B4F5007F 		cmp	r4, #512
+ 1893 000e 02D2     		bcs	.L113
+ 1894              		.loc 1 569 46 is_stmt 1 discriminator 3 view .LVU456
+ 1895              		.loc 1 569 49 is_stmt 0 discriminator 3 view .LVU457
+ 1896 0010 0134     		adds	r4, r4, #1
+ 1897              	.LVL161:
+ 1898              		.loc 1 569 49 discriminator 3 view .LVU458
+ 1899 0012 A4B2     		uxth	r4, r4
+ 1900              	.LVL162:
+ 1901              		.loc 1 569 49 discriminator 3 view .LVU459
+ 1902 0014 F7E7     		b	.L112
+ 1903              	.L113:
+ 570:src/protocolfunctions.c ****     
+ 571:src/protocolfunctions.c ****     #ifdef SERIAL_USART2_IT
+ 572:src/protocolfunctions.c ****         HAL_UART_Transmit(&huart2, (uint8_t*)message, len, 100);
+ 1904              		.loc 1 572 9 is_stmt 1 view .LVU460
+ 1905 0016 6423     		movs	r3, #100
+ 1906 0018 2246     		mov	r2, r4
+ 1907 001a 2946     		mov	r1, r5
+ 1908 001c 0548     		ldr	r0, .L118
+ARM GAS  /tmp/cc0kyNAB.s 			page 46
+
+
+ 1909              	.LVL163:
+ 1910              		.loc 1 572 9 is_stmt 0 view .LVU461
+ 1911 001e FFF7FEFF 		bl	HAL_UART_Transmit
+ 1912              	.LVL164:
+ 573:src/protocolfunctions.c ****     #endif
+ 574:src/protocolfunctions.c ****     
+ 575:src/protocolfunctions.c ****     #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
+ 576:src/protocolfunctions.c ****         HAL_UART_Transmit(&huart3, (uint8_t*)message, len, 100);
+ 577:src/protocolfunctions.c ****     #endif
+ 578:src/protocolfunctions.c ****     
+ 579:src/protocolfunctions.c ****     // Also output to Software Serial (PA13/PA14) if initialized
+ 580:src/protocolfunctions.c ****     #if defined(SOFTWARE_SERIAL) && defined(ENABLE_CAN_BUS)
+ 581:src/protocolfunctions.c ****     extern bool CAN_IsSoftwareSerialReady(void);
+ 1913              		.loc 1 581 5 is_stmt 1 view .LVU462
+ 582:src/protocolfunctions.c ****     if (CAN_IsSoftwareSerialReady()) {
+ 1914              		.loc 1 582 5 view .LVU463
+ 1915              		.loc 1 582 9 is_stmt 0 view .LVU464
+ 1916 0022 FFF7FEFF 		bl	CAN_IsSoftwareSerialReady
+ 1917              	.LVL165:
+ 1918              		.loc 1 582 8 discriminator 1 view .LVU465
+ 1919 0026 00B9     		cbnz	r0, .L117
+ 1920              	.L111:
+ 583:src/protocolfunctions.c ****         softwareserial_Send((unsigned char*)message, len);
+ 584:src/protocolfunctions.c ****     }
+ 585:src/protocolfunctions.c ****     #endif
+ 586:src/protocolfunctions.c **** }
+ 1921              		.loc 1 586 1 view .LVU466
+ 1922 0028 38BD     		pop	{r3, r4, r5, pc}
+ 1923              	.LVL166:
+ 1924              	.L117:
+ 583:src/protocolfunctions.c ****         softwareserial_Send((unsigned char*)message, len);
+ 1925              		.loc 1 583 9 is_stmt 1 view .LVU467
+ 1926 002a 2146     		mov	r1, r4
+ 1927 002c 2846     		mov	r0, r5
+ 1928 002e FFF7FEFF 		bl	softwareserial_Send
+ 1929              	.LVL167:
+ 1930              		.loc 1 586 1 is_stmt 0 view .LVU468
+ 1931 0032 F9E7     		b	.L111
+ 1932              	.L119:
+ 1933              		.align	2
+ 1934              	.L118:
+ 1935 0034 00000000 		.word	huart2
+ 1936              		.cfi_endproc
+ 1937              	.LFE80:
+ 1939              		.global	BuzzerData
+ 1940              		.section	.bss.BuzzerData,"aw",%nobits
+ 1941              		.align	2
+ 1944              	BuzzerData:
+ 1945 0000 00000000 		.space	4
+ 1946              		.global	PWMData
+ 1947              		.section	.data.PWMData,"aw"
+ 1948              		.align	2
+ 1951              	PWMData:
+ 1952 0000 00000000 		.word	0
+ 1953 0004 00000000 		.word	0
+ 1954 0008 58020000 		.word	600
+ 1955 000c A8FDFFFF 		.word	-600
+ARM GAS  /tmp/cc0kyNAB.s 			page 47
+
+
+ 1956 0010 28000000 		.word	40
+ 1957              		.comm	RawPosition,16,4
+ 1958              		.global	PosnData
+ 1959              		.section	.data.PosnData,"aw"
+ 1960              		.align	2
+ 1963              	PosnData:
+ 1964 0000 00000000 		.word	0
+ 1965 0004 00000000 		.word	0
+ 1966 0008 C8000000 		.word	200
+ 1967 000c 46000000 		.word	70
+ 1968 0010 00000000 		.space	16
+ 1968      00000000 
+ 1968      00000000 
+ 1968      00000000 
+ 1969              		.comm	PositionIncr,8,4
+ 1970              		.comm	Position,16,4
+ 1971              		.global	SpeedData
+ 1972              		.section	.data.SpeedData,"aw"
+ 1973              		.align	2
+ 1976              	SpeedData:
+ 1977 0000 00000000 		.word	0
+ 1978 0004 00000000 		.word	0
+ 1979 0008 58020000 		.word	600
+ 1980 000c A8FDFFFF 		.word	-600
+ 1981 0010 28000000 		.word	40
+ 1982 0014 00000000 		.space	16
+ 1982      00000000 
+ 1982      00000000 
+ 1982      00000000 
+ 1983              		.comm	sensor_copy,20,4
+ 1984              		.global	protocol_enable
+ 1985              		.section	.bss.protocol_enable,"aw",%nobits
+ 1988              	protocol_enable:
+ 1989 0000 00       		.space	1
+ 1990              		.comm	sUSART2,4692,4
+ 1991              		.comm	sSoftwareSerial,4692,4
+ 1992              		.text
+ 1993              	.Letext0:
+ 1994              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 1995              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 1996              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 1997              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 1998              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 1999              		.file 7 "inc/protocol.h"
+ 2000              		.file 8 "inc/protocolfunctions.h"
+ 2001              		.file 9 "inc/control_structures.h"
+ 2002              		.file 10 "inc/bldc.h"
+ 2003              		.file 11 "inc/flashcontent.h"
+ 2004              		.file 12 "inc/sensorcoms.h"
+ 2005              		.file 13 "inc/hallinterrupts.h"
+ 2006              		.file 14 "inc/deadreckoner.h"
+ 2007              		.file 15 "inc/softwareserial.h"
+ 2008              		.file 16 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 2009              		.file 17 "inc/flashaccess.h"
+ 2010              		.file 18 "/usr/include/newlib/stdio.h"
+ 2011              		.file 19 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
+ARM GAS  /tmp/cc0kyNAB.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 protocolfunctions.c
+     /tmp/cc0kyNAB.s:19     .text.fn_enable:00000000 $t
+     /tmp/cc0kyNAB.s:25     .text.fn_enable:00000000 fn_enable
+     /tmp/cc0kyNAB.s:141    .text.fn_enable:00000064 $d
+     /tmp/cc0kyNAB.s:1988   .bss.protocol_enable:00000000 protocol_enable
+     /tmp/cc0kyNAB.s:1963   .data.PosnData:00000000 PosnData
+     /tmp/cc0kyNAB.s:1976   .data.SpeedData:00000000 SpeedData
+     /tmp/cc0kyNAB.s:1951   .data.PWMData:00000000 PWMData
+     /tmp/cc0kyNAB.s:151    .text.fn_SpeedData:00000000 $t
+     /tmp/cc0kyNAB.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
+     /tmp/cc0kyNAB.s:198    .text.fn_SpeedData:0000001c $d
+     /tmp/cc0kyNAB.s:204    .text.fn_Position:00000000 $t
+     /tmp/cc0kyNAB.s:210    .text.fn_Position:00000000 fn_Position
+     /tmp/cc0kyNAB.s:311    .text.fn_Position:00000050 $d
+     /tmp/cc0kyNAB.s:316    .text.fn_PositionIncr:00000000 $t
+     /tmp/cc0kyNAB.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
+     /tmp/cc0kyNAB.s:416    .text.fn_PositionIncr:00000058 $d
+     /tmp/cc0kyNAB.s:424    .text.fn_RawPosition:00000000 $t
+     /tmp/cc0kyNAB.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
+     /tmp/cc0kyNAB.s:529    .text.fn_RawPosition:00000050 $d
+     /tmp/cc0kyNAB.s:534    .text.fn_PWMData:00000000 $t
+     /tmp/cc0kyNAB.s:540    .text.fn_PWMData:00000000 fn_PWMData
+     /tmp/cc0kyNAB.s:683    .text.fn_PWMData:0000008c $d
+     /tmp/cc0kyNAB.s:689    .text.fn_BuzzerData:00000000 $t
+     /tmp/cc0kyNAB.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
+     /tmp/cc0kyNAB.s:784    .text.fn_BuzzerData:0000004c $d
+     /tmp/cc0kyNAB.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
+     /tmp/cc0kyNAB.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
+     /tmp/cc0kyNAB.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
+     /tmp/cc0kyNAB.s:854    .text.fn_SensorData:00000000 $t
+     /tmp/cc0kyNAB.s:860    .text.fn_SensorData:00000000 fn_SensorData
+     /tmp/cc0kyNAB.s:907    .text.fn_SensorData:00000044 $d
+                            *COM*:00000014 sensor_copy
+     /tmp/cc0kyNAB.s:913    .text.fn_xytPosn:00000000 $t
+     /tmp/cc0kyNAB.s:919    .text.fn_xytPosn:00000000 fn_xytPosn
+     /tmp/cc0kyNAB.s:962    .text.fn_xytPosn:00000024 $d
+     /tmp/cc0kyNAB.s:967    .text.fn_FlashContentPID:00000000 $t
+     /tmp/cc0kyNAB.s:973    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
+     /tmp/cc0kyNAB.s:1010   .text.setup_protocol:00000000 $t
+     /tmp/cc0kyNAB.s:1016   .text.setup_protocol:00000000 setup_protocol
+     /tmp/cc0kyNAB.s:1639   .text.setup_protocol:0000038c $d
+                            *COM*:00001254 sSoftwareSerial
+                            *COM*:00001254 sUSART2
+                            *COM*:00000010 Position
+                            *COM*:00000008 PositionIncr
+                            *COM*:00000010 RawPosition
+     /tmp/cc0kyNAB.s:1944   .bss.BuzzerData:00000000 BuzzerData
+     /tmp/cc0kyNAB.s:1769   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
+     /tmp/cc0kyNAB.s:1678   .text.setup_protocol:00000424 $t
+     /tmp/cc0kyNAB.s:1688   .text.consoleLog:00000000 $t
+     /tmp/cc0kyNAB.s:1694   .text.consoleLog:00000000 consoleLog
+     /tmp/cc0kyNAB.s:1748   .text.consoleLog:0000002c $d
+     /tmp/cc0kyNAB.s:1755   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
+     /tmp/cc0kyNAB.s:1763   .text.fn_FlashContentMagic:00000000 $t
+     /tmp/cc0kyNAB.s:1848   .text.fn_FlashContentMagic:0000004c $d
+     /tmp/cc0kyNAB.s:1855   .text.consoleLogRaw:00000000 $t
+ARM GAS  /tmp/cc0kyNAB.s 			page 49
+
+
+     /tmp/cc0kyNAB.s:1861   .text.consoleLogRaw:00000000 consoleLogRaw
+     /tmp/cc0kyNAB.s:1935   .text.consoleLogRaw:00000034 $d
+     /tmp/cc0kyNAB.s:1941   .bss.BuzzerData:00000000 $d
+     /tmp/cc0kyNAB.s:1948   .data.PWMData:00000000 $d
+     /tmp/cc0kyNAB.s:1960   .data.PosnData:00000000 $d
+     /tmp/cc0kyNAB.s:1973   .data.SpeedData:00000000 $d
+     /tmp/cc0kyNAB.s:1989   .bss.protocol_enable:00000000 $d
+
+UNDEFINED SYMBOLS
+fn_defaultProcessing
+init_PID_control
+enable
+HallData
+control_type
+input_timeout_counter
+buzzerFreq
+buzzerLen
+buzzerPattern
+FlashContent
+electrical_measurements
+fn_defaultProcessingReadOnly
+sensor_data
+reset
+deadreconer
+change_PID_constants
+protocol_init
+main_ascii_init
+setParamVariable
+setParamHandler
+protocol_GetTick
+HAL_GetTick
+protocol_Delay
+HAL_Delay
+protocol_SystemReset
+HAL_NVIC_SystemReset
+softwareserial_Send
+softwareserial_Send_Wait
+USART2_IT_send
+disablepoweroff
+debug_out
+xytPosn
+protocol_send_text
+sprintf
+writeFlash
+HAL_UART_Transmit
+CAN_IsSoftwareSerialReady
+huart2

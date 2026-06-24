@@ -149,7 +149,7 @@
   // Falls back to USART2/USART3 if MCP2515 not detected
   #define INCLUDE_PROTOCOL INCLUDE_PROTOCOL2
   #define ENABLE_CAN_BUS 1
-  #define CAN_SPEED MCP2515_SPEED_500KBPS
+  #define CAN_SPEED MCP2515_SPEED_250KBPS
   #ifndef CAN_BOARD_ID
     #define CAN_BOARD_ID 0          // Board ID (0-15) - Default if not set by build flag
   #endif
@@ -177,7 +177,7 @@
   // Combines CAN control with hoverboard sensor reading
   #define INCLUDE_PROTOCOL INCLUDE_PROTOCOL2
   #define ENABLE_CAN_BUS 1
-  #define CAN_SPEED MCP2515_SPEED_500KBPS
+  #define CAN_SPEED MCP2515_SPEED_250KBPS
   #define CAN_BOARD_ID 0          // Board ID (0-15) - Used for multi-board setups
   #define READ_SENSOR
   #define CONTROL_SENSOR
@@ -209,7 +209,7 @@
   // PA13/PA14 (SWD pins) used for debug serial output
   #define INCLUDE_PROTOCOL INCLUDE_PROTOCOL2
   #define ENABLE_CAN_BUS 1
-  #define CAN_SPEED MCP2515_SPEED_500KBPS
+  #define CAN_SPEED MCP2515_SPEED_250KBPS
   #ifndef CAN_BOARD_ID
     #define CAN_BOARD_ID 0          // Board ID (0-15) - configurable via build flag
   #endif

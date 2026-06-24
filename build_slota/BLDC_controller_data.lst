@@ -1,0 +1,355 @@
+ARM GAS  /tmp/ccc4CutE.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"BLDC_controller_data.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/BLDC_controller_data.c"
+  18              		.global	rtP
+  19              		.section	.data.rtP,"aw"
+  20              		.align	2
+  23              	rtP:
+  24 0000 672B0000 		.word	11111
+  25 0004 0A000000 		.word	10
+  26 0008 0F000000 		.word	15
+  27 000c 1E000000 		.word	30
+  28 0010 90010000 		.word	400
+  29 0014 46000000 		.word	70
+  30 0018 00000000 		.word	0
+  31 001c 64000000 		.word	100
+  32 0020 C8000000 		.word	200
+  33 0024 2C010000 		.word	300
+  34 0028 90010000 		.word	400
+  35 002c F4010000 		.word	500
+  36 0030 58020000 		.word	600
+  37 0034 BC020000 		.word	700
+  38 0038 20030000 		.word	800
+  39 003c 84030000 		.word	900
+  40 0040 E8030000 		.word	1000
+  41 0044 0000     		.short	0
+  42 0046 0000     		.short	0
+  43 0048 0000     		.short	0
+  44 004a 0000     		.short	0
+  45 004c 0000     		.short	0
+  46 004e 0200     		.short	2
+  47 0050 0300     		.short	3
+  48 0052 0500     		.short	5
+  49 0054 0900     		.short	9
+  50 0056 1000     		.short	16
+  51 0058 1900     		.short	25
+  52 005a 3200     		.short	50
+  53 005c 1400     		.short	20
+  54 005e DC05     		.short	1500
+  55 0060 03       		.byte	3
+  56 0061 01       		.byte	1
+  57 0062 0000     		.space	2
+  58              		.global	rtConstP
+  59              		.section	.data.rtConstP,"aw"
+ARM GAS  /tmp/ccc4CutE.s 			page 2
+
+
+  60              		.align	2
+  63              	rtConstP:
+  64 0000 E803     		.short	1000
+  65 0002 E803     		.short	1000
+  66 0004 E803     		.short	1000
+  67 0006 18FC     		.short	-1000
+  68 0008 18FC     		.short	-1000
+  69 000a 18FC     		.short	-1000
+  70 000c E803     		.short	1000
+  71 000e 18FC     		.short	-1000
+  72 0010 18FC     		.short	-1000
+  73 0012 E803     		.short	1000
+  74 0014 E803     		.short	1000
+  75 0016 E803     		.short	1000
+  76 0018 18FC     		.short	-1000
+  77 001a 18FC     		.short	-1000
+  78 001c E803     		.short	1000
+  79 001e 18FC     		.short	-1000
+  80 0020 18FC     		.short	-1000
+  81 0022 18FC     		.short	-1000
+  82 0024 E803     		.short	1000
+  83 0026 E803     		.short	1000
+  84 0028 E803     		.short	1000
+  85 002a F401     		.short	500
+  86 002c 8302     		.short	643
+  87 002e FE02     		.short	766
+  88 0030 6203     		.short	866
+  89 0032 AC03     		.short	940
+  90 0034 D903     		.short	985
+  91 0036 E803     		.short	1000
+  92 0038 D903     		.short	985
+  93 003a AC03     		.short	940
+  94 003c 6203     		.short	866
+  95 003e FE02     		.short	766
+  96 0040 8302     		.short	643
+  97 0042 F401     		.short	500
+  98 0044 5601     		.short	342
+  99 0046 AE00     		.short	174
+ 100 0048 0000     		.short	0
+ 101 004a 52FF     		.short	-174
+ 102 004c AAFE     		.short	-342
+ 103 004e 0CFE     		.short	-500
+ 104 0050 7DFD     		.short	-643
+ 105 0052 02FD     		.short	-766
+ 106 0054 9EFC     		.short	-866
+ 107 0056 54FC     		.short	-940
+ 108 0058 27FC     		.short	-985
+ 109 005a 18FC     		.short	-1000
+ 110 005c 27FC     		.short	-985
+ 111 005e 54FC     		.short	-940
+ 112 0060 9EFC     		.short	-866
+ 113 0062 02FD     		.short	-766
+ 114 0064 7DFD     		.short	-643
+ 115 0066 0CFE     		.short	-500
+ 116 0068 AAFE     		.short	-342
+ 117 006a 52FF     		.short	-174
+ 118 006c 0000     		.short	0
+ARM GAS  /tmp/ccc4CutE.s 			page 3
+
+
+ 119 006e AE00     		.short	174
+ 120 0070 5601     		.short	342
+ 121 0072 F401     		.short	500
+ 122 0074 18FC     		.short	-1000
+ 123 0076 27FC     		.short	-985
+ 124 0078 54FC     		.short	-940
+ 125 007a 9EFC     		.short	-866
+ 126 007c 02FD     		.short	-766
+ 127 007e 7DFD     		.short	-643
+ 128 0080 0CFE     		.short	-500
+ 129 0082 AAFE     		.short	-342
+ 130 0084 52FF     		.short	-174
+ 131 0086 0000     		.short	0
+ 132 0088 AE00     		.short	174
+ 133 008a 5601     		.short	342
+ 134 008c F401     		.short	500
+ 135 008e 8302     		.short	643
+ 136 0090 FE02     		.short	766
+ 137 0092 6203     		.short	866
+ 138 0094 AC03     		.short	940
+ 139 0096 D903     		.short	985
+ 140 0098 E803     		.short	1000
+ 141 009a D903     		.short	985
+ 142 009c AC03     		.short	940
+ 143 009e 6203     		.short	866
+ 144 00a0 FE02     		.short	766
+ 145 00a2 8302     		.short	643
+ 146 00a4 F401     		.short	500
+ 147 00a6 5601     		.short	342
+ 148 00a8 AE00     		.short	174
+ 149 00aa 0000     		.short	0
+ 150 00ac 52FF     		.short	-174
+ 151 00ae AAFE     		.short	-342
+ 152 00b0 0CFE     		.short	-500
+ 153 00b2 7DFD     		.short	-643
+ 154 00b4 02FD     		.short	-766
+ 155 00b6 9EFC     		.short	-866
+ 156 00b8 54FC     		.short	-940
+ 157 00ba 27FC     		.short	-985
+ 158 00bc 18FC     		.short	-1000
+ 159 00be F401     		.short	500
+ 160 00c0 5601     		.short	342
+ 161 00c2 AE00     		.short	174
+ 162 00c4 0000     		.short	0
+ 163 00c6 52FF     		.short	-174
+ 164 00c8 AAFE     		.short	-342
+ 165 00ca 0CFE     		.short	-500
+ 166 00cc 7DFD     		.short	-643
+ 167 00ce 02FD     		.short	-766
+ 168 00d0 9EFC     		.short	-866
+ 169 00d2 54FC     		.short	-940
+ 170 00d4 27FC     		.short	-985
+ 171 00d6 18FC     		.short	-1000
+ 172 00d8 27FC     		.short	-985
+ 173 00da 54FC     		.short	-940
+ 174 00dc 9EFC     		.short	-866
+ 175 00de 02FD     		.short	-766
+ARM GAS  /tmp/ccc4CutE.s 			page 4
+
+
+ 176 00e0 7DFD     		.short	-643
+ 177 00e2 0CFE     		.short	-500
+ 178 00e4 AAFE     		.short	-342
+ 179 00e6 52FF     		.short	-174
+ 180 00e8 0000     		.short	0
+ 181 00ea AE00     		.short	174
+ 182 00ec 5601     		.short	342
+ 183 00ee F401     		.short	500
+ 184 00f0 8302     		.short	643
+ 185 00f2 FE02     		.short	766
+ 186 00f4 6203     		.short	866
+ 187 00f6 AC03     		.short	940
+ 188 00f8 D903     		.short	985
+ 189 00fa E803     		.short	1000
+ 190 00fc D903     		.short	985
+ 191 00fe AC03     		.short	940
+ 192 0100 6203     		.short	866
+ 193 0102 FE02     		.short	766
+ 194 0104 8302     		.short	643
+ 195 0106 F401     		.short	500
+ 196 0108 2D03     		.short	813
+ 197 010a B103     		.short	945
+ 198 010c E803     		.short	1000
+ 199 010e E403     		.short	996
+ 200 0110 C203     		.short	962
+ 201 0112 9E03     		.short	926
+ 202 0114 9003     		.short	912
+ 203 0116 9E03     		.short	926
+ 204 0118 C203     		.short	962
+ 205 011a E403     		.short	996
+ 206 011c E803     		.short	1000
+ 207 011e B103     		.short	945
+ 208 0120 2D03     		.short	813
+ 209 0122 5702     		.short	599
+ 210 0124 3F01     		.short	319
+ 211 0126 0000     		.short	0
+ 212 0128 C1FE     		.short	-319
+ 213 012a A9FD     		.short	-599
+ 214 012c D3FC     		.short	-813
+ 215 012e 4FFC     		.short	-945
+ 216 0130 18FC     		.short	-1000
+ 217 0132 1CFC     		.short	-996
+ 218 0134 3EFC     		.short	-962
+ 219 0136 62FC     		.short	-926
+ 220 0138 70FC     		.short	-912
+ 221 013a 62FC     		.short	-926
+ 222 013c 3EFC     		.short	-962
+ 223 013e 1CFC     		.short	-996
+ 224 0140 18FC     		.short	-1000
+ 225 0142 4FFC     		.short	-945
+ 226 0144 D3FC     		.short	-813
+ 227 0146 A9FD     		.short	-599
+ 228 0148 C1FE     		.short	-319
+ 229 014a 0000     		.short	0
+ 230 014c 3F01     		.short	319
+ 231 014e 5702     		.short	599
+ 232 0150 2D03     		.short	813
+ARM GAS  /tmp/ccc4CutE.s 			page 5
+
+
+ 233 0152 70FC     		.short	-912
+ 234 0154 62FC     		.short	-926
+ 235 0156 3EFC     		.short	-962
+ 236 0158 1CFC     		.short	-996
+ 237 015a 18FC     		.short	-1000
+ 238 015c 4FFC     		.short	-945
+ 239 015e D3FC     		.short	-813
+ 240 0160 A9FD     		.short	-599
+ 241 0162 C1FE     		.short	-319
+ 242 0164 0000     		.short	0
+ 243 0166 3F01     		.short	319
+ 244 0168 5702     		.short	599
+ 245 016a 2D03     		.short	813
+ 246 016c B103     		.short	945
+ 247 016e E803     		.short	1000
+ 248 0170 E403     		.short	996
+ 249 0172 C203     		.short	962
+ 250 0174 9E03     		.short	926
+ 251 0176 9003     		.short	912
+ 252 0178 9E03     		.short	926
+ 253 017a C203     		.short	962
+ 254 017c E403     		.short	996
+ 255 017e E803     		.short	1000
+ 256 0180 B103     		.short	945
+ 257 0182 2D03     		.short	813
+ 258 0184 5702     		.short	599
+ 259 0186 3F01     		.short	319
+ 260 0188 0000     		.short	0
+ 261 018a C1FE     		.short	-319
+ 262 018c A9FD     		.short	-599
+ 263 018e D3FC     		.short	-813
+ 264 0190 4FFC     		.short	-945
+ 265 0192 18FC     		.short	-1000
+ 266 0194 1CFC     		.short	-996
+ 267 0196 3EFC     		.short	-962
+ 268 0198 62FC     		.short	-926
+ 269 019a 70FC     		.short	-912
+ 270 019c 2D03     		.short	813
+ 271 019e 5702     		.short	599
+ 272 01a0 3F01     		.short	319
+ 273 01a2 0000     		.short	0
+ 274 01a4 C1FE     		.short	-319
+ 275 01a6 A9FD     		.short	-599
+ 276 01a8 D3FC     		.short	-813
+ 277 01aa 4FFC     		.short	-945
+ 278 01ac 18FC     		.short	-1000
+ 279 01ae 1CFC     		.short	-996
+ 280 01b0 3EFC     		.short	-962
+ 281 01b2 62FC     		.short	-926
+ 282 01b4 70FC     		.short	-912
+ 283 01b6 62FC     		.short	-926
+ 284 01b8 3EFC     		.short	-962
+ 285 01ba 1CFC     		.short	-996
+ 286 01bc 18FC     		.short	-1000
+ 287 01be 4FFC     		.short	-945
+ 288 01c0 D3FC     		.short	-813
+ 289 01c2 A9FD     		.short	-599
+ARM GAS  /tmp/ccc4CutE.s 			page 6
+
+
+ 290 01c4 C1FE     		.short	-319
+ 291 01c6 0000     		.short	0
+ 292 01c8 3F01     		.short	319
+ 293 01ca 5702     		.short	599
+ 294 01cc 2D03     		.short	813
+ 295 01ce B103     		.short	945
+ 296 01d0 E803     		.short	1000
+ 297 01d2 E403     		.short	996
+ 298 01d4 C203     		.short	962
+ 299 01d6 9E03     		.short	926
+ 300 01d8 9003     		.short	912
+ 301 01da 9E03     		.short	926
+ 302 01dc C203     		.short	962
+ 303 01de E403     		.short	996
+ 304 01e0 E803     		.short	1000
+ 305 01e2 B103     		.short	945
+ 306 01e4 2D03     		.short	813
+ 307 01e6 E803     		.short	1000
+ 308 01e8 18FC     		.short	-1000
+ 309 01ea 0000     		.short	0
+ 310 01ec E803     		.short	1000
+ 311 01ee 0000     		.short	0
+ 312 01f0 18FC     		.short	-1000
+ 313 01f2 0000     		.short	0
+ 314 01f4 E803     		.short	1000
+ 315 01f6 18FC     		.short	-1000
+ 316 01f8 18FC     		.short	-1000
+ 317 01fa E803     		.short	1000
+ 318 01fc 0000     		.short	0
+ 319 01fe 18FC     		.short	-1000
+ 320 0200 0000     		.short	0
+ 321 0202 E803     		.short	1000
+ 322 0204 0000     		.short	0
+ 323 0206 18FC     		.short	-1000
+ 324 0208 E803     		.short	1000
+ 325 020a 00050304 		.ascii	"\000\005\003\004\001\000\002\000"
+ 325      01000200 
+ 326              		.text
+ 327              	.Letext0:
+ 328              		.file 2 "inc/rtwtypes.h"
+ 329              		.file 3 "inc/BLDC_controller.h"
+ARM GAS  /tmp/ccc4CutE.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 BLDC_controller_data.c
+     /tmp/ccc4CutE.s:23     .data.rtP:00000000 rtP
+     /tmp/ccc4CutE.s:20     .data.rtP:00000000 $d
+     /tmp/ccc4CutE.s:63     .data.rtConstP:00000000 rtConstP
+     /tmp/ccc4CutE.s:60     .data.rtConstP:00000000 $d
+
+NO UNDEFINED SYMBOLS

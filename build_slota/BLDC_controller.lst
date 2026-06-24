@@ -1,0 +1,2842 @@
+ARM GAS  /tmp/ccVmOSN0.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"BLDC_controller.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/BLDC_controller.c"
+  18              		.global	__aeabi_uldivmod
+  19              		.section	.text.BLDC_controller_step,"ax",%progbits
+  20              		.align	1
+  21              		.global	BLDC_controller_step
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	BLDC_controller_step:
+  27              	.LVL0:
+  28              	.LFB3:
+   1:src/BLDC_controller.c **** /*
+   2:src/BLDC_controller.c ****  * Academic License - for use in teaching, academic research, and meeting
+   3:src/BLDC_controller.c ****  * course requirements at degree granting institutions only.  Not for
+   4:src/BLDC_controller.c ****  * government, commercial, or other organizational use.
+   5:src/BLDC_controller.c ****  *
+   6:src/BLDC_controller.c ****  * File: BLDC_controller.c
+   7:src/BLDC_controller.c ****  *
+   8:src/BLDC_controller.c ****  * Code generated for Simulink model 'BLDC_controller'.
+   9:src/BLDC_controller.c ****  *
+  10:src/BLDC_controller.c ****  * Model version                  : 1.883
+  11:src/BLDC_controller.c ****  * Simulink Coder version         : 8.13 (R2017b) 24-Jul-2017
+  12:src/BLDC_controller.c ****  * C/C++ source code generated on : Tue Jun 11 21:14:57 2019
+  13:src/BLDC_controller.c ****  *
+  14:src/BLDC_controller.c ****  * Target selection: ert.tlc
+  15:src/BLDC_controller.c ****  * Embedded hardware selection: ARM Compatible->ARM Cortex
+  16:src/BLDC_controller.c ****  * Emulation hardware selection:
+  17:src/BLDC_controller.c ****  *    Differs from embedded hardware (MATLAB Host)
+  18:src/BLDC_controller.c ****  * Code generation objectives:
+  19:src/BLDC_controller.c ****  *    1. Execution efficiency
+  20:src/BLDC_controller.c ****  *    2. RAM efficiency
+  21:src/BLDC_controller.c ****  * Validation result: Not run
+  22:src/BLDC_controller.c ****  */
+  23:src/BLDC_controller.c **** 
+  24:src/BLDC_controller.c **** #include "BLDC_controller.h"
+  25:src/BLDC_controller.c **** #ifndef UCHAR_MAX
+  26:src/BLDC_controller.c **** #include <limits.h>
+  27:src/BLDC_controller.c **** #endif
+  28:src/BLDC_controller.c **** 
+  29:src/BLDC_controller.c **** #if ( UCHAR_MAX != (0xFFU) ) || ( SCHAR_MAX != (0x7F) )
+  30:src/BLDC_controller.c **** #error Code was generated for compiler with different sized uchar/char. \
+ARM GAS  /tmp/ccVmOSN0.s 			page 2
+
+
+  31:src/BLDC_controller.c **** Consider adjusting Test hardware word size settings on the \
+  32:src/BLDC_controller.c **** Hardware Implementation pane to match your compiler word sizes as \
+  33:src/BLDC_controller.c **** defined in limits.h of the compiler. Alternatively, you can \
+  34:src/BLDC_controller.c **** select the Test hardware is the same as production hardware option and \
+  35:src/BLDC_controller.c **** select the Enable portable word sizes option on the Code Generation > \
+  36:src/BLDC_controller.c **** Verification pane for ERT based targets, which will disable the \
+  37:src/BLDC_controller.c **** preprocessor word size checks.
+  38:src/BLDC_controller.c **** #endif
+  39:src/BLDC_controller.c **** 
+  40:src/BLDC_controller.c **** #if ( USHRT_MAX != (0xFFFFU) ) || ( SHRT_MAX != (0x7FFF) )
+  41:src/BLDC_controller.c **** #error Code was generated for compiler with different sized ushort/short. \
+  42:src/BLDC_controller.c **** Consider adjusting Test hardware word size settings on the \
+  43:src/BLDC_controller.c **** Hardware Implementation pane to match your compiler word sizes as \
+  44:src/BLDC_controller.c **** defined in limits.h of the compiler. Alternatively, you can \
+  45:src/BLDC_controller.c **** select the Test hardware is the same as production hardware option and \
+  46:src/BLDC_controller.c **** select the Enable portable word sizes option on the Code Generation > \
+  47:src/BLDC_controller.c **** Verification pane for ERT based targets, which will disable the \
+  48:src/BLDC_controller.c **** preprocessor word size checks.
+  49:src/BLDC_controller.c **** #endif
+  50:src/BLDC_controller.c **** 
+  51:src/BLDC_controller.c **** #if ( UINT_MAX != (0xFFFFFFFFU) ) || ( INT_MAX != (0x7FFFFFFF) )
+  52:src/BLDC_controller.c **** #error Code was generated for compiler with different sized uint/int. \
+  53:src/BLDC_controller.c **** Consider adjusting Test hardware word size settings on the \
+  54:src/BLDC_controller.c **** Hardware Implementation pane to match your compiler word sizes as \
+  55:src/BLDC_controller.c **** defined in limits.h of the compiler. Alternatively, you can \
+  56:src/BLDC_controller.c **** select the Test hardware is the same as production hardware option and \
+  57:src/BLDC_controller.c **** select the Enable portable word sizes option on the Code Generation > \
+  58:src/BLDC_controller.c **** Verification pane for ERT based targets, which will disable the \
+  59:src/BLDC_controller.c **** preprocessor word size checks.
+  60:src/BLDC_controller.c **** #endif
+  61:src/BLDC_controller.c **** 
+  62:src/BLDC_controller.c **** #if ( ULONG_MAX != (0xFFFFFFFFU) ) || ( LONG_MAX != (0x7FFFFFFF) )
+  63:src/BLDC_controller.c **** #error Code was generated for compiler with different sized ulong/long. \
+  64:src/BLDC_controller.c **** Consider adjusting Test hardware word size settings on the \
+  65:src/BLDC_controller.c **** Hardware Implementation pane to match your compiler word sizes as \
+  66:src/BLDC_controller.c **** defined in limits.h of the compiler. Alternatively, you can \
+  67:src/BLDC_controller.c **** select the Test hardware is the same as production hardware option and \
+  68:src/BLDC_controller.c **** select the Enable portable word sizes option on the Code Generation > \
+  69:src/BLDC_controller.c **** Verification pane for ERT based targets, which will disable the \
+  70:src/BLDC_controller.c **** preprocessor word size checks.
+  71:src/BLDC_controller.c **** #endif
+  72:src/BLDC_controller.c **** 
+  73:src/BLDC_controller.c **** #if 0
+  74:src/BLDC_controller.c **** 
+  75:src/BLDC_controller.c **** /* Skip this size verification because of preprocessor limitation */
+  76:src/BLDC_controller.c **** #if ( ULLONG_MAX != (0xFFFFFFFFFFFFFFFFULL) ) || ( LLONG_MAX != (0x7FFFFFFFFFFFFFFFLL) )
+  77:src/BLDC_controller.c **** #error Code was generated for compiler with different sized ulong_long/long_long. \
+  78:src/BLDC_controller.c **** Consider adjusting Test hardware word size settings on the \
+  79:src/BLDC_controller.c **** Hardware Implementation pane to match your compiler word sizes as \
+  80:src/BLDC_controller.c **** defined in limits.h of the compiler. Alternatively, you can \
+  81:src/BLDC_controller.c **** select the Test hardware is the same as production hardware option and \
+  82:src/BLDC_controller.c **** select the Enable portable word sizes option on the Code Generation > \
+  83:src/BLDC_controller.c **** Verification pane for ERT based targets, which will disable the \
+  84:src/BLDC_controller.c **** preprocessor word size checks.
+  85:src/BLDC_controller.c **** #endif
+  86:src/BLDC_controller.c **** #endif
+  87:src/BLDC_controller.c **** 
+ARM GAS  /tmp/ccVmOSN0.s 			page 3
+
+
+  88:src/BLDC_controller.c **** static inline uint8_T plook_u8s32u32n31_evenc_s(int32_T u, int32_T bp0, uint32_T bpSpace,
+  89:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction);
+  90:src/BLDC_controller.c **** static inline int16_T intrp1d_s16s32s32u8u32n31l_s(uint8_T bpIndex, uint32_T frac, const
+  91:src/BLDC_controller.c ****   int16_T table[]);
+  92:src/BLDC_controller.c **** static inline int32_T div_nde_s32_floor(int32_T numerator, int32_T denominator);
+  93:src/BLDC_controller.c **** static inline uint8_T plook_u8s32u32n31_evenc_s(int32_T u, int32_T bp0, uint32_T bpSpace,
+  94:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction)
+  95:src/BLDC_controller.c **** {
+  96:src/BLDC_controller.c ****   uint8_T bpIndex;
+  97:src/BLDC_controller.c ****   uint32_T uAdjust;
+  98:src/BLDC_controller.c ****   uint32_T fbpIndex;
+  99:src/BLDC_controller.c **** 
+ 100:src/BLDC_controller.c ****   /* Prelookup - Index and Fraction
+ 101:src/BLDC_controller.c ****      Index Search method: 'even'
+ 102:src/BLDC_controller.c ****      Extrapolation method: 'Clip'
+ 103:src/BLDC_controller.c ****      Use previous index: 'off'
+ 104:src/BLDC_controller.c ****      Use last breakpoint for index at or above upper limit: 'off'
+ 105:src/BLDC_controller.c ****      Remove protection against out-of-range input in generated code: 'off'
+ 106:src/BLDC_controller.c ****      Rounding mode: 'simplest'
+ 107:src/BLDC_controller.c ****    */
+ 108:src/BLDC_controller.c ****   if (u <= bp0) {
+ 109:src/BLDC_controller.c ****     bpIndex = 0U;
+ 110:src/BLDC_controller.c ****     *fraction = 0U;
+ 111:src/BLDC_controller.c ****   } else {
+ 112:src/BLDC_controller.c ****     uAdjust = (uint32_T)u - bp0;
+ 113:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 114:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 115:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 116:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 117:src/BLDC_controller.c ****         bpSpace);
+ 118:src/BLDC_controller.c ****     } else {
+ 119:src/BLDC_controller.c ****       bpIndex = (uint8_T)(maxIndex - 1U);
+ 120:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 121:src/BLDC_controller.c ****     }
+ 122:src/BLDC_controller.c ****   }
+ 123:src/BLDC_controller.c **** 
+ 124:src/BLDC_controller.c ****   return bpIndex;
+ 125:src/BLDC_controller.c **** }
+ 126:src/BLDC_controller.c **** 
+ 127:src/BLDC_controller.c **** static inline int16_T intrp1d_s16s32s32u8u32n31l_s(uint8_T bpIndex, uint32_T frac, const
+ 128:src/BLDC_controller.c ****   int16_T table[])
+ 129:src/BLDC_controller.c **** {
+ 130:src/BLDC_controller.c ****   uint32_T offset_0d;
+ 131:src/BLDC_controller.c **** 
+ 132:src/BLDC_controller.c ****   /* Interpolation 1-D
+ 133:src/BLDC_controller.c ****      Interpolation method: 'Linear'
+ 134:src/BLDC_controller.c ****      Use last breakpoint for index at or above upper limit: 'off'
+ 135:src/BLDC_controller.c ****      Rounding mode: 'simplest'
+ 136:src/BLDC_controller.c ****      Overflow mode: 'wrapping'
+ 137:src/BLDC_controller.c ****    */
+ 138:src/BLDC_controller.c ****   offset_0d = bpIndex;
+ 139:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 140:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 141:src/BLDC_controller.c **** }
+ 142:src/BLDC_controller.c **** 
+ 143:src/BLDC_controller.c **** static inline int32_T div_nde_s32_floor(int32_T numerator, int32_T denominator)
+ 144:src/BLDC_controller.c **** {
+ARM GAS  /tmp/ccVmOSN0.s 			page 4
+
+
+ 145:src/BLDC_controller.c ****   return (((numerator < 0) != (denominator < 0)) && (numerator % denominator !=
+ 146:src/BLDC_controller.c ****            0) ? -1 : 0) + numerator / denominator;
+ 147:src/BLDC_controller.c **** }
+ 148:src/BLDC_controller.c **** 
+ 149:src/BLDC_controller.c **** /* Model step function */
+ 150:src/BLDC_controller.c **** void BLDC_controller_step(RT_MODEL *const rtM)
+ 151:src/BLDC_controller.c **** {
+  29              		.loc 1 151 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 151 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 36
+  37              		.cfi_offset 4, -36
+  38              		.cfi_offset 5, -32
+  39              		.cfi_offset 6, -28
+  40              		.cfi_offset 7, -24
+  41              		.cfi_offset 8, -20
+  42              		.cfi_offset 9, -16
+  43              		.cfi_offset 10, -12
+  44              		.cfi_offset 11, -8
+  45              		.cfi_offset 14, -4
+  46 0004 83B0     		sub	sp, sp, #12
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 48
+ 152:src/BLDC_controller.c ****   P *rtP = ((P *) rtM->defaultParam);
+  49              		.loc 1 152 3 is_stmt 1 view .LVU2
+  50              		.loc 1 152 6 is_stmt 0 view .LVU3
+  51 0006 0568     		ldr	r5, [r0]
+  52              	.LVL1:
+ 153:src/BLDC_controller.c ****   DW *rtDW = ((DW *) rtM->dwork);
+  53              		.loc 1 153 3 is_stmt 1 view .LVU4
+  54              		.loc 1 153 7 is_stmt 0 view .LVU5
+  55 0008 C468     		ldr	r4, [r0, #12]
+  56              	.LVL2:
+ 154:src/BLDC_controller.c ****   ExtU *rtU = (ExtU *) rtM->inputs;
+  57              		.loc 1 154 3 is_stmt 1 view .LVU6
+  58              		.loc 1 154 9 is_stmt 0 view .LVU7
+  59 000a 4668     		ldr	r6, [r0, #4]
+  60              	.LVL3:
+ 155:src/BLDC_controller.c ****   ExtY *rtY = (ExtY *) rtM->outputs;
+  61              		.loc 1 155 3 is_stmt 1 view .LVU8
+  62              		.loc 1 155 9 is_stmt 0 view .LVU9
+  63 000c D0F808A0 		ldr	r10, [r0, #8]
+  64              	.LVL4:
+ 156:src/BLDC_controller.c ****   uint8_T rtb_Sum;
+  65              		.loc 1 156 3 is_stmt 1 view .LVU10
+ 157:src/BLDC_controller.c ****   int32_T rtb_Abs1;
+  66              		.loc 1 157 3 view .LVU11
+ 158:src/BLDC_controller.c ****   uint8_T rtb_BitwiseOperator;
+  67              		.loc 1 158 3 view .LVU12
+ 159:src/BLDC_controller.c ****   int32_T rtb_Sum2;
+  68              		.loc 1 159 3 view .LVU13
+ 160:src/BLDC_controller.c ****   int16_T rtb_Abs2;
+  69              		.loc 1 160 3 view .LVU14
+ARM GAS  /tmp/ccVmOSN0.s 			page 5
+
+
+ 161:src/BLDC_controller.c ****   int16_T rtb_Sum1_a;
+  70              		.loc 1 161 3 view .LVU15
+ 162:src/BLDC_controller.c ****   int32_T rtb_Abs5;
+  71              		.loc 1 162 3 view .LVU16
+ 163:src/BLDC_controller.c ****   int8_T rtAction;
+  72              		.loc 1 163 3 view .LVU17
+ 164:src/BLDC_controller.c ****   int8_T rtb_Sum2_h;
+  73              		.loc 1 164 3 view .LVU18
+ 165:src/BLDC_controller.c ****   uint32_T rtb_r_phaAdvDC_XA_o2;
+  74              		.loc 1 165 3 view .LVU19
+ 166:src/BLDC_controller.c ****   int32_T rtb_Switch1_idx_1;
+  75              		.loc 1 166 3 view .LVU20
+ 167:src/BLDC_controller.c **** 
+ 168:src/BLDC_controller.c ****   /* Outputs for Atomic SubSystem: '<Root>/BLDC_controller' */
+ 169:src/BLDC_controller.c ****   /* Sum: '<S12>/Sum' incorporates:
+ 170:src/BLDC_controller.c ****    *  Gain: '<S12>/g_Ha'
+ 171:src/BLDC_controller.c ****    *  Gain: '<S12>/g_Hb'
+ 172:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallA '
+ 173:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallB'
+ 174:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallC'
+ 175:src/BLDC_controller.c ****    */
+ 176:src/BLDC_controller.c ****   rtb_Sum = (uint8_T)((uint32_T)(uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2)
+  76              		.loc 1 176 3 view .LVU21
+  77              		.loc 1 176 66 is_stmt 0 view .LVU22
+  78 0010 3178     		ldrb	r1, [r6]	@ zero_extendqisi2
+  79              		.loc 1 176 53 view .LVU23
+  80 0012 8B00     		lsls	r3, r1, #2
+  81 0014 DBB2     		uxtb	r3, r3
+ 177:src/BLDC_controller.c ****     + (uint8_T)(rtU->b_hallB << 1)) + rtU->b_hallC);
+  82              		.loc 1 177 20 view .LVU24
+  83 0016 7078     		ldrb	r0, [r6, #1]	@ zero_extendqisi2
+  84              	.LVL5:
+  85              		.loc 1 177 7 view .LVU25
+  86 0018 4200     		lsls	r2, r0, #1
+  87 001a D2B2     		uxtb	r2, r2
+ 176:src/BLDC_controller.c ****     + (uint8_T)(rtU->b_hallB << 1)) + rtU->b_hallC);
+  88              		.loc 1 176 33 view .LVU26
+  89 001c 1344     		add	r3, r3, r2
+  90 001e DBB2     		uxtb	r3, r3
+  91              		.loc 1 177 42 view .LVU27
+  92 0020 B278     		ldrb	r2, [r6, #2]	@ zero_extendqisi2
+ 176:src/BLDC_controller.c ****     + (uint8_T)(rtU->b_hallB << 1)) + rtU->b_hallC);
+  93              		.loc 1 176 11 view .LVU28
+  94 0022 1344     		add	r3, r3, r2
+  95 0024 DBB2     		uxtb	r3, r3
+  96 0026 0093     		str	r3, [sp]
+  97              	.LVL6:
+ 178:src/BLDC_controller.c **** 
+ 179:src/BLDC_controller.c ****   /* Abs: '<S2>/Abs1' incorporates:
+ 180:src/BLDC_controller.c ****    *  Inport: '<Root>/r_DC'
+ 181:src/BLDC_controller.c ****    */
+ 182:src/BLDC_controller.c ****   if (rtU->r_DC < 0) {
+  98              		.loc 1 182 3 is_stmt 1 view .LVU29
+  99              		.loc 1 182 10 is_stmt 0 view .LVU30
+ 100 0028 7368     		ldr	r3, [r6, #4]
+ 101 002a 0193     		str	r3, [sp, #4]
+ 102              		.loc 1 182 6 view .LVU31
+ARM GAS  /tmp/ccVmOSN0.s 			page 6
+
+
+ 103 002c 002B     		cmp	r3, #0
+ 104 002e 1BDB     		blt	.L59
+ 105              	.L2:
+ 106              	.LVL7:
+ 183:src/BLDC_controller.c ****     rtb_Abs1 = -rtU->r_DC;
+ 184:src/BLDC_controller.c ****   } else {
+ 185:src/BLDC_controller.c ****     rtb_Abs1 = rtU->r_DC;
+ 186:src/BLDC_controller.c ****   }
+ 187:src/BLDC_controller.c **** 
+ 188:src/BLDC_controller.c ****   /* End of Abs: '<S2>/Abs1' */
+ 189:src/BLDC_controller.c **** 
+ 190:src/BLDC_controller.c ****   /* S-Function (sfix_bitop): '<S11>/Bitwise Operator' incorporates:
+ 191:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallA '
+ 192:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallB'
+ 193:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallC'
+ 194:src/BLDC_controller.c ****    *  UnitDelay: '<S11>/UnitDelay'
+ 195:src/BLDC_controller.c ****    *  UnitDelay: '<S11>/UnitDelay1'
+ 196:src/BLDC_controller.c ****    *  UnitDelay: '<S11>/UnitDelay2'
+ 197:src/BLDC_controller.c ****    */
+ 198:src/BLDC_controller.c ****   rtb_BitwiseOperator = (uint8_T)(rtU->b_hallA ^ rtU->b_hallB ^ rtU->b_hallC ^
+ 107              		.loc 1 198 3 is_stmt 1 view .LVU32
+ 199:src/BLDC_controller.c ****     rtDW->UnitDelay_DSTATE ^ rtDW->UnitDelay1_DSTATE_i ^
+ 108              		.loc 1 199 9 is_stmt 0 view .LVU33
+ 109 0030 277F     		ldrb	r7, [r4, #28]	@ zero_extendqisi2
+ 110              		.loc 1 199 34 view .LVU34
+ 111 0032 637F     		ldrb	r3, [r4, #29]	@ zero_extendqisi2
+ 198:src/BLDC_controller.c ****     rtDW->UnitDelay_DSTATE ^ rtDW->UnitDelay1_DSTATE_i ^
+ 112              		.loc 1 198 25 view .LVU35
+ 113 0034 4140     		eors	r1, r1, r0
+ 114 0036 4A40     		eors	r2, r2, r1
+ 115 0038 7A40     		eors	r2, r2, r7
+ 116 003a 5340     		eors	r3, r3, r2
+ 200:src/BLDC_controller.c ****     rtDW->UnitDelay2_DSTATE_h);
+ 117              		.loc 1 200 9 view .LVU36
+ 118 003c A27F     		ldrb	r2, [r4, #30]	@ zero_extendqisi2
+ 119              	.LVL8:
+ 201:src/BLDC_controller.c **** 
+ 202:src/BLDC_controller.c ****   /* If: '<S14>/If1' incorporates:
+ 203:src/BLDC_controller.c ****    *  Constant: '<S14>/Constant6'
+ 204:src/BLDC_controller.c ****    *  Constant: '<S17>/Constant1'
+ 205:src/BLDC_controller.c ****    *  Constant: '<S17>/Constant23'
+ 206:src/BLDC_controller.c ****    *  If: '<S7>/If2'
+ 207:src/BLDC_controller.c ****    *  Inport: '<S15>/z_counterRawPrev'
+ 208:src/BLDC_controller.c ****    *  RelationalOperator: '<S17>/Relational Operator1'
+ 209:src/BLDC_controller.c ****    *  Sum: '<S14>/Sum1'
+ 210:src/BLDC_controller.c ****    *  Switch: '<S17>/Switch1'
+ 211:src/BLDC_controller.c ****    *  Switch: '<S17>/Switch2'
+ 212:src/BLDC_controller.c ****    *  UnitDelay: '<S14>/UnitDelay1'
+ 213:src/BLDC_controller.c ****    *  UnitDelay: '<S17>/UnitDelay1'
+ 214:src/BLDC_controller.c ****    */
+ 215:src/BLDC_controller.c ****   if (rtb_BitwiseOperator != 0) {
+ 120              		.loc 1 215 3 is_stmt 1 view .LVU37
+ 121              		.loc 1 215 6 is_stmt 0 view .LVU38
+ 122 003e 9342     		cmp	r3, r2
+ 123 0040 32D0     		beq	.L3
+ 216:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S7>/F01_03_Direction_Detection' incorporates:
+ 217:src/BLDC_controller.c ****      *  ActionPort: '<S13>/Action Port'
+ARM GAS  /tmp/ccVmOSN0.s 			page 7
+
+
+ 218:src/BLDC_controller.c ****      */
+ 219:src/BLDC_controller.c ****     /* UnitDelay: '<S13>/UnitDelay1' */
+ 220:src/BLDC_controller.c ****     rtDW->UnitDelay1 = rtDW->Switch2;
+ 124              		.loc 1 220 5 is_stmt 1 view .LVU39
+ 125              		.loc 1 220 28 is_stmt 0 view .LVU40
+ 126 0042 94F91930 		ldrsb	r3, [r4, #25]
+ 127              	.LVL9:
+ 128              		.loc 1 220 22 view .LVU41
+ 129 0046 2376     		strb	r3, [r4, #24]
+ 130              	.LVL10:
+ 221:src/BLDC_controller.c **** 
+ 222:src/BLDC_controller.c ****     /* Sum: '<S13>/Sum2' incorporates:
+ 223:src/BLDC_controller.c ****      *  Constant: '<S12>/vec_hallToPos'
+ 224:src/BLDC_controller.c ****      *  Selector: '<S12>/Selector'
+ 225:src/BLDC_controller.c ****      *  UnitDelay: '<S13>/UnitDelay2'
+ 226:src/BLDC_controller.c ****      */
+ 227:src/BLDC_controller.c ****     rtb_Sum2_h = (int8_T)(rtConstP.vec_hallToPos_Value[rtb_Sum] -
+ 131              		.loc 1 227 5 is_stmt 1 view .LVU42
+ 132              		.loc 1 227 55 is_stmt 0 view .LVU43
+ 133 0048 B04B     		ldr	r3, .L68
+ 134 004a 009A     		ldr	r2, [sp]
+ 135 004c 1344     		add	r3, r3, r2
+ 136 004e 93F80A32 		ldrb	r3, [r3, #522]	@ zero_extendqisi2
+ 228:src/BLDC_controller.c ****                           rtDW->UnitDelay2_DSTATE_i);
+ 137              		.loc 1 228 31 view .LVU44
+ 138 0052 A27E     		ldrb	r2, [r4, #26]	@ zero_extendqisi2
+ 227:src/BLDC_controller.c ****                           rtDW->UnitDelay2_DSTATE_i);
+ 139              		.loc 1 227 65 view .LVU45
+ 140 0054 9B1A     		subs	r3, r3, r2
+ 227:src/BLDC_controller.c ****                           rtDW->UnitDelay2_DSTATE_i);
+ 141              		.loc 1 227 16 view .LVU46
+ 142 0056 5BB2     		sxtb	r3, r3
+ 143              	.LVL11:
+ 229:src/BLDC_controller.c **** 
+ 230:src/BLDC_controller.c ****     /* Switch: '<S13>/Switch2' incorporates:
+ 231:src/BLDC_controller.c ****      *  Constant: '<S13>/Constant20'
+ 232:src/BLDC_controller.c ****      *  Constant: '<S13>/Constant23'
+ 233:src/BLDC_controller.c ****      *  Constant: '<S13>/Constant24'
+ 234:src/BLDC_controller.c ****      *  Constant: '<S13>/Constant8'
+ 235:src/BLDC_controller.c ****      *  Logic: '<S13>/Logical Operator3'
+ 236:src/BLDC_controller.c ****      *  RelationalOperator: '<S13>/Relational Operator1'
+ 237:src/BLDC_controller.c ****      *  RelationalOperator: '<S13>/Relational Operator6'
+ 238:src/BLDC_controller.c ****      */
+ 239:src/BLDC_controller.c ****     if ((rtb_Sum2_h == 1) || (rtb_Sum2_h == -5)) {
+ 144              		.loc 1 239 5 is_stmt 1 view .LVU47
+ 145              		.loc 1 239 8 is_stmt 0 view .LVU48
+ 146 0058 012B     		cmp	r3, #1
+ 147 005a 08D0     		beq	.L4
+ 148              		.loc 1 239 27 discriminator 1 view .LVU49
+ 149 005c 13F1050F 		cmn	r3, #5
+ 150 0060 05D0     		beq	.L4
+ 240:src/BLDC_controller.c ****       rtDW->Switch2 = 1;
+ 241:src/BLDC_controller.c ****     } else {
+ 242:src/BLDC_controller.c ****       rtDW->Switch2 = -1;
+ 151              		.loc 1 242 7 is_stmt 1 view .LVU50
+ 152              		.loc 1 242 21 is_stmt 0 view .LVU51
+ 153 0062 FF23     		movs	r3, #255
+ARM GAS  /tmp/ccVmOSN0.s 			page 8
+
+
+ 154              	.LVL12:
+ 155              		.loc 1 242 21 view .LVU52
+ 156 0064 6376     		strb	r3, [r4, #25]
+ 157              	.LVL13:
+ 158              		.loc 1 242 21 view .LVU53
+ 159 0066 04E0     		b	.L6
+ 160              	.LVL14:
+ 161              	.L59:
+ 183:src/BLDC_controller.c ****   } else {
+ 162              		.loc 1 183 5 is_stmt 1 view .LVU54
+ 183:src/BLDC_controller.c ****   } else {
+ 163              		.loc 1 183 14 is_stmt 0 view .LVU55
+ 164 0068 5B42     		rsbs	r3, r3, #0
+ 165 006a 0193     		str	r3, [sp, #4]
+ 166              	.LVL15:
+ 183:src/BLDC_controller.c ****   } else {
+ 167              		.loc 1 183 14 view .LVU56
+ 168 006c E0E7     		b	.L2
+ 169              	.LVL16:
+ 170              	.L4:
+ 240:src/BLDC_controller.c ****       rtDW->Switch2 = 1;
+ 171              		.loc 1 240 7 is_stmt 1 view .LVU57
+ 240:src/BLDC_controller.c ****       rtDW->Switch2 = 1;
+ 172              		.loc 1 240 21 is_stmt 0 view .LVU58
+ 173 006e 0123     		movs	r3, #1
+ 174              	.LVL17:
+ 240:src/BLDC_controller.c ****       rtDW->Switch2 = 1;
+ 175              		.loc 1 240 21 view .LVU59
+ 176 0070 6376     		strb	r3, [r4, #25]
+ 177              	.LVL18:
+ 178              	.L6:
+ 243:src/BLDC_controller.c ****     }
+ 244:src/BLDC_controller.c **** 
+ 245:src/BLDC_controller.c ****     /* End of Switch: '<S13>/Switch2' */
+ 246:src/BLDC_controller.c **** 
+ 247:src/BLDC_controller.c ****     /* Update for UnitDelay: '<S13>/UnitDelay2' incorporates:
+ 248:src/BLDC_controller.c ****      *  Constant: '<S12>/vec_hallToPos'
+ 249:src/BLDC_controller.c ****      *  Selector: '<S12>/Selector'
+ 250:src/BLDC_controller.c ****      */
+ 251:src/BLDC_controller.c ****     rtDW->UnitDelay2_DSTATE_i = rtConstP.vec_hallToPos_Value[rtb_Sum];
+ 179              		.loc 1 251 5 is_stmt 1 view .LVU60
+ 180              		.loc 1 251 61 is_stmt 0 view .LVU61
+ 181 0072 A64B     		ldr	r3, .L68
+ 182 0074 009A     		ldr	r2, [sp]
+ 183 0076 1344     		add	r3, r3, r2
+ 184 0078 93F90A32 		ldrsb	r3, [r3, #522]
+ 185              		.loc 1 251 31 view .LVU62
+ 186 007c A376     		strb	r3, [r4, #26]
+ 252:src/BLDC_controller.c **** 
+ 253:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S7>/F01_03_Direction_Detection' */
+ 254:src/BLDC_controller.c ****     rtb_Abs2 = 1;
+ 187              		.loc 1 254 5 is_stmt 1 view .LVU63
+ 188              	.LVL19:
+ 255:src/BLDC_controller.c **** 
+ 256:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S14>/Counter_Hold_and_Error_Calculation' incorporates:
+ 257:src/BLDC_controller.c ****      *  ActionPort: '<S15>/Action Port'
+ 258:src/BLDC_controller.c ****      */
+ARM GAS  /tmp/ccVmOSN0.s 			page 9
+
+
+ 259:src/BLDC_controller.c ****     rtDW->z_counterRawPrev = rtDW->UnitDelay1_DSTATE_c;
+ 189              		.loc 1 259 5 view .LVU64
+ 190              		.loc 1 259 34 is_stmt 0 view .LVU65
+ 191 007e B4F91430 		ldrsh	r3, [r4, #20]
+ 192              		.loc 1 259 28 view .LVU66
+ 193 0082 E381     		strh	r3, [r4, #14]	@ movhi
+ 260:src/BLDC_controller.c **** 
+ 261:src/BLDC_controller.c ****     /* Sum: '<S15>/Sum4' incorporates:
+ 262:src/BLDC_controller.c ****      *  Constant: '<S14>/Constant6'
+ 263:src/BLDC_controller.c ****      *  Constant: '<S17>/Constant23'
+ 264:src/BLDC_controller.c ****      *  Inport: '<S15>/z_counterRawPrev'
+ 265:src/BLDC_controller.c ****      *  Sum: '<S14>/Sum1'
+ 266:src/BLDC_controller.c ****      *  UnitDelay: '<S14>/UnitDelay1'
+ 267:src/BLDC_controller.c ****      *  UnitDelay: '<S15>/z_counter2'
+ 268:src/BLDC_controller.c ****      */
+ 269:src/BLDC_controller.c ****     rtDW->Sum4 = (int16_T)(rtDW->z_counterRawPrev - rtDW->z_counter2_DSTATE);
+ 194              		.loc 1 269 5 is_stmt 1 view .LVU67
+ 195              		.loc 1 269 32 is_stmt 0 view .LVU68
+ 196 0084 9AB2     		uxth	r2, r3
+ 197              		.loc 1 269 57 view .LVU69
+ 198 0086 E18A     		ldrh	r1, [r4, #22]
+ 199              		.loc 1 269 51 view .LVU70
+ 200 0088 521A     		subs	r2, r2, r1
+ 201              		.loc 1 269 16 view .LVU71
+ 202 008a 2282     		strh	r2, [r4, #16]	@ movhi
+ 270:src/BLDC_controller.c **** 
+ 271:src/BLDC_controller.c ****     /* Update for UnitDelay: '<S15>/z_counter2' */
+ 272:src/BLDC_controller.c ****     rtDW->z_counter2_DSTATE = rtDW->z_counterRawPrev;
+ 203              		.loc 1 272 5 is_stmt 1 view .LVU72
+ 204              		.loc 1 272 29 is_stmt 0 view .LVU73
+ 205 008c E382     		strh	r3, [r4, #22]	@ movhi
+ 254:src/BLDC_controller.c **** 
+ 206              		.loc 1 254 14 view .LVU74
+ 207 008e 0127     		movs	r7, #1
+ 208              	.LVL20:
+ 209              	.L7:
+ 273:src/BLDC_controller.c **** 
+ 274:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S14>/Counter_Hold_and_Error_Calculation' */
+ 275:src/BLDC_controller.c ****   } else {
+ 276:src/BLDC_controller.c ****     if (rtDW->UnitDelay1_DSTATE < rtP->z_maxCntRst) {
+ 277:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 278:src/BLDC_controller.c ****        *  UnitDelay: '<S17>/UnitDelay1'
+ 279:src/BLDC_controller.c ****        */
+ 280:src/BLDC_controller.c ****       rtb_Abs2 = rtDW->UnitDelay1_DSTATE;
+ 281:src/BLDC_controller.c ****     } else {
+ 282:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 283:src/BLDC_controller.c ****        *  Constant: '<S17>/Constant1'
+ 284:src/BLDC_controller.c ****        */
+ 285:src/BLDC_controller.c ****       rtb_Abs2 = rtP->z_maxCntRst;
+ 286:src/BLDC_controller.c ****     }
+ 287:src/BLDC_controller.c **** 
+ 288:src/BLDC_controller.c ****     rtb_Abs2++;
+ 289:src/BLDC_controller.c ****   }
+ 290:src/BLDC_controller.c **** 
+ 291:src/BLDC_controller.c ****   /* End of If: '<S14>/If1' */
+ 292:src/BLDC_controller.c **** 
+ 293:src/BLDC_controller.c ****   /* Sum: '<S14>/Sum1' */
+ARM GAS  /tmp/ccVmOSN0.s 			page 10
+
+
+ 294:src/BLDC_controller.c ****   rtb_Sum1_a = rtb_Abs2;
+ 210              		.loc 1 294 3 is_stmt 1 view .LVU75
+ 295:src/BLDC_controller.c **** 
+ 296:src/BLDC_controller.c ****   /* Switch: '<S16>/Switch1' incorporates:
+ 297:src/BLDC_controller.c ****    *  Constant: '<S16>/Constant1'
+ 298:src/BLDC_controller.c ****    *  Constant: '<S16>/cf_spdCoef'
+ 299:src/BLDC_controller.c ****    *  Constant: '<S16>/z_maxCntRst'
+ 300:src/BLDC_controller.c ****    *  Logic: '<S16>/Logical Operator1'
+ 301:src/BLDC_controller.c ****    *  Product: '<S16>/Divide4'
+ 302:src/BLDC_controller.c ****    *  RelationalOperator: '<S16>/Relational Operator2'
+ 303:src/BLDC_controller.c ****    *  RelationalOperator: '<S16>/Relational Operator5'
+ 304:src/BLDC_controller.c ****    *  Sum: '<S14>/Sum1'
+ 305:src/BLDC_controller.c ****    */
+ 306:src/BLDC_controller.c ****   if ((rtb_Abs2 > rtP->z_maxCntRst) || (rtDW->Switch2 != rtDW->UnitDelay1)) {
+ 211              		.loc 1 306 3 view .LVU76
+ 212              		.loc 1 306 22 is_stmt 0 view .LVU77
+ 213 0090 B5F95E30 		ldrsh	r3, [r5, #94]
+ 214              		.loc 1 306 6 view .LVU78
+ 215 0094 BB42     		cmp	r3, r7
+ 216 0096 19DB     		blt	.L41
+ 217              		.loc 1 306 45 discriminator 1 view .LVU79
+ 218 0098 94F91930 		ldrsb	r3, [r4, #25]
+ 219              		.loc 1 306 62 discriminator 1 view .LVU80
+ 220 009c 94F91820 		ldrsb	r2, [r4, #24]
+ 221              		.loc 1 306 37 discriminator 1 view .LVU81
+ 222 00a0 9342     		cmp	r3, r2
+ 223 00a2 0BD0     		beq	.L60
+ 307:src/BLDC_controller.c ****     rtb_Sum2 = 0;
+ 224              		.loc 1 307 14 view .LVU82
+ 225 00a4 0022     		movs	r2, #0
+ 226 00a6 12E0     		b	.L9
+ 227              	.LVL21:
+ 228              	.L3:
+ 276:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 229              		.loc 1 276 5 is_stmt 1 view .LVU83
+ 276:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 230              		.loc 1 276 13 is_stmt 0 view .LVU84
+ 231 00a8 B4F91230 		ldrsh	r3, [r4, #18]
+ 232              	.LVL22:
+ 276:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 233              		.loc 1 276 38 view .LVU85
+ 234 00ac B5F95E70 		ldrsh	r7, [r5, #94]
+ 235              	.LVL23:
+ 276:src/BLDC_controller.c ****       /* Switch: '<S17>/Switch2' incorporates:
+ 236              		.loc 1 276 8 view .LVU86
+ 237 00b0 BB42     		cmp	r3, r7
+ 238 00b2 00DA     		bge	.L8
+ 280:src/BLDC_controller.c ****     } else {
+ 239              		.loc 1 280 16 view .LVU87
+ 240 00b4 1F46     		mov	r7, r3
+ 241              	.L8:
+ 242              	.LVL24:
+ 288:src/BLDC_controller.c ****   }
+ 243              		.loc 1 288 5 is_stmt 1 view .LVU88
+ 288:src/BLDC_controller.c ****   }
+ 244              		.loc 1 288 13 is_stmt 0 view .LVU89
+ 245 00b6 0137     		adds	r7, r7, #1
+ARM GAS  /tmp/ccVmOSN0.s 			page 11
+
+
+ 246              	.LVL25:
+ 288:src/BLDC_controller.c ****   }
+ 247              		.loc 1 288 13 view .LVU90
+ 248 00b8 3FB2     		sxth	r7, r7
+ 249              	.LVL26:
+ 288:src/BLDC_controller.c ****   }
+ 250              		.loc 1 288 13 view .LVU91
+ 251 00ba E9E7     		b	.L7
+ 252              	.LVL27:
+ 253              	.L60:
+ 308:src/BLDC_controller.c ****   } else {
+ 309:src/BLDC_controller.c ****     rtb_Sum2 = rtP->cf_speedCoef * rtDW->Switch2 / rtDW->z_counterRawPrev;
+ 254              		.loc 1 309 5 is_stmt 1 view .LVU92
+ 255              		.loc 1 309 19 is_stmt 0 view .LVU93
+ 256 00bc 2A68     		ldr	r2, [r5]
+ 257              		.loc 1 309 34 view .LVU94
+ 258 00be 03FB02F2 		mul	r2, r3, r2
+ 259              		.loc 1 309 56 view .LVU95
+ 260 00c2 B4F90E30 		ldrsh	r3, [r4, #14]
+ 261              		.loc 1 309 14 view .LVU96
+ 262 00c6 92FBF3F2 		sdiv	r2, r2, r3
+ 263              	.LVL28:
+ 264              		.loc 1 309 14 view .LVU97
+ 265 00ca 00E0     		b	.L9
+ 266              	.LVL29:
+ 267              	.L41:
+ 307:src/BLDC_controller.c ****   } else {
+ 268              		.loc 1 307 14 view .LVU98
+ 269 00cc 0022     		movs	r2, #0
+ 270              	.L9:
+ 271              	.LVL30:
+ 310:src/BLDC_controller.c ****   }
+ 311:src/BLDC_controller.c **** 
+ 312:src/BLDC_controller.c ****   /* End of Switch: '<S16>/Switch1' */
+ 313:src/BLDC_controller.c **** 
+ 314:src/BLDC_controller.c ****   /* Product: '<S16>/Divide2' incorporates:
+ 315:src/BLDC_controller.c ****    *  Constant: '<S16>/Constant2'
+ 316:src/BLDC_controller.c ****    *  Constant: '<S16>/Constant3'
+ 317:src/BLDC_controller.c ****    *  Constant: '<S16>/cf_speedFilt'
+ 318:src/BLDC_controller.c ****    *  Product: '<S16>/Divide1'
+ 319:src/BLDC_controller.c ****    *  Product: '<S16>/Divide3'
+ 320:src/BLDC_controller.c ****    *  Sum: '<S16>/Sum1'
+ 321:src/BLDC_controller.c ****    *  Sum: '<S16>/Sum2'
+ 322:src/BLDC_controller.c ****    *  UnitDelay: '<S16>/UnitDelay2'
+ 323:src/BLDC_controller.c ****    */
+ 324:src/BLDC_controller.c ****   rtb_Sum2 = ((100 - rtP->cf_speedFilt) * rtDW->UnitDelay2_DSTATE + rtb_Sum2 *
+ 272              		.loc 1 324 3 is_stmt 1 view .LVU99
+ 273              		.loc 1 324 25 is_stmt 0 view .LVU100
+ 274 00ce 6B68     		ldr	r3, [r5, #4]
+ 275              		.loc 1 324 20 view .LVU101
+ 276 00d0 C3F16400 		rsb	r0, r3, #100
+ 277              		.loc 1 324 47 view .LVU102
+ 278 00d4 6168     		ldr	r1, [r4, #4]
+ 279              		.loc 1 324 78 view .LVU103
+ 280 00d6 02FB03F3 		mul	r3, r2, r3
+ 281              		.loc 1 324 67 view .LVU104
+ 282 00da 01FB0033 		mla	r3, r1, r0, r3
+ARM GAS  /tmp/ccVmOSN0.s 			page 12
+
+
+ 283              		.loc 1 324 12 view .LVU105
+ 284 00de 8C4A     		ldr	r2, .L68+4
+ 285              	.LVL31:
+ 286              		.loc 1 324 12 view .LVU106
+ 287 00e0 82FB0312 		smull	r1, r2, r2, r3
+ 288 00e4 4FEAE379 		asr	r9, r3, #31
+ 289 00e8 C9EB6219 		rsb	r9, r9, r2, asr #5
+ 290              	.LVL32:
+ 325:src/BLDC_controller.c ****               rtP->cf_speedFilt) / 100;
+ 326:src/BLDC_controller.c **** 
+ 327:src/BLDC_controller.c ****   /* Abs: '<S16>/Abs5' */
+ 328:src/BLDC_controller.c ****   if (rtb_Sum2 < 0) {
+ 291              		.loc 1 328 3 is_stmt 1 view .LVU107
+ 292              		.loc 1 328 6 is_stmt 0 view .LVU108
+ 293 00ec 13F1630F 		cmn	r3, #99
+ 294 00f0 02DA     		bge	.L43
+ 329:src/BLDC_controller.c ****     rtb_Abs5 = -rtb_Sum2;
+ 295              		.loc 1 329 5 is_stmt 1 view .LVU109
+ 296              		.loc 1 329 14 is_stmt 0 view .LVU110
+ 297 00f2 C9F10002 		rsb	r2, r9, #0
+ 298              	.LVL33:
+ 299              		.loc 1 329 14 view .LVU111
+ 300 00f6 00E0     		b	.L10
+ 301              	.LVL34:
+ 302              	.L43:
+ 330:src/BLDC_controller.c ****   } else {
+ 331:src/BLDC_controller.c ****     rtb_Abs5 = rtb_Sum2;
+ 303              		.loc 1 331 14 view .LVU112
+ 304 00f8 4A46     		mov	r2, r9
+ 305              	.L10:
+ 306              	.LVL35:
+ 332:src/BLDC_controller.c ****   }
+ 333:src/BLDC_controller.c **** 
+ 334:src/BLDC_controller.c ****   /* End of Abs: '<S16>/Abs5' */
+ 335:src/BLDC_controller.c **** 
+ 336:src/BLDC_controller.c ****   /* Relay: '<S14>/n_commDeacv' */
+ 337:src/BLDC_controller.c ****   if (rtb_Abs5 >= rtP->n_commDeacvHi) {
+ 307              		.loc 1 337 3 is_stmt 1 view .LVU113
+ 308              		.loc 1 337 22 is_stmt 0 view .LVU114
+ 309 00fa EB68     		ldr	r3, [r5, #12]
+ 310              		.loc 1 337 6 view .LVU115
+ 311 00fc 9342     		cmp	r3, r2
+ 312 00fe 61DC     		bgt	.L11
+ 338:src/BLDC_controller.c ****     rtDW->n_commDeacv_Mode = true;
+ 313              		.loc 1 338 5 is_stmt 1 view .LVU116
+ 314              		.loc 1 338 28 is_stmt 0 view .LVU117
+ 315 0100 0123     		movs	r3, #1
+ 316 0102 E377     		strb	r3, [r4, #31]
+ 317              	.L12:
+ 339:src/BLDC_controller.c ****   } else {
+ 340:src/BLDC_controller.c ****     if (rtb_Abs5 <= rtP->n_commAcvLo) {
+ 341:src/BLDC_controller.c ****       rtDW->n_commDeacv_Mode = false;
+ 342:src/BLDC_controller.c ****     }
+ 343:src/BLDC_controller.c ****   }
+ 344:src/BLDC_controller.c **** 
+ 345:src/BLDC_controller.c ****   /* Abs: '<S14>/Abs2' */
+ 346:src/BLDC_controller.c ****   if (rtDW->Sum4 < 0) {
+ARM GAS  /tmp/ccVmOSN0.s 			page 13
+
+
+ 318              		.loc 1 346 3 is_stmt 1 view .LVU118
+ 319              		.loc 1 346 11 is_stmt 0 view .LVU119
+ 320 0104 B4F91030 		ldrsh	r3, [r4, #16]
+ 321              		.loc 1 346 6 view .LVU120
+ 322 0108 002B     		cmp	r3, #0
+ 323 010a 61DB     		blt	.L61
+ 324              	.LVL36:
+ 325              	.L13:
+ 347:src/BLDC_controller.c ****     rtb_Abs2 = (int16_T)-rtDW->Sum4;
+ 348:src/BLDC_controller.c ****   } else {
+ 349:src/BLDC_controller.c ****     rtb_Abs2 = rtDW->Sum4;
+ 350:src/BLDC_controller.c ****   }
+ 351:src/BLDC_controller.c **** 
+ 352:src/BLDC_controller.c ****   /* End of Abs: '<S14>/Abs2' */
+ 353:src/BLDC_controller.c **** 
+ 354:src/BLDC_controller.c ****   /* Relay: '<S14>/dz_counter' */
+ 355:src/BLDC_controller.c ****   if (rtb_Abs2 >= rtP->dz_counterHi) {
+ 326              		.loc 1 355 3 is_stmt 1 view .LVU121
+ 327              		.loc 1 355 22 is_stmt 0 view .LVU122
+ 328 010c B5F95A10 		ldrsh	r1, [r5, #90]
+ 329              		.loc 1 355 6 view .LVU123
+ 330 0110 9942     		cmp	r1, r3
+ 331 0112 61DC     		bgt	.L14
+ 356:src/BLDC_controller.c ****     rtDW->dz_counter_Mode = true;
+ 332              		.loc 1 356 5 is_stmt 1 view .LVU124
+ 333              		.loc 1 356 27 is_stmt 0 view .LVU125
+ 334 0114 0123     		movs	r3, #1
+ 335              	.LVL37:
+ 336              		.loc 1 356 27 view .LVU126
+ 337 0116 84F82030 		strb	r3, [r4, #32]
+ 338              	.L15:
+ 357:src/BLDC_controller.c ****   } else {
+ 358:src/BLDC_controller.c ****     if (rtb_Abs2 <= rtP->dz_counterLo) {
+ 359:src/BLDC_controller.c ****       rtDW->dz_counter_Mode = false;
+ 360:src/BLDC_controller.c ****     }
+ 361:src/BLDC_controller.c ****   }
+ 362:src/BLDC_controller.c **** 
+ 363:src/BLDC_controller.c ****   /* If: '<S2>/If1' incorporates:
+ 364:src/BLDC_controller.c ****    *  Constant: '<S7>/z_ctrlTypSel1'
+ 365:src/BLDC_controller.c ****    */
+ 366:src/BLDC_controller.c ****   rtb_Sum2_h = rtDW->If1_ActiveSubsystem;
+ 339              		.loc 1 366 3 is_stmt 1 view .LVU127
+ 340              		.loc 1 366 14 is_stmt 0 view .LVU128
+ 341 011a 94F91B10 		ldrsb	r1, [r4, #27]
+ 342              	.LVL38:
+ 367:src/BLDC_controller.c ****   rtAction = -1;
+ 343              		.loc 1 367 3 is_stmt 1 view .LVU129
+ 368:src/BLDC_controller.c ****   if (rtP->z_ctrlTypSel != 0) {
+ 344              		.loc 1 368 3 view .LVU130
+ 345              		.loc 1 368 10 is_stmt 0 view .LVU131
+ 346 011e 95F86030 		ldrb	r3, [r5, #96]	@ zero_extendqisi2
+ 347              		.loc 1 368 6 view .LVU132
+ 348 0122 002B     		cmp	r3, #0
+ 349 0124 60D1     		bne	.L44
+ 367:src/BLDC_controller.c ****   rtAction = -1;
+ 350              		.loc 1 367 12 view .LVU133
+ 351 0126 4FF0FF33 		mov	r3, #-1
+ARM GAS  /tmp/ccVmOSN0.s 			page 14
+
+
+ 352              	.L16:
+ 353              	.LVL39:
+ 369:src/BLDC_controller.c ****     rtAction = 0;
+ 370:src/BLDC_controller.c ****   }
+ 371:src/BLDC_controller.c **** 
+ 372:src/BLDC_controller.c ****   rtDW->If1_ActiveSubsystem = rtAction;
+ 354              		.loc 1 372 3 is_stmt 1 view .LVU134
+ 355              		.loc 1 372 29 is_stmt 0 view .LVU135
+ 356 012a E376     		strb	r3, [r4, #27]
+ 373:src/BLDC_controller.c ****   if ((rtb_Sum2_h != rtAction) && (rtb_Sum2_h == 0)) {
+ 357              		.loc 1 373 3 is_stmt 1 view .LVU136
+ 358              		.loc 1 373 6 is_stmt 0 view .LVU137
+ 359 012c 8B42     		cmp	r3, r1
+ 360 012e 03D0     		beq	.L17
+ 361              		.loc 1 373 32 discriminator 1 view .LVU138
+ 362 0130 11B9     		cbnz	r1, .L17
+ 374:src/BLDC_controller.c ****     /* Disable for Outport: '<S8>/a_elecAngleAdv' */
+ 375:src/BLDC_controller.c ****     rtDW->Switch_PhaAdv = 0;
+ 363              		.loc 1 375 5 is_stmt 1 view .LVU139
+ 364              		.loc 1 375 25 is_stmt 0 view .LVU140
+ 365 0132 2160     		str	r1, [r4]
+ 376:src/BLDC_controller.c **** 
+ 377:src/BLDC_controller.c ****     /* Disable for Outport: '<Root>/a_elecAngle' incorporates:
+ 378:src/BLDC_controller.c ****      *  Outport: '<S8>/a_elecAngle'
+ 379:src/BLDC_controller.c ****      */
+ 380:src/BLDC_controller.c ****     rtY->a_elecAngle = 0;
+ 366              		.loc 1 380 5 is_stmt 1 view .LVU141
+ 367              		.loc 1 380 22 is_stmt 0 view .LVU142
+ 368 0134 CAF81010 		str	r1, [r10, #16]
+ 369              	.L17:
+ 381:src/BLDC_controller.c ****   }
+ 382:src/BLDC_controller.c **** 
+ 383:src/BLDC_controller.c ****   if (rtAction == 0) {
+ 370              		.loc 1 383 3 is_stmt 1 view .LVU143
+ 371              		.loc 1 383 6 is_stmt 0 view .LVU144
+ 372 0138 002B     		cmp	r3, #0
+ 373 013a 40F0A480 		bne	.L18
+ 384:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S2>/F02_Electrical_Angle_Calculation' incorporates:
+ 385:src/BLDC_controller.c ****      *  ActionPort: '<S8>/Action Port'
+ 386:src/BLDC_controller.c ****      */
+ 387:src/BLDC_controller.c ****     /* Switch: '<S8>/Switch3' incorporates:
+ 388:src/BLDC_controller.c ****      *  Constant: '<S12>/vec_hallToPos'
+ 389:src/BLDC_controller.c ****      *  Constant: '<S8>/Constant16'
+ 390:src/BLDC_controller.c ****      *  Gain: '<S12>/g_Ha'
+ 391:src/BLDC_controller.c ****      *  Gain: '<S12>/g_Hb'
+ 392:src/BLDC_controller.c ****      *  Inport: '<Root>/b_hallA '
+ 393:src/BLDC_controller.c ****      *  Inport: '<Root>/b_hallB'
+ 394:src/BLDC_controller.c ****      *  Inport: '<Root>/b_hallC'
+ 395:src/BLDC_controller.c ****      *  RelationalOperator: '<S8>/Relational Operator7'
+ 396:src/BLDC_controller.c ****      *  Selector: '<S12>/Selector'
+ 397:src/BLDC_controller.c ****      *  Sum: '<S12>/Sum'
+ 398:src/BLDC_controller.c ****      *  Sum: '<S8>/Sum1'
+ 399:src/BLDC_controller.c ****      */
+ 400:src/BLDC_controller.c ****     if (rtDW->Switch2 == 1) {
+ 374              		.loc 1 400 5 is_stmt 1 view .LVU145
+ 375              		.loc 1 400 13 is_stmt 0 view .LVU146
+ 376 013e 94F91910 		ldrsb	r1, [r4, #25]
+ARM GAS  /tmp/ccVmOSN0.s 			page 15
+
+
+ 377              	.LVL40:
+ 378              		.loc 1 400 8 view .LVU147
+ 379 0142 0129     		cmp	r1, #1
+ 380 0144 52D0     		beq	.L62
+ 401:src/BLDC_controller.c ****       rtb_Sum2_h = rtConstP.vec_hallToPos_Value[rtb_Sum];
+ 402:src/BLDC_controller.c ****     } else {
+ 403:src/BLDC_controller.c ****       rtb_Sum2_h = (int8_T)(rtConstP.vec_hallToPos_Value[(uint8_T)((uint32_T)
+ 381              		.loc 1 403 7 is_stmt 1 view .LVU148
+ 404:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 382              		.loc 1 404 42 is_stmt 0 view .LVU149
+ 383 0146 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 384              	.LVL41:
+ 385              		.loc 1 404 29 view .LVU150
+ 386 0148 9B00     		lsls	r3, r3, #2
+ 387 014a DBB2     		uxtb	r3, r3
+ 405:src/BLDC_controller.c ****                   (rtU->b_hallB << 1)) + rtU->b_hallC)] + 1);
+ 388              		.loc 1 405 23 view .LVU151
+ 389 014c 7078     		ldrb	r0, [r6, #1]	@ zero_extendqisi2
+ 404:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 390              		.loc 1 404 60 view .LVU152
+ 391 014e 4000     		lsls	r0, r0, #1
+ 392 0150 C0B2     		uxtb	r0, r0
+ 404:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 393              		.loc 1 404 9 view .LVU153
+ 394 0152 0344     		add	r3, r3, r0
+ 395 0154 DBB2     		uxtb	r3, r3
+ 396              		.loc 1 405 45 view .LVU154
+ 397 0156 B078     		ldrb	r0, [r6, #2]	@ zero_extendqisi2
+ 403:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 398              		.loc 1 403 58 view .LVU155
+ 399 0158 0344     		add	r3, r3, r0
+ 400 015a DBB2     		uxtb	r3, r3
+ 403:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 401              		.loc 1 403 57 view .LVU156
+ 402 015c 6B48     		ldr	r0, .L68
+ 403 015e 0344     		add	r3, r3, r0
+ 404 0160 93F80A82 		ldrb	r8, [r3, #522]	@ zero_extendqisi2
+ 405              		.loc 1 405 57 view .LVU157
+ 406 0164 08F10108 		add	r8, r8, #1
+ 403:src/BLDC_controller.c ****         (uint8_T)((uint32_T)(uint8_T)(rtU->b_hallA << 2) + (uint8_T)
+ 407              		.loc 1 403 18 view .LVU158
+ 408 0168 4FFA88F8 		sxtb	r8, r8
+ 409              	.LVL42:
+ 410              	.L20:
+ 406:src/BLDC_controller.c ****     }
+ 407:src/BLDC_controller.c **** 
+ 408:src/BLDC_controller.c ****     /* End of Switch: '<S8>/Switch3' */
+ 409:src/BLDC_controller.c **** 
+ 410:src/BLDC_controller.c ****     /* Outport: '<Root>/a_elecAngle' incorporates:
+ 411:src/BLDC_controller.c ****      *  Constant: '<S8>/a_elecAngle1'
+ 412:src/BLDC_controller.c ****      *  Product: '<S8>/Divide4'
+ 413:src/BLDC_controller.c ****      *  Product: '<S8>/Divide5'
+ 414:src/BLDC_controller.c ****      *  Product: '<S8>/Product6'
+ 415:src/BLDC_controller.c ****      *  Sum: '<S8>/Sum2'
+ 416:src/BLDC_controller.c ****      */
+ 417:src/BLDC_controller.c ****     rtY->a_elecAngle = 60 * rtb_Sum1_a / rtDW->z_counterRawPrev * rtDW->Switch2
+ 411              		.loc 1 417 5 is_stmt 1 view .LVU159
+ARM GAS  /tmp/ccVmOSN0.s 			page 16
+
+
+ 412              		.loc 1 417 27 is_stmt 0 view .LVU160
+ 413 016c C7EB0713 		rsb	r3, r7, r7, lsl #4
+ 414 0170 9B00     		lsls	r3, r3, #2
+ 415              		.loc 1 417 46 view .LVU161
+ 416 0172 B4F90E00 		ldrsh	r0, [r4, #14]
+ 417              		.loc 1 417 40 view .LVU162
+ 418 0176 93FBF0F3 		sdiv	r3, r3, r0
+ 418:src/BLDC_controller.c ****       + rtb_Sum2_h * 60;
+ 419              		.loc 1 418 20 view .LVU163
+ 420 017a C8EB0818 		rsb	r8, r8, r8, lsl #4
+ 421              	.LVL43:
+ 422              		.loc 1 418 20 view .LVU164
+ 423 017e 4FEA8808 		lsl	r8, r8, #2
+ 424              		.loc 1 418 7 view .LVU165
+ 425 0182 01FB0388 		mla	r8, r1, r3, r8
+ 417:src/BLDC_controller.c ****       + rtb_Sum2_h * 60;
+ 426              		.loc 1 417 22 view .LVU166
+ 427 0186 CAF81080 		str	r8, [r10, #16]
+ 419:src/BLDC_controller.c **** 
+ 420:src/BLDC_controller.c ****     /* Switch: '<S8>/Switch_PhaAdv' incorporates:
+ 421:src/BLDC_controller.c ****      *  Constant: '<S8>/a_elecPeriod1'
+ 422:src/BLDC_controller.c ****      *  Constant: '<S8>/n_motPhaAdvEna'
+ 423:src/BLDC_controller.c ****      *  Logic: '<S8>/Logical Operator2'
+ 424:src/BLDC_controller.c ****      *  Outport: '<Root>/a_elecAngle'
+ 425:src/BLDC_controller.c ****      *  RelationalOperator: '<S8>/Relational Operator4'
+ 426:src/BLDC_controller.c ****      */
+ 427:src/BLDC_controller.c ****     if (rtP->b_phaAdvEna && (rtb_Abs5 > rtP->n_motPhaAdvEna)) {
+ 428              		.loc 1 427 5 is_stmt 1 view .LVU167
+ 429              		.loc 1 427 12 is_stmt 0 view .LVU168
+ 430 018a 95F86130 		ldrb	r3, [r5, #97]	@ zero_extendqisi2
+ 431              		.loc 1 427 8 view .LVU169
+ 432 018e 002B     		cmp	r3, #0
+ 433 0190 77D0     		beq	.L21
+ 434              		.loc 1 427 44 discriminator 1 view .LVU170
+ 435 0192 2B69     		ldr	r3, [r5, #16]
+ 436              		.loc 1 427 26 discriminator 1 view .LVU171
+ 437 0194 9342     		cmp	r3, r2
+ 438 0196 74DA     		bge	.L21
+ 428:src/BLDC_controller.c ****       /* PreLookup: '<S8>/r_phaAdvDC_XA' */
+ 429:src/BLDC_controller.c ****       rtb_BitwiseOperator = plook_u8s32u32n31_evenc_s(rtb_Abs1,
+ 439              		.loc 1 429 7 is_stmt 1 view .LVU172
+ 440              		.loc 1 429 29 is_stmt 0 view .LVU173
+ 441 0198 AB69     		ldr	r3, [r5, #24]
+ 430:src/BLDC_controller.c ****         rtP->r_phaAdvDC_XA[0], (uint32_T)rtP->r_phaAdvDC_XA[1] -
+ 442              		.loc 1 430 60 view .LVU174
+ 443 019a EA69     		ldr	r2, [r5, #28]
+ 444              	.LVL44:
+ 429:src/BLDC_controller.c ****         rtP->r_phaAdvDC_XA[0], (uint32_T)rtP->r_phaAdvDC_XA[1] -
+ 445              		.loc 1 429 29 view .LVU175
+ 446 019c D21A     		subs	r2, r2, r3
+ 447              	.LVL45:
+ 448              	.LBB32:
+ 449              	.LBI32:
+  93:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction)
+ 450              		.loc 1 93 23 is_stmt 1 view .LVU176
+ 451              	.LBB33:
+  96:src/BLDC_controller.c ****   uint32_T uAdjust;
+ARM GAS  /tmp/ccVmOSN0.s 			page 17
+
+
+ 452              		.loc 1 96 3 view .LVU177
+  97:src/BLDC_controller.c ****   uint32_T fbpIndex;
+ 453              		.loc 1 97 3 view .LVU178
+  98:src/BLDC_controller.c **** 
+ 454              		.loc 1 98 3 view .LVU179
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 455              		.loc 1 108 3 view .LVU180
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 456              		.loc 1 108 6 is_stmt 0 view .LVU181
+ 457 019e 0199     		ldr	r1, [sp, #4]
+ 458 01a0 8B42     		cmp	r3, r1
+ 459 01a2 29DA     		bge	.L45
+ 112:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 460              		.loc 1 112 5 is_stmt 1 view .LVU182
+ 112:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 461              		.loc 1 112 13 is_stmt 0 view .LVU183
+ 462 01a4 CB1A     		subs	r3, r1, r3
+ 463              	.LVL46:
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 464              		.loc 1 113 5 is_stmt 1 view .LVU184
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 465              		.loc 1 113 14 is_stmt 0 view .LVU185
+ 466 01a6 B3FBF2FB 		udiv	fp, r3, r2
+ 467              	.LVL47:
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 468              		.loc 1 114 5 is_stmt 1 view .LVU186
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 469              		.loc 1 114 8 is_stmt 0 view .LVU187
+ 470 01aa BBF1090F 		cmp	fp, #9
+ 471 01ae 52D8     		bhi	.L46
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 472              		.loc 1 115 7 is_stmt 1 view .LVU188
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 473              		.loc 1 115 15 is_stmt 0 view .LVU189
+ 474 01b0 5FFA8BFB 		uxtb	fp, fp
+ 475              	.LVL48:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 476              		.loc 1 116 7 is_stmt 1 view .LVU190
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 477              		.loc 1 116 50 is_stmt 0 view .LVU191
+ 478 01b4 02FB1B31 		mls	r1, r2, fp, r3
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 479              		.loc 1 116 78 view .LVU192
+ 480 01b8 0023     		movs	r3, #0
+ 481              	.LVL49:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 482              		.loc 1 116 78 view .LVU193
+ 483 01ba C807     		lsls	r0, r1, #31
+ 484 01bc 4908     		lsrs	r1, r1, #1
+ 485 01be FFF7FEFF 		bl	__aeabi_uldivmod
+ 486              	.LVL50:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 487              		.loc 1 116 78 view .LVU194
+ 488 01c2 1BE0     		b	.L22
+ 489              	.LVL51:
+ 490              	.L11:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ARM GAS  /tmp/ccVmOSN0.s 			page 18
+
+
+ 491              		.loc 1 116 78 view .LVU195
+ 492              	.LBE33:
+ 493              	.LBE32:
+ 340:src/BLDC_controller.c ****       rtDW->n_commDeacv_Mode = false;
+ 494              		.loc 1 340 5 is_stmt 1 view .LVU196
+ 340:src/BLDC_controller.c ****       rtDW->n_commDeacv_Mode = false;
+ 495              		.loc 1 340 24 is_stmt 0 view .LVU197
+ 496 01c4 AB68     		ldr	r3, [r5, #8]
+ 340:src/BLDC_controller.c ****       rtDW->n_commDeacv_Mode = false;
+ 497              		.loc 1 340 8 view .LVU198
+ 498 01c6 9342     		cmp	r3, r2
+ 499 01c8 9CDB     		blt	.L12
+ 341:src/BLDC_controller.c ****     }
+ 500              		.loc 1 341 7 is_stmt 1 view .LVU199
+ 341:src/BLDC_controller.c ****     }
+ 501              		.loc 1 341 30 is_stmt 0 view .LVU200
+ 502 01ca 0023     		movs	r3, #0
+ 503 01cc E377     		strb	r3, [r4, #31]
+ 504 01ce 99E7     		b	.L12
+ 505              	.L61:
+ 347:src/BLDC_controller.c ****   } else {
+ 506              		.loc 1 347 5 is_stmt 1 view .LVU201
+ 347:src/BLDC_controller.c ****   } else {
+ 507              		.loc 1 347 30 is_stmt 0 view .LVU202
+ 508 01d0 9BB2     		uxth	r3, r3
+ 347:src/BLDC_controller.c ****   } else {
+ 509              		.loc 1 347 16 view .LVU203
+ 510 01d2 5B42     		rsbs	r3, r3, #0
+ 347:src/BLDC_controller.c ****   } else {
+ 511              		.loc 1 347 14 view .LVU204
+ 512 01d4 1BB2     		sxth	r3, r3
+ 513              	.LVL52:
+ 347:src/BLDC_controller.c ****   } else {
+ 514              		.loc 1 347 14 view .LVU205
+ 515 01d6 99E7     		b	.L13
+ 516              	.L14:
+ 358:src/BLDC_controller.c ****       rtDW->dz_counter_Mode = false;
+ 517              		.loc 1 358 5 is_stmt 1 view .LVU206
+ 358:src/BLDC_controller.c ****       rtDW->dz_counter_Mode = false;
+ 518              		.loc 1 358 24 is_stmt 0 view .LVU207
+ 519 01d8 B5F95C10 		ldrsh	r1, [r5, #92]
+ 358:src/BLDC_controller.c ****       rtDW->dz_counter_Mode = false;
+ 520              		.loc 1 358 8 view .LVU208
+ 521 01dc 9942     		cmp	r1, r3
+ 522 01de 9CDB     		blt	.L15
+ 359:src/BLDC_controller.c ****     }
+ 523              		.loc 1 359 7 is_stmt 1 view .LVU209
+ 359:src/BLDC_controller.c ****     }
+ 524              		.loc 1 359 29 is_stmt 0 view .LVU210
+ 525 01e0 0023     		movs	r3, #0
+ 526              	.LVL53:
+ 359:src/BLDC_controller.c ****     }
+ 527              		.loc 1 359 29 view .LVU211
+ 528 01e2 84F82030 		strb	r3, [r4, #32]
+ 529 01e6 98E7     		b	.L15
+ 530              	.LVL54:
+ 531              	.L44:
+ARM GAS  /tmp/ccVmOSN0.s 			page 19
+
+
+ 369:src/BLDC_controller.c ****   }
+ 532              		.loc 1 369 14 view .LVU212
+ 533 01e8 0023     		movs	r3, #0
+ 534 01ea 9EE7     		b	.L16
+ 535              	.LVL55:
+ 536              	.L62:
+ 401:src/BLDC_controller.c ****     } else {
+ 537              		.loc 1 401 7 is_stmt 1 view .LVU213
+ 401:src/BLDC_controller.c ****     } else {
+ 538              		.loc 1 401 18 is_stmt 0 view .LVU214
+ 539 01ec 474B     		ldr	r3, .L68
+ 540              	.LVL56:
+ 401:src/BLDC_controller.c ****     } else {
+ 541              		.loc 1 401 18 view .LVU215
+ 542 01ee 0098     		ldr	r0, [sp]
+ 543 01f0 0344     		add	r3, r3, r0
+ 544 01f2 93F90A82 		ldrsb	r8, [r3, #522]
+ 545              	.LVL57:
+ 401:src/BLDC_controller.c ****     } else {
+ 546              		.loc 1 401 18 view .LVU216
+ 547 01f6 B9E7     		b	.L20
+ 548              	.LVL58:
+ 549              	.L45:
+ 550              	.LBB36:
+ 551              	.LBB34:
+ 110:src/BLDC_controller.c ****   } else {
+ 552              		.loc 1 110 15 view .LVU217
+ 553 01f8 0020     		movs	r0, #0
+ 109:src/BLDC_controller.c ****     *fraction = 0U;
+ 554              		.loc 1 109 13 view .LVU218
+ 555 01fa 8346     		mov	fp, r0
+ 556              	.LVL59:
+ 557              	.L22:
+ 124:src/BLDC_controller.c **** }
+ 558              		.loc 1 124 3 is_stmt 1 view .LVU219
+ 124:src/BLDC_controller.c **** }
+ 559              		.loc 1 124 3 is_stmt 0 view .LVU220
+ 560              	.LBE34:
+ 561              	.LBE36:
+ 431:src/BLDC_controller.c ****         rtP->r_phaAdvDC_XA[0], 10U, &rtb_r_phaAdvDC_XA_o2);
+ 432:src/BLDC_controller.c **** 
+ 433:src/BLDC_controller.c ****       /* Interpolation_n-D: '<S8>/a_phaAdv_M2' */
+ 434:src/BLDC_controller.c ****       rtb_Abs2 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 562              		.loc 1 434 7 is_stmt 1 view .LVU221
+ 435:src/BLDC_controller.c ****         rtb_r_phaAdvDC_XA_o2, rtP->a_phaAdv_M1);
+ 563              		.loc 1 435 34 is_stmt 0 view .LVU222
+ 564 01fc 05F14402 		add	r2, r5, #68
+ 565              	.LVL60:
+ 566              	.LBB37:
+ 567              	.LBI37:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 568              		.loc 1 127 23 is_stmt 1 view .LVU223
+ 569              	.LBB38:
+ 130:src/BLDC_controller.c **** 
+ 570              		.loc 1 130 3 view .LVU224
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 571              		.loc 1 138 3 view .LVU225
+ARM GAS  /tmp/ccVmOSN0.s 			page 20
+
+
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 572              		.loc 1 139 3 view .LVU226
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 573              		.loc 1 139 46 is_stmt 0 view .LVU227
+ 574 0200 0BF10103 		add	r3, fp, #1
+ 575 0204 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 576              		.loc 1 139 70 view .LVU228
+ 577 0208 32F91B20 		ldrsh	r2, [r2, fp, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 578              		.loc 1 139 63 view .LVU229
+ 579 020c 9B1A     		subs	r3, r3, r2
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 580              		.loc 1 139 31 view .LVU230
+ 581 020e 4FEAE37C 		asr	ip, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 582              		.loc 1 140 5 view .LVU231
+ 583 0212 A0FB0331 		umull	r3, r1, r0, r3
+ 584 0216 00FB0C11 		mla	r1, r0, ip, r1
+ 140:src/BLDC_controller.c **** }
+ 585              		.loc 1 140 13 view .LVU232
+ 586 021a DB0F     		lsrs	r3, r3, #31
+ 587 021c 43EA4103 		orr	r3, r3, r1, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 588              		.loc 1 139 20 view .LVU233
+ 589 0220 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 590              		.loc 1 140 27 view .LVU234
+ 591 0222 92B2     		uxth	r2, r2
+ 140:src/BLDC_controller.c **** }
+ 592              		.loc 1 140 20 view .LVU235
+ 593 0224 1344     		add	r3, r3, r2
+ 594 0226 9BB2     		uxth	r3, r3
+ 595              	.LVL61:
+ 140:src/BLDC_controller.c **** }
+ 596              		.loc 1 140 20 view .LVU236
+ 597              	.LBE38:
+ 598              	.LBE37:
+ 436:src/BLDC_controller.c **** 
+ 437:src/BLDC_controller.c ****       /* Sum: '<S8>/Sum3' incorporates:
+ 438:src/BLDC_controller.c ****        *  Outport: '<Root>/a_elecAngle'
+ 439:src/BLDC_controller.c ****        *  Product: '<S8>/Product2'
+ 440:src/BLDC_controller.c ****        */
+ 441:src/BLDC_controller.c ****       rtb_Abs5 = (int16_T)(rtb_Abs2 * rtDW->Switch2) + rtY->a_elecAngle;
+ 599              		.loc 1 441 7 is_stmt 1 view .LVU237
+ 600              		.loc 1 441 43 is_stmt 0 view .LVU238
+ 601 0228 94F91920 		ldrsb	r2, [r4, #25]
+ 602 022c 92B2     		uxth	r2, r2
+ 603              		.loc 1 441 37 view .LVU239
+ 604 022e 02FB03F3 		mul	r3, r2, r3
+ 605              	.LVL62:
+ 606              		.loc 1 441 18 view .LVU240
+ 607 0232 1BB2     		sxth	r3, r3
+ 608              	.LVL63:
+ 442:src/BLDC_controller.c **** 
+ 443:src/BLDC_controller.c ****       /* Math: '<S8>/Math Function' */
+ 444:src/BLDC_controller.c ****       rtDW->Switch_PhaAdv = rtb_Abs5 - div_nde_s32_floor(rtb_Abs5, 360) * 360;
+ARM GAS  /tmp/ccVmOSN0.s 			page 21
+
+
+ 609              		.loc 1 444 7 is_stmt 1 view .LVU241
+ 610              	.LBB39:
+ 611              	.LBI39:
+ 143:src/BLDC_controller.c **** {
+ 612              		.loc 1 143 23 view .LVU242
+ 613              	.LBB40:
+ 145:src/BLDC_controller.c ****            0) ? -1 : 0) + numerator / denominator;
+ 614              		.loc 1 145 3 view .LVU243
+ 146:src/BLDC_controller.c **** }
+ 615              		.loc 1 146 20 is_stmt 0 view .LVU244
+ 616 0234 18EB0303 		adds	r3, r8, r3
+ 617              	.LVL64:
+ 146:src/BLDC_controller.c **** }
+ 618              		.loc 1 146 20 view .LVU245
+ 619 0238 12D4     		bmi	.L63
+ 146:src/BLDC_controller.c **** }
+ 620              		.loc 1 146 20 discriminator 1 view .LVU246
+ 621 023a 0020     		movs	r0, #0
+ 622              	.LVL65:
+ 623              	.L23:
+ 146:src/BLDC_controller.c **** }
+ 624              		.loc 1 146 37 discriminator 3 view .LVU247
+ 625 023c 3549     		ldr	r1, .L68+8
+ 626 023e 81FB0321 		smull	r2, r1, r1, r3
+ 627 0242 1944     		add	r1, r1, r3
+ 628 0244 DA17     		asrs	r2, r3, #31
+ 629 0246 C2EB2122 		rsb	r2, r2, r1, asr #8
+ 146:src/BLDC_controller.c **** }
+ 630              		.loc 1 146 25 discriminator 3 view .LVU248
+ 631 024a 0244     		add	r2, r2, r0
+ 632              	.LVL66:
+ 146:src/BLDC_controller.c **** }
+ 633              		.loc 1 146 25 discriminator 3 view .LVU249
+ 634              	.LBE40:
+ 635              	.LBE39:
+ 636              		.loc 1 444 38 discriminator 1 view .LVU250
+ 637 024c 3249     		ldr	r1, .L68+12
+ 638 024e 01FB0233 		mla	r3, r1, r2, r3
+ 639              	.LVL67:
+ 640              		.loc 1 444 27 discriminator 1 view .LVU251
+ 641 0252 2360     		str	r3, [r4]
+ 642              		.loc 1 444 27 view .LVU252
+ 643 0254 17E0     		b	.L18
+ 644              	.LVL68:
+ 645              	.L46:
+ 646              	.LBB42:
+ 647              	.LBB35:
+ 120:src/BLDC_controller.c ****     }
+ 648              		.loc 1 120 17 view .LVU253
+ 649 0256 4FF00040 		mov	r0, #-2147483648
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 650              		.loc 1 119 15 view .LVU254
+ 651 025a 4FF0090B 		mov	fp, #9
+ 652              	.LVL69:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 653              		.loc 1 119 15 view .LVU255
+ 654 025e CDE7     		b	.L22
+ARM GAS  /tmp/ccVmOSN0.s 			page 22
+
+
+ 655              	.LVL70:
+ 656              	.L63:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 657              		.loc 1 119 15 view .LVU256
+ 658              	.LBE35:
+ 659              	.LBE42:
+ 660              	.LBB43:
+ 661              	.LBB41:
+ 145:src/BLDC_controller.c ****            0) ? -1 : 0) + numerator / denominator;
+ 662              		.loc 1 145 64 view .LVU257
+ 663 0260 2C49     		ldr	r1, .L68+8
+ 664              	.LVL71:
+ 145:src/BLDC_controller.c ****            0) ? -1 : 0) + numerator / denominator;
+ 665              		.loc 1 145 64 view .LVU258
+ 666 0262 81FB0321 		smull	r2, r1, r1, r3
+ 667 0266 1944     		add	r1, r1, r3
+ 668 0268 DA17     		asrs	r2, r3, #31
+ 669 026a C2EB2122 		rsb	r2, r2, r1, asr #8
+ 670 026e 4FF4B471 		mov	r1, #360
+ 671 0272 01FB1232 		mls	r2, r1, r2, r3
+ 145:src/BLDC_controller.c ****            0) ? -1 : 0) + numerator / denominator;
+ 672              		.loc 1 145 50 view .LVU259
+ 673 0276 0AB9     		cbnz	r2, .L48
+ 146:src/BLDC_controller.c **** }
+ 674              		.loc 1 146 20 discriminator 1 view .LVU260
+ 675 0278 0020     		movs	r0, #0
+ 676              	.LVL72:
+ 146:src/BLDC_controller.c **** }
+ 677              		.loc 1 146 20 discriminator 1 view .LVU261
+ 678 027a DFE7     		b	.L23
+ 679              	.LVL73:
+ 680              	.L48:
+ 146:src/BLDC_controller.c **** }
+ 681              		.loc 1 146 20 view .LVU262
+ 682 027c 4FF0FF30 		mov	r0, #-1
+ 683              	.LVL74:
+ 146:src/BLDC_controller.c **** }
+ 684              		.loc 1 146 20 view .LVU263
+ 685 0280 DCE7     		b	.L23
+ 686              	.LVL75:
+ 687              	.L21:
+ 146:src/BLDC_controller.c **** }
+ 688              		.loc 1 146 20 view .LVU264
+ 689              	.LBE41:
+ 690              	.LBE43:
+ 445:src/BLDC_controller.c ****     } else {
+ 446:src/BLDC_controller.c ****       rtDW->Switch_PhaAdv = rtY->a_elecAngle;
+ 691              		.loc 1 446 7 is_stmt 1 view .LVU265
+ 692              		.loc 1 446 27 is_stmt 0 view .LVU266
+ 693 0282 C4F80080 		str	r8, [r4]
+ 694              	.LVL76:
+ 695              	.L18:
+ 447:src/BLDC_controller.c ****     }
+ 448:src/BLDC_controller.c **** 
+ 449:src/BLDC_controller.c ****     /* End of Switch: '<S8>/Switch_PhaAdv' */
+ 450:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S2>/F02_Electrical_Angle_Calculation' */
+ 451:src/BLDC_controller.c ****   }
+ARM GAS  /tmp/ccVmOSN0.s 			page 23
+
+
+ 452:src/BLDC_controller.c **** 
+ 453:src/BLDC_controller.c ****   /* End of If: '<S2>/If1' */
+ 454:src/BLDC_controller.c **** 
+ 455:src/BLDC_controller.c ****   /* SwitchCase: '<S9>/Switch Case' incorporates:
+ 456:src/BLDC_controller.c ****    *  Constant: '<S7>/z_ctrlTypSel1'
+ 457:src/BLDC_controller.c ****    */
+ 458:src/BLDC_controller.c ****   switch (rtP->z_ctrlTypSel) {
+ 696              		.loc 1 458 3 is_stmt 1 view .LVU267
+ 697              		.loc 1 458 14 is_stmt 0 view .LVU268
+ 698 0286 95F86030 		ldrb	r3, [r5, #96]	@ zero_extendqisi2
+ 699              		.loc 1 458 3 view .LVU269
+ 700 028a 022B     		cmp	r3, #2
+ 701 028c 00F0B880 		beq	.L24
+ 702 0290 032B     		cmp	r3, #3
+ 703 0292 00F02E81 		beq	.L25
+ 704 0296 012B     		cmp	r3, #1
+ 705 0298 40F08680 		bne	.L26
+ 459:src/BLDC_controller.c ****    case 1:
+ 460:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S9>/F03_01_Pure_Trapezoidal_Method' incorporates:
+ 461:src/BLDC_controller.c ****      *  ActionPort: '<S18>/Action Port'
+ 462:src/BLDC_controller.c ****      */
+ 463:src/BLDC_controller.c ****     /* PreLookup: '<S18>/a_trapElecAngle_XA' */
+ 464:src/BLDC_controller.c ****     rtb_BitwiseOperator = plook_u8s32u32n31_evenc_s(rtDW->Switch_PhaAdv, 0, 60U,
+ 706              		.loc 1 464 5 is_stmt 1 view .LVU270
+ 707              		.loc 1 464 27 is_stmt 0 view .LVU271
+ 708 029c 2368     		ldr	r3, [r4]
+ 709              	.LVL77:
+ 710              	.LBB44:
+ 711              	.LBI44:
+  93:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction)
+ 712              		.loc 1 93 23 is_stmt 1 view .LVU272
+ 713              	.LBB45:
+  96:src/BLDC_controller.c ****   uint32_T uAdjust;
+ 714              		.loc 1 96 3 view .LVU273
+  97:src/BLDC_controller.c ****   uint32_T fbpIndex;
+ 715              		.loc 1 97 3 view .LVU274
+  98:src/BLDC_controller.c **** 
+ 716              		.loc 1 98 3 view .LVU275
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 717              		.loc 1 108 3 view .LVU276
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 718              		.loc 1 108 6 is_stmt 0 view .LVU277
+ 719 029e 002B     		cmp	r3, #0
+ 720 02a0 40DD     		ble	.L49
+ 112:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 721              		.loc 1 112 5 is_stmt 1 view .LVU278
+ 722              	.LVL78:
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 723              		.loc 1 113 5 view .LVU279
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 724              		.loc 1 113 14 is_stmt 0 view .LVU280
+ 725 02a2 1E49     		ldr	r1, .L68+16
+ 726 02a4 A1FB0321 		umull	r2, r1, r1, r3
+ 727 02a8 4909     		lsrs	r1, r1, #5
+ 728              	.LVL79:
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 729              		.loc 1 114 5 is_stmt 1 view .LVU281
+ARM GAS  /tmp/ccVmOSN0.s 			page 24
+
+
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 730              		.loc 1 114 8 is_stmt 0 view .LVU282
+ 731 02aa B3F5B47F 		cmp	r3, #360
+ 732 02ae 80F0A380 		bcs	.L50
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 733              		.loc 1 115 7 is_stmt 1 view .LVU283
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 734              		.loc 1 115 15 is_stmt 0 view .LVU284
+ 735 02b2 C9B2     		uxtb	r1, r1
+ 736              	.LVL80:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 737              		.loc 1 116 7 is_stmt 1 view .LVU285
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 738              		.loc 1 116 60 is_stmt 0 view .LVU286
+ 739 02b4 C1EB0112 		rsb	r2, r1, r1, lsl #4
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 740              		.loc 1 116 50 view .LVU287
+ 741 02b8 A3EB8203 		sub	r3, r3, r2, lsl #2
+ 742              	.LVL81:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 743              		.loc 1 116 71 view .LVU288
+ 744 02bc 5808     		lsrs	r0, r3, #1
+ 745 02be DB07     		lsls	r3, r3, #31
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 746              		.loc 1 116 78 view .LVU289
+ 747 02c0 4FF0000C 		mov	ip, #0
+ 748 02c4 1A18     		adds	r2, r3, r0
+ 749 02c6 1DD2     		bcs	.L64
+ 750              	.L28:
+ 751 02c8 6244     		add	r2, r2, ip
+ 752 02ca DFF850C0 		ldr	ip, .L68+16
+ 753              	.LVL82:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 754              		.loc 1 116 78 view .LVU290
+ 755 02ce ACFB02EC 		umull	lr, ip, ip, r2
+ 756              	.LVL83:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 757              		.loc 1 116 78 view .LVU291
+ 758 02d2 4FEADC0C 		lsr	ip, ip, #3
+ 759 02d6 CCEB0C1C 		rsb	ip, ip, ip, lsl #4
+ 760 02da A2EB0C02 		sub	r2, r2, ip
+ 761 02de 9B1A     		subs	r3, r3, r2
+ 762 02e0 60F10000 		sbc	r0, r0, #0
+ 763 02e4 DFF838C0 		ldr	ip, .L68+20
+ 764 02e8 4FF0EE32 		mov	r2, #-286331154
+ 765 02ec 03FB02F2 		mul	r2, r3, r2
+ 766 02f0 0CFB0020 		mla	r0, ip, r0, r2
+ 767 02f4 A3FB0C2C 		umull	r2, ip, r3, ip
+ 768 02f8 00EB0C03 		add	r3, r0, ip
+ 769 02fc 9208     		lsrs	r2, r2, #2
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 770              		.loc 1 116 19 view .LVU292
+ 771 02fe 42EA8372 		orr	r2, r2, r3, lsl #30
+ 772              	.LVL84:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 773              		.loc 1 116 19 view .LVU293
+ 774 0302 11E0     		b	.L27
+ARM GAS  /tmp/ccVmOSN0.s 			page 25
+
+
+ 775              	.LVL85:
+ 776              	.L64:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 777              		.loc 1 116 78 view .LVU294
+ 778 0304 4FF0010C 		mov	ip, #1
+ 779 0308 DEE7     		b	.L28
+ 780              	.L69:
+ 781 030a 00BF     		.align	2
+ 782              	.L68:
+ 783 030c 00000000 		.word	rtConstP
+ 784 0310 1F85EB51 		.word	1374389535
+ 785 0314 B7600BB6 		.word	-1240768329
+ 786 0318 98FEFFFF 		.word	-360
+ 787 031c 89888888 		.word	-2004318071
+ 788 0320 EFEEEEEE 		.word	-286331153
+ 789              	.LVL86:
+ 790              	.L49:
+ 110:src/BLDC_controller.c ****   } else {
+ 791              		.loc 1 110 15 view .LVU295
+ 792 0324 0022     		movs	r2, #0
+ 109:src/BLDC_controller.c ****     *fraction = 0U;
+ 793              		.loc 1 109 13 view .LVU296
+ 794 0326 1146     		mov	r1, r2
+ 795              	.LVL87:
+ 796              	.L27:
+ 124:src/BLDC_controller.c **** }
+ 797              		.loc 1 124 3 is_stmt 1 view .LVU297
+ 124:src/BLDC_controller.c **** }
+ 798              		.loc 1 124 3 is_stmt 0 view .LVU298
+ 799              	.LBE45:
+ 800              	.LBE44:
+ 465:src/BLDC_controller.c ****       6U, &rtb_r_phaAdvDC_XA_o2);
+ 466:src/BLDC_controller.c **** 
+ 467:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S18>/r_trapPhaA_M1' */
+ 468:src/BLDC_controller.c ****     rtDW->Merge = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 801              		.loc 1 468 5 is_stmt 1 view .LVU299
+ 802              	.LBB47:
+ 803              	.LBI47:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 804              		.loc 1 127 23 view .LVU300
+ 805              	.LBB48:
+ 130:src/BLDC_controller.c **** 
+ 806              		.loc 1 130 3 view .LVU301
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 807              		.loc 1 138 3 view .LVU302
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 808              		.loc 1 139 3 view .LVU303
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 809              		.loc 1 139 46 is_stmt 0 view .LVU304
+ 810 0328 01F10108 		add	r8, r1, #1
+ 811 032c BB48     		ldr	r0, .L70
+ 812 032e 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 813              		.loc 1 139 70 view .LVU305
+ 814 0332 30F911B0 		ldrsh	fp, [r0, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 815              		.loc 1 139 63 view .LVU306
+ARM GAS  /tmp/ccVmOSN0.s 			page 26
+
+
+ 816 0336 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 817              		.loc 1 139 31 view .LVU307
+ 818 033a 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 819              		.loc 1 140 5 view .LVU308
+ 820 033e A3FB023C 		umull	r3, ip, r3, r2
+ 821 0342 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 822              		.loc 1 140 13 view .LVU309
+ 823 0346 DB0F     		lsrs	r3, r3, #31
+ 824 0348 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 825              		.loc 1 139 20 view .LVU310
+ 826 034c 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 827              		.loc 1 140 27 view .LVU311
+ 828 034e 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 829              		.loc 1 140 20 view .LVU312
+ 830 0352 5B44     		add	r3, r3, fp
+ 831              	.LVL88:
+ 140:src/BLDC_controller.c **** }
+ 832              		.loc 1 140 20 view .LVU313
+ 833              	.LBE48:
+ 834              	.LBE47:
+ 835              		.loc 1 468 17 discriminator 1 view .LVU314
+ 836 0354 2381     		strh	r3, [r4, #8]	@ movhi
+ 469:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_trapPhaA_M1_Table);
+ 470:src/BLDC_controller.c **** 
+ 471:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S18>/r_trapPhaB_M1' */
+ 472:src/BLDC_controller.c ****     rtDW->Merge1 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 837              		.loc 1 472 5 is_stmt 1 view .LVU315
+ 838              	.LVL89:
+ 839              	.LBB49:
+ 840              	.LBI49:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 841              		.loc 1 127 23 view .LVU316
+ 842              	.LBB50:
+ 130:src/BLDC_controller.c **** 
+ 843              		.loc 1 130 3 view .LVU317
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 844              		.loc 1 138 3 view .LVU318
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 845              		.loc 1 139 3 view .LVU319
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 846              		.loc 1 139 46 is_stmt 0 view .LVU320
+ 847 0356 00F10E0C 		add	ip, r0, #14
+ 848 035a 3CF91830 		ldrsh	r3, [ip, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 849              		.loc 1 139 70 view .LVU321
+ 850 035e 3CF911B0 		ldrsh	fp, [ip, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 851              		.loc 1 139 63 view .LVU322
+ 852 0362 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 853              		.loc 1 139 31 view .LVU323
+ARM GAS  /tmp/ccVmOSN0.s 			page 27
+
+
+ 854 0366 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 855              		.loc 1 140 5 view .LVU324
+ 856 036a A3FB023C 		umull	r3, ip, r3, r2
+ 857 036e 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 858              		.loc 1 140 13 view .LVU325
+ 859 0372 DB0F     		lsrs	r3, r3, #31
+ 860 0374 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 861              		.loc 1 139 20 view .LVU326
+ 862 0378 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 863              		.loc 1 140 27 view .LVU327
+ 864 037a 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 865              		.loc 1 140 20 view .LVU328
+ 866 037e 5B44     		add	r3, r3, fp
+ 867              	.LVL90:
+ 140:src/BLDC_controller.c **** }
+ 868              		.loc 1 140 20 view .LVU329
+ 869              	.LBE50:
+ 870              	.LBE49:
+ 871              		.loc 1 472 18 discriminator 1 view .LVU330
+ 872 0380 6381     		strh	r3, [r4, #10]	@ movhi
+ 473:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_trapPhaB_M1_Table);
+ 474:src/BLDC_controller.c **** 
+ 475:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S18>/r_trapPhaC_M1' */
+ 476:src/BLDC_controller.c ****     rtDW->Merge2 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 873              		.loc 1 476 5 is_stmt 1 view .LVU331
+ 874              	.LVL91:
+ 875              	.LBB51:
+ 876              	.LBI51:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 877              		.loc 1 127 23 view .LVU332
+ 878              	.LBB52:
+ 130:src/BLDC_controller.c **** 
+ 879              		.loc 1 130 3 view .LVU333
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 880              		.loc 1 138 3 view .LVU334
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 881              		.loc 1 139 3 view .LVU335
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 882              		.loc 1 139 46 is_stmt 0 view .LVU336
+ 883 0382 1C30     		adds	r0, r0, #28
+ 884 0384 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 885              		.loc 1 139 70 view .LVU337
+ 886 0388 30F91110 		ldrsh	r1, [r0, r1, lsl #1]
+ 887              	.LVL92:
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 888              		.loc 1 139 63 view .LVU338
+ 889 038c 5B1A     		subs	r3, r3, r1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 890              		.loc 1 139 31 view .LVU339
+ 891 038e 4FEAE37C 		asr	ip, r3, #31
+ 140:src/BLDC_controller.c **** }
+ARM GAS  /tmp/ccVmOSN0.s 			page 28
+
+
+ 892              		.loc 1 140 5 view .LVU340
+ 893 0392 A3FB0230 		umull	r3, r0, r3, r2
+ 894 0396 02FB0C02 		mla	r2, r2, ip, r0
+ 140:src/BLDC_controller.c **** }
+ 895              		.loc 1 140 13 view .LVU341
+ 896 039a DB0F     		lsrs	r3, r3, #31
+ 897 039c 43EA4203 		orr	r3, r3, r2, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 898              		.loc 1 139 20 view .LVU342
+ 899 03a0 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 900              		.loc 1 140 27 view .LVU343
+ 901 03a2 89B2     		uxth	r1, r1
+ 140:src/BLDC_controller.c **** }
+ 902              		.loc 1 140 20 view .LVU344
+ 903 03a4 0B44     		add	r3, r3, r1
+ 904              	.LVL93:
+ 140:src/BLDC_controller.c **** }
+ 905              		.loc 1 140 20 view .LVU345
+ 906              	.LBE52:
+ 907              	.LBE51:
+ 908              		.loc 1 476 18 discriminator 1 view .LVU346
+ 909 03a6 A381     		strh	r3, [r4, #12]	@ movhi
+ 477:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_trapPhaC_M1_Table);
+ 478:src/BLDC_controller.c **** 
+ 479:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S9>/F03_01_Pure_Trapezoidal_Method' */
+ 480:src/BLDC_controller.c ****     break;
+ 910              		.loc 1 480 5 is_stmt 1 view .LVU347
+ 911              	.LVL94:
+ 912              	.L26:
+ 481:src/BLDC_controller.c **** 
+ 482:src/BLDC_controller.c ****    case 2:
+ 483:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S9>/F03_02_Sinusoidal_Method' incorporates:
+ 484:src/BLDC_controller.c ****      *  ActionPort: '<S19>/Action Port'
+ 485:src/BLDC_controller.c ****      */
+ 486:src/BLDC_controller.c ****     /* PreLookup: '<S19>/a_sinElecAngle_XA' */
+ 487:src/BLDC_controller.c ****     rtb_BitwiseOperator = plook_u8s32u32n31_evenc_s(rtDW->Switch_PhaAdv, 0, 10U,
+ 488:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 489:src/BLDC_controller.c **** 
+ 490:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S19>/r_sinPhaA_M1' */
+ 491:src/BLDC_controller.c ****     rtDW->Merge = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 492:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaA_M1_Table);
+ 493:src/BLDC_controller.c **** 
+ 494:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S19>/r_sinPhaB_M1' */
+ 495:src/BLDC_controller.c ****     rtDW->Merge1 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 496:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaB_M1_Table);
+ 497:src/BLDC_controller.c **** 
+ 498:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S19>/r_sinPhaC_M1' */
+ 499:src/BLDC_controller.c ****     rtDW->Merge2 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 500:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaC_M1_Table);
+ 501:src/BLDC_controller.c **** 
+ 502:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S9>/F03_02_Sinusoidal_Method' */
+ 503:src/BLDC_controller.c ****     break;
+ 504:src/BLDC_controller.c **** 
+ 505:src/BLDC_controller.c ****    case 3:
+ 506:src/BLDC_controller.c ****     /* Outputs for IfAction SubSystem: '<S9>/F03_03_Sinusoidal3rd_Method' incorporates:
+ 507:src/BLDC_controller.c ****      *  ActionPort: '<S20>/Action Port'
+ARM GAS  /tmp/ccVmOSN0.s 			page 29
+
+
+ 508:src/BLDC_controller.c ****      */
+ 509:src/BLDC_controller.c ****     /* PreLookup: '<S20>/a_sinElecAngle_XA' */
+ 510:src/BLDC_controller.c ****     rtb_BitwiseOperator = plook_u8s32u32n31_evenc_s(rtDW->Switch_PhaAdv, 0, 10U,
+ 511:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 512:src/BLDC_controller.c **** 
+ 513:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S20>/r_sin3PhaA_M1' */
+ 514:src/BLDC_controller.c ****     rtDW->Merge = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 515:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaA_M1_Table);
+ 516:src/BLDC_controller.c **** 
+ 517:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S20>/r_sin3PhaB_M1' */
+ 518:src/BLDC_controller.c ****     rtDW->Merge1 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 519:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaB_M1_Table);
+ 520:src/BLDC_controller.c **** 
+ 521:src/BLDC_controller.c ****     /* Interpolation_n-D: '<S20>/r_sin3PhaC_M1' */
+ 522:src/BLDC_controller.c ****     rtDW->Merge2 = intrp1d_s16s32s32u8u32n31l_s(rtb_BitwiseOperator,
+ 523:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaC_M1_Table);
+ 524:src/BLDC_controller.c **** 
+ 525:src/BLDC_controller.c ****     /* End of Outputs for SubSystem: '<S9>/F03_03_Sinusoidal3rd_Method' */
+ 526:src/BLDC_controller.c ****     break;
+ 527:src/BLDC_controller.c ****   }
+ 528:src/BLDC_controller.c **** 
+ 529:src/BLDC_controller.c ****   /* End of SwitchCase: '<S9>/Switch Case' */
+ 530:src/BLDC_controller.c **** 
+ 531:src/BLDC_controller.c ****   /* Signum: '<S14>/Sign' */
+ 532:src/BLDC_controller.c ****   if (rtDW->Switch2 < 0) {
+ 913              		.loc 1 532 3 view .LVU348
+ 914              		.loc 1 532 11 is_stmt 0 view .LVU349
+ 915 03a8 94F91930 		ldrsb	r3, [r4, #25]
+ 916              		.loc 1 532 6 view .LVU350
+ 917 03ac 002B     		cmp	r3, #0
+ 918 03ae C0F21981 		blt	.L55
+ 533:src/BLDC_controller.c ****     rtb_Sum2_h = -1;
+ 534:src/BLDC_controller.c ****   } else {
+ 535:src/BLDC_controller.c ****     rtb_Sum2_h = (int8_T)(rtDW->Switch2 > 0);
+ 919              		.loc 1 535 5 is_stmt 1 view .LVU351
+ 920              		.loc 1 535 16 is_stmt 0 view .LVU352
+ 921 03b2 002B     		cmp	r3, #0
+ 922 03b4 D4BF     		ite	le
+ 923 03b6 0022     		movle	r2, #0
+ 924 03b8 0122     		movgt	r2, #1
+ 925              	.LVL95:
+ 926              	.L36:
+ 536:src/BLDC_controller.c ****   }
+ 537:src/BLDC_controller.c **** 
+ 538:src/BLDC_controller.c ****   /* End of Signum: '<S14>/Sign' */
+ 539:src/BLDC_controller.c **** 
+ 540:src/BLDC_controller.c ****   /* Signum: '<S14>/Sign1' incorporates:
+ 541:src/BLDC_controller.c ****    *  Inport: '<Root>/r_DC'
+ 542:src/BLDC_controller.c ****    */
+ 543:src/BLDC_controller.c ****   if (rtU->r_DC < 0) {
+ 927              		.loc 1 543 3 is_stmt 1 view .LVU353
+ 928              		.loc 1 543 10 is_stmt 0 view .LVU354
+ 929 03ba 7368     		ldr	r3, [r6, #4]
+ 930              		.loc 1 543 6 view .LVU355
+ 931 03bc 002B     		cmp	r3, #0
+ 932 03be C0F21481 		blt	.L56
+ 544:src/BLDC_controller.c ****     rtb_Abs5 = -1;
+ARM GAS  /tmp/ccVmOSN0.s 			page 30
+
+
+ 545:src/BLDC_controller.c ****   } else {
+ 546:src/BLDC_controller.c ****     rtb_Abs5 = (rtU->r_DC > 0);
+ 933              		.loc 1 546 5 is_stmt 1 view .LVU356
+ 934              		.loc 1 546 27 is_stmt 0 view .LVU357
+ 935 03c2 002B     		cmp	r3, #0
+ 936 03c4 D4BF     		ite	le
+ 937 03c6 0020     		movle	r0, #0
+ 938 03c8 0120     		movgt	r0, #1
+ 939              	.LVL96:
+ 940              	.L37:
+ 547:src/BLDC_controller.c ****   }
+ 548:src/BLDC_controller.c **** 
+ 549:src/BLDC_controller.c ****   /* End of Signum: '<S14>/Sign1' */
+ 550:src/BLDC_controller.c **** 
+ 551:src/BLDC_controller.c ****   /* Switch: '<S10>/Switch1' incorporates:
+ 552:src/BLDC_controller.c ****    *  Constant: '<S12>/vec_hallToPos'
+ 553:src/BLDC_controller.c ****    *  Constant: '<S14>/CTRL_COMM'
+ 554:src/BLDC_controller.c ****    *  Constant: '<S14>/r_commDCDeacv'
+ 555:src/BLDC_controller.c ****    *  Constant: '<S7>/z_ctrlTypSel1'
+ 556:src/BLDC_controller.c ****    *  Inport: '<Root>/r_DC'
+ 557:src/BLDC_controller.c ****    *  Logic: '<S14>/Logical Operator2'
+ 558:src/BLDC_controller.c ****    *  LookupNDDirect: '<S10>/z_commutMap_M1'
+ 559:src/BLDC_controller.c ****    *  Product: '<S10>/Divide2'
+ 560:src/BLDC_controller.c ****    *  Product: '<S10>/Divide4'
+ 561:src/BLDC_controller.c ****    *  RelationalOperator: '<S14>/Relational Operator1'
+ 562:src/BLDC_controller.c ****    *  RelationalOperator: '<S14>/Relational Operator3'
+ 563:src/BLDC_controller.c ****    *  RelationalOperator: '<S14>/Relational Operator4'
+ 564:src/BLDC_controller.c ****    *  Relay: '<S14>/dz_counter'
+ 565:src/BLDC_controller.c ****    *  Relay: '<S14>/n_commDeacv'
+ 566:src/BLDC_controller.c ****    *  Selector: '<S12>/Selector'
+ 567:src/BLDC_controller.c ****    *
+ 568:src/BLDC_controller.c ****    * About '<S10>/z_commutMap_M1':
+ 569:src/BLDC_controller.c ****    *  2-dimensional Direct Look-Up returning a Column
+ 570:src/BLDC_controller.c ****    */
+ 571:src/BLDC_controller.c ****   if ((rtP->z_ctrlTypSel != 0) && (rtb_Abs1 > rtP->r_commDCDeacv) && (rtb_Sum2_h
+ 941              		.loc 1 571 3 is_stmt 1 view .LVU358
+ 942              		.loc 1 571 11 is_stmt 0 view .LVU359
+ 943 03ca 95F86010 		ldrb	r1, [r5, #96]	@ zero_extendqisi2
+ 944              		.loc 1 571 6 view .LVU360
+ 945 03ce 31B1     		cbz	r1, .L38
+ 946              		.loc 1 571 50 discriminator 1 view .LVU361
+ 947 03d0 6969     		ldr	r1, [r5, #20]
+ 948              		.loc 1 571 32 discriminator 1 view .LVU362
+ 949 03d2 019D     		ldr	r5, [sp, #4]
+ 950              	.LVL97:
+ 951              		.loc 1 571 32 discriminator 1 view .LVU363
+ 952 03d4 A942     		cmp	r1, r5
+ 953 03d6 02DA     		bge	.L38
+ 954              		.loc 1 571 67 discriminator 2 view .LVU364
+ 955 03d8 8242     		cmp	r2, r0
+ 956 03da 00F00981 		beq	.L65
+ 957              	.LVL98:
+ 958              	.L38:
+ 572:src/BLDC_controller.c ****        == rtb_Abs5) && rtDW->n_commDeacv_Mode && (!rtDW->dz_counter_Mode)) {
+ 573:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtDW->Merge;
+ 574:src/BLDC_controller.c ****     rtb_Switch1_idx_1 = rtU->r_DC * rtDW->Merge1;
+ 575:src/BLDC_controller.c ****     rtb_Abs1 = rtU->r_DC * rtDW->Merge2;
+ARM GAS  /tmp/ccVmOSN0.s 			page 31
+
+
+ 576:src/BLDC_controller.c ****   } else {
+ 577:src/BLDC_controller.c ****     if (rtConstP.vec_hallToPos_Value[rtb_Sum] > 5) {
+ 959              		.loc 1 577 5 is_stmt 1 view .LVU365
+ 960              		.loc 1 577 37 is_stmt 0 view .LVU366
+ 961 03de 8F4A     		ldr	r2, .L70
+ 962 03e0 0099     		ldr	r1, [sp]
+ 963 03e2 0A44     		add	r2, r2, r1
+ 964 03e4 92F90A52 		ldrsb	r5, [r2, #522]
+ 965              		.loc 1 577 8 view .LVU367
+ 966 03e8 052D     		cmp	r5, #5
+ 967 03ea 00F31F81 		bgt	.L57
+ 578:src/BLDC_controller.c ****       /* LookupNDDirect: '<S10>/z_commutMap_M1'
+ 579:src/BLDC_controller.c ****        *
+ 580:src/BLDC_controller.c ****        * About '<S10>/z_commutMap_M1':
+ 581:src/BLDC_controller.c ****        *  2-dimensional Direct Look-Up returning a Column
+ 582:src/BLDC_controller.c ****        */
+ 583:src/BLDC_controller.c ****       rtb_Sum2_h = 5;
+ 584:src/BLDC_controller.c ****     } else if (rtConstP.vec_hallToPos_Value[rtb_Sum] < 0) {
+ 968              		.loc 1 584 12 is_stmt 1 view .LVU368
+ 969              		.loc 1 584 15 is_stmt 0 view .LVU369
+ 970 03ee 002D     		cmp	r5, #0
+ 971 03f0 80F21D81 		bge	.L40
+ 585:src/BLDC_controller.c ****       /* LookupNDDirect: '<S10>/z_commutMap_M1'
+ 586:src/BLDC_controller.c ****        *
+ 587:src/BLDC_controller.c ****        * About '<S10>/z_commutMap_M1':
+ 588:src/BLDC_controller.c ****        *  2-dimensional Direct Look-Up returning a Column
+ 589:src/BLDC_controller.c ****        */
+ 590:src/BLDC_controller.c ****       rtb_Sum2_h = 0;
+ 972              		.loc 1 590 18 view .LVU370
+ 973 03f4 0025     		movs	r5, #0
+ 974 03f6 1AE1     		b	.L40
+ 975              	.LVL99:
+ 976              	.L50:
+ 977              	.LBB53:
+ 978              	.LBB46:
+ 120:src/BLDC_controller.c ****     }
+ 979              		.loc 1 120 17 view .LVU371
+ 980 03f8 4FF00042 		mov	r2, #-2147483648
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 981              		.loc 1 119 15 view .LVU372
+ 982 03fc 0521     		movs	r1, #5
+ 983              	.LVL100:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 984              		.loc 1 119 15 view .LVU373
+ 985 03fe 93E7     		b	.L27
+ 986              	.LVL101:
+ 987              	.L24:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 988              		.loc 1 119 15 view .LVU374
+ 989              	.LBE46:
+ 990              	.LBE53:
+ 487:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 991              		.loc 1 487 5 is_stmt 1 view .LVU375
+ 487:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 992              		.loc 1 487 27 is_stmt 0 view .LVU376
+ 993 0400 2368     		ldr	r3, [r4]
+ 994              	.LVL102:
+ARM GAS  /tmp/ccVmOSN0.s 			page 32
+
+
+ 995              	.LBB54:
+ 996              	.LBI54:
+  93:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction)
+ 997              		.loc 1 93 23 is_stmt 1 view .LVU377
+ 998              	.LBB55:
+  96:src/BLDC_controller.c ****   uint32_T uAdjust;
+ 999              		.loc 1 96 3 view .LVU378
+  97:src/BLDC_controller.c ****   uint32_T fbpIndex;
+ 1000              		.loc 1 97 3 view .LVU379
+  98:src/BLDC_controller.c **** 
+ 1001              		.loc 1 98 3 view .LVU380
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 1002              		.loc 1 108 3 view .LVU381
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 1003              		.loc 1 108 6 is_stmt 0 view .LVU382
+ 1004 0402 002B     		cmp	r3, #0
+ 1005 0404 2EDD     		ble	.L51
+ 112:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 1006              		.loc 1 112 5 is_stmt 1 view .LVU383
+ 1007              	.LVL103:
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 1008              		.loc 1 113 5 view .LVU384
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 1009              		.loc 1 113 14 is_stmt 0 view .LVU385
+ 1010 0406 8649     		ldr	r1, .L70+4
+ 1011 0408 A1FB0321 		umull	r2, r1, r1, r3
+ 1012 040c C908     		lsrs	r1, r1, #3
+ 1013              	.LVL104:
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 1014              		.loc 1 114 5 is_stmt 1 view .LVU386
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 1015              		.loc 1 114 8 is_stmt 0 view .LVU387
+ 1016 040e B3F5B47F 		cmp	r3, #360
+ 1017 0412 6AD2     		bcs	.L52
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 1018              		.loc 1 115 7 is_stmt 1 view .LVU388
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 1019              		.loc 1 115 15 is_stmt 0 view .LVU389
+ 1020 0414 C9B2     		uxtb	r1, r1
+ 1021              	.LVL105:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1022              		.loc 1 116 7 is_stmt 1 view .LVU390
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1023              		.loc 1 116 60 is_stmt 0 view .LVU391
+ 1024 0416 01EB8102 		add	r2, r1, r1, lsl #2
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1025              		.loc 1 116 50 view .LVU392
+ 1026 041a A3EB4203 		sub	r3, r3, r2, lsl #1
+ 1027              	.LVL106:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1028              		.loc 1 116 71 view .LVU393
+ 1029 041e 4FEA5308 		lsr	r8, r3, #1
+ 1030 0422 DB07     		lsls	r3, r3, #31
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1031              		.loc 1 116 78 view .LVU394
+ 1032 0424 0020     		movs	r0, #0
+ 1033 0426 13EB0802 		adds	r2, r3, r8
+ARM GAS  /tmp/ccVmOSN0.s 			page 33
+
+
+ 1034 042a 19D2     		bcs	.L66
+ 1035              	.L31:
+ 1036 042c 0244     		add	r2, r2, r0
+ 1037 042e 7C48     		ldr	r0, .L70+4
+ 1038              	.LVL107:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1039              		.loc 1 116 78 view .LVU395
+ 1040 0430 A0FB02CE 		umull	ip, lr, r0, r2
+ 1041 0434 2EF0030C 		bic	ip, lr, #3
+ 1042 0438 0CEB9E0C 		add	ip, ip, lr, lsr #2
+ 1043 043c A2EB0C02 		sub	r2, r2, ip
+ 1044 0440 9A1A     		subs	r2, r3, r2
+ 1045 0442 68F10008 		sbc	r8, r8, #0
+ 1046 0446 4FF0CC33 		mov	r3, #-858993460
+ 1047 044a 02FB03F3 		mul	r3, r2, r3
+ 1048 044e 00FB0833 		mla	r3, r0, r8, r3
+ 1049 0452 A2FB0020 		umull	r2, r0, r2, r0
+ 1050              	.LVL108:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1051              		.loc 1 116 78 view .LVU396
+ 1052 0456 0344     		add	r3, r3, r0
+ 1053 0458 5208     		lsrs	r2, r2, #1
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1054              		.loc 1 116 19 view .LVU397
+ 1055 045a 42EAC372 		orr	r2, r2, r3, lsl #31
+ 1056              	.LVL109:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1057              		.loc 1 116 19 view .LVU398
+ 1058 045e 03E0     		b	.L30
+ 1059              	.LVL110:
+ 1060              	.L66:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1061              		.loc 1 116 78 view .LVU399
+ 1062 0460 0120     		movs	r0, #1
+ 1063 0462 E3E7     		b	.L31
+ 1064              	.LVL111:
+ 1065              	.L51:
+ 110:src/BLDC_controller.c ****   } else {
+ 1066              		.loc 1 110 15 view .LVU400
+ 1067 0464 0022     		movs	r2, #0
+ 109:src/BLDC_controller.c ****     *fraction = 0U;
+ 1068              		.loc 1 109 13 view .LVU401
+ 1069 0466 1146     		mov	r1, r2
+ 1070              	.LVL112:
+ 1071              	.L30:
+ 124:src/BLDC_controller.c **** }
+ 1072              		.loc 1 124 3 is_stmt 1 view .LVU402
+ 124:src/BLDC_controller.c **** }
+ 1073              		.loc 1 124 3 is_stmt 0 view .LVU403
+ 1074              	.LBE55:
+ 1075              	.LBE54:
+ 491:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaA_M1_Table);
+ 1076              		.loc 1 491 5 is_stmt 1 view .LVU404
+ 1077              	.LBB57:
+ 1078              	.LBI57:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1079              		.loc 1 127 23 view .LVU405
+ARM GAS  /tmp/ccVmOSN0.s 			page 34
+
+
+ 1080              	.LBB58:
+ 130:src/BLDC_controller.c **** 
+ 1081              		.loc 1 130 3 view .LVU406
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1082              		.loc 1 138 3 view .LVU407
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1083              		.loc 1 139 3 view .LVU408
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1084              		.loc 1 139 46 is_stmt 0 view .LVU409
+ 1085 0468 01F10108 		add	r8, r1, #1
+ 1086 046c 6D48     		ldr	r0, .L70+8
+ 1087              	.LVL113:
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1088              		.loc 1 139 46 view .LVU410
+ 1089 046e 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1090              		.loc 1 139 70 view .LVU411
+ 1091 0472 30F911B0 		ldrsh	fp, [r0, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1092              		.loc 1 139 63 view .LVU412
+ 1093 0476 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1094              		.loc 1 139 31 view .LVU413
+ 1095 047a 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1096              		.loc 1 140 5 view .LVU414
+ 1097 047e A3FB023C 		umull	r3, ip, r3, r2
+ 1098 0482 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 1099              		.loc 1 140 13 view .LVU415
+ 1100 0486 DB0F     		lsrs	r3, r3, #31
+ 1101 0488 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1102              		.loc 1 139 20 view .LVU416
+ 1103 048c 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1104              		.loc 1 140 27 view .LVU417
+ 1105 048e 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 1106              		.loc 1 140 20 view .LVU418
+ 1107 0492 5B44     		add	r3, r3, fp
+ 1108              	.LVL114:
+ 140:src/BLDC_controller.c **** }
+ 1109              		.loc 1 140 20 view .LVU419
+ 1110              	.LBE58:
+ 1111              	.LBE57:
+ 491:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaA_M1_Table);
+ 1112              		.loc 1 491 17 discriminator 1 view .LVU420
+ 1113 0494 2381     		strh	r3, [r4, #8]	@ movhi
+ 495:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaB_M1_Table);
+ 1114              		.loc 1 495 5 is_stmt 1 view .LVU421
+ 1115              	.LVL115:
+ 1116              	.LBB59:
+ 1117              	.LBI59:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1118              		.loc 1 127 23 view .LVU422
+ 1119              	.LBB60:
+ARM GAS  /tmp/ccVmOSN0.s 			page 35
+
+
+ 130:src/BLDC_controller.c **** 
+ 1120              		.loc 1 130 3 view .LVU423
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1121              		.loc 1 138 3 view .LVU424
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1122              		.loc 1 139 3 view .LVU425
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1123              		.loc 1 139 46 is_stmt 0 view .LVU426
+ 1124 0496 00F14A0C 		add	ip, r0, #74
+ 1125 049a 3CF91830 		ldrsh	r3, [ip, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1126              		.loc 1 139 70 view .LVU427
+ 1127 049e 3CF911B0 		ldrsh	fp, [ip, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1128              		.loc 1 139 63 view .LVU428
+ 1129 04a2 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1130              		.loc 1 139 31 view .LVU429
+ 1131 04a6 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1132              		.loc 1 140 5 view .LVU430
+ 1133 04aa A3FB023C 		umull	r3, ip, r3, r2
+ 1134 04ae 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 1135              		.loc 1 140 13 view .LVU431
+ 1136 04b2 DB0F     		lsrs	r3, r3, #31
+ 1137 04b4 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1138              		.loc 1 139 20 view .LVU432
+ 1139 04b8 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1140              		.loc 1 140 27 view .LVU433
+ 1141 04ba 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 1142              		.loc 1 140 20 view .LVU434
+ 1143 04be 5B44     		add	r3, r3, fp
+ 1144              	.LVL116:
+ 140:src/BLDC_controller.c **** }
+ 1145              		.loc 1 140 20 view .LVU435
+ 1146              	.LBE60:
+ 1147              	.LBE59:
+ 495:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaB_M1_Table);
+ 1148              		.loc 1 495 18 discriminator 1 view .LVU436
+ 1149 04c0 6381     		strh	r3, [r4, #10]	@ movhi
+ 499:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaC_M1_Table);
+ 1150              		.loc 1 499 5 is_stmt 1 view .LVU437
+ 1151              	.LVL117:
+ 1152              	.LBB61:
+ 1153              	.LBI61:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1154              		.loc 1 127 23 view .LVU438
+ 1155              	.LBB62:
+ 130:src/BLDC_controller.c **** 
+ 1156              		.loc 1 130 3 view .LVU439
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1157              		.loc 1 138 3 view .LVU440
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ARM GAS  /tmp/ccVmOSN0.s 			page 36
+
+
+ 1158              		.loc 1 139 3 view .LVU441
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1159              		.loc 1 139 46 is_stmt 0 view .LVU442
+ 1160 04c2 9430     		adds	r0, r0, #148
+ 1161 04c4 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1162              		.loc 1 139 70 view .LVU443
+ 1163 04c8 30F91110 		ldrsh	r1, [r0, r1, lsl #1]
+ 1164              	.LVL118:
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1165              		.loc 1 139 63 view .LVU444
+ 1166 04cc 5B1A     		subs	r3, r3, r1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1167              		.loc 1 139 31 view .LVU445
+ 1168 04ce 4FEAE37C 		asr	ip, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1169              		.loc 1 140 5 view .LVU446
+ 1170 04d2 A3FB0230 		umull	r3, r0, r3, r2
+ 1171 04d6 02FB0C02 		mla	r2, r2, ip, r0
+ 140:src/BLDC_controller.c **** }
+ 1172              		.loc 1 140 13 view .LVU447
+ 1173 04da DB0F     		lsrs	r3, r3, #31
+ 1174 04dc 43EA4203 		orr	r3, r3, r2, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1175              		.loc 1 139 20 view .LVU448
+ 1176 04e0 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1177              		.loc 1 140 27 view .LVU449
+ 1178 04e2 89B2     		uxth	r1, r1
+ 140:src/BLDC_controller.c **** }
+ 1179              		.loc 1 140 20 view .LVU450
+ 1180 04e4 0B44     		add	r3, r3, r1
+ 1181              	.LVL119:
+ 140:src/BLDC_controller.c **** }
+ 1182              		.loc 1 140 20 view .LVU451
+ 1183              	.LBE62:
+ 1184              	.LBE61:
+ 499:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sinPhaC_M1_Table);
+ 1185              		.loc 1 499 18 discriminator 1 view .LVU452
+ 1186 04e6 A381     		strh	r3, [r4, #12]	@ movhi
+ 503:src/BLDC_controller.c **** 
+ 1187              		.loc 1 503 5 is_stmt 1 view .LVU453
+ 1188 04e8 5EE7     		b	.L26
+ 1189              	.LVL120:
+ 1190              	.L52:
+ 1191              	.LBB63:
+ 1192              	.LBB56:
+ 120:src/BLDC_controller.c ****     }
+ 1193              		.loc 1 120 17 is_stmt 0 view .LVU454
+ 1194 04ea 4FF00042 		mov	r2, #-2147483648
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1195              		.loc 1 119 15 view .LVU455
+ 1196 04ee 2321     		movs	r1, #35
+ 1197              	.LVL121:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1198              		.loc 1 119 15 view .LVU456
+ 1199 04f0 BAE7     		b	.L30
+ARM GAS  /tmp/ccVmOSN0.s 			page 37
+
+
+ 1200              	.LVL122:
+ 1201              	.L25:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1202              		.loc 1 119 15 view .LVU457
+ 1203              	.LBE56:
+ 1204              	.LBE63:
+ 510:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 1205              		.loc 1 510 5 is_stmt 1 view .LVU458
+ 510:src/BLDC_controller.c ****       36U, &rtb_r_phaAdvDC_XA_o2);
+ 1206              		.loc 1 510 27 is_stmt 0 view .LVU459
+ 1207 04f2 2368     		ldr	r3, [r4]
+ 1208              	.LVL123:
+ 1209              	.LBB64:
+ 1210              	.LBI64:
+  93:src/BLDC_controller.c ****   uint32_T maxIndex, uint32_T *fraction)
+ 1211              		.loc 1 93 23 is_stmt 1 view .LVU460
+ 1212              	.LBB65:
+  96:src/BLDC_controller.c ****   uint32_T uAdjust;
+ 1213              		.loc 1 96 3 view .LVU461
+  97:src/BLDC_controller.c ****   uint32_T fbpIndex;
+ 1214              		.loc 1 97 3 view .LVU462
+  98:src/BLDC_controller.c **** 
+ 1215              		.loc 1 98 3 view .LVU463
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 1216              		.loc 1 108 3 view .LVU464
+ 108:src/BLDC_controller.c ****     bpIndex = 0U;
+ 1217              		.loc 1 108 6 is_stmt 0 view .LVU465
+ 1218 04f4 002B     		cmp	r3, #0
+ 1219 04f6 2EDD     		ble	.L53
+ 112:src/BLDC_controller.c ****     fbpIndex = uAdjust / bpSpace;
+ 1220              		.loc 1 112 5 is_stmt 1 view .LVU466
+ 1221              	.LVL124:
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 1222              		.loc 1 113 5 view .LVU467
+ 113:src/BLDC_controller.c ****     if (fbpIndex < maxIndex) {
+ 1223              		.loc 1 113 14 is_stmt 0 view .LVU468
+ 1224 04f8 4949     		ldr	r1, .L70+4
+ 1225 04fa A1FB0321 		umull	r2, r1, r1, r3
+ 1226 04fe C908     		lsrs	r1, r1, #3
+ 1227              	.LVL125:
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 1228              		.loc 1 114 5 is_stmt 1 view .LVU469
+ 114:src/BLDC_controller.c ****       bpIndex = (uint8_T)fbpIndex;
+ 1229              		.loc 1 114 8 is_stmt 0 view .LVU470
+ 1230 0500 B3F5B47F 		cmp	r3, #360
+ 1231 0504 6AD2     		bcs	.L54
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 1232              		.loc 1 115 7 is_stmt 1 view .LVU471
+ 115:src/BLDC_controller.c ****       *fraction = (uint32_T)(((uint64_T)(uAdjust - bpIndex * bpSpace) << 31) /
+ 1233              		.loc 1 115 15 is_stmt 0 view .LVU472
+ 1234 0506 C9B2     		uxtb	r1, r1
+ 1235              	.LVL126:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1236              		.loc 1 116 7 is_stmt 1 view .LVU473
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1237              		.loc 1 116 60 is_stmt 0 view .LVU474
+ 1238 0508 01EB8102 		add	r2, r1, r1, lsl #2
+ARM GAS  /tmp/ccVmOSN0.s 			page 38
+
+
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1239              		.loc 1 116 50 view .LVU475
+ 1240 050c A3EB4203 		sub	r3, r3, r2, lsl #1
+ 1241              	.LVL127:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1242              		.loc 1 116 71 view .LVU476
+ 1243 0510 4FEA5308 		lsr	r8, r3, #1
+ 1244 0514 DB07     		lsls	r3, r3, #31
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1245              		.loc 1 116 78 view .LVU477
+ 1246 0516 0020     		movs	r0, #0
+ 1247 0518 13EB0802 		adds	r2, r3, r8
+ 1248 051c 19D2     		bcs	.L67
+ 1249              	.L34:
+ 1250 051e 0244     		add	r2, r2, r0
+ 1251 0520 3F48     		ldr	r0, .L70+4
+ 1252              	.LVL128:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1253              		.loc 1 116 78 view .LVU478
+ 1254 0522 A0FB02CE 		umull	ip, lr, r0, r2
+ 1255 0526 2EF0030C 		bic	ip, lr, #3
+ 1256 052a 0CEB9E0C 		add	ip, ip, lr, lsr #2
+ 1257 052e A2EB0C02 		sub	r2, r2, ip
+ 1258 0532 9A1A     		subs	r2, r3, r2
+ 1259 0534 68F10008 		sbc	r8, r8, #0
+ 1260 0538 4FF0CC33 		mov	r3, #-858993460
+ 1261 053c 02FB03F3 		mul	r3, r2, r3
+ 1262 0540 00FB0833 		mla	r3, r0, r8, r3
+ 1263 0544 A2FB0020 		umull	r2, r0, r2, r0
+ 1264              	.LVL129:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1265              		.loc 1 116 78 view .LVU479
+ 1266 0548 0344     		add	r3, r3, r0
+ 1267 054a 5208     		lsrs	r2, r2, #1
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1268              		.loc 1 116 19 view .LVU480
+ 1269 054c 42EAC372 		orr	r2, r2, r3, lsl #31
+ 1270              	.LVL130:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1271              		.loc 1 116 19 view .LVU481
+ 1272 0550 03E0     		b	.L33
+ 1273              	.LVL131:
+ 1274              	.L67:
+ 116:src/BLDC_controller.c ****         bpSpace);
+ 1275              		.loc 1 116 78 view .LVU482
+ 1276 0552 0120     		movs	r0, #1
+ 1277 0554 E3E7     		b	.L34
+ 1278              	.LVL132:
+ 1279              	.L53:
+ 110:src/BLDC_controller.c ****   } else {
+ 1280              		.loc 1 110 15 view .LVU483
+ 1281 0556 0022     		movs	r2, #0
+ 109:src/BLDC_controller.c ****     *fraction = 0U;
+ 1282              		.loc 1 109 13 view .LVU484
+ 1283 0558 1146     		mov	r1, r2
+ 1284              	.LVL133:
+ 1285              	.L33:
+ARM GAS  /tmp/ccVmOSN0.s 			page 39
+
+
+ 124:src/BLDC_controller.c **** }
+ 1286              		.loc 1 124 3 is_stmt 1 view .LVU485
+ 124:src/BLDC_controller.c **** }
+ 1287              		.loc 1 124 3 is_stmt 0 view .LVU486
+ 1288              	.LBE65:
+ 1289              	.LBE64:
+ 514:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaA_M1_Table);
+ 1290              		.loc 1 514 5 is_stmt 1 view .LVU487
+ 1291              	.LBB67:
+ 1292              	.LBI67:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1293              		.loc 1 127 23 view .LVU488
+ 1294              	.LBB68:
+ 130:src/BLDC_controller.c **** 
+ 1295              		.loc 1 130 3 view .LVU489
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1296              		.loc 1 138 3 view .LVU490
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1297              		.loc 1 139 3 view .LVU491
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1298              		.loc 1 139 46 is_stmt 0 view .LVU492
+ 1299 055a 01F10108 		add	r8, r1, #1
+ 1300 055e 3248     		ldr	r0, .L70+12
+ 1301              	.LVL134:
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1302              		.loc 1 139 46 view .LVU493
+ 1303 0560 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1304              		.loc 1 139 70 view .LVU494
+ 1305 0564 30F911B0 		ldrsh	fp, [r0, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1306              		.loc 1 139 63 view .LVU495
+ 1307 0568 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1308              		.loc 1 139 31 view .LVU496
+ 1309 056c 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1310              		.loc 1 140 5 view .LVU497
+ 1311 0570 A3FB023C 		umull	r3, ip, r3, r2
+ 1312 0574 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 1313              		.loc 1 140 13 view .LVU498
+ 1314 0578 DB0F     		lsrs	r3, r3, #31
+ 1315 057a 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1316              		.loc 1 139 20 view .LVU499
+ 1317 057e 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1318              		.loc 1 140 27 view .LVU500
+ 1319 0580 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 1320              		.loc 1 140 20 view .LVU501
+ 1321 0584 5B44     		add	r3, r3, fp
+ 1322              	.LVL135:
+ 140:src/BLDC_controller.c **** }
+ 1323              		.loc 1 140 20 view .LVU502
+ 1324              	.LBE68:
+ARM GAS  /tmp/ccVmOSN0.s 			page 40
+
+
+ 1325              	.LBE67:
+ 514:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaA_M1_Table);
+ 1326              		.loc 1 514 17 discriminator 1 view .LVU503
+ 1327 0586 2381     		strh	r3, [r4, #8]	@ movhi
+ 518:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaB_M1_Table);
+ 1328              		.loc 1 518 5 is_stmt 1 view .LVU504
+ 1329              	.LVL136:
+ 1330              	.LBB69:
+ 1331              	.LBI69:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1332              		.loc 1 127 23 view .LVU505
+ 1333              	.LBB70:
+ 130:src/BLDC_controller.c **** 
+ 1334              		.loc 1 130 3 view .LVU506
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1335              		.loc 1 138 3 view .LVU507
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1336              		.loc 1 139 3 view .LVU508
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1337              		.loc 1 139 46 is_stmt 0 view .LVU509
+ 1338 0588 00F14A0C 		add	ip, r0, #74
+ 1339 058c 3CF91830 		ldrsh	r3, [ip, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1340              		.loc 1 139 70 view .LVU510
+ 1341 0590 3CF911B0 		ldrsh	fp, [ip, r1, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1342              		.loc 1 139 63 view .LVU511
+ 1343 0594 A3EB0B03 		sub	r3, r3, fp
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1344              		.loc 1 139 31 view .LVU512
+ 1345 0598 4FEAE37E 		asr	lr, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1346              		.loc 1 140 5 view .LVU513
+ 1347 059c A3FB023C 		umull	r3, ip, r3, r2
+ 1348 05a0 02FB0ECC 		mla	ip, r2, lr, ip
+ 140:src/BLDC_controller.c **** }
+ 1349              		.loc 1 140 13 view .LVU514
+ 1350 05a4 DB0F     		lsrs	r3, r3, #31
+ 1351 05a6 43EA4C03 		orr	r3, r3, ip, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1352              		.loc 1 139 20 view .LVU515
+ 1353 05aa 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1354              		.loc 1 140 27 view .LVU516
+ 1355 05ac 1FFA8BFB 		uxth	fp, fp
+ 140:src/BLDC_controller.c **** }
+ 1356              		.loc 1 140 20 view .LVU517
+ 1357 05b0 5B44     		add	r3, r3, fp
+ 1358              	.LVL137:
+ 140:src/BLDC_controller.c **** }
+ 1359              		.loc 1 140 20 view .LVU518
+ 1360              	.LBE70:
+ 1361              	.LBE69:
+ 518:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaB_M1_Table);
+ 1362              		.loc 1 518 18 discriminator 1 view .LVU519
+ 1363 05b2 6381     		strh	r3, [r4, #10]	@ movhi
+ 522:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaC_M1_Table);
+ARM GAS  /tmp/ccVmOSN0.s 			page 41
+
+
+ 1364              		.loc 1 522 5 is_stmt 1 view .LVU520
+ 1365              	.LVL138:
+ 1366              	.LBB71:
+ 1367              	.LBI71:
+ 127:src/BLDC_controller.c ****   int16_T table[])
+ 1368              		.loc 1 127 23 view .LVU521
+ 1369              	.LBB72:
+ 130:src/BLDC_controller.c **** 
+ 1370              		.loc 1 130 3 view .LVU522
+ 138:src/BLDC_controller.c ****   return (int16_T)((int16_T)(((int64_T)(table[offset_0d + 1U] - table[offset_0d])
+ 1371              		.loc 1 138 3 view .LVU523
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1372              		.loc 1 139 3 view .LVU524
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1373              		.loc 1 139 46 is_stmt 0 view .LVU525
+ 1374 05b4 9430     		adds	r0, r0, #148
+ 1375 05b6 30F91830 		ldrsh	r3, [r0, r8, lsl #1]
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1376              		.loc 1 139 70 view .LVU526
+ 1377 05ba 30F91110 		ldrsh	r1, [r0, r1, lsl #1]
+ 1378              	.LVL139:
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1379              		.loc 1 139 63 view .LVU527
+ 1380 05be 5B1A     		subs	r3, r3, r1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1381              		.loc 1 139 31 view .LVU528
+ 1382 05c0 4FEAE37C 		asr	ip, r3, #31
+ 140:src/BLDC_controller.c **** }
+ 1383              		.loc 1 140 5 view .LVU529
+ 1384 05c4 A3FB0230 		umull	r3, r0, r3, r2
+ 1385 05c8 02FB0C02 		mla	r2, r2, ip, r0
+ 140:src/BLDC_controller.c **** }
+ 1386              		.loc 1 140 13 view .LVU530
+ 1387 05cc DB0F     		lsrs	r3, r3, #31
+ 1388 05ce 43EA4203 		orr	r3, r3, r2, lsl #1
+ 139:src/BLDC_controller.c ****     * frac) >> 31) + table[offset_0d]);
+ 1389              		.loc 1 139 20 view .LVU531
+ 1390 05d2 9BB2     		uxth	r3, r3
+ 140:src/BLDC_controller.c **** }
+ 1391              		.loc 1 140 27 view .LVU532
+ 1392 05d4 89B2     		uxth	r1, r1
+ 140:src/BLDC_controller.c **** }
+ 1393              		.loc 1 140 20 view .LVU533
+ 1394 05d6 0B44     		add	r3, r3, r1
+ 1395              	.LVL140:
+ 140:src/BLDC_controller.c **** }
+ 1396              		.loc 1 140 20 view .LVU534
+ 1397              	.LBE72:
+ 1398              	.LBE71:
+ 522:src/BLDC_controller.c ****       rtb_r_phaAdvDC_XA_o2, rtConstP.r_sin3PhaC_M1_Table);
+ 1399              		.loc 1 522 18 discriminator 1 view .LVU535
+ 1400 05d8 A381     		strh	r3, [r4, #12]	@ movhi
+ 526:src/BLDC_controller.c ****   }
+ 1401              		.loc 1 526 5 is_stmt 1 view .LVU536
+ 1402 05da E5E6     		b	.L26
+ 1403              	.LVL141:
+ 1404              	.L54:
+ARM GAS  /tmp/ccVmOSN0.s 			page 42
+
+
+ 1405              	.LBB73:
+ 1406              	.LBB66:
+ 120:src/BLDC_controller.c ****     }
+ 1407              		.loc 1 120 17 is_stmt 0 view .LVU537
+ 1408 05dc 4FF00042 		mov	r2, #-2147483648
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1409              		.loc 1 119 15 view .LVU538
+ 1410 05e0 2321     		movs	r1, #35
+ 1411              	.LVL142:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1412              		.loc 1 119 15 view .LVU539
+ 1413 05e2 BAE7     		b	.L33
+ 1414              	.LVL143:
+ 1415              	.L55:
+ 119:src/BLDC_controller.c ****       *fraction = 2147483648U;
+ 1416              		.loc 1 119 15 view .LVU540
+ 1417              	.LBE66:
+ 1418              	.LBE73:
+ 533:src/BLDC_controller.c ****   } else {
+ 1419              		.loc 1 533 16 view .LVU541
+ 1420 05e4 4FF0FF32 		mov	r2, #-1
+ 1421 05e8 E7E6     		b	.L36
+ 1422              	.LVL144:
+ 1423              	.L56:
+ 544:src/BLDC_controller.c ****   } else {
+ 1424              		.loc 1 544 14 view .LVU542
+ 1425 05ea 4FF0FF30 		mov	r0, #-1
+ 1426 05ee ECE6     		b	.L37
+ 1427              	.LVL145:
+ 1428              	.L65:
+ 572:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtDW->Merge;
+ 1429              		.loc 1 572 28 view .LVU543
+ 1430 05f0 E27F     		ldrb	r2, [r4, #31]	@ zero_extendqisi2
+ 1431              	.LVL146:
+ 572:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtDW->Merge;
+ 1432              		.loc 1 572 21 view .LVU544
+ 1433 05f2 002A     		cmp	r2, #0
+ 1434 05f4 3FF4F3AE 		beq	.L38
+ 572:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtDW->Merge;
+ 1435              		.loc 1 572 56 discriminator 1 view .LVU545
+ 1436 05f8 94F82020 		ldrb	r2, [r4, #32]	@ zero_extendqisi2
+ 572:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtDW->Merge;
+ 1437              		.loc 1 572 47 discriminator 1 view .LVU546
+ 1438 05fc 002A     		cmp	r2, #0
+ 1439 05fe 7FF4EEAE 		bne	.L38
+ 573:src/BLDC_controller.c ****     rtb_Switch1_idx_1 = rtU->r_DC * rtDW->Merge1;
+ 1440              		.loc 1 573 5 is_stmt 1 view .LVU547
+ 573:src/BLDC_controller.c ****     rtb_Switch1_idx_1 = rtU->r_DC * rtDW->Merge1;
+ 1441              		.loc 1 573 32 is_stmt 0 view .LVU548
+ 1442 0602 B4F90810 		ldrsh	r1, [r4, #8]
+ 573:src/BLDC_controller.c ****     rtb_Switch1_idx_1 = rtU->r_DC * rtDW->Merge1;
+ 1443              		.loc 1 573 14 view .LVU549
+ 1444 0606 03FB01F1 		mul	r1, r3, r1
+ 1445              	.LVL147:
+ 574:src/BLDC_controller.c ****     rtb_Abs1 = rtU->r_DC * rtDW->Merge2;
+ 1446              		.loc 1 574 5 is_stmt 1 view .LVU550
+ 574:src/BLDC_controller.c ****     rtb_Abs1 = rtU->r_DC * rtDW->Merge2;
+ARM GAS  /tmp/ccVmOSN0.s 			page 43
+
+
+ 1447              		.loc 1 574 41 is_stmt 0 view .LVU551
+ 1448 060a B4F90A20 		ldrsh	r2, [r4, #10]
+ 574:src/BLDC_controller.c ****     rtb_Abs1 = rtU->r_DC * rtDW->Merge2;
+ 1449              		.loc 1 574 23 view .LVU552
+ 1450 060e 03FB02F2 		mul	r2, r3, r2
+ 1451              	.LVL148:
+ 575:src/BLDC_controller.c ****   } else {
+ 1452              		.loc 1 575 5 is_stmt 1 view .LVU553
+ 575:src/BLDC_controller.c ****   } else {
+ 1453              		.loc 1 575 32 is_stmt 0 view .LVU554
+ 1454 0612 B4F90C00 		ldrsh	r0, [r4, #12]
+ 575:src/BLDC_controller.c ****   } else {
+ 1455              		.loc 1 575 14 view .LVU555
+ 1456 0616 00FB03F3 		mul	r3, r0, r3
+ 1457              	.LVL149:
+ 575:src/BLDC_controller.c ****   } else {
+ 1458              		.loc 1 575 14 view .LVU556
+ 1459 061a 22E0     		b	.L39
+ 1460              	.L71:
+ 1461              		.align	2
+ 1462              	.L70:
+ 1463 061c 00000000 		.word	rtConstP
+ 1464 0620 CDCCCCCC 		.word	-858993459
+ 1465 0624 2A000000 		.word	rtConstP+42
+ 1466 0628 08010000 		.word	rtConstP+264
+ 1467              	.LVL150:
+ 1468              	.L57:
+ 583:src/BLDC_controller.c ****     } else if (rtConstP.vec_hallToPos_Value[rtb_Sum] < 0) {
+ 1469              		.loc 1 583 18 view .LVU557
+ 1470 062c 0525     		movs	r5, #5
+ 1471              	.L40:
+ 1472              	.LVL151:
+ 591:src/BLDC_controller.c ****     } else {
+ 592:src/BLDC_controller.c ****       /* LookupNDDirect: '<S10>/z_commutMap_M1' incorporates:
+ 593:src/BLDC_controller.c ****        *  Constant: '<S12>/vec_hallToPos'
+ 594:src/BLDC_controller.c ****        *  Selector: '<S12>/Selector'
+ 595:src/BLDC_controller.c ****        *
+ 596:src/BLDC_controller.c ****        * About '<S10>/z_commutMap_M1':
+ 597:src/BLDC_controller.c ****        *  2-dimensional Direct Look-Up returning a Column
+ 598:src/BLDC_controller.c ****        */
+ 599:src/BLDC_controller.c ****       rtb_Sum2_h = rtConstP.vec_hallToPos_Value[rtb_Sum];
+ 600:src/BLDC_controller.c ****     }
+ 601:src/BLDC_controller.c **** 
+ 602:src/BLDC_controller.c ****     /* LookupNDDirect: '<S10>/z_commutMap_M1' incorporates:
+ 603:src/BLDC_controller.c ****      *  Constant: '<S12>/vec_hallToPos'
+ 604:src/BLDC_controller.c ****      *  Selector: '<S12>/Selector'
+ 605:src/BLDC_controller.c ****      *
+ 606:src/BLDC_controller.c ****      * About '<S10>/z_commutMap_M1':
+ 607:src/BLDC_controller.c ****      *  2-dimensional Direct Look-Up returning a Column
+ 608:src/BLDC_controller.c ****      */
+ 609:src/BLDC_controller.c ****     rtb_Abs1 = rtb_Sum2_h * 3;
+ 1473              		.loc 1 609 5 is_stmt 1 view .LVU558
+ 1474              		.loc 1 609 14 is_stmt 0 view .LVU559
+ 1475 062e 05EB4505 		add	r5, r5, r5, lsl #1
+ 1476              	.LVL152:
+ 610:src/BLDC_controller.c ****     rtb_Abs5 = rtU->r_DC * rtConstP.z_commutMap_M1_table[rtb_Abs1];
+ 1477              		.loc 1 610 5 is_stmt 1 view .LVU560
+ARM GAS  /tmp/ccVmOSN0.s 			page 44
+
+
+ 1478              		.loc 1 610 57 is_stmt 0 view .LVU561
+ 1479 0632 1E48     		ldr	r0, .L72
+ 1480              	.LVL153:
+ 1481              		.loc 1 610 57 view .LVU562
+ 1482 0634 05F1F002 		add	r2, r5, #240
+ 1483 0638 00EB4202 		add	r2, r0, r2, lsl #1
+ 1484 063c B2F90610 		ldrsh	r1, [r2, #6]
+ 1485              		.loc 1 610 14 view .LVU563
+ 1486 0640 03FB01F1 		mul	r1, r3, r1
+ 1487              	.LVL154:
+ 611:src/BLDC_controller.c ****     rtb_Switch1_idx_1 = rtConstP.z_commutMap_M1_table[1 + rtb_Abs1] * rtU->r_DC;
+ 1488              		.loc 1 611 5 is_stmt 1 view .LVU564
+ 1489              		.loc 1 611 54 is_stmt 0 view .LVU565
+ 1490 0644 05F1F102 		add	r2, r5, #241
+ 1491 0648 00EB4202 		add	r2, r0, r2, lsl #1
+ 1492 064c B2F90620 		ldrsh	r2, [r2, #6]
+ 1493              		.loc 1 611 23 view .LVU566
+ 1494 0650 03FB02F2 		mul	r2, r3, r2
+ 1495              	.LVL155:
+ 612:src/BLDC_controller.c ****     rtb_Abs1 = rtConstP.z_commutMap_M1_table[2 + rtb_Abs1] * rtU->r_DC;
+ 1496              		.loc 1 612 5 is_stmt 1 view .LVU567
+ 1497              		.loc 1 612 45 is_stmt 0 view .LVU568
+ 1498 0654 F235     		adds	r5, r5, #242
+ 1499              	.LVL156:
+ 1500              		.loc 1 612 45 view .LVU569
+ 1501 0656 00EB4500 		add	r0, r0, r5, lsl #1
+ 1502 065a B0F90600 		ldrsh	r0, [r0, #6]
+ 1503              		.loc 1 612 14 view .LVU570
+ 1504 065e 00FB03F3 		mul	r3, r0, r3
+ 1505              	.LVL157:
+ 1506              	.L39:
+ 613:src/BLDC_controller.c ****   }
+ 614:src/BLDC_controller.c **** 
+ 615:src/BLDC_controller.c ****   /* End of Switch: '<S10>/Switch1' */
+ 616:src/BLDC_controller.c **** 
+ 617:src/BLDC_controller.c ****   /* Outport: '<Root>/DC_phaA' incorporates:
+ 618:src/BLDC_controller.c ****    *  Constant: '<S10>/Constant1'
+ 619:src/BLDC_controller.c ****    *  Product: '<S10>/Divide1'
+ 620:src/BLDC_controller.c ****    */
+ 621:src/BLDC_controller.c ****   rtY->DC_phaA = rtb_Abs5 / 1000;
+ 1507              		.loc 1 621 3 is_stmt 1 view .LVU571
+ 1508              		.loc 1 621 27 is_stmt 0 view .LVU572
+ 1509 0662 1348     		ldr	r0, .L72+4
+ 1510 0664 80FB01C5 		smull	ip, r5, r0, r1
+ 1511 0668 C917     		asrs	r1, r1, #31
+ 1512              	.LVL158:
+ 1513              		.loc 1 621 27 view .LVU573
+ 1514 066a C1EBA511 		rsb	r1, r1, r5, asr #6
+ 1515              		.loc 1 621 16 view .LVU574
+ 1516 066e CAF80010 		str	r1, [r10]
+ 622:src/BLDC_controller.c **** 
+ 623:src/BLDC_controller.c ****   /* Outport: '<Root>/DC_phaB' incorporates:
+ 624:src/BLDC_controller.c ****    *  Constant: '<S10>/Constant1'
+ 625:src/BLDC_controller.c ****    *  Product: '<S10>/Divide1'
+ 626:src/BLDC_controller.c ****    */
+ 627:src/BLDC_controller.c ****   rtY->DC_phaB = rtb_Switch1_idx_1 / 1000;
+ 1517              		.loc 1 627 3 is_stmt 1 view .LVU575
+ARM GAS  /tmp/ccVmOSN0.s 			page 45
+
+
+ 1518              		.loc 1 627 36 is_stmt 0 view .LVU576
+ 1519 0672 80FB0251 		smull	r5, r1, r0, r2
+ 1520 0676 D217     		asrs	r2, r2, #31
+ 1521              	.LVL159:
+ 1522              		.loc 1 627 36 view .LVU577
+ 1523 0678 C2EBA112 		rsb	r2, r2, r1, asr #6
+ 1524              		.loc 1 627 16 view .LVU578
+ 1525 067c CAF80420 		str	r2, [r10, #4]
+ 628:src/BLDC_controller.c **** 
+ 629:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S11>/UnitDelay' incorporates:
+ 630:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallA '
+ 631:src/BLDC_controller.c ****    */
+ 632:src/BLDC_controller.c ****   rtDW->UnitDelay_DSTATE = rtU->b_hallA;
+ 1526              		.loc 1 632 3 is_stmt 1 view .LVU579
+ 1527              		.loc 1 632 31 is_stmt 0 view .LVU580
+ 1528 0680 3278     		ldrb	r2, [r6]	@ zero_extendqisi2
+ 1529              		.loc 1 632 26 view .LVU581
+ 1530 0682 2277     		strb	r2, [r4, #28]
+ 633:src/BLDC_controller.c **** 
+ 634:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S11>/UnitDelay1' incorporates:
+ 635:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallB'
+ 636:src/BLDC_controller.c ****    */
+ 637:src/BLDC_controller.c ****   rtDW->UnitDelay1_DSTATE_i = rtU->b_hallB;
+ 1531              		.loc 1 637 3 is_stmt 1 view .LVU582
+ 1532              		.loc 1 637 34 is_stmt 0 view .LVU583
+ 1533 0684 7278     		ldrb	r2, [r6, #1]	@ zero_extendqisi2
+ 1534              		.loc 1 637 29 view .LVU584
+ 1535 0686 6277     		strb	r2, [r4, #29]
+ 638:src/BLDC_controller.c **** 
+ 639:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S11>/UnitDelay2' incorporates:
+ 640:src/BLDC_controller.c ****    *  Inport: '<Root>/b_hallC'
+ 641:src/BLDC_controller.c ****    */
+ 642:src/BLDC_controller.c ****   rtDW->UnitDelay2_DSTATE_h = rtU->b_hallC;
+ 1536              		.loc 1 642 3 is_stmt 1 view .LVU585
+ 1537              		.loc 1 642 34 is_stmt 0 view .LVU586
+ 1538 0688 B278     		ldrb	r2, [r6, #2]	@ zero_extendqisi2
+ 1539              		.loc 1 642 29 view .LVU587
+ 1540 068a A277     		strb	r2, [r4, #30]
+ 643:src/BLDC_controller.c **** 
+ 644:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S17>/UnitDelay1' */
+ 645:src/BLDC_controller.c ****   rtDW->UnitDelay1_DSTATE = rtb_Sum1_a;
+ 1541              		.loc 1 645 3 is_stmt 1 view .LVU588
+ 1542              		.loc 1 645 27 is_stmt 0 view .LVU589
+ 1543 068c 6782     		strh	r7, [r4, #18]	@ movhi
+ 646:src/BLDC_controller.c **** 
+ 647:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S14>/UnitDelay1' */
+ 648:src/BLDC_controller.c ****   rtDW->UnitDelay1_DSTATE_c = rtb_Sum1_a;
+ 1544              		.loc 1 648 3 is_stmt 1 view .LVU590
+ 1545              		.loc 1 648 29 is_stmt 0 view .LVU591
+ 1546 068e A782     		strh	r7, [r4, #20]	@ movhi
+ 649:src/BLDC_controller.c **** 
+ 650:src/BLDC_controller.c ****   /* Update for UnitDelay: '<S16>/UnitDelay2' */
+ 651:src/BLDC_controller.c ****   rtDW->UnitDelay2_DSTATE = rtb_Sum2;
+ 1547              		.loc 1 651 3 is_stmt 1 view .LVU592
+ 1548              		.loc 1 651 27 is_stmt 0 view .LVU593
+ 1549 0690 C4F80490 		str	r9, [r4, #4]
+ 652:src/BLDC_controller.c **** 
+ARM GAS  /tmp/ccVmOSN0.s 			page 46
+
+
+ 653:src/BLDC_controller.c ****   /* Outport: '<Root>/DC_phaC' incorporates:
+ 654:src/BLDC_controller.c ****    *  Constant: '<S10>/Constant1'
+ 655:src/BLDC_controller.c ****    *  Product: '<S10>/Divide1'
+ 656:src/BLDC_controller.c ****    */
+ 657:src/BLDC_controller.c ****   rtY->DC_phaC = rtb_Abs1 / 1000;
+ 1550              		.loc 1 657 3 is_stmt 1 view .LVU594
+ 1551              		.loc 1 657 27 is_stmt 0 view .LVU595
+ 1552 0694 80FB0312 		smull	r1, r2, r0, r3
+ 1553 0698 DB17     		asrs	r3, r3, #31
+ 1554              	.LVL160:
+ 1555              		.loc 1 657 27 view .LVU596
+ 1556 069a C3EBA213 		rsb	r3, r3, r2, asr #6
+ 1557              		.loc 1 657 16 view .LVU597
+ 1558 069e CAF80830 		str	r3, [r10, #8]
+ 658:src/BLDC_controller.c **** 
+ 659:src/BLDC_controller.c ****   /* End of Outputs for SubSystem: '<Root>/BLDC_controller' */
+ 660:src/BLDC_controller.c **** 
+ 661:src/BLDC_controller.c ****   /* Outport: '<Root>/n_mot' */
+ 662:src/BLDC_controller.c ****   rtY->n_mot = rtb_Sum2;
+ 1559              		.loc 1 662 3 is_stmt 1 view .LVU598
+ 1560              		.loc 1 662 14 is_stmt 0 view .LVU599
+ 1561 06a2 CAF80C90 		str	r9, [r10, #12]
+ 663:src/BLDC_controller.c **** }
+ 1562              		.loc 1 663 1 view .LVU600
+ 1563 06a6 03B0     		add	sp, sp, #12
+ 1564              	.LCFI2:
+ 1565              		.cfi_def_cfa_offset 36
+ 1566              	.LVL161:
+ 1567              		.loc 1 663 1 view .LVU601
+ 1568              		@ sp needed
+ 1569 06a8 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1570              	.LVL162:
+ 1571              	.L73:
+ 1572              		.loc 1 663 1 view .LVU602
+ 1573              		.align	2
+ 1574              	.L72:
+ 1575 06ac 00000000 		.word	rtConstP
+ 1576 06b0 D34D6210 		.word	274877907
+ 1577              		.cfi_endproc
+ 1578              	.LFE3:
+ 1580              		.section	.text.BLDC_controller_initialize,"ax",%progbits
+ 1581              		.align	1
+ 1582              		.global	BLDC_controller_initialize
+ 1583              		.syntax unified
+ 1584              		.thumb
+ 1585              		.thumb_func
+ 1587              	BLDC_controller_initialize:
+ 1588              	.LVL163:
+ 1589              	.LFB4:
+ 664:src/BLDC_controller.c **** 
+ 665:src/BLDC_controller.c **** /* Model initialize function */
+ 666:src/BLDC_controller.c **** void BLDC_controller_initialize(RT_MODEL *const rtM)
+ 667:src/BLDC_controller.c **** {
+ 1590              		.loc 1 667 1 is_stmt 1 view -0
+ 1591              		.cfi_startproc
+ 1592              		@ args = 0, pretend = 0, frame = 0
+ 1593              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccVmOSN0.s 			page 47
+
+
+ 1594              		@ link register save eliminated.
+ 668:src/BLDC_controller.c ****   P *rtP = ((P *) rtM->defaultParam);
+ 1595              		.loc 1 668 3 view .LVU604
+ 1596              		.loc 1 668 6 is_stmt 0 view .LVU605
+ 1597 0000 0268     		ldr	r2, [r0]
+ 1598              	.LVL164:
+ 669:src/BLDC_controller.c ****   DW *rtDW = ((DW *) rtM->dwork);
+ 1599              		.loc 1 669 3 is_stmt 1 view .LVU606
+ 1600              		.loc 1 669 7 is_stmt 0 view .LVU607
+ 1601 0002 C368     		ldr	r3, [r0, #12]
+ 1602              	.LVL165:
+ 670:src/BLDC_controller.c **** 
+ 671:src/BLDC_controller.c ****   /* Start for Atomic SubSystem: '<Root>/BLDC_controller' */
+ 672:src/BLDC_controller.c ****   /* Start for If: '<S2>/If1' */
+ 673:src/BLDC_controller.c ****   rtDW->If1_ActiveSubsystem = -1;
+ 1603              		.loc 1 673 3 is_stmt 1 view .LVU608
+ 1604              		.loc 1 673 29 is_stmt 0 view .LVU609
+ 1605 0004 FF21     		movs	r1, #255
+ 1606 0006 D976     		strb	r1, [r3, #27]
+ 674:src/BLDC_controller.c **** 
+ 675:src/BLDC_controller.c ****   /* End of Start for SubSystem: '<Root>/BLDC_controller' */
+ 676:src/BLDC_controller.c **** 
+ 677:src/BLDC_controller.c ****   /* SystemInitialize for Atomic SubSystem: '<Root>/BLDC_controller' */
+ 678:src/BLDC_controller.c ****   /* InitializeConditions for UnitDelay: '<S17>/UnitDelay1' */
+ 679:src/BLDC_controller.c ****   rtDW->UnitDelay1_DSTATE = rtP->z_maxCntRst;
+ 1607              		.loc 1 679 3 is_stmt 1 view .LVU610
+ 1608              		.loc 1 679 32 is_stmt 0 view .LVU611
+ 1609 0008 B2F95E10 		ldrsh	r1, [r2, #94]
+ 1610              		.loc 1 679 27 view .LVU612
+ 1611 000c 5982     		strh	r1, [r3, #18]	@ movhi
+ 680:src/BLDC_controller.c **** 
+ 681:src/BLDC_controller.c ****   /* SystemInitialize for IfAction SubSystem: '<S14>/Counter_Hold_and_Error_Calculation' */
+ 682:src/BLDC_controller.c ****   /* InitializeConditions for UnitDelay: '<S15>/z_counter2' */
+ 683:src/BLDC_controller.c ****   rtDW->z_counter2_DSTATE = rtP->z_maxCntRst;
+ 1612              		.loc 1 683 3 is_stmt 1 view .LVU613
+ 1613              		.loc 1 683 27 is_stmt 0 view .LVU614
+ 1614 000e D982     		strh	r1, [r3, #22]	@ movhi
+ 684:src/BLDC_controller.c **** 
+ 685:src/BLDC_controller.c ****   /* SystemInitialize for Outport: '<S15>/z_counter' */
+ 686:src/BLDC_controller.c ****   rtDW->z_counterRawPrev = rtP->z_maxCntRst;
+ 1615              		.loc 1 686 3 is_stmt 1 view .LVU615
+ 1616              		.loc 1 686 31 is_stmt 0 view .LVU616
+ 1617 0010 B2F95E20 		ldrsh	r2, [r2, #94]
+ 1618              	.LVL166:
+ 1619              		.loc 1 686 26 view .LVU617
+ 1620 0014 DA81     		strh	r2, [r3, #14]	@ movhi
+ 687:src/BLDC_controller.c **** 
+ 688:src/BLDC_controller.c ****   /* End of SystemInitialize for SubSystem: '<S14>/Counter_Hold_and_Error_Calculation' */
+ 689:src/BLDC_controller.c ****   /* End of SystemInitialize for SubSystem: '<Root>/BLDC_controller' */
+ 690:src/BLDC_controller.c **** }
+ 1621              		.loc 1 690 1 view .LVU618
+ 1622 0016 7047     		bx	lr
+ 1623              		.cfi_endproc
+ 1624              	.LFE4:
+ 1626              		.text
+ 1627              	.Letext0:
+ 1628              		.file 2 "inc/rtwtypes.h"
+ARM GAS  /tmp/ccVmOSN0.s 			page 48
+
+
+ 1629              		.file 3 "inc/BLDC_controller.h"
+ARM GAS  /tmp/ccVmOSN0.s 			page 49
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 BLDC_controller.c
+     /tmp/ccVmOSN0.s:20     .text.BLDC_controller_step:00000000 $t
+     /tmp/ccVmOSN0.s:26     .text.BLDC_controller_step:00000000 BLDC_controller_step
+     /tmp/ccVmOSN0.s:783    .text.BLDC_controller_step:0000030c $d
+     /tmp/ccVmOSN0.s:792    .text.BLDC_controller_step:00000324 $t
+     /tmp/ccVmOSN0.s:1463   .text.BLDC_controller_step:0000061c $d
+     /tmp/ccVmOSN0.s:1470   .text.BLDC_controller_step:0000062c $t
+     /tmp/ccVmOSN0.s:1575   .text.BLDC_controller_step:000006ac $d
+     /tmp/ccVmOSN0.s:1581   .text.BLDC_controller_initialize:00000000 $t
+     /tmp/ccVmOSN0.s:1587   .text.BLDC_controller_initialize:00000000 BLDC_controller_initialize
+
+UNDEFINED SYMBOLS
+__aeabi_uldivmod
+rtConstP

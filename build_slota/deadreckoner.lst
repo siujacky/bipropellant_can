@@ -1,0 +1,1688 @@
+ARM GAS  /tmp/ccRdewjh.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"deadreckoner.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/deadreckoner.c"
+  18              		.section	.text.getChange,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	getChange:
+  25              	.LVL0:
+  26              	.LFB75:
+   1:src/deadreckoner.c **** 
+   2:src/deadreckoner.c **** #include "deadreckoner.h"
+   3:src/deadreckoner.c **** #include <math.h>
+   4:src/deadreckoner.c **** #include <stdlib.h>
+   5:src/deadreckoner.c **** #include "stm32f1xx_hal.h"
+   6:src/deadreckoner.c **** 
+   7:src/deadreckoner.c **** 
+   8:src/deadreckoner.c **** #define UNSIGNED_LONG_MAX 4294967295
+   9:src/deadreckoner.c **** #define WHEEL_FORWARD 1
+  10:src/deadreckoner.c **** #define WHEEL_REVERSE -1
+  11:src/deadreckoner.c **** 
+  12:src/deadreckoner.c **** #define PI (3.14159265359)
+  13:src/deadreckoner.c **** #define TWO_PI (3.14159265359*2)
+  14:src/deadreckoner.c **** 
+  15:src/deadreckoner.c **** // if we had microseconds, set TIMER_RES to 1000000
+  16:src/deadreckoner.c **** #define micros HAL_GetTick
+  17:src/deadreckoner.c **** #define TIMER_RES (1000.0)
+  18:src/deadreckoner.c **** 
+  19:src/deadreckoner.c **** static void computeAngularVelocities(DEADRECKONER *);
+  20:src/deadreckoner.c **** static uint32_t getChange(uint32_t, uint32_t);
+  21:src/deadreckoner.c **** 
+  22:src/deadreckoner.c **** 
+  23:src/deadreckoner.c **** DEADRECKONER *DeadReckoner(volatile int32_t *pLeftTicks, volatile int32_t *pRightTicks, double tick
+  24:src/deadreckoner.c ****     // get zeroed structure
+  25:src/deadreckoner.c ****     DEADRECKONER *d = calloc(1, sizeof(DEADRECKONER));
+  26:src/deadreckoner.c **** 
+  27:src/deadreckoner.c **** 	d->leftOmegaDirection = 1;
+  28:src/deadreckoner.c **** 	d->rightOmegaDirection = 1;
+  29:src/deadreckoner.c **** 
+  30:src/deadreckoner.c **** 	d->leftTicks = pLeftTicks;
+  31:src/deadreckoner.c **** 	d->rightTicks = pRightTicks;
+  32:src/deadreckoner.c **** 	d->ticksPerRev = ticksPerRev;
+ARM GAS  /tmp/ccRdewjh.s 			page 2
+
+
+  33:src/deadreckoner.c **** 	d->radius = wheelDiameter/2;
+  34:src/deadreckoner.c **** 	d->length = wheelBase;
+  35:src/deadreckoner.c **** 	d->toRadPerSec = TIMER_RES * TWO_PI / d->ticksPerRev;
+  36:src/deadreckoner.c **** 
+  37:src/deadreckoner.c ****     d->useDegrees = useDegrees;
+  38:src/deadreckoner.c **** 
+  39:src/deadreckoner.c ****     return d;
+  40:src/deadreckoner.c **** }
+  41:src/deadreckoner.c **** 
+  42:src/deadreckoner.c **** void DeadReckoner_Destroy( DEADRECKONER **d ) {
+  43:src/deadreckoner.c ****     if (d) {
+  44:src/deadreckoner.c ****         if (*d) {
+  45:src/deadreckoner.c ****             free(*d);
+  46:src/deadreckoner.c ****             *d = NULL;
+  47:src/deadreckoner.c ****         }
+  48:src/deadreckoner.c ****     }
+  49:src/deadreckoner.c **** }
+  50:src/deadreckoner.c **** 
+  51:src/deadreckoner.c **** void setXYT(DEADRECKONER *d, double x, double y, double t) {
+  52:src/deadreckoner.c **** 	d->xc = x;
+  53:src/deadreckoner.c **** 	d->yc = y;
+  54:src/deadreckoner.c ****     if (d->useDegrees){
+  55:src/deadreckoner.c **** 	    d->theta = (t/180.0)*PI;
+  56:src/deadreckoner.c ****     } else {
+  57:src/deadreckoner.c **** 	    d->theta = t;
+  58:src/deadreckoner.c ****     }
+  59:src/deadreckoner.c **** }
+  60:src/deadreckoner.c **** 
+  61:src/deadreckoner.c **** void getXYT(DEADRECKONER *d, double *x, double *y, double *t) {
+  62:src/deadreckoner.c **** 	if (x) *x = d->xc;
+  63:src/deadreckoner.c **** 	if (y) *y = d->yc;
+  64:src/deadreckoner.c **** 	if (t) {
+  65:src/deadreckoner.c ****         if (d->useDegrees){
+  66:src/deadreckoner.c ****             *t = (d->theta/PI)*180.0;
+  67:src/deadreckoner.c ****         } else {
+  68:src/deadreckoner.c ****             *t = d->theta;
+  69:src/deadreckoner.c ****         }
+  70:src/deadreckoner.c ****     }
+  71:src/deadreckoner.c **** }
+  72:src/deadreckoner.c **** 
+  73:src/deadreckoner.c **** 
+  74:src/deadreckoner.c **** void getWl(DEADRECKONER *d, double *wl, double *wr) {
+  75:src/deadreckoner.c **** 	// TODO: Check this
+  76:src/deadreckoner.c **** 	if (wl) *wl = d->wl * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+  77:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+  78:src/deadreckoner.c **** }
+  79:src/deadreckoner.c **** 
+  80:src/deadreckoner.c **** 
+  81:src/deadreckoner.c **** void getW(DEADRECKONER *d, double *w) {
+  82:src/deadreckoner.c **** 	if (w) *w = d->w * d->dt_integration / (UNSIGNED_LONG_MAX - d->dt_integration);
+  83:src/deadreckoner.c **** }
+  84:src/deadreckoner.c **** 
+  85:src/deadreckoner.c **** 
+  86:src/deadreckoner.c **** void setLROmegaDirection(DEADRECKONER *d, int directionL, int directionR) {
+  87:src/deadreckoner.c **** 	d->leftOmegaDirection = directionL;
+  88:src/deadreckoner.c **** 	d->rightOmegaDirection = directionR;
+  89:src/deadreckoner.c **** }
+ARM GAS  /tmp/ccRdewjh.s 			page 3
+
+
+  90:src/deadreckoner.c **** 
+  91:src/deadreckoner.c **** void getLROmegaDirection(DEADRECKONER *d, int *directionL, int *directionR) {
+  92:src/deadreckoner.c **** 	if(directionL) *directionL = d->leftOmegaDirection;
+  93:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+  94:src/deadreckoner.c **** }
+  95:src/deadreckoner.c **** 
+  96:src/deadreckoner.c **** 
+  97:src/deadreckoner.c **** void computeAngularVelocities(DEADRECKONER *d) {
+  98:src/deadreckoner.c **** 	// Time elapsed after computing the angular velocity previously.
+  99:src/deadreckoner.c **** 	// change in time is defined as previous - current to prevent round off error.
+ 100:src/deadreckoner.c **** 	d->dt_omega = getChange(d->prevWheelComputeTime, micros()); // in milliseconds
+ 101:src/deadreckoner.c **** 
+ 102:src/deadreckoner.c **** 	double changeLeftTicks = *d->leftTicks - d->leftTicksPrev;//getChange(*d->leftTicks, d->leftTicksP
+ 103:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 104:src/deadreckoner.c **** 
+ 105:src/deadreckoner.c **** 	d->wl = d->leftOmegaDirection * changeLeftTicks / d->dt_omega * d->toRadPerSec;
+ 106:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 107:src/deadreckoner.c **** 
+ 108:src/deadreckoner.c **** 	//double toRPM = 30.0 / PI;
+ 109:src/deadreckoner.c **** 	//Serial.print("\twl: "); Serial.print(wl*toRPM, 5);
+ 110:src/deadreckoner.c **** 	//Serial.print("\twr: "); Serial.print(wr*toRPM, 5);
+ 111:src/deadreckoner.c **** 	//Serial.print("\tdt: "); Serial.print(dt_omega);
+ 112:src/deadreckoner.c **** 	//Serial.print("\tlt: "); Serial.print(changeLeftTicks);
+ 113:src/deadreckoner.c **** 	//Serial.print("\trt: "); Serial.println(changeRightTicks);
+ 114:src/deadreckoner.c **** 
+ 115:src/deadreckoner.c **** 	d->leftTicksPrev = *d->leftTicks;
+ 116:src/deadreckoner.c **** 	d->rightTicksPrev = *d->rightTicks;
+ 117:src/deadreckoner.c **** 
+ 118:src/deadreckoner.c **** 	d->prevWheelComputeTime = micros();
+ 119:src/deadreckoner.c **** }
+ 120:src/deadreckoner.c **** 
+ 121:src/deadreckoner.c **** uint32_t getChange(uint32_t current, uint32_t previous) {
+  27              		.loc 1 121 57 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+ 122:src/deadreckoner.c **** 	// Overflow has occured
+ 123:src/deadreckoner.c **** 	if (current < previous) {
+  32              		.loc 1 123 2 view .LVU1
+  33              		.loc 1 123 5 is_stmt 0 view .LVU2
+  34 0000 8842     		cmp	r0, r1
+  35 0002 01D3     		bcc	.L4
+ 124:src/deadreckoner.c **** 		return UNSIGNED_LONG_MAX - previous + current;
+ 125:src/deadreckoner.c **** 	}
+ 126:src/deadreckoner.c **** 	// No overflow
+ 127:src/deadreckoner.c **** 	return current - previous;
+  36              		.loc 1 127 2 is_stmt 1 view .LVU3
+  37              		.loc 1 127 17 is_stmt 0 view .LVU4
+  38 0004 401A     		subs	r0, r0, r1
+  39              	.LVL1:
+ 128:src/deadreckoner.c **** }
+  40              		.loc 1 128 1 view .LVU5
+  41 0006 7047     		bx	lr
+  42              	.LVL2:
+  43              	.L4:
+ 124:src/deadreckoner.c **** 		return UNSIGNED_LONG_MAX - previous + current;
+ARM GAS  /tmp/ccRdewjh.s 			page 4
+
+
+  44              		.loc 1 124 3 is_stmt 1 view .LVU6
+ 124:src/deadreckoner.c **** 		return UNSIGNED_LONG_MAX - previous + current;
+  45              		.loc 1 124 39 is_stmt 0 view .LVU7
+  46 0008 401A     		subs	r0, r0, r1
+  47              	.LVL3:
+ 124:src/deadreckoner.c **** 		return UNSIGNED_LONG_MAX - previous + current;
+  48              		.loc 1 124 39 view .LVU8
+  49 000a 0138     		subs	r0, r0, #1
+  50 000c 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE75:
+  54              		.global	__aeabi_i2d
+  55              		.global	__aeabi_dmul
+  56              		.global	__aeabi_ui2d
+  57              		.global	__aeabi_ddiv
+  58              		.section	.text.computeAngularVelocities,"ax",%progbits
+  59              		.align	1
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  64              	computeAngularVelocities:
+  65              	.LVL4:
+  66              	.LFB74:
+  97:src/deadreckoner.c **** 	// Time elapsed after computing the angular velocity previously.
+  67              		.loc 1 97 48 is_stmt 1 view -0
+  68              		.cfi_startproc
+  69              		@ args = 0, pretend = 0, frame = 8
+  70              		@ frame_needed = 0, uses_anonymous_args = 0
+  97:src/deadreckoner.c **** 	// Time elapsed after computing the angular velocity previously.
+  71              		.loc 1 97 48 is_stmt 0 view .LVU10
+  72 0000 2DE9F04D 		push	{r4, r5, r6, r7, r8, r10, fp, lr}
+  73              	.LCFI0:
+  74              		.cfi_def_cfa_offset 32
+  75              		.cfi_offset 4, -32
+  76              		.cfi_offset 5, -28
+  77              		.cfi_offset 6, -24
+  78              		.cfi_offset 7, -20
+  79              		.cfi_offset 8, -16
+  80              		.cfi_offset 10, -12
+  81              		.cfi_offset 11, -8
+  82              		.cfi_offset 14, -4
+  83 0004 82B0     		sub	sp, sp, #8
+  84              	.LCFI1:
+  85              		.cfi_def_cfa_offset 40
+  86 0006 0446     		mov	r4, r0
+ 100:src/deadreckoner.c **** 
+  87              		.loc 1 100 2 is_stmt 1 view .LVU11
+ 100:src/deadreckoner.c **** 
+  88              		.loc 1 100 16 is_stmt 0 view .LVU12
+  89 0008 456E     		ldr	r5, [r0, #100]
+  90 000a FFF7FEFF 		bl	HAL_GetTick
+  91              	.LVL5:
+ 100:src/deadreckoner.c **** 
+  92              		.loc 1 100 16 view .LVU13
+  93 000e 0146     		mov	r1, r0
+ 100:src/deadreckoner.c **** 
+  94              		.loc 1 100 16 discriminator 1 view .LVU14
+ARM GAS  /tmp/ccRdewjh.s 			page 5
+
+
+  95 0010 2846     		mov	r0, r5
+  96 0012 FFF7FEFF 		bl	getChange
+  97              	.LVL6:
+  98 0016 8246     		mov	r10, r0
+ 100:src/deadreckoner.c **** 
+  99              		.loc 1 100 14 discriminator 2 view .LVU15
+ 100 0018 2067     		str	r0, [r4, #112]
+ 102:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 101              		.loc 1 102 2 is_stmt 1 view .LVU16
+ 102:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 102              		.loc 1 102 29 is_stmt 0 view .LVU17
+ 103 001a D4F80080 		ldr	r8, [r4]
+ 102:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 104              		.loc 1 102 27 view .LVU18
+ 105 001e D8F80000 		ldr	r0, [r8]
+ 102:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 106              		.loc 1 102 44 view .LVU19
+ 107 0022 A368     		ldr	r3, [r4, #8]
+ 102:src/deadreckoner.c **** 	double changeRightTicks = *d->rightTicks - d->rightTicksPrev;//getChange(*d->rightTicks, d->rightT
+ 108              		.loc 1 102 9 view .LVU20
+ 109 0024 C01A     		subs	r0, r0, r3
+ 110 0026 FFF7FEFF 		bl	__aeabi_i2d
+ 111              	.LVL7:
+ 112 002a 0646     		mov	r6, r0
+ 113 002c 0F46     		mov	r7, r1
+ 114              	.LVL8:
+ 103:src/deadreckoner.c **** 
+ 115              		.loc 1 103 2 is_stmt 1 view .LVU21
+ 103:src/deadreckoner.c **** 
+ 116              		.loc 1 103 30 is_stmt 0 view .LVU22
+ 117 002e 6568     		ldr	r5, [r4, #4]
+ 103:src/deadreckoner.c **** 
+ 118              		.loc 1 103 28 view .LVU23
+ 119 0030 2868     		ldr	r0, [r5]
+ 103:src/deadreckoner.c **** 
+ 120              		.loc 1 103 46 view .LVU24
+ 121 0032 E368     		ldr	r3, [r4, #12]
+ 103:src/deadreckoner.c **** 
+ 122              		.loc 1 103 9 view .LVU25
+ 123 0034 C01A     		subs	r0, r0, r3
+ 124 0036 FFF7FEFF 		bl	__aeabi_i2d
+ 125              	.LVL9:
+ 126 003a CDE90001 		strd	r0, [sp]
+ 127              	.LVL10:
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 128              		.loc 1 105 2 is_stmt 1 view .LVU26
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 129              		.loc 1 105 32 is_stmt 0 view .LVU27
+ 130 003e A06E     		ldr	r0, [r4, #104]
+ 131              	.LVL11:
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 132              		.loc 1 105 32 view .LVU28
+ 133 0040 FFF7FEFF 		bl	__aeabi_i2d
+ 134              	.LVL12:
+ 135 0044 3246     		mov	r2, r6
+ 136 0046 3B46     		mov	r3, r7
+ 137 0048 FFF7FEFF 		bl	__aeabi_dmul
+ARM GAS  /tmp/ccRdewjh.s 			page 6
+
+
+ 138              	.LVL13:
+ 139 004c 0646     		mov	r6, r0
+ 140              	.LVL14:
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 141              		.loc 1 105 32 view .LVU29
+ 142 004e 0F46     		mov	r7, r1
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 143              		.loc 1 105 50 view .LVU30
+ 144 0050 5046     		mov	r0, r10
+ 145 0052 FFF7FEFF 		bl	__aeabi_ui2d
+ 146              	.LVL15:
+ 147 0056 8246     		mov	r10, r0
+ 148 0058 8B46     		mov	fp, r1
+ 149 005a 0246     		mov	r2, r0
+ 150 005c 0B46     		mov	r3, r1
+ 151 005e 3046     		mov	r0, r6
+ 152 0060 3946     		mov	r1, r7
+ 153 0062 FFF7FEFF 		bl	__aeabi_ddiv
+ 154              	.LVL16:
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 155              		.loc 1 105 67 view .LVU31
+ 156 0066 D4E91667 		ldrd	r6, [r4, #88]
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 157              		.loc 1 105 64 view .LVU32
+ 158 006a 3246     		mov	r2, r6
+ 159 006c 3B46     		mov	r3, r7
+ 160 006e FFF7FEFF 		bl	__aeabi_dmul
+ 161              	.LVL17:
+ 105:src/deadreckoner.c **** 	d->wr = d->rightOmegaDirection * changeRightTicks / d->dt_omega * d->toRadPerSec;
+ 162              		.loc 1 105 8 view .LVU33
+ 163 0072 C4E90801 		strd	r0, [r4, #32]
+ 106:src/deadreckoner.c **** 
+ 164              		.loc 1 106 2 is_stmt 1 view .LVU34
+ 106:src/deadreckoner.c **** 
+ 165              		.loc 1 106 33 is_stmt 0 view .LVU35
+ 166 0076 E06E     		ldr	r0, [r4, #108]
+ 167 0078 FFF7FEFF 		bl	__aeabi_i2d
+ 168              	.LVL18:
+ 169 007c DDE90023 		ldrd	r2, [sp]
+ 170 0080 FFF7FEFF 		bl	__aeabi_dmul
+ 171              	.LVL19:
+ 106:src/deadreckoner.c **** 
+ 172              		.loc 1 106 52 view .LVU36
+ 173 0084 5246     		mov	r2, r10
+ 174 0086 5B46     		mov	r3, fp
+ 175 0088 FFF7FEFF 		bl	__aeabi_ddiv
+ 176              	.LVL20:
+ 177 008c 0246     		mov	r2, r0
+ 178 008e 0B46     		mov	r3, r1
+ 106:src/deadreckoner.c **** 
+ 179              		.loc 1 106 66 view .LVU37
+ 180 0090 3046     		mov	r0, r6
+ 181 0092 3946     		mov	r1, r7
+ 182 0094 FFF7FEFF 		bl	__aeabi_dmul
+ 183              	.LVL21:
+ 106:src/deadreckoner.c **** 
+ 184              		.loc 1 106 8 view .LVU38
+ARM GAS  /tmp/ccRdewjh.s 			page 7
+
+
+ 185 0098 C4E90A01 		strd	r0, [r4, #40]
+ 115:src/deadreckoner.c **** 	d->rightTicksPrev = *d->rightTicks;
+ 186              		.loc 1 115 2 is_stmt 1 view .LVU39
+ 115:src/deadreckoner.c **** 	d->rightTicksPrev = *d->rightTicks;
+ 187              		.loc 1 115 21 is_stmt 0 view .LVU40
+ 188 009c D8F80030 		ldr	r3, [r8]
+ 115:src/deadreckoner.c **** 	d->rightTicksPrev = *d->rightTicks;
+ 189              		.loc 1 115 19 view .LVU41
+ 190 00a0 A360     		str	r3, [r4, #8]
+ 116:src/deadreckoner.c **** 
+ 191              		.loc 1 116 2 is_stmt 1 view .LVU42
+ 116:src/deadreckoner.c **** 
+ 192              		.loc 1 116 22 is_stmt 0 view .LVU43
+ 193 00a2 2B68     		ldr	r3, [r5]
+ 116:src/deadreckoner.c **** 
+ 194              		.loc 1 116 20 view .LVU44
+ 195 00a4 E360     		str	r3, [r4, #12]
+ 118:src/deadreckoner.c **** }
+ 196              		.loc 1 118 2 is_stmt 1 view .LVU45
+ 118:src/deadreckoner.c **** }
+ 197              		.loc 1 118 28 is_stmt 0 view .LVU46
+ 198 00a6 FFF7FEFF 		bl	HAL_GetTick
+ 199              	.LVL22:
+ 118:src/deadreckoner.c **** }
+ 200              		.loc 1 118 26 discriminator 1 view .LVU47
+ 201 00aa 6066     		str	r0, [r4, #100]
+ 119:src/deadreckoner.c **** 
+ 202              		.loc 1 119 1 view .LVU48
+ 203 00ac 02B0     		add	sp, sp, #8
+ 204              	.LCFI2:
+ 205              		.cfi_def_cfa_offset 32
+ 206              	.LVL23:
+ 119:src/deadreckoner.c **** 
+ 207              		.loc 1 119 1 view .LVU49
+ 208              		@ sp needed
+ 209 00ae BDE8F08D 		pop	{r4, r5, r6, r7, r8, r10, fp, pc}
+ 119:src/deadreckoner.c **** 
+ 210              		.loc 1 119 1 view .LVU50
+ 211              		.cfi_endproc
+ 212              	.LFE74:
+ 214              		.section	.text.DeadReckoner,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	DeadReckoner
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	DeadReckoner:
+ 222              	.LVL24:
+ 223              	.LFB66:
+  23:src/deadreckoner.c ****     // get zeroed structure
+ 224              		.loc 1 23 165 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 20, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:src/deadreckoner.c ****     // get zeroed structure
+ 228              		.loc 1 23 165 is_stmt 0 view .LVU52
+ 229 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ARM GAS  /tmp/ccRdewjh.s 			page 8
+
+
+ 230              	.LCFI3:
+ 231              		.cfi_def_cfa_offset 24
+ 232              		.cfi_offset 4, -24
+ 233              		.cfi_offset 5, -20
+ 234              		.cfi_offset 6, -16
+ 235              		.cfi_offset 7, -12
+ 236              		.cfi_offset 8, -8
+ 237              		.cfi_offset 14, -4
+ 238 0004 8046     		mov	r8, r0
+ 239 0006 0D46     		mov	r5, r1
+ 240 0008 1646     		mov	r6, r2
+ 241 000a 1F46     		mov	r7, r3
+  25:src/deadreckoner.c **** 
+ 242              		.loc 1 25 5 is_stmt 1 view .LVU53
+  25:src/deadreckoner.c **** 
+ 243              		.loc 1 25 23 is_stmt 0 view .LVU54
+ 244 000c 8021     		movs	r1, #128
+ 245              	.LVL25:
+  25:src/deadreckoner.c **** 
+ 246              		.loc 1 25 23 view .LVU55
+ 247 000e 0120     		movs	r0, #1
+ 248              	.LVL26:
+  25:src/deadreckoner.c **** 
+ 249              		.loc 1 25 23 view .LVU56
+ 250 0010 FFF7FEFF 		bl	calloc
+ 251              	.LVL27:
+  25:src/deadreckoner.c **** 
+ 252              		.loc 1 25 23 view .LVU57
+ 253 0014 0446     		mov	r4, r0
+ 254              	.LVL28:
+  27:src/deadreckoner.c **** 	d->rightOmegaDirection = 1;
+ 255              		.loc 1 27 2 is_stmt 1 view .LVU58
+  27:src/deadreckoner.c **** 	d->rightOmegaDirection = 1;
+ 256              		.loc 1 27 24 is_stmt 0 view .LVU59
+ 257 0016 0123     		movs	r3, #1
+ 258 0018 8366     		str	r3, [r0, #104]
+  28:src/deadreckoner.c **** 
+ 259              		.loc 1 28 2 is_stmt 1 view .LVU60
+  28:src/deadreckoner.c **** 
+ 260              		.loc 1 28 25 is_stmt 0 view .LVU61
+ 261 001a C366     		str	r3, [r0, #108]
+  30:src/deadreckoner.c **** 	d->rightTicks = pRightTicks;
+ 262              		.loc 1 30 2 is_stmt 1 view .LVU62
+  30:src/deadreckoner.c **** 	d->rightTicks = pRightTicks;
+ 263              		.loc 1 30 15 is_stmt 0 view .LVU63
+ 264 001c C0F80080 		str	r8, [r0]
+  31:src/deadreckoner.c **** 	d->ticksPerRev = ticksPerRev;
+ 265              		.loc 1 31 2 is_stmt 1 view .LVU64
+  31:src/deadreckoner.c **** 	d->ticksPerRev = ticksPerRev;
+ 266              		.loc 1 31 16 is_stmt 0 view .LVU65
+ 267 0020 4560     		str	r5, [r0, #4]
+  32:src/deadreckoner.c **** 	d->radius = wheelDiameter/2;
+ 268              		.loc 1 32 2 is_stmt 1 view .LVU66
+  32:src/deadreckoner.c **** 	d->radius = wheelDiameter/2;
+ 269              		.loc 1 32 17 is_stmt 0 view .LVU67
+ 270 0022 C0E90C67 		strd	r6, [r0, #48]
+  33:src/deadreckoner.c **** 	d->length = wheelBase;
+ARM GAS  /tmp/ccRdewjh.s 			page 9
+
+
+ 271              		.loc 1 33 2 is_stmt 1 view .LVU68
+  33:src/deadreckoner.c **** 	d->length = wheelBase;
+ 272              		.loc 1 33 27 is_stmt 0 view .LVU69
+ 273 0026 0022     		movs	r2, #0
+ 274 0028 0F4B     		ldr	r3, .L9+8
+ 275 002a DDE90601 		ldrd	r0, [sp, #24]
+ 276              	.LVL29:
+  33:src/deadreckoner.c **** 	d->length = wheelBase;
+ 277              		.loc 1 33 27 view .LVU70
+ 278 002e FFF7FEFF 		bl	__aeabi_dmul
+ 279              	.LVL30:
+  33:src/deadreckoner.c **** 	d->length = wheelBase;
+ 280              		.loc 1 33 12 view .LVU71
+ 281 0032 C4E91201 		strd	r0, [r4, #72]
+  34:src/deadreckoner.c **** 	d->toRadPerSec = TIMER_RES * TWO_PI / d->ticksPerRev;
+ 282              		.loc 1 34 2 is_stmt 1 view .LVU72
+  34:src/deadreckoner.c **** 	d->toRadPerSec = TIMER_RES * TWO_PI / d->ticksPerRev;
+ 283              		.loc 1 34 12 is_stmt 0 view .LVU73
+ 284 0036 DDE90823 		ldrd	r2, [sp, #32]
+ 285 003a C4E91023 		strd	r2, [r4, #64]
+  35:src/deadreckoner.c **** 
+ 286              		.loc 1 35 2 is_stmt 1 view .LVU74
+  35:src/deadreckoner.c **** 
+ 287              		.loc 1 35 38 is_stmt 0 view .LVU75
+ 288 003e 3246     		mov	r2, r6
+ 289 0040 3B46     		mov	r3, r7
+ 290 0042 07A1     		adr	r1, .L9
+ 291 0044 D1E90001 		ldrd	r0, [r1]
+ 292 0048 FFF7FEFF 		bl	__aeabi_ddiv
+ 293              	.LVL31:
+  35:src/deadreckoner.c **** 
+ 294              		.loc 1 35 17 view .LVU76
+ 295 004c C4E91601 		strd	r0, [r4, #88]
+  37:src/deadreckoner.c **** 
+ 296              		.loc 1 37 5 is_stmt 1 view .LVU77
+  37:src/deadreckoner.c **** 
+ 297              		.loc 1 37 19 is_stmt 0 view .LVU78
+ 298 0050 0A9B     		ldr	r3, [sp, #40]
+ 299 0052 A367     		str	r3, [r4, #120]
+  39:src/deadreckoner.c **** }
+ 300              		.loc 1 39 5 is_stmt 1 view .LVU79
+  40:src/deadreckoner.c **** 
+ 301              		.loc 1 40 1 is_stmt 0 view .LVU80
+ 302 0054 2046     		mov	r0, r4
+ 303 0056 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 304              	.LVL32:
+ 305              	.L10:
+  40:src/deadreckoner.c **** 
+ 306              		.loc 1 40 1 view .LVU81
+ 307 005a 00BFAFF3 		.align	3
+ 307      0080
+ 308              	.L9:
+ 309 0060 D1954A70 		.word	1883936209
+ 310 0064 2F8BB840 		.word	1085836079
+ 311 0068 0000E03F 		.word	1071644672
+ 312              		.cfi_endproc
+ 313              	.LFE66:
+ARM GAS  /tmp/ccRdewjh.s 			page 10
+
+
+ 315              		.section	.text.DeadReckoner_Destroy,"ax",%progbits
+ 316              		.align	1
+ 317              		.global	DeadReckoner_Destroy
+ 318              		.syntax unified
+ 319              		.thumb
+ 320              		.thumb_func
+ 322              	DeadReckoner_Destroy:
+ 323              	.LVL33:
+ 324              	.LFB67:
+  42:src/deadreckoner.c ****     if (d) {
+ 325              		.loc 1 42 47 is_stmt 1 view -0
+ 326              		.cfi_startproc
+ 327              		@ args = 0, pretend = 0, frame = 0
+ 328              		@ frame_needed = 0, uses_anonymous_args = 0
+  43:src/deadreckoner.c ****         if (*d) {
+ 329              		.loc 1 43 5 view .LVU83
+  43:src/deadreckoner.c ****         if (*d) {
+ 330              		.loc 1 43 8 is_stmt 0 view .LVU84
+ 331 0000 40B1     		cbz	r0, .L14
+  42:src/deadreckoner.c ****     if (d) {
+ 332              		.loc 1 42 47 view .LVU85
+ 333 0002 10B5     		push	{r4, lr}
+ 334              	.LCFI4:
+ 335              		.cfi_def_cfa_offset 8
+ 336              		.cfi_offset 4, -8
+ 337              		.cfi_offset 14, -4
+ 338 0004 0446     		mov	r4, r0
+  44:src/deadreckoner.c ****             free(*d);
+ 339              		.loc 1 44 9 is_stmt 1 view .LVU86
+  44:src/deadreckoner.c ****             free(*d);
+ 340              		.loc 1 44 13 is_stmt 0 view .LVU87
+ 341 0006 0068     		ldr	r0, [r0]
+ 342              	.LVL34:
+  44:src/deadreckoner.c ****             free(*d);
+ 343              		.loc 1 44 12 view .LVU88
+ 344 0008 18B1     		cbz	r0, .L11
+  45:src/deadreckoner.c ****             *d = NULL;
+ 345              		.loc 1 45 13 is_stmt 1 view .LVU89
+ 346 000a FFF7FEFF 		bl	free
+ 347              	.LVL35:
+  46:src/deadreckoner.c ****         }
+ 348              		.loc 1 46 13 view .LVU90
+  46:src/deadreckoner.c ****         }
+ 349              		.loc 1 46 16 is_stmt 0 view .LVU91
+ 350 000e 0023     		movs	r3, #0
+ 351 0010 2360     		str	r3, [r4]
+ 352              	.L11:
+  49:src/deadreckoner.c **** 
+ 353              		.loc 1 49 1 view .LVU92
+ 354 0012 10BD     		pop	{r4, pc}
+ 355              	.LVL36:
+ 356              	.L14:
+ 357              	.LCFI5:
+ 358              		.cfi_def_cfa_offset 0
+ 359              		.cfi_restore 4
+ 360              		.cfi_restore 14
+  49:src/deadreckoner.c **** 
+ARM GAS  /tmp/ccRdewjh.s 			page 11
+
+
+ 361              		.loc 1 49 1 view .LVU93
+ 362 0014 7047     		bx	lr
+ 363              		.cfi_endproc
+ 364              	.LFE67:
+ 366              		.section	.text.setXYT,"ax",%progbits
+ 367              		.align	1
+ 368              		.global	setXYT
+ 369              		.syntax unified
+ 370              		.thumb
+ 371              		.thumb_func
+ 373              	setXYT:
+ 374              	.LVL37:
+ 375              	.LFB68:
+  51:src/deadreckoner.c **** 	d->xc = x;
+ 376              		.loc 1 51 60 is_stmt 1 view -0
+ 377              		.cfi_startproc
+ 378              		@ args = 16, pretend = 0, frame = 0
+ 379              		@ frame_needed = 0, uses_anonymous_args = 0
+  51:src/deadreckoner.c **** 	d->xc = x;
+ 380              		.loc 1 51 60 is_stmt 0 view .LVU95
+ 381 0000 10B5     		push	{r4, lr}
+ 382              	.LCFI6:
+ 383              		.cfi_def_cfa_offset 8
+ 384              		.cfi_offset 4, -8
+ 385              		.cfi_offset 14, -4
+ 386 0002 0446     		mov	r4, r0
+  52:src/deadreckoner.c **** 	d->yc = y;
+ 387              		.loc 1 52 2 is_stmt 1 view .LVU96
+  52:src/deadreckoner.c **** 	d->yc = y;
+ 388              		.loc 1 52 8 is_stmt 0 view .LVU97
+ 389 0004 C0E90423 		strd	r2, [r0, #16]
+  53:src/deadreckoner.c ****     if (d->useDegrees){
+ 390              		.loc 1 53 2 is_stmt 1 view .LVU98
+  53:src/deadreckoner.c ****     if (d->useDegrees){
+ 391              		.loc 1 53 8 is_stmt 0 view .LVU99
+ 392 0008 DDE90223 		ldrd	r2, [sp, #8]
+ 393              	.LVL38:
+  53:src/deadreckoner.c ****     if (d->useDegrees){
+ 394              		.loc 1 53 8 view .LVU100
+ 395 000c C0E90623 		strd	r2, [r0, #24]
+  54:src/deadreckoner.c **** 	    d->theta = (t/180.0)*PI;
+ 396              		.loc 1 54 5 is_stmt 1 view .LVU101
+  54:src/deadreckoner.c **** 	    d->theta = (t/180.0)*PI;
+ 397              		.loc 1 54 10 is_stmt 0 view .LVU102
+ 398 0010 836F     		ldr	r3, [r0, #120]
+  54:src/deadreckoner.c **** 	    d->theta = (t/180.0)*PI;
+ 399              		.loc 1 54 8 view .LVU103
+ 400 0012 6BB1     		cbz	r3, .L18
+  55:src/deadreckoner.c ****     } else {
+ 401              		.loc 1 55 6 is_stmt 1 view .LVU104
+  55:src/deadreckoner.c ****     } else {
+ 402              		.loc 1 55 19 is_stmt 0 view .LVU105
+ 403 0014 0022     		movs	r2, #0
+ 404 0016 0C4B     		ldr	r3, .L21+8
+ 405 0018 DDE90401 		ldrd	r0, [sp, #16]
+ 406              	.LVL39:
+  55:src/deadreckoner.c ****     } else {
+ARM GAS  /tmp/ccRdewjh.s 			page 12
+
+
+ 407              		.loc 1 55 19 view .LVU106
+ 408 001c FFF7FEFF 		bl	__aeabi_ddiv
+ 409              	.LVL40:
+  55:src/deadreckoner.c ****     } else {
+ 410              		.loc 1 55 26 view .LVU107
+ 411 0020 07A3     		adr	r3, .L21
+ 412 0022 D3E90023 		ldrd	r2, [r3]
+ 413 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 414              	.LVL41:
+  55:src/deadreckoner.c ****     } else {
+ 415              		.loc 1 55 15 view .LVU108
+ 416 002a C4E91401 		strd	r0, [r4, #80]
+ 417              	.L17:
+  59:src/deadreckoner.c **** 
+ 418              		.loc 1 59 1 view .LVU109
+ 419 002e 10BD     		pop	{r4, pc}
+ 420              	.LVL42:
+ 421              	.L18:
+  57:src/deadreckoner.c ****     }
+ 422              		.loc 1 57 6 is_stmt 1 view .LVU110
+  57:src/deadreckoner.c ****     }
+ 423              		.loc 1 57 15 is_stmt 0 view .LVU111
+ 424 0030 DDE90423 		ldrd	r2, [sp, #16]
+ 425 0034 C0E91423 		strd	r2, [r0, #80]
+  59:src/deadreckoner.c **** 
+ 426              		.loc 1 59 1 view .LVU112
+ 427 0038 F9E7     		b	.L17
+ 428              	.L22:
+ 429 003a 00BFAFF3 		.align	3
+ 429      0080
+ 430              	.L21:
+ 431 0040 EA2E4454 		.word	1413754602
+ 432 0044 FB210940 		.word	1074340347
+ 433 0048 00806640 		.word	1080459264
+ 434              		.cfi_endproc
+ 435              	.LFE68:
+ 437              		.section	.text.getXYT,"ax",%progbits
+ 438              		.align	1
+ 439              		.global	getXYT
+ 440              		.syntax unified
+ 441              		.thumb
+ 442              		.thumb_func
+ 444              	getXYT:
+ 445              	.LVL43:
+ 446              	.LFB69:
+  61:src/deadreckoner.c **** 	if (x) *x = d->xc;
+ 447              		.loc 1 61 63 is_stmt 1 view -0
+ 448              		.cfi_startproc
+ 449              		@ args = 0, pretend = 0, frame = 0
+ 450              		@ frame_needed = 0, uses_anonymous_args = 0
+  61:src/deadreckoner.c **** 	if (x) *x = d->xc;
+ 451              		.loc 1 61 63 is_stmt 0 view .LVU114
+ 452 0000 2DE91848 		push	{r3, r4, fp, lr}
+ 453              	.LCFI7:
+ 454              		.cfi_def_cfa_offset 16
+ 455              		.cfi_offset 3, -16
+ 456              		.cfi_offset 4, -12
+ARM GAS  /tmp/ccRdewjh.s 			page 13
+
+
+ 457              		.cfi_offset 11, -8
+ 458              		.cfi_offset 14, -4
+ 459 0004 1C46     		mov	r4, r3
+  62:src/deadreckoner.c **** 	if (y) *y = d->yc;
+ 460              		.loc 1 62 2 is_stmt 1 view .LVU115
+  62:src/deadreckoner.c **** 	if (y) *y = d->yc;
+ 461              		.loc 1 62 5 is_stmt 0 view .LVU116
+ 462 0006 19B1     		cbz	r1, .L24
+  62:src/deadreckoner.c **** 	if (y) *y = d->yc;
+ 463              		.loc 1 62 9 is_stmt 1 discriminator 1 view .LVU117
+  62:src/deadreckoner.c **** 	if (y) *y = d->yc;
+ 464              		.loc 1 62 12 is_stmt 0 discriminator 1 view .LVU118
+ 465 0008 D0E904BC 		ldrd	fp, [r0, #16]
+ 466 000c C1E900BC 		strd	fp, [r1]
+ 467              	.L24:
+  63:src/deadreckoner.c **** 	if (t) {
+ 468              		.loc 1 63 2 is_stmt 1 view .LVU119
+  63:src/deadreckoner.c **** 	if (t) {
+ 469              		.loc 1 63 5 is_stmt 0 view .LVU120
+ 470 0010 1AB1     		cbz	r2, .L25
+  63:src/deadreckoner.c **** 	if (t) {
+ 471              		.loc 1 63 9 is_stmt 1 discriminator 1 view .LVU121
+  63:src/deadreckoner.c **** 	if (t) {
+ 472              		.loc 1 63 12 is_stmt 0 discriminator 1 view .LVU122
+ 473 0012 D0E906BC 		ldrd	fp, [r0, #24]
+ 474 0016 C2E900BC 		strd	fp, [r2]
+ 475              	.L25:
+  64:src/deadreckoner.c ****         if (d->useDegrees){
+ 476              		.loc 1 64 2 is_stmt 1 view .LVU123
+  64:src/deadreckoner.c ****         if (d->useDegrees){
+ 477              		.loc 1 64 5 is_stmt 0 view .LVU124
+ 478 001a 84B1     		cbz	r4, .L23
+  65:src/deadreckoner.c ****             *t = (d->theta/PI)*180.0;
+ 479              		.loc 1 65 9 is_stmt 1 view .LVU125
+  65:src/deadreckoner.c ****             *t = (d->theta/PI)*180.0;
+ 480              		.loc 1 65 14 is_stmt 0 view .LVU126
+ 481 001c 836F     		ldr	r3, [r0, #120]
+ 482              	.LVL44:
+  65:src/deadreckoner.c ****             *t = (d->theta/PI)*180.0;
+ 483              		.loc 1 65 12 view .LVU127
+ 484 001e 83B1     		cbz	r3, .L27
+  66:src/deadreckoner.c ****         } else {
+ 485              		.loc 1 66 13 is_stmt 1 view .LVU128
+  66:src/deadreckoner.c ****         } else {
+ 486              		.loc 1 66 27 is_stmt 0 view .LVU129
+ 487 0020 0BA3     		adr	r3, .L29
+ 488 0022 D3E90023 		ldrd	r2, [r3]
+ 489              	.LVL45:
+  66:src/deadreckoner.c ****         } else {
+ 490              		.loc 1 66 27 view .LVU130
+ 491 0026 00F15001 		add	r1, r0, #80
+ 492 002a D1E90001 		ldrd	r0, [r1]
+ 493              	.LVL46:
+  66:src/deadreckoner.c ****         } else {
+ 494              		.loc 1 66 27 view .LVU131
+ 495 002e FFF7FEFF 		bl	__aeabi_ddiv
+ 496              	.LVL47:
+ARM GAS  /tmp/ccRdewjh.s 			page 14
+
+
+  66:src/deadreckoner.c ****         } else {
+ 497              		.loc 1 66 31 view .LVU132
+ 498 0032 0022     		movs	r2, #0
+ 499 0034 084B     		ldr	r3, .L29+8
+ 500 0036 FFF7FEFF 		bl	__aeabi_dmul
+ 501              	.LVL48:
+  66:src/deadreckoner.c ****         } else {
+ 502              		.loc 1 66 16 view .LVU133
+ 503 003a C4E90001 		strd	r0, [r4]
+ 504              	.L23:
+  71:src/deadreckoner.c **** 
+ 505              		.loc 1 71 1 view .LVU134
+ 506 003e BDE81888 		pop	{r3, r4, fp, pc}
+ 507              	.LVL49:
+ 508              	.L27:
+  68:src/deadreckoner.c ****         }
+ 509              		.loc 1 68 13 is_stmt 1 view .LVU135
+  68:src/deadreckoner.c ****         }
+ 510              		.loc 1 68 19 is_stmt 0 view .LVU136
+ 511 0042 D0E91423 		ldrd	r2, [r0, #80]
+ 512              	.LVL50:
+  68:src/deadreckoner.c ****         }
+ 513              		.loc 1 68 16 view .LVU137
+ 514 0046 C4E90023 		strd	r2, [r4]
+  71:src/deadreckoner.c **** 
+ 515              		.loc 1 71 1 view .LVU138
+ 516 004a F8E7     		b	.L23
+ 517              	.L30:
+ 518 004c AFF30080 		.align	3
+ 519              	.L29:
+ 520 0050 EA2E4454 		.word	1413754602
+ 521 0054 FB210940 		.word	1074340347
+ 522 0058 00806640 		.word	1080459264
+ 523              		.cfi_endproc
+ 524              	.LFE69:
+ 526              		.global	__aeabi_l2d
+ 527              		.section	.text.getWl,"ax",%progbits
+ 528              		.align	1
+ 529              		.global	getWl
+ 530              		.syntax unified
+ 531              		.thumb
+ 532              		.thumb_func
+ 534              	getWl:
+ 535              	.LVL51:
+ 536              	.LFB70:
+  74:src/deadreckoner.c **** 	// TODO: Check this
+ 537              		.loc 1 74 53 is_stmt 1 view -0
+ 538              		.cfi_startproc
+ 539              		@ args = 0, pretend = 0, frame = 0
+ 540              		@ frame_needed = 0, uses_anonymous_args = 0
+  74:src/deadreckoner.c **** 	// TODO: Check this
+ 541              		.loc 1 74 53 is_stmt 0 view .LVU140
+ 542 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 543              	.LCFI8:
+ 544              		.cfi_def_cfa_offset 32
+ 545              		.cfi_offset 3, -32
+ 546              		.cfi_offset 4, -28
+ARM GAS  /tmp/ccRdewjh.s 			page 15
+
+
+ 547              		.cfi_offset 5, -24
+ 548              		.cfi_offset 6, -20
+ 549              		.cfi_offset 7, -16
+ 550              		.cfi_offset 8, -12
+ 551              		.cfi_offset 9, -8
+ 552              		.cfi_offset 14, -4
+ 553 0004 0446     		mov	r4, r0
+ 554 0006 1546     		mov	r5, r2
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 555              		.loc 1 76 2 is_stmt 1 view .LVU141
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 556              		.loc 1 76 5 is_stmt 0 view .LVU142
+ 557 0008 D1B1     		cbz	r1, .L32
+ 558 000a 8846     		mov	r8, r1
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 559              		.loc 1 76 10 is_stmt 1 discriminator 1 view .LVU143
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 560              		.loc 1 76 17 is_stmt 0 discriminator 1 view .LVU144
+ 561 000c D0E90867 		ldrd	r6, [r0, #32]
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 562              		.loc 1 76 25 discriminator 1 view .LVU145
+ 563 0010 D0F87090 		ldr	r9, [r0, #112]
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 564              		.loc 1 76 22 discriminator 1 view .LVU146
+ 565 0014 4846     		mov	r0, r9
+ 566              	.LVL52:
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 567              		.loc 1 76 22 discriminator 1 view .LVU147
+ 568 0016 FFF7FEFF 		bl	__aeabi_ui2d
+ 569              	.LVL53:
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 570              		.loc 1 76 22 discriminator 1 view .LVU148
+ 571 001a 3246     		mov	r2, r6
+ 572 001c 3B46     		mov	r3, r7
+ 573 001e FFF7FEFF 		bl	__aeabi_dmul
+ 574              	.LVL54:
+ 575 0022 0646     		mov	r6, r0
+ 576 0024 0F46     		mov	r7, r1
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 577              		.loc 1 76 36 discriminator 1 view .LVU149
+ 578 0026 D9F1FF30 		rsbs	r0, r9, #-1
+ 579 002a 0021     		movs	r1, #0
+ 580 002c FFF7FEFF 		bl	__aeabi_l2d
+ 581              	.LVL55:
+ 582 0030 0246     		mov	r2, r0
+ 583 0032 0B46     		mov	r3, r1
+ 584 0034 3046     		mov	r0, r6
+ 585 0036 3946     		mov	r1, r7
+ 586 0038 FFF7FEFF 		bl	__aeabi_ddiv
+ 587              	.LVL56:
+  76:src/deadreckoner.c **** 	if (wr) *wr = d->wr * d->dt_omega / (UNSIGNED_LONG_MAX - d->dt_omega);
+ 588              		.loc 1 76 14 discriminator 1 view .LVU150
+ 589 003c C8E90001 		strd	r0, [r8]
+ 590              	.LVL57:
+ 591              	.L32:
+  77:src/deadreckoner.c **** }
+ 592              		.loc 1 77 2 is_stmt 1 view .LVU151
+ARM GAS  /tmp/ccRdewjh.s 			page 16
+
+
+  77:src/deadreckoner.c **** }
+ 593              		.loc 1 77 5 is_stmt 0 view .LVU152
+ 594 0040 C5B1     		cbz	r5, .L31
+  77:src/deadreckoner.c **** }
+ 595              		.loc 1 77 10 is_stmt 1 discriminator 1 view .LVU153
+  77:src/deadreckoner.c **** }
+ 596              		.loc 1 77 17 is_stmt 0 discriminator 1 view .LVU154
+ 597 0042 D4E90A67 		ldrd	r6, [r4, #40]
+  77:src/deadreckoner.c **** }
+ 598              		.loc 1 77 25 discriminator 1 view .LVU155
+ 599 0046 246F     		ldr	r4, [r4, #112]
+ 600              	.LVL58:
+  77:src/deadreckoner.c **** }
+ 601              		.loc 1 77 22 discriminator 1 view .LVU156
+ 602 0048 2046     		mov	r0, r4
+ 603 004a FFF7FEFF 		bl	__aeabi_ui2d
+ 604              	.LVL59:
+ 605 004e 3246     		mov	r2, r6
+ 606 0050 3B46     		mov	r3, r7
+ 607 0052 FFF7FEFF 		bl	__aeabi_dmul
+ 608              	.LVL60:
+ 609 0056 0646     		mov	r6, r0
+ 610 0058 0F46     		mov	r7, r1
+  77:src/deadreckoner.c **** }
+ 611              		.loc 1 77 36 discriminator 1 view .LVU157
+ 612 005a D4F1FF30 		rsbs	r0, r4, #-1
+ 613 005e 0021     		movs	r1, #0
+ 614 0060 FFF7FEFF 		bl	__aeabi_l2d
+ 615              	.LVL61:
+ 616 0064 0246     		mov	r2, r0
+ 617 0066 0B46     		mov	r3, r1
+ 618 0068 3046     		mov	r0, r6
+ 619 006a 3946     		mov	r1, r7
+ 620 006c FFF7FEFF 		bl	__aeabi_ddiv
+ 621              	.LVL62:
+  77:src/deadreckoner.c **** }
+ 622              		.loc 1 77 14 discriminator 1 view .LVU158
+ 623 0070 C5E90001 		strd	r0, [r5]
+ 624              	.L31:
+  78:src/deadreckoner.c **** 
+ 625              		.loc 1 78 1 view .LVU159
+ 626 0074 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+  78:src/deadreckoner.c **** 
+ 627              		.loc 1 78 1 view .LVU160
+ 628              		.cfi_endproc
+ 629              	.LFE70:
+ 631              		.global	__aeabi_ui2f
+ 632              		.global	__aeabi_fmul
+ 633              		.global	__aeabi_l2f
+ 634              		.global	__aeabi_fdiv
+ 635              		.global	__aeabi_f2d
+ 636              		.section	.text.getW,"ax",%progbits
+ 637              		.align	1
+ 638              		.global	getW
+ 639              		.syntax unified
+ 640              		.thumb
+ 641              		.thumb_func
+ARM GAS  /tmp/ccRdewjh.s 			page 17
+
+
+ 643              	getW:
+ 644              	.LVL63:
+ 645              	.LFB71:
+  81:src/deadreckoner.c **** 	if (w) *w = d->w * d->dt_integration / (UNSIGNED_LONG_MAX - d->dt_integration);
+ 646              		.loc 1 81 39 is_stmt 1 view -0
+ 647              		.cfi_startproc
+ 648              		@ args = 0, pretend = 0, frame = 0
+ 649              		@ frame_needed = 0, uses_anonymous_args = 0
+  82:src/deadreckoner.c **** }
+ 650              		.loc 1 82 2 view .LVU162
+  82:src/deadreckoner.c **** }
+ 651              		.loc 1 82 5 is_stmt 0 view .LVU163
+ 652 0000 C1B1     		cbz	r1, .L38
+  81:src/deadreckoner.c **** 	if (w) *w = d->w * d->dt_integration / (UNSIGNED_LONG_MAX - d->dt_integration);
+ 653              		.loc 1 81 39 view .LVU164
+ 654 0002 70B5     		push	{r4, r5, r6, lr}
+ 655              	.LCFI9:
+ 656              		.cfi_def_cfa_offset 16
+ 657              		.cfi_offset 4, -16
+ 658              		.cfi_offset 5, -12
+ 659              		.cfi_offset 6, -8
+ 660              		.cfi_offset 14, -4
+ 661 0004 0E46     		mov	r6, r1
+  82:src/deadreckoner.c **** }
+ 662              		.loc 1 82 9 is_stmt 1 discriminator 1 view .LVU165
+  82:src/deadreckoner.c **** }
+ 663              		.loc 1 82 15 is_stmt 0 discriminator 1 view .LVU166
+ 664 0006 846B     		ldr	r4, [r0, #56]	@ float
+  82:src/deadreckoner.c **** }
+ 665              		.loc 1 82 22 discriminator 1 view .LVU167
+ 666 0008 456F     		ldr	r5, [r0, #116]
+  82:src/deadreckoner.c **** }
+ 667              		.loc 1 82 19 discriminator 1 view .LVU168
+ 668 000a 2846     		mov	r0, r5
+ 669              	.LVL64:
+  82:src/deadreckoner.c **** }
+ 670              		.loc 1 82 19 discriminator 1 view .LVU169
+ 671 000c FFF7FEFF 		bl	__aeabi_ui2f
+ 672              	.LVL65:
+  82:src/deadreckoner.c **** }
+ 673              		.loc 1 82 19 discriminator 1 view .LVU170
+ 674 0010 2146     		mov	r1, r4
+ 675 0012 FFF7FEFF 		bl	__aeabi_fmul
+ 676              	.LVL66:
+ 677 0016 0446     		mov	r4, r0
+  82:src/deadreckoner.c **** }
+ 678              		.loc 1 82 39 discriminator 1 view .LVU171
+ 679 0018 D5F1FF30 		rsbs	r0, r5, #-1
+ 680 001c 0021     		movs	r1, #0
+ 681 001e FFF7FEFF 		bl	__aeabi_l2f
+ 682              	.LVL67:
+ 683 0022 0146     		mov	r1, r0
+ 684 0024 2046     		mov	r0, r4
+ 685 0026 FFF7FEFF 		bl	__aeabi_fdiv
+ 686              	.LVL68:
+ 687 002a FFF7FEFF 		bl	__aeabi_f2d
+ 688              	.LVL69:
+ARM GAS  /tmp/ccRdewjh.s 			page 18
+
+
+  82:src/deadreckoner.c **** }
+ 689              		.loc 1 82 12 discriminator 1 view .LVU172
+ 690 002e C6E90001 		strd	r0, [r6]
+  83:src/deadreckoner.c **** 
+ 691              		.loc 1 83 1 view .LVU173
+ 692 0032 70BD     		pop	{r4, r5, r6, pc}
+ 693              	.LVL70:
+ 694              	.L38:
+ 695              	.LCFI10:
+ 696              		.cfi_def_cfa_offset 0
+ 697              		.cfi_restore 4
+ 698              		.cfi_restore 5
+ 699              		.cfi_restore 6
+ 700              		.cfi_restore 14
+  83:src/deadreckoner.c **** 
+ 701              		.loc 1 83 1 view .LVU174
+ 702 0034 7047     		bx	lr
+ 703              		.cfi_endproc
+ 704              	.LFE71:
+ 706              		.section	.text.setLROmegaDirection,"ax",%progbits
+ 707              		.align	1
+ 708              		.global	setLROmegaDirection
+ 709              		.syntax unified
+ 710              		.thumb
+ 711              		.thumb_func
+ 713              	setLROmegaDirection:
+ 714              	.LVL71:
+ 715              	.LFB72:
+  86:src/deadreckoner.c **** 	d->leftOmegaDirection = directionL;
+ 716              		.loc 1 86 75 is_stmt 1 view -0
+ 717              		.cfi_startproc
+ 718              		@ args = 0, pretend = 0, frame = 0
+ 719              		@ frame_needed = 0, uses_anonymous_args = 0
+ 720              		@ link register save eliminated.
+  87:src/deadreckoner.c **** 	d->rightOmegaDirection = directionR;
+ 721              		.loc 1 87 2 view .LVU176
+  87:src/deadreckoner.c **** 	d->rightOmegaDirection = directionR;
+ 722              		.loc 1 87 24 is_stmt 0 view .LVU177
+ 723 0000 8166     		str	r1, [r0, #104]
+  88:src/deadreckoner.c **** }
+ 724              		.loc 1 88 2 is_stmt 1 view .LVU178
+  88:src/deadreckoner.c **** }
+ 725              		.loc 1 88 25 is_stmt 0 view .LVU179
+ 726 0002 C266     		str	r2, [r0, #108]
+  89:src/deadreckoner.c **** 
+ 727              		.loc 1 89 1 view .LVU180
+ 728 0004 7047     		bx	lr
+ 729              		.cfi_endproc
+ 730              	.LFE72:
+ 732              		.section	.text.getLROmegaDirection,"ax",%progbits
+ 733              		.align	1
+ 734              		.global	getLROmegaDirection
+ 735              		.syntax unified
+ 736              		.thumb
+ 737              		.thumb_func
+ 739              	getLROmegaDirection:
+ 740              	.LVL72:
+ARM GAS  /tmp/ccRdewjh.s 			page 19
+
+
+ 741              	.LFB73:
+  91:src/deadreckoner.c **** 	if(directionL) *directionL = d->leftOmegaDirection;
+ 742              		.loc 1 91 77 is_stmt 1 view -0
+ 743              		.cfi_startproc
+ 744              		@ args = 0, pretend = 0, frame = 0
+ 745              		@ frame_needed = 0, uses_anonymous_args = 0
+ 746              		@ link register save eliminated.
+  92:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+ 747              		.loc 1 92 2 view .LVU182
+  92:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+ 748              		.loc 1 92 4 is_stmt 0 view .LVU183
+ 749 0000 0B46     		mov	r3, r1
+ 750 0002 09B1     		cbz	r1, .L43
+  92:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+ 751              		.loc 1 92 17 is_stmt 1 discriminator 1 view .LVU184
+  92:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+ 752              		.loc 1 92 32 is_stmt 0 discriminator 1 view .LVU185
+ 753 0004 816E     		ldr	r1, [r0, #104]
+ 754              	.LVL73:
+  92:src/deadreckoner.c **** 	if(directionR) *directionR = d->rightOmegaDirection;
+ 755              		.loc 1 92 29 discriminator 1 view .LVU186
+ 756 0006 1960     		str	r1, [r3]
+ 757              	.L43:
+  93:src/deadreckoner.c **** }
+ 758              		.loc 1 93 2 is_stmt 1 view .LVU187
+  93:src/deadreckoner.c **** }
+ 759              		.loc 1 93 4 is_stmt 0 view .LVU188
+ 760 0008 0AB1     		cbz	r2, .L42
+  93:src/deadreckoner.c **** }
+ 761              		.loc 1 93 17 is_stmt 1 discriminator 1 view .LVU189
+  93:src/deadreckoner.c **** }
+ 762              		.loc 1 93 32 is_stmt 0 discriminator 1 view .LVU190
+ 763 000a C36E     		ldr	r3, [r0, #108]
+ 764              	.LVL74:
+  93:src/deadreckoner.c **** }
+ 765              		.loc 1 93 29 discriminator 1 view .LVU191
+ 766 000c 1360     		str	r3, [r2]
+ 767              	.L42:
+  94:src/deadreckoner.c **** 
+ 768              		.loc 1 94 1 view .LVU192
+ 769 000e 7047     		bx	lr
+ 770              		.cfi_endproc
+ 771              	.LFE73:
+ 773              		.global	__aeabi_d2f
+ 774              		.global	__aeabi_fadd
+ 775              		.global	__aeabi_fsub
+ 776              		.global	__aeabi_dadd
+ 777              		.section	.text.computePosition,"ax",%progbits
+ 778              		.align	1
+ 779              		.global	computePosition
+ 780              		.syntax unified
+ 781              		.thumb
+ 782              		.thumb_func
+ 784              	computePosition:
+ 785              	.LVL75:
+ 786              	.LFB76:
+ 129:src/deadreckoner.c **** 
+ARM GAS  /tmp/ccRdewjh.s 			page 20
+
+
+ 130:src/deadreckoner.c **** void computePosition(DEADRECKONER *d) {
+ 787              		.loc 1 130 39 is_stmt 1 view -0
+ 788              		.cfi_startproc
+ 789              		@ args = 0, pretend = 0, frame = 16
+ 790              		@ frame_needed = 0, uses_anonymous_args = 0
+ 791              		.loc 1 130 39 is_stmt 0 view .LVU194
+ 792 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 793              	.LCFI11:
+ 794              		.cfi_def_cfa_offset 36
+ 795              		.cfi_offset 4, -36
+ 796              		.cfi_offset 5, -32
+ 797              		.cfi_offset 6, -28
+ 798              		.cfi_offset 7, -24
+ 799              		.cfi_offset 8, -20
+ 800              		.cfi_offset 9, -16
+ 801              		.cfi_offset 10, -12
+ 802              		.cfi_offset 11, -8
+ 803              		.cfi_offset 14, -4
+ 804 0004 85B0     		sub	sp, sp, #20
+ 805              	.LCFI12:
+ 806              		.cfi_def_cfa_offset 56
+ 807 0006 0446     		mov	r4, r0
+ 131:src/deadreckoner.c **** 	d->dt_integration = getChange(d->prevIntegrationTime, micros());
+ 808              		.loc 1 131 2 is_stmt 1 view .LVU195
+ 809              		.loc 1 131 22 is_stmt 0 view .LVU196
+ 810 0008 056E     		ldr	r5, [r0, #96]
+ 811 000a FFF7FEFF 		bl	HAL_GetTick
+ 812              	.LVL76:
+ 813              		.loc 1 131 22 view .LVU197
+ 814 000e 0146     		mov	r1, r0
+ 815              		.loc 1 131 22 discriminator 1 view .LVU198
+ 816 0010 2846     		mov	r0, r5
+ 817 0012 FFF7FEFF 		bl	getChange
+ 818              	.LVL77:
+ 819              		.loc 1 131 20 discriminator 2 view .LVU199
+ 820 0016 6067     		str	r0, [r4, #116]
+ 132:src/deadreckoner.c ****     // don't do anything unless some time has passed.
+ 133:src/deadreckoner.c ****     if (0 == d->dt_integration){
+ 821              		.loc 1 133 5 is_stmt 1 view .LVU200
+ 822              		.loc 1 133 8 is_stmt 0 view .LVU201
+ 823 0018 10B9     		cbnz	r0, .L48
+ 824              	.L45:
+ 134:src/deadreckoner.c ****         return;
+ 135:src/deadreckoner.c ****     }
+ 136:src/deadreckoner.c **** 
+ 137:src/deadreckoner.c **** 	computeAngularVelocities(d);
+ 138:src/deadreckoner.c **** 	// Time elapsed after the previous position has been integrated.
+ 139:src/deadreckoner.c **** 	// change in time is defined as previous - current to prevent round off error.
+ 140:src/deadreckoner.c **** 
+ 141:src/deadreckoner.c **** 	float dt = ((float)d->dt_integration) / TIMER_RES; // convert to seconds
+ 142:src/deadreckoner.c **** 
+ 143:src/deadreckoner.c **** 	// Dead reckoning equations
+ 144:src/deadreckoner.c **** 
+ 145:src/deadreckoner.c **** 	float Vl = d->wl * d->radius;
+ 146:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 147:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
+ 148:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
+ARM GAS  /tmp/ccRdewjh.s 			page 21
+
+
+ 149:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 150:src/deadreckoner.c **** 	float xNext = d->xc + dt * v*(2 + cos(dt*d->w / 2))*cos(d->theta + dt * d->w / 2) / 3;
+ 151:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 152:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 153:src/deadreckoner.c **** 
+ 154:src/deadreckoner.c **** 	d->xc = xNext;
+ 155:src/deadreckoner.c **** 	d->yc = yNext;
+ 156:src/deadreckoner.c **** 	d->theta = thetaNext;
+ 157:src/deadreckoner.c **** 
+ 158:src/deadreckoner.c **** 	// float toRPM = 30 / PI;
+ 159:src/deadreckoner.c **** 	// float dist = sqrt(d->xc*d->xc + d->yc * d->yc);
+ 160:src/deadreckoner.c **** 	//Serial.print("\tdist: "); Serial.print(dist);
+ 161:src/deadreckoner.c **** 	//Serial.print("\twl: "); Serial.print(wl*toRPM, 5);
+ 162:src/deadreckoner.c **** 	//Serial.print("\twr: "); Serial.print(wr*toRPM, 5);
+ 163:src/deadreckoner.c **** 	//Serial.print("\tVl: "); Serial.print(Vl);
+ 164:src/deadreckoner.c **** 	//Serial.print("\tVr: "); Serial.print(Vr);
+ 165:src/deadreckoner.c **** 	//Serial.print("\tw: "); Serial.print(w, 5);
+ 166:src/deadreckoner.c **** 	//Serial.print("\tx: "); Serial.print(xc);
+ 167:src/deadreckoner.c **** 	//Serial.print("\ty: "); Serial.print(yc);
+ 168:src/deadreckoner.c **** 	//Serial.print("\ttheta: "); Serial.println(theta*RAD_TO_DEG);
+ 169:src/deadreckoner.c **** 
+ 170:src/deadreckoner.c **** 	d->prevIntegrationTime = micros();
+ 171:src/deadreckoner.c **** }
+ 825              		.loc 1 171 1 view .LVU202
+ 826 001a 05B0     		add	sp, sp, #20
+ 827              	.LCFI13:
+ 828              		.cfi_remember_state
+ 829              		.cfi_def_cfa_offset 36
+ 830              		@ sp needed
+ 831 001c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 832              	.LVL78:
+ 833              	.L48:
+ 834              	.LCFI14:
+ 835              		.cfi_restore_state
+ 137:src/deadreckoner.c **** 	// Time elapsed after the previous position has been integrated.
+ 836              		.loc 1 137 2 is_stmt 1 view .LVU203
+ 837 0020 2046     		mov	r0, r4
+ 838 0022 FFF7FEFF 		bl	computeAngularVelocities
+ 839              	.LVL79:
+ 141:src/deadreckoner.c **** 
+ 840              		.loc 1 141 2 view .LVU204
+ 141:src/deadreckoner.c **** 
+ 841              		.loc 1 141 14 is_stmt 0 view .LVU205
+ 842 0026 606F     		ldr	r0, [r4, #116]
+ 843 0028 FFF7FEFF 		bl	__aeabi_ui2f
+ 844              	.LVL80:
+ 141:src/deadreckoner.c **** 
+ 845              		.loc 1 141 8 view .LVU206
+ 846 002c 5649     		ldr	r1, .L49
+ 847 002e FFF7FEFF 		bl	__aeabi_fdiv
+ 848              	.LVL81:
+ 849 0032 0646     		mov	r6, r0
+ 850              	.LVL82:
+ 145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 851              		.loc 1 145 2 is_stmt 1 view .LVU207
+ 145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 852              		.loc 1 145 22 is_stmt 0 view .LVU208
+ARM GAS  /tmp/ccRdewjh.s 			page 22
+
+
+ 853 0034 D4E91289 		ldrd	r8, [r4, #72]
+ 145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 854              		.loc 1 145 19 view .LVU209
+ 855 0038 4246     		mov	r2, r8
+ 856 003a 4B46     		mov	r3, r9
+ 857 003c D4E90801 		ldrd	r0, [r4, #32]
+ 858              	.LVL83:
+ 145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 859              		.loc 1 145 19 view .LVU210
+ 860 0040 FFF7FEFF 		bl	__aeabi_dmul
+ 861              	.LVL84:
+ 145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
+ 862              		.loc 1 145 8 view .LVU211
+ 863 0044 FFF7FEFF 		bl	__aeabi_d2f
+ 864              	.LVL85:
+ 865 0048 0746     		mov	r7, r0
+ 866              	.LVL86:
+ 146:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
+ 867              		.loc 1 146 2 is_stmt 1 view .LVU212
+ 146:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
+ 868              		.loc 1 146 19 is_stmt 0 view .LVU213
+ 869 004a D4E90A23 		ldrd	r2, [r4, #40]
+ 870 004e 4046     		mov	r0, r8
+ 871              	.LVL87:
+ 146:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
+ 872              		.loc 1 146 19 view .LVU214
+ 873 0050 4946     		mov	r1, r9
+ 874 0052 FFF7FEFF 		bl	__aeabi_dmul
+ 875              	.LVL88:
+ 146:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
+ 876              		.loc 1 146 8 view .LVU215
+ 877 0056 FFF7FEFF 		bl	__aeabi_d2f
+ 878              	.LVL89:
+ 879 005a 0546     		mov	r5, r0
+ 880              	.LVL90:
+ 147:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
+ 881              		.loc 1 147 2 is_stmt 1 view .LVU216
+ 147:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
+ 882              		.loc 1 147 16 is_stmt 0 view .LVU217
+ 883 005c 0146     		mov	r1, r0
+ 884 005e 3846     		mov	r0, r7
+ 885              	.LVL91:
+ 147:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
+ 886              		.loc 1 147 16 view .LVU218
+ 887 0060 FFF7FEFF 		bl	__aeabi_fadd
+ 888              	.LVL92:
+ 147:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
+ 889              		.loc 1 147 8 view .LVU219
+ 890 0064 4FF07C51 		mov	r1, #1056964608
+ 891 0068 FFF7FEFF 		bl	__aeabi_fmul
+ 892              	.LVL93:
+ 893 006c 8046     		mov	r8, r0
+ 894              	.LVL94:
+ 148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 895              		.loc 1 148 2 is_stmt 1 view .LVU220
+ 148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 896              		.loc 1 148 13 is_stmt 0 view .LVU221
+ARM GAS  /tmp/ccRdewjh.s 			page 23
+
+
+ 897 006e 3946     		mov	r1, r7
+ 898 0070 2846     		mov	r0, r5
+ 899              	.LVL95:
+ 148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 900              		.loc 1 148 13 view .LVU222
+ 901 0072 FFF7FEFF 		bl	__aeabi_fsub
+ 902              	.LVL96:
+ 903 0076 FFF7FEFF 		bl	__aeabi_f2d
+ 904              	.LVL97:
+ 148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 905              		.loc 1 148 19 view .LVU223
+ 906 007a D4E91023 		ldrd	r2, [r4, #64]
+ 907 007e FFF7FEFF 		bl	__aeabi_ddiv
+ 908              	.LVL98:
+ 909 0082 FFF7FEFF 		bl	__aeabi_d2f
+ 910              	.LVL99:
+ 911 0086 0546     		mov	r5, r0
+ 912              	.LVL100:
+ 148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
+ 913              		.loc 1 148 7 view .LVU224
+ 914 0088 A063     		str	r0, [r4, #56]	@ float
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 915              		.loc 1 150 2 is_stmt 1 view .LVU225
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 916              		.loc 1 150 17 is_stmt 0 view .LVU226
+ 917 008a D4E904AB 		ldrd	r10, [r4, #16]
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 918              		.loc 1 150 27 view .LVU227
+ 919 008e 4146     		mov	r1, r8
+ 920 0090 3046     		mov	r0, r6
+ 921 0092 FFF7FEFF 		bl	__aeabi_fmul
+ 922              	.LVL101:
+ 923 0096 FFF7FEFF 		bl	__aeabi_f2d
+ 924              	.LVL102:
+ 925 009a 8046     		mov	r8, r0
+ 926              	.LVL103:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 927              		.loc 1 150 27 view .LVU228
+ 928 009c 8946     		mov	r9, r1
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 929              		.loc 1 150 42 view .LVU229
+ 930 009e 3146     		mov	r1, r6
+ 931 00a0 2846     		mov	r0, r5
+ 932 00a2 FFF7FEFF 		bl	__aeabi_fmul
+ 933              	.LVL104:
+ 934 00a6 0546     		mov	r5, r0
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 935              		.loc 1 150 48 view .LVU230
+ 936 00a8 4FF07C51 		mov	r1, #1056964608
+ 937 00ac FFF7FEFF 		bl	__aeabi_fmul
+ 938              	.LVL105:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 939              		.loc 1 150 36 view .LVU231
+ 940 00b0 FFF7FEFF 		bl	__aeabi_f2d
+ 941              	.LVL106:
+ 942 00b4 0646     		mov	r6, r0
+ 943              	.LVL107:
+ARM GAS  /tmp/ccRdewjh.s 			page 24
+
+
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 944              		.loc 1 150 36 view .LVU232
+ 945 00b6 0F46     		mov	r7, r1
+ 946              	.LVL108:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 947              		.loc 1 150 36 view .LVU233
+ 948 00b8 FFF7FEFF 		bl	cos
+ 949              	.LVL109:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 950              		.loc 1 150 34 discriminator 1 view .LVU234
+ 951 00bc 0022     		movs	r2, #0
+ 952 00be 4FF08043 		mov	r3, #1073741824
+ 953 00c2 FFF7FEFF 		bl	__aeabi_dadd
+ 954              	.LVL110:
+ 955 00c6 0246     		mov	r2, r0
+ 956 00c8 0B46     		mov	r3, r1
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 957              		.loc 1 150 30 discriminator 1 view .LVU235
+ 958 00ca 4046     		mov	r0, r8
+ 959 00cc 4946     		mov	r1, r9
+ 960 00ce FFF7FEFF 		bl	__aeabi_dmul
+ 961              	.LVL111:
+ 962 00d2 CDE90001 		strd	r0, [sp]
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 963              		.loc 1 150 59 discriminator 1 view .LVU236
+ 964 00d6 D4E91489 		ldrd	r8, [r4, #80]
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 965              		.loc 1 150 54 discriminator 1 view .LVU237
+ 966 00da 4246     		mov	r2, r8
+ 967 00dc 4B46     		mov	r3, r9
+ 968 00de 3046     		mov	r0, r6
+ 969 00e0 3946     		mov	r1, r7
+ 970 00e2 FFF7FEFF 		bl	__aeabi_dadd
+ 971              	.LVL112:
+ 972 00e6 0246     		mov	r2, r0
+ 973 00e8 0B46     		mov	r3, r1
+ 974 00ea CDE90223 		strd	r2, [sp, #8]
+ 975 00ee FFF7FEFF 		bl	cos
+ 976              	.LVL113:
+ 977 00f2 0246     		mov	r2, r0
+ 978 00f4 0B46     		mov	r3, r1
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 979              		.loc 1 150 53 discriminator 2 view .LVU238
+ 980 00f6 DDE90001 		ldrd	r0, [sp]
+ 981 00fa FFF7FEFF 		bl	__aeabi_dmul
+ 982              	.LVL114:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 983              		.loc 1 150 84 discriminator 2 view .LVU239
+ 984 00fe 0022     		movs	r2, #0
+ 985 0100 224B     		ldr	r3, .L49+4
+ 986 0102 FFF7FEFF 		bl	__aeabi_ddiv
+ 987              	.LVL115:
+ 988 0106 0246     		mov	r2, r0
+ 989 0108 0B46     		mov	r3, r1
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 990              		.loc 1 150 22 discriminator 2 view .LVU240
+ 991 010a 5046     		mov	r0, r10
+ARM GAS  /tmp/ccRdewjh.s 			page 25
+
+
+ 992 010c 5946     		mov	r1, fp
+ 993 010e FFF7FEFF 		bl	__aeabi_dadd
+ 994              	.LVL116:
+ 150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
+ 995              		.loc 1 150 8 discriminator 2 view .LVU241
+ 996 0112 FFF7FEFF 		bl	__aeabi_d2f
+ 997              	.LVL117:
+ 998 0116 8246     		mov	r10, r0
+ 999              	.LVL118:
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1000              		.loc 1 151 2 is_stmt 1 view .LVU242
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1001              		.loc 1 151 17 is_stmt 0 view .LVU243
+ 1002 0118 D4E90667 		ldrd	r6, [r4, #24]
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1003              		.loc 1 151 54 discriminator 1 view .LVU244
+ 1004 011c DDE90201 		ldrd	r0, [sp, #8]
+ 1005              	.LVL119:
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1006              		.loc 1 151 54 discriminator 1 view .LVU245
+ 1007 0120 FFF7FEFF 		bl	sin
+ 1008              	.LVL120:
+ 1009 0124 0246     		mov	r2, r0
+ 1010 0126 0B46     		mov	r3, r1
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1011              		.loc 1 151 53 discriminator 2 view .LVU246
+ 1012 0128 DDE90001 		ldrd	r0, [sp]
+ 1013 012c FFF7FEFF 		bl	__aeabi_dmul
+ 1014              	.LVL121:
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1015              		.loc 1 151 84 discriminator 2 view .LVU247
+ 1016 0130 0022     		movs	r2, #0
+ 1017 0132 164B     		ldr	r3, .L49+4
+ 1018 0134 FFF7FEFF 		bl	__aeabi_ddiv
+ 1019              	.LVL122:
+ 1020 0138 0246     		mov	r2, r0
+ 1021 013a 0B46     		mov	r3, r1
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1022              		.loc 1 151 22 discriminator 2 view .LVU248
+ 1023 013c 3046     		mov	r0, r6
+ 1024 013e 3946     		mov	r1, r7
+ 1025 0140 FFF7FEFF 		bl	__aeabi_dadd
+ 1026              	.LVL123:
+ 151:src/deadreckoner.c **** 	float thetaNext = d->theta + dt * d->w;
+ 1027              		.loc 1 151 8 discriminator 2 view .LVU249
+ 1028 0144 FFF7FEFF 		bl	__aeabi_d2f
+ 1029              	.LVL124:
+ 1030 0148 0646     		mov	r6, r0
+ 1031              	.LVL125:
+ 152:src/deadreckoner.c **** 
+ 1032              		.loc 1 152 2 is_stmt 1 view .LVU250
+ 152:src/deadreckoner.c **** 
+ 1033              		.loc 1 152 34 is_stmt 0 view .LVU251
+ 1034 014a 2846     		mov	r0, r5
+ 1035              	.LVL126:
+ 152:src/deadreckoner.c **** 
+ 1036              		.loc 1 152 34 view .LVU252
+ARM GAS  /tmp/ccRdewjh.s 			page 26
+
+
+ 1037 014c FFF7FEFF 		bl	__aeabi_f2d
+ 1038              	.LVL127:
+ 1039 0150 0246     		mov	r2, r0
+ 1040 0152 0B46     		mov	r3, r1
+ 152:src/deadreckoner.c **** 
+ 1041              		.loc 1 152 29 view .LVU253
+ 1042 0154 4046     		mov	r0, r8
+ 1043 0156 4946     		mov	r1, r9
+ 1044 0158 FFF7FEFF 		bl	__aeabi_dadd
+ 1045              	.LVL128:
+ 152:src/deadreckoner.c **** 
+ 1046              		.loc 1 152 8 view .LVU254
+ 1047 015c FFF7FEFF 		bl	__aeabi_d2f
+ 1048              	.LVL129:
+ 1049 0160 0546     		mov	r5, r0
+ 1050              	.LVL130:
+ 154:src/deadreckoner.c **** 	d->yc = yNext;
+ 1051              		.loc 1 154 2 is_stmt 1 view .LVU255
+ 154:src/deadreckoner.c **** 	d->yc = yNext;
+ 1052              		.loc 1 154 8 is_stmt 0 view .LVU256
+ 1053 0162 5046     		mov	r0, r10
+ 1054              	.LVL131:
+ 154:src/deadreckoner.c **** 	d->yc = yNext;
+ 1055              		.loc 1 154 8 view .LVU257
+ 1056 0164 FFF7FEFF 		bl	__aeabi_f2d
+ 1057              	.LVL132:
+ 1058 0168 C4E90401 		strd	r0, [r4, #16]
+ 155:src/deadreckoner.c **** 	d->theta = thetaNext;
+ 1059              		.loc 1 155 2 is_stmt 1 view .LVU258
+ 155:src/deadreckoner.c **** 	d->theta = thetaNext;
+ 1060              		.loc 1 155 8 is_stmt 0 view .LVU259
+ 1061 016c 3046     		mov	r0, r6
+ 1062 016e FFF7FEFF 		bl	__aeabi_f2d
+ 1063              	.LVL133:
+ 1064 0172 C4E90601 		strd	r0, [r4, #24]
+ 156:src/deadreckoner.c **** 
+ 1065              		.loc 1 156 2 is_stmt 1 view .LVU260
+ 156:src/deadreckoner.c **** 
+ 1066              		.loc 1 156 11 is_stmt 0 view .LVU261
+ 1067 0176 2846     		mov	r0, r5
+ 1068 0178 FFF7FEFF 		bl	__aeabi_f2d
+ 1069              	.LVL134:
+ 1070 017c C4E91401 		strd	r0, [r4, #80]
+ 170:src/deadreckoner.c **** }
+ 1071              		.loc 1 170 2 is_stmt 1 view .LVU262
+ 170:src/deadreckoner.c **** }
+ 1072              		.loc 1 170 27 is_stmt 0 view .LVU263
+ 1073 0180 FFF7FEFF 		bl	HAL_GetTick
+ 1074              	.LVL135:
+ 170:src/deadreckoner.c **** }
+ 1075              		.loc 1 170 25 discriminator 1 view .LVU264
+ 1076 0184 2066     		str	r0, [r4, #96]
+ 1077 0186 48E7     		b	.L45
+ 1078              	.L50:
+ 1079              		.align	2
+ 1080              	.L49:
+ 1081 0188 00007A44 		.word	1148846080
+ARM GAS  /tmp/ccRdewjh.s 			page 27
+
+
+ 1082 018c 00000840 		.word	1074266112
+ 1083              		.cfi_endproc
+ 1084              	.LFE76:
+ 1086              		.section	.text.reset,"ax",%progbits
+ 1087              		.align	1
+ 1088              		.global	reset
+ 1089              		.syntax unified
+ 1090              		.thumb
+ 1091              		.thumb_func
+ 1093              	reset:
+ 1094              	.LVL136:
+ 1095              	.LFB77:
+ 172:src/deadreckoner.c **** 
+ 173:src/deadreckoner.c **** void reset(DEADRECKONER *d, int resetTheta) {
+ 1096              		.loc 1 173 45 is_stmt 1 view -0
+ 1097              		.cfi_startproc
+ 1098              		@ args = 0, pretend = 0, frame = 0
+ 1099              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1100              		@ link register save eliminated.
+ 174:src/deadreckoner.c **** 	d->xc = 0;
+ 1101              		.loc 1 174 2 view .LVU266
+ 1102              		.loc 1 174 8 is_stmt 0 view .LVU267
+ 1103 0000 0022     		movs	r2, #0
+ 1104 0002 0023     		movs	r3, #0
+ 1105 0004 C0E90423 		strd	r2, [r0, #16]
+ 175:src/deadreckoner.c **** 	d->yc = 0;
+ 1106              		.loc 1 175 2 is_stmt 1 view .LVU268
+ 1107              		.loc 1 175 8 is_stmt 0 view .LVU269
+ 1108 0008 C0E90623 		strd	r2, [r0, #24]
+ 176:src/deadreckoner.c **** 	d->leftTicksPrev = *d->leftTicks;
+ 1109              		.loc 1 176 2 is_stmt 1 view .LVU270
+ 1110              		.loc 1 176 23 is_stmt 0 view .LVU271
+ 1111 000c 0368     		ldr	r3, [r0]
+ 1112              		.loc 1 176 21 view .LVU272
+ 1113 000e 1B68     		ldr	r3, [r3]
+ 1114              		.loc 1 176 19 view .LVU273
+ 1115 0010 8360     		str	r3, [r0, #8]
+ 177:src/deadreckoner.c **** 	d->rightTicksPrev = *d->rightTicks;
+ 1116              		.loc 1 177 2 is_stmt 1 view .LVU274
+ 1117              		.loc 1 177 24 is_stmt 0 view .LVU275
+ 1118 0012 4368     		ldr	r3, [r0, #4]
+ 1119              		.loc 1 177 22 view .LVU276
+ 1120 0014 1B68     		ldr	r3, [r3]
+ 1121              		.loc 1 177 20 view .LVU277
+ 1122 0016 C360     		str	r3, [r0, #12]
+ 178:src/deadreckoner.c ****     if (resetTheta) d->theta = 0;
+ 1123              		.loc 1 178 5 is_stmt 1 view .LVU278
+ 1124              		.loc 1 178 8 is_stmt 0 view .LVU279
+ 1125 0018 19B1     		cbz	r1, .L51
+ 1126              		.loc 1 178 21 is_stmt 1 discriminator 1 view .LVU280
+ 1127              		.loc 1 178 30 is_stmt 0 discriminator 1 view .LVU281
+ 1128 001a 0022     		movs	r2, #0
+ 1129 001c 0023     		movs	r3, #0
+ 1130 001e C0E91423 		strd	r2, [r0, #80]
+ 1131              	.L51:
+ 179:src/deadreckoner.c **** }...
+ 1132              		.loc 1 179 1 view .LVU282
+ARM GAS  /tmp/ccRdewjh.s 			page 28
+
+
+ 1133 0022 7047     		bx	lr
+ 1134              		.cfi_endproc
+ 1135              	.LFE77:
+ 1137              		.text
+ 1138              	.Letext0:
+ 1139              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 1140              		.file 3 "inc/deadreckoner.h"
+ 1141              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 1142              		.file 5 "/usr/include/newlib/math.h"
+ 1143              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1144              		.file 7 "/usr/include/newlib/stdlib.h"
+ARM GAS  /tmp/ccRdewjh.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 deadreckoner.c
+     /tmp/ccRdewjh.s:19     .text.getChange:00000000 $t
+     /tmp/ccRdewjh.s:24     .text.getChange:00000000 getChange
+     /tmp/ccRdewjh.s:59     .text.computeAngularVelocities:00000000 $t
+     /tmp/ccRdewjh.s:64     .text.computeAngularVelocities:00000000 computeAngularVelocities
+     /tmp/ccRdewjh.s:215    .text.DeadReckoner:00000000 $t
+     /tmp/ccRdewjh.s:221    .text.DeadReckoner:00000000 DeadReckoner
+     /tmp/ccRdewjh.s:309    .text.DeadReckoner:00000060 $d
+     /tmp/ccRdewjh.s:316    .text.DeadReckoner_Destroy:00000000 $t
+     /tmp/ccRdewjh.s:322    .text.DeadReckoner_Destroy:00000000 DeadReckoner_Destroy
+     /tmp/ccRdewjh.s:367    .text.setXYT:00000000 $t
+     /tmp/ccRdewjh.s:373    .text.setXYT:00000000 setXYT
+     /tmp/ccRdewjh.s:431    .text.setXYT:00000040 $d
+     /tmp/ccRdewjh.s:438    .text.getXYT:00000000 $t
+     /tmp/ccRdewjh.s:444    .text.getXYT:00000000 getXYT
+     /tmp/ccRdewjh.s:520    .text.getXYT:00000050 $d
+     /tmp/ccRdewjh.s:528    .text.getWl:00000000 $t
+     /tmp/ccRdewjh.s:534    .text.getWl:00000000 getWl
+     /tmp/ccRdewjh.s:637    .text.getW:00000000 $t
+     /tmp/ccRdewjh.s:643    .text.getW:00000000 getW
+     /tmp/ccRdewjh.s:707    .text.setLROmegaDirection:00000000 $t
+     /tmp/ccRdewjh.s:713    .text.setLROmegaDirection:00000000 setLROmegaDirection
+     /tmp/ccRdewjh.s:733    .text.getLROmegaDirection:00000000 $t
+     /tmp/ccRdewjh.s:739    .text.getLROmegaDirection:00000000 getLROmegaDirection
+     /tmp/ccRdewjh.s:778    .text.computePosition:00000000 $t
+     /tmp/ccRdewjh.s:784    .text.computePosition:00000000 computePosition
+     /tmp/ccRdewjh.s:1081   .text.computePosition:00000188 $d
+     /tmp/ccRdewjh.s:1087   .text.reset:00000000 $t
+     /tmp/ccRdewjh.s:1093   .text.reset:00000000 reset
+
+UNDEFINED SYMBOLS
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_ui2d
+__aeabi_ddiv
+HAL_GetTick
+calloc
+free
+__aeabi_l2d
+__aeabi_ui2f
+__aeabi_fmul
+__aeabi_l2f
+__aeabi_fdiv
+__aeabi_f2d
+__aeabi_d2f
+__aeabi_fadd
+__aeabi_fsub
+__aeabi_dadd
+cos
+sin

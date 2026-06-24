@@ -1,0 +1,1083 @@
+ARM GAS  /tmp/ccCKyHOs.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"cobsr.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/hbprotocol/cobsr.c"
+  18              		.section	.text.cobsr_encode,"ax",%progbits
+  19              		.align	1
+  20              		.global	cobsr_encode
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	cobsr_encode:
+  26              	.LVL0:
+  27              	.LFB0:
+   1:src/hbprotocol/cobsr.c **** /*
+   2:src/hbprotocol/cobsr.c ****  * cobsr.c
+   3:src/hbprotocol/cobsr.c ****  *
+   4:src/hbprotocol/cobsr.c ****  * Consistent Overhead Byte Stuffing--Reduced (COBS/R)
+   5:src/hbprotocol/cobsr.c ****  */
+   6:src/hbprotocol/cobsr.c **** 
+   7:src/hbprotocol/cobsr.c **** #include <stdlib.h>
+   8:src/hbprotocol/cobsr.c **** #include "cobsr.h"
+   9:src/hbprotocol/cobsr.c **** 
+  10:src/hbprotocol/cobsr.c **** 
+  11:src/hbprotocol/cobsr.c **** /*****************************************************************************
+  12:src/hbprotocol/cobsr.c ****  * Defines
+  13:src/hbprotocol/cobsr.c ****  ****************************************************************************/
+  14:src/hbprotocol/cobsr.c **** 
+  15:src/hbprotocol/cobsr.c **** #ifndef FALSE
+  16:src/hbprotocol/cobsr.c **** #define FALSE       (0)
+  17:src/hbprotocol/cobsr.c **** #endif
+  18:src/hbprotocol/cobsr.c **** 
+  19:src/hbprotocol/cobsr.c **** #ifndef TRUE
+  20:src/hbprotocol/cobsr.c **** #define TRUE        (!FALSE)
+  21:src/hbprotocol/cobsr.c **** #endif
+  22:src/hbprotocol/cobsr.c **** 
+  23:src/hbprotocol/cobsr.c **** 
+  24:src/hbprotocol/cobsr.c **** /*****************************************************************************
+  25:src/hbprotocol/cobsr.c ****  * Functions
+  26:src/hbprotocol/cobsr.c ****  ****************************************************************************/
+  27:src/hbprotocol/cobsr.c **** 
+  28:src/hbprotocol/cobsr.c **** /* COBS/R-encode a string of input bytes, which may save one byte of output.
+  29:src/hbprotocol/cobsr.c ****  *
+  30:src/hbprotocol/cobsr.c ****  * dst_buf_ptr:    The buffer into which the result will be written
+  31:src/hbprotocol/cobsr.c ****  * dst_buf_len:    Length of the buffer into which the result will be written
+ARM GAS  /tmp/ccCKyHOs.s 			page 2
+
+
+  32:src/hbprotocol/cobsr.c ****  * src_ptr:        The byte string to be encoded
+  33:src/hbprotocol/cobsr.c ****  * src_len         Length of the byte string to be encoded
+  34:src/hbprotocol/cobsr.c ****  *
+  35:src/hbprotocol/cobsr.c ****  * returns:        A struct containing the success status of the encoding
+  36:src/hbprotocol/cobsr.c ****  *                 operation and the length of the result (that was written to
+  37:src/hbprotocol/cobsr.c ****  *                 dst_buf_ptr)
+  38:src/hbprotocol/cobsr.c ****  */
+  39:src/hbprotocol/cobsr.c **** cobsr_encode_result cobsr_encode(uint8_t * dst_buf_ptr, size_t dst_buf_len,
+  40:src/hbprotocol/cobsr.c ****                                  const uint8_t * src_ptr, size_t src_len)
+  41:src/hbprotocol/cobsr.c **** {
+  28              		.loc 1 41 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 4, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 41 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 28
+  36              		.cfi_offset 4, -28
+  37              		.cfi_offset 5, -24
+  38              		.cfi_offset 6, -20
+  39              		.cfi_offset 7, -16
+  40              		.cfi_offset 8, -12
+  41              		.cfi_offset 9, -8
+  42              		.cfi_offset 14, -4
+  43 0004 079E     		ldr	r6, [sp, #28]
+  42:src/hbprotocol/cobsr.c ****     cobsr_encode_result result              = { 0, COBSR_ENCODE_OK };
+  44              		.loc 1 42 5 is_stmt 1 view .LVU2
+  45              		.loc 1 42 25 is_stmt 0 view .LVU3
+  46 0006 0024     		movs	r4, #0
+  47 0008 0460     		str	r4, [r0]
+  48 000a 0471     		strb	r4, [r0, #4]
+  43:src/hbprotocol/cobsr.c ****     const uint8_t *     src_read_ptr        = src_ptr;
+  49              		.loc 1 43 5 is_stmt 1 view .LVU4
+  50              	.LVL1:
+  44:src/hbprotocol/cobsr.c ****     const uint8_t *     src_end_ptr         = src_ptr + src_len;
+  51              		.loc 1 44 5 view .LVU5
+  52              		.loc 1 44 25 is_stmt 0 view .LVU6
+  53 000c 9F19     		adds	r7, r3, r6
+  54              	.LVL2:
+  45:src/hbprotocol/cobsr.c ****     uint8_t *           dst_buf_start_ptr   = dst_buf_ptr;
+  55              		.loc 1 45 5 is_stmt 1 view .LVU7
+  46:src/hbprotocol/cobsr.c ****     uint8_t *           dst_buf_end_ptr     = dst_buf_ptr + dst_buf_len;
+  56              		.loc 1 46 5 view .LVU8
+  57              		.loc 1 46 25 is_stmt 0 view .LVU9
+  58 000e 8D18     		adds	r5, r1, r2
+  59              	.LVL3:
+  47:src/hbprotocol/cobsr.c ****     uint8_t *           dst_code_write_ptr  = dst_buf_ptr;
+  60              		.loc 1 47 5 is_stmt 1 view .LVU10
+  48:src/hbprotocol/cobsr.c ****     uint8_t *           dst_write_ptr       = dst_code_write_ptr + 1;
+  61              		.loc 1 48 5 view .LVU11
+  49:src/hbprotocol/cobsr.c ****     uint8_t             src_byte            = 0;
+  62              		.loc 1 49 5 view .LVU12
+  50:src/hbprotocol/cobsr.c ****     uint8_t             src_byte_next       = *src_read_ptr;
+  63              		.loc 1 50 5 view .LVU13
+  64              		.loc 1 50 25 is_stmt 0 view .LVU14
+  65 0010 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ARM GAS  /tmp/ccCKyHOs.s 			page 3
+
+
+  66              	.LVL4:
+  51:src/hbprotocol/cobsr.c **** 
+  52:src/hbprotocol/cobsr.c ****     uint8_t             search_len          = 1;
+  67              		.loc 1 52 5 is_stmt 1 view .LVU15
+  53:src/hbprotocol/cobsr.c **** 
+  54:src/hbprotocol/cobsr.c **** 
+  55:src/hbprotocol/cobsr.c ****     /* First, do a NULL pointer check and return immediately if it fails. */
+  56:src/hbprotocol/cobsr.c ****     if ((dst_buf_ptr == NULL) || (src_ptr == NULL))
+  68              		.loc 1 56 5 view .LVU16
+  69              		.loc 1 56 8 is_stmt 0 view .LVU17
+  70 0012 81B1     		cbz	r1, .L18
+  71 0014 01F1010E 		add	lr, r1, #1
+  72              	.LVL5:
+  57:src/hbprotocol/cobsr.c ****     {
+  58:src/hbprotocol/cobsr.c ****         result.status = COBSR_ENCODE_NULL_POINTER;
+  59:src/hbprotocol/cobsr.c ****         return result;
+  60:src/hbprotocol/cobsr.c ****     }
+  61:src/hbprotocol/cobsr.c **** 
+  62:src/hbprotocol/cobsr.c ****     if (src_len != 0)
+  73              		.loc 1 62 5 is_stmt 1 view .LVU18
+  74              		.loc 1 62 8 is_stmt 0 view .LVU19
+  75 0018 86B9     		cbnz	r6, .L13
+  47:src/hbprotocol/cobsr.c ****     uint8_t *           dst_write_ptr       = dst_code_write_ptr + 1;
+  76              		.loc 1 47 25 view .LVU20
+  77 001a 8846     		mov	r8, r1
+  52:src/hbprotocol/cobsr.c **** 
+  78              		.loc 1 52 25 view .LVU21
+  79 001c 4FF0010C 		mov	ip, #1
+  49:src/hbprotocol/cobsr.c ****     uint8_t             src_byte_next       = *src_read_ptr;
+  80              		.loc 1 49 25 view .LVU22
+  81 0020 0022     		movs	r2, #0
+  82              	.LVL6:
+  83              	.L5:
+  63:src/hbprotocol/cobsr.c ****     {
+  64:src/hbprotocol/cobsr.c ****         /* Iterate over the source bytes */
+  65:src/hbprotocol/cobsr.c ****         for (;;)
+  66:src/hbprotocol/cobsr.c ****         {
+  67:src/hbprotocol/cobsr.c ****             /* Check for running out of output buffer space */
+  68:src/hbprotocol/cobsr.c ****             if (dst_write_ptr >= dst_buf_end_ptr)
+  69:src/hbprotocol/cobsr.c ****             {
+  70:src/hbprotocol/cobsr.c ****                 result.status |= COBSR_ENCODE_OUT_BUFFER_OVERFLOW;
+  71:src/hbprotocol/cobsr.c ****                 break;
+  72:src/hbprotocol/cobsr.c ****             }
+  73:src/hbprotocol/cobsr.c ****             src_byte = src_byte_next;
+  74:src/hbprotocol/cobsr.c ****             if ( (src_read_ptr+1) <= src_end_ptr)
+  75:src/hbprotocol/cobsr.c ****             {
+  76:src/hbprotocol/cobsr.c ****                 src_byte_next = *(src_read_ptr++ + 1);
+  77:src/hbprotocol/cobsr.c ****             }
+  78:src/hbprotocol/cobsr.c ****             if (src_byte == 0)
+  79:src/hbprotocol/cobsr.c ****             {
+  80:src/hbprotocol/cobsr.c ****                 /* We found a zero byte */
+  81:src/hbprotocol/cobsr.c ****                 *dst_code_write_ptr = search_len;
+  82:src/hbprotocol/cobsr.c ****                 dst_code_write_ptr = dst_write_ptr++;
+  83:src/hbprotocol/cobsr.c ****                 search_len = 1;
+  84:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+  85:src/hbprotocol/cobsr.c ****                 {
+  86:src/hbprotocol/cobsr.c ****                     break;
+ARM GAS  /tmp/ccCKyHOs.s 			page 4
+
+
+  87:src/hbprotocol/cobsr.c ****                 }
+  88:src/hbprotocol/cobsr.c ****             }
+  89:src/hbprotocol/cobsr.c ****             else
+  90:src/hbprotocol/cobsr.c ****             {
+  91:src/hbprotocol/cobsr.c ****                 /* Copy the non-zero byte to the destination buffer */
+  92:src/hbprotocol/cobsr.c ****                 *dst_write_ptr++ = src_byte;
+  93:src/hbprotocol/cobsr.c ****                 search_len++;
+  94:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+  95:src/hbprotocol/cobsr.c ****                 {
+  96:src/hbprotocol/cobsr.c ****                     break;
+  97:src/hbprotocol/cobsr.c ****                 }
+  98:src/hbprotocol/cobsr.c ****                 if (search_len == 0xFF)
+  99:src/hbprotocol/cobsr.c ****                 {
+ 100:src/hbprotocol/cobsr.c ****                     /* We have a long string of non-zero bytes, so we need
+ 101:src/hbprotocol/cobsr.c ****                      * to write out a length code of 0xFF. */
+ 102:src/hbprotocol/cobsr.c ****                     *dst_code_write_ptr = search_len;
+ 103:src/hbprotocol/cobsr.c ****                     dst_code_write_ptr = dst_write_ptr++;
+ 104:src/hbprotocol/cobsr.c ****                     search_len = 1;
+ 105:src/hbprotocol/cobsr.c ****                 }
+ 106:src/hbprotocol/cobsr.c ****             }
+ 107:src/hbprotocol/cobsr.c ****         }
+ 108:src/hbprotocol/cobsr.c ****     }
+ 109:src/hbprotocol/cobsr.c **** 
+ 110:src/hbprotocol/cobsr.c ****     /* We've reached the end of the source data (or possibly run out of output buffer)
+ 111:src/hbprotocol/cobsr.c ****      * Finalise the remaining output. In particular, write the code (length) byte.
+ 112:src/hbprotocol/cobsr.c ****      *
+ 113:src/hbprotocol/cobsr.c ****      * For COBS/R, the final code (length) byte is special: if the final data byte is
+ 114:src/hbprotocol/cobsr.c ****      * greater than or equal to what would normally be the final code (length) byte,
+ 115:src/hbprotocol/cobsr.c ****      * then replace the final code byte with the final data byte, and remove the final
+ 116:src/hbprotocol/cobsr.c ****      * data byte from the end of the sequence. This saves one byte in the output.
+ 117:src/hbprotocol/cobsr.c ****      *
+ 118:src/hbprotocol/cobsr.c ****      * Update the pointer to calculate the final output length.
+ 119:src/hbprotocol/cobsr.c ****      */
+ 120:src/hbprotocol/cobsr.c ****     if (dst_code_write_ptr >= dst_buf_end_ptr)
+  84              		.loc 1 120 5 is_stmt 1 view .LVU23
+  85              		.loc 1 120 8 is_stmt 0 view .LVU24
+  86 0022 A845     		cmp	r8, r5
+  87 0024 47D3     		bcc	.L10
+ 121:src/hbprotocol/cobsr.c ****     {
+ 122:src/hbprotocol/cobsr.c ****         /* We've run out of output buffer to write the code byte. */
+ 123:src/hbprotocol/cobsr.c ****         result.status |= COBSR_ENCODE_OUT_BUFFER_OVERFLOW;
+  88              		.loc 1 123 9 is_stmt 1 view .LVU25
+  89              		.loc 1 123 15 is_stmt 0 view .LVU26
+  90 0026 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+  91              		.loc 1 123 23 view .LVU27
+  92 0028 43F00203 		orr	r3, r3, #2
+  93 002c 0371     		strb	r3, [r0, #4]
+ 124:src/hbprotocol/cobsr.c ****         dst_write_ptr = dst_buf_end_ptr;
+  94              		.loc 1 124 9 is_stmt 1 view .LVU28
+  95              	.LVL7:
+  96              	.L11:
+ 125:src/hbprotocol/cobsr.c ****     }
+ 126:src/hbprotocol/cobsr.c ****     else
+ 127:src/hbprotocol/cobsr.c ****     {
+ 128:src/hbprotocol/cobsr.c ****         if (src_byte < search_len)
+ 129:src/hbprotocol/cobsr.c ****         {
+ 130:src/hbprotocol/cobsr.c ****             /* Encoding same as plain COBS */
+ARM GAS  /tmp/ccCKyHOs.s 			page 5
+
+
+ 131:src/hbprotocol/cobsr.c ****             *dst_code_write_ptr = search_len;
+ 132:src/hbprotocol/cobsr.c ****         }
+ 133:src/hbprotocol/cobsr.c ****         else
+ 134:src/hbprotocol/cobsr.c ****         {
+ 135:src/hbprotocol/cobsr.c ****             /* Special COBS/R encoding: length code is final byte,
+ 136:src/hbprotocol/cobsr.c ****              * and final byte is removed from data sequence. */
+ 137:src/hbprotocol/cobsr.c ****             *dst_code_write_ptr = src_byte;
+ 138:src/hbprotocol/cobsr.c ****             dst_write_ptr--;
+ 139:src/hbprotocol/cobsr.c ****         }
+ 140:src/hbprotocol/cobsr.c ****     }
+ 141:src/hbprotocol/cobsr.c **** 
+ 142:src/hbprotocol/cobsr.c ****     /* Calculate the output length, from the value of dst_code_write_ptr */
+ 143:src/hbprotocol/cobsr.c ****     result.out_len = dst_write_ptr - dst_buf_start_ptr;
+  97              		.loc 1 143 5 view .LVU29
+  98              		.loc 1 143 36 is_stmt 0 view .LVU30
+  99 002e 6D1A     		subs	r5, r5, r1
+ 100              	.LVL8:
+ 101              		.loc 1 143 20 view .LVU31
+ 102 0030 0560     		str	r5, [r0]
+ 144:src/hbprotocol/cobsr.c **** 
+ 145:src/hbprotocol/cobsr.c ****     return result;
+ 103              		.loc 1 145 5 is_stmt 1 view .LVU32
+ 104              	.LVL9:
+ 105              	.L1:
+ 146:src/hbprotocol/cobsr.c **** }
+ 106              		.loc 1 146 1 is_stmt 0 view .LVU33
+ 107 0032 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 108              	.LVL10:
+ 109              	.L18:
+  58:src/hbprotocol/cobsr.c ****         return result;
+ 110              		.loc 1 58 9 is_stmt 1 view .LVU34
+  58:src/hbprotocol/cobsr.c ****         return result;
+ 111              		.loc 1 58 23 is_stmt 0 view .LVU35
+ 112 0036 0123     		movs	r3, #1
+ 113              	.LVL11:
+  58:src/hbprotocol/cobsr.c ****         return result;
+ 114              		.loc 1 58 23 view .LVU36
+ 115 0038 0371     		strb	r3, [r0, #4]
+  59:src/hbprotocol/cobsr.c ****     }
+ 116              		.loc 1 59 9 is_stmt 1 view .LVU37
+  59:src/hbprotocol/cobsr.c ****     }
+ 117              		.loc 1 59 16 is_stmt 0 view .LVU38
+ 118 003a FAE7     		b	.L1
+ 119              	.LVL12:
+ 120              	.L13:
+  47:src/hbprotocol/cobsr.c ****     uint8_t *           dst_write_ptr       = dst_code_write_ptr + 1;
+ 121              		.loc 1 47 25 view .LVU39
+ 122 003c 8846     		mov	r8, r1
+  52:src/hbprotocol/cobsr.c **** 
+ 123              		.loc 1 52 25 view .LVU40
+ 124 003e 4FF0010C 		mov	ip, #1
+  49:src/hbprotocol/cobsr.c ****     uint8_t             src_byte_next       = *src_read_ptr;
+ 125              		.loc 1 49 25 view .LVU41
+ 126 0042 4FF00009 		mov	r9, #0
+ 127 0046 14E0     		b	.L4
+ 128              	.LVL13:
+ 129              	.L20:
+ARM GAS  /tmp/ccCKyHOs.s 			page 6
+
+
+  70:src/hbprotocol/cobsr.c ****                 break;
+ 130              		.loc 1 70 17 is_stmt 1 view .LVU42
+  70:src/hbprotocol/cobsr.c ****                 break;
+ 131              		.loc 1 70 31 is_stmt 0 view .LVU43
+ 132 0048 0223     		movs	r3, #2
+ 133              	.LVL14:
+  70:src/hbprotocol/cobsr.c ****                 break;
+ 134              		.loc 1 70 31 view .LVU44
+ 135 004a 0371     		strb	r3, [r0, #4]
+  71:src/hbprotocol/cobsr.c ****             }
+ 136              		.loc 1 71 17 is_stmt 1 view .LVU45
+ 137 004c 4A46     		mov	r2, r9
+ 138              	.LVL15:
+  71:src/hbprotocol/cobsr.c ****             }
+ 139              		.loc 1 71 17 is_stmt 0 view .LVU46
+ 140 004e E8E7     		b	.L5
+ 141              	.LVL16:
+ 142              	.L14:
+  71:src/hbprotocol/cobsr.c ****             }
+ 143              		.loc 1 71 17 view .LVU47
+ 144 0050 1646     		mov	r6, r2
+ 145 0052 15E0     		b	.L7
+ 146              	.LVL17:
+ 147              	.L8:
+  92:src/hbprotocol/cobsr.c ****                 search_len++;
+ 148              		.loc 1 92 17 is_stmt 1 view .LVU48
+  92:src/hbprotocol/cobsr.c ****                 search_len++;
+ 149              		.loc 1 92 31 is_stmt 0 view .LVU49
+ 150 0054 7446     		mov	r4, lr
+ 151              	.LVL18:
+  92:src/hbprotocol/cobsr.c ****                 search_len++;
+ 152              		.loc 1 92 34 view .LVU50
+ 153 0056 04F8012B 		strb	r2, [r4], #1
+ 154              	.LVL19:
+  93:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 155              		.loc 1 93 17 is_stmt 1 view .LVU51
+  93:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 156              		.loc 1 93 27 is_stmt 0 view .LVU52
+ 157 005a 0CF1010C 		add	ip, ip, #1
+ 158              	.LVL20:
+  93:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 159              		.loc 1 93 27 view .LVU53
+ 160 005e 5FFA8CFC 		uxtb	ip, ip
+ 161              	.LVL21:
+  94:src/hbprotocol/cobsr.c ****                 {
+ 162              		.loc 1 94 17 is_stmt 1 view .LVU54
+  94:src/hbprotocol/cobsr.c ****                 {
+ 163              		.loc 1 94 20 is_stmt 0 view .LVU55
+ 164 0062 BB42     		cmp	r3, r7
+ 165 0064 25D2     		bcs	.L16
+  98:src/hbprotocol/cobsr.c ****                 {
+ 166              		.loc 1 98 17 is_stmt 1 view .LVU56
+  98:src/hbprotocol/cobsr.c ****                 {
+ 167              		.loc 1 98 20 is_stmt 0 view .LVU57
+ 168 0066 BCF1FF0F 		cmp	ip, #255
+ 169 006a 15D0     		beq	.L19
+ 170              	.LVL22:
+ARM GAS  /tmp/ccCKyHOs.s 			page 7
+
+
+ 171              	.L9:
+  83:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 172              		.loc 1 83 28 view .LVU58
+ 173 006c 9146     		mov	r9, r2
+ 174 006e 3246     		mov	r2, r6
+ 175              	.LVL23:
+  83:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 176              		.loc 1 83 28 view .LVU59
+ 177 0070 A646     		mov	lr, r4
+ 178              	.LVL24:
+ 179              	.L4:
+  65:src/hbprotocol/cobsr.c ****         {
+ 180              		.loc 1 65 9 is_stmt 1 view .LVU60
+  68:src/hbprotocol/cobsr.c ****             {
+ 181              		.loc 1 68 13 view .LVU61
+  68:src/hbprotocol/cobsr.c ****             {
+ 182              		.loc 1 68 16 is_stmt 0 view .LVU62
+ 183 0072 AE45     		cmp	lr, r5
+ 184 0074 E8D2     		bcs	.L20
+  73:src/hbprotocol/cobsr.c ****             if ( (src_read_ptr+1) <= src_end_ptr)
+ 185              		.loc 1 73 13 is_stmt 1 view .LVU63
+ 186              	.LVL25:
+  74:src/hbprotocol/cobsr.c ****             {
+ 187              		.loc 1 74 13 view .LVU64
+  74:src/hbprotocol/cobsr.c ****             {
+ 188              		.loc 1 74 31 is_stmt 0 view .LVU65
+ 189 0076 5C1C     		adds	r4, r3, #1
+  74:src/hbprotocol/cobsr.c ****             {
+ 190              		.loc 1 74 16 view .LVU66
+ 191 0078 BC42     		cmp	r4, r7
+ 192 007a E9D8     		bhi	.L14
+  76:src/hbprotocol/cobsr.c ****             }
+ 193              		.loc 1 76 17 is_stmt 1 view .LVU67
+ 194              	.LVL26:
+  76:src/hbprotocol/cobsr.c ****             }
+ 195              		.loc 1 76 31 is_stmt 0 view .LVU68
+ 196 007c 5E78     		ldrb	r6, [r3, #1]	@ zero_extendqisi2
+ 197              	.LVL27:
+  76:src/hbprotocol/cobsr.c ****             }
+ 198              		.loc 1 76 47 view .LVU69
+ 199 007e 2346     		mov	r3, r4
+ 200              	.LVL28:
+ 201              	.L7:
+  78:src/hbprotocol/cobsr.c ****             {
+ 202              		.loc 1 78 13 is_stmt 1 view .LVU70
+  78:src/hbprotocol/cobsr.c ****             {
+ 203              		.loc 1 78 16 is_stmt 0 view .LVU71
+ 204 0080 002A     		cmp	r2, #0
+ 205 0082 E7D1     		bne	.L8
+  81:src/hbprotocol/cobsr.c ****                 dst_code_write_ptr = dst_write_ptr++;
+ 206              		.loc 1 81 17 is_stmt 1 view .LVU72
+  81:src/hbprotocol/cobsr.c ****                 dst_code_write_ptr = dst_write_ptr++;
+ 207              		.loc 1 81 37 is_stmt 0 view .LVU73
+ 208 0084 88F800C0 		strb	ip, [r8]
+  82:src/hbprotocol/cobsr.c ****                 search_len = 1;
+ 209              		.loc 1 82 17 is_stmt 1 view .LVU74
+  82:src/hbprotocol/cobsr.c ****                 search_len = 1;
+ARM GAS  /tmp/ccCKyHOs.s 			page 8
+
+
+ 210              		.loc 1 82 51 is_stmt 0 view .LVU75
+ 211 0088 0EF10104 		add	r4, lr, #1
+ 212              	.LVL29:
+  83:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 213              		.loc 1 83 17 is_stmt 1 view .LVU76
+  84:src/hbprotocol/cobsr.c ****                 {
+ 214              		.loc 1 84 17 view .LVU77
+  84:src/hbprotocol/cobsr.c ****                 {
+ 215              		.loc 1 84 20 is_stmt 0 view .LVU78
+ 216 008c BB42     		cmp	r3, r7
+ 217 008e 0BD2     		bcs	.L15
+  82:src/hbprotocol/cobsr.c ****                 search_len = 1;
+ 218              		.loc 1 82 36 view .LVU79
+ 219 0090 F046     		mov	r8, lr
+  83:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 220              		.loc 1 83 28 view .LVU80
+ 221 0092 4FF0010C 		mov	ip, #1
+ 222 0096 E9E7     		b	.L9
+ 223              	.LVL30:
+ 224              	.L19:
+ 102:src/hbprotocol/cobsr.c ****                     dst_code_write_ptr = dst_write_ptr++;
+ 225              		.loc 1 102 21 is_stmt 1 view .LVU81
+ 102:src/hbprotocol/cobsr.c ****                     dst_code_write_ptr = dst_write_ptr++;
+ 226              		.loc 1 102 41 is_stmt 0 view .LVU82
+ 227 0098 88F800C0 		strb	ip, [r8]
+ 103:src/hbprotocol/cobsr.c ****                     search_len = 1;
+ 228              		.loc 1 103 21 is_stmt 1 view .LVU83
+ 229              	.LVL31:
+ 104:src/hbprotocol/cobsr.c ****                 }
+ 230              		.loc 1 104 21 view .LVU84
+ 103:src/hbprotocol/cobsr.c ****                     search_len = 1;
+ 231              		.loc 1 103 40 is_stmt 0 view .LVU85
+ 232 009c A046     		mov	r8, r4
+ 103:src/hbprotocol/cobsr.c ****                     search_len = 1;
+ 233              		.loc 1 103 55 view .LVU86
+ 234 009e 0EF10204 		add	r4, lr, #2
+ 235              	.LVL32:
+ 104:src/hbprotocol/cobsr.c ****                 }
+ 236              		.loc 1 104 32 view .LVU87
+ 237 00a2 4FF0010C 		mov	ip, #1
+ 238 00a6 E1E7     		b	.L9
+ 239              	.LVL33:
+ 240              	.L15:
+  82:src/hbprotocol/cobsr.c ****                 search_len = 1;
+ 241              		.loc 1 82 36 view .LVU88
+ 242 00a8 F046     		mov	r8, lr
+  82:src/hbprotocol/cobsr.c ****                 search_len = 1;
+ 243              		.loc 1 82 51 view .LVU89
+ 244 00aa A646     		mov	lr, r4
+ 245              	.LVL34:
+  83:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
+ 246              		.loc 1 83 28 view .LVU90
+ 247 00ac 4FF0010C 		mov	ip, #1
+ 248 00b0 B7E7     		b	.L5
+ 249              	.LVL35:
+ 250              	.L16:
+  92:src/hbprotocol/cobsr.c ****                 search_len++;
+ARM GAS  /tmp/ccCKyHOs.s 			page 9
+
+
+ 251              		.loc 1 92 31 view .LVU91
+ 252 00b2 A646     		mov	lr, r4
+ 253 00b4 B5E7     		b	.L5
+ 254              	.LVL36:
+ 255              	.L10:
+ 128:src/hbprotocol/cobsr.c ****         {
+ 256              		.loc 1 128 9 is_stmt 1 view .LVU92
+ 128:src/hbprotocol/cobsr.c ****         {
+ 257              		.loc 1 128 12 is_stmt 0 view .LVU93
+ 258 00b6 6245     		cmp	r2, ip
+ 259 00b8 03D2     		bcs	.L12
+ 131:src/hbprotocol/cobsr.c ****         }
+ 260              		.loc 1 131 13 is_stmt 1 view .LVU94
+ 131:src/hbprotocol/cobsr.c ****         }
+ 261              		.loc 1 131 33 is_stmt 0 view .LVU95
+ 262 00ba 88F800C0 		strb	ip, [r8]
+ 263 00be 7546     		mov	r5, lr
+ 264              	.LVL37:
+ 131:src/hbprotocol/cobsr.c ****         }
+ 265              		.loc 1 131 33 view .LVU96
+ 266 00c0 B5E7     		b	.L11
+ 267              	.LVL38:
+ 268              	.L12:
+ 137:src/hbprotocol/cobsr.c ****             dst_write_ptr--;
+ 269              		.loc 1 137 13 is_stmt 1 view .LVU97
+ 137:src/hbprotocol/cobsr.c ****             dst_write_ptr--;
+ 270              		.loc 1 137 33 is_stmt 0 view .LVU98
+ 271 00c2 88F80020 		strb	r2, [r8]
+ 138:src/hbprotocol/cobsr.c ****         }
+ 272              		.loc 1 138 13 is_stmt 1 view .LVU99
+ 138:src/hbprotocol/cobsr.c ****         }
+ 273              		.loc 1 138 26 is_stmt 0 view .LVU100
+ 274 00c6 0EF1FF35 		add	r5, lr, #-1
+ 275              	.LVL39:
+ 138:src/hbprotocol/cobsr.c ****         }
+ 276              		.loc 1 138 26 view .LVU101
+ 277 00ca B0E7     		b	.L11
+ 278              		.cfi_endproc
+ 279              	.LFE0:
+ 281              		.section	.text.cobsr_decode,"ax",%progbits
+ 282              		.align	1
+ 283              		.global	cobsr_decode
+ 284              		.syntax unified
+ 285              		.thumb
+ 286              		.thumb_func
+ 288              	cobsr_decode:
+ 289              	.LVL40:
+ 290              	.LFB1:
+ 147:src/hbprotocol/cobsr.c **** 
+ 148:src/hbprotocol/cobsr.c **** 
+ 149:src/hbprotocol/cobsr.c **** /* Decode a COBS/R byte string.
+ 150:src/hbprotocol/cobsr.c ****  *
+ 151:src/hbprotocol/cobsr.c ****  * dst_buf_ptr:    The buffer into which the result will be written
+ 152:src/hbprotocol/cobsr.c ****  * dst_buf_len:    Length of the buffer into which the result will be written
+ 153:src/hbprotocol/cobsr.c ****  * src_ptr:        The byte string to be decoded
+ 154:src/hbprotocol/cobsr.c ****  * src_len         Length of the byte string to be decoded
+ 155:src/hbprotocol/cobsr.c ****  *
+ARM GAS  /tmp/ccCKyHOs.s 			page 10
+
+
+ 156:src/hbprotocol/cobsr.c ****  * returns:        A struct containing the success status of the decoding
+ 157:src/hbprotocol/cobsr.c ****  *                 operation and the length of the result (that was written to
+ 158:src/hbprotocol/cobsr.c ****  *                 dst_buf_ptr)
+ 159:src/hbprotocol/cobsr.c ****  */
+ 160:src/hbprotocol/cobsr.c **** cobsr_decode_result cobsr_decode(uint8_t * dst_buf_ptr, size_t dst_buf_len,
+ 161:src/hbprotocol/cobsr.c ****                                  const uint8_t * src_ptr, size_t src_len)
+ 162:src/hbprotocol/cobsr.c **** {
+ 291              		.loc 1 162 1 is_stmt 1 view -0
+ 292              		.cfi_startproc
+ 293              		@ args = 4, pretend = 0, frame = 0
+ 294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 295              		.loc 1 162 1 is_stmt 0 view .LVU103
+ 296 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 297              	.LCFI1:
+ 298              		.cfi_def_cfa_offset 24
+ 299              		.cfi_offset 4, -24
+ 300              		.cfi_offset 5, -20
+ 301              		.cfi_offset 6, -16
+ 302              		.cfi_offset 7, -12
+ 303              		.cfi_offset 8, -8
+ 304              		.cfi_offset 14, -4
+ 305 0004 0C46     		mov	r4, r1
+ 306 0006 069F     		ldr	r7, [sp, #24]
+ 163:src/hbprotocol/cobsr.c ****     cobsr_decode_result result              = { 0, COBSR_DECODE_OK };
+ 307              		.loc 1 163 5 is_stmt 1 view .LVU104
+ 308              		.loc 1 163 25 is_stmt 0 view .LVU105
+ 309 0008 0021     		movs	r1, #0
+ 310              	.LVL41:
+ 311              		.loc 1 163 25 view .LVU106
+ 312 000a 0160     		str	r1, [r0]
+ 313 000c 0171     		strb	r1, [r0, #4]
+ 164:src/hbprotocol/cobsr.c ****     const uint8_t *     src_read_ptr        = src_ptr;
+ 314              		.loc 1 164 5 is_stmt 1 view .LVU107
+ 315              	.LVL42:
+ 165:src/hbprotocol/cobsr.c ****     const uint8_t *     src_end_ptr         = src_ptr + src_len;
+ 316              		.loc 1 165 5 view .LVU108
+ 317              		.loc 1 165 25 is_stmt 0 view .LVU109
+ 318 000e DE19     		adds	r6, r3, r7
+ 319              	.LVL43:
+ 166:src/hbprotocol/cobsr.c ****     uint8_t *           dst_buf_start_ptr   = dst_buf_ptr;
+ 320              		.loc 1 166 5 is_stmt 1 view .LVU110
+ 167:src/hbprotocol/cobsr.c ****     uint8_t *           dst_buf_end_ptr     = dst_buf_ptr + dst_buf_len;
+ 321              		.loc 1 167 5 view .LVU111
+ 322              		.loc 1 167 25 is_stmt 0 view .LVU112
+ 323 0010 A518     		adds	r5, r4, r2
+ 324              	.LVL44:
+ 168:src/hbprotocol/cobsr.c ****     uint8_t *           dst_write_ptr       = dst_buf_ptr;
+ 325              		.loc 1 168 5 is_stmt 1 view .LVU113
+ 169:src/hbprotocol/cobsr.c ****     size_t              remaining_input_bytes;
+ 326              		.loc 1 169 5 view .LVU114
+ 170:src/hbprotocol/cobsr.c ****     size_t              remaining_output_bytes;
+ 327              		.loc 1 170 5 view .LVU115
+ 171:src/hbprotocol/cobsr.c ****     size_t              num_output_bytes;
+ 328              		.loc 1 171 5 view .LVU116
+ 172:src/hbprotocol/cobsr.c ****     uint8_t             src_byte;
+ 329              		.loc 1 172 5 view .LVU117
+ 173:src/hbprotocol/cobsr.c ****     uint8_t             i;
+ARM GAS  /tmp/ccCKyHOs.s 			page 11
+
+
+ 330              		.loc 1 173 5 view .LVU118
+ 174:src/hbprotocol/cobsr.c ****     uint8_t             len_code;
+ 331              		.loc 1 174 5 view .LVU119
+ 175:src/hbprotocol/cobsr.c **** 
+ 176:src/hbprotocol/cobsr.c **** 
+ 177:src/hbprotocol/cobsr.c ****     /* First, do a NULL pointer check and return immediately if it fails. */
+ 178:src/hbprotocol/cobsr.c ****     if ((dst_buf_ptr == NULL) || (src_ptr == NULL))
+ 332              		.loc 1 178 5 view .LVU120
+ 333              		.loc 1 178 8 is_stmt 0 view .LVU121
+ 334 0012 1CB1     		cbz	r4, .L22
+ 335              		.loc 1 178 31 discriminator 1 view .LVU122
+ 336 0014 13B1     		cbz	r3, .L22
+ 179:src/hbprotocol/cobsr.c ****     {
+ 180:src/hbprotocol/cobsr.c ****         result.status = COBSR_DECODE_NULL_POINTER;
+ 181:src/hbprotocol/cobsr.c ****         return result;
+ 182:src/hbprotocol/cobsr.c ****     }
+ 183:src/hbprotocol/cobsr.c **** 
+ 184:src/hbprotocol/cobsr.c ****     if (src_len != 0)
+ 337              		.loc 1 184 5 is_stmt 1 view .LVU123
+ 338              		.loc 1 184 8 is_stmt 0 view .LVU124
+ 339 0016 5FB1     		cbz	r7, .L21
+ 168:src/hbprotocol/cobsr.c ****     size_t              remaining_input_bytes;
+ 340              		.loc 1 168 25 view .LVU125
+ 341 0018 A446     		mov	ip, r4
+ 342 001a 22E0     		b	.L25
+ 343              	.L22:
+ 180:src/hbprotocol/cobsr.c ****         return result;
+ 344              		.loc 1 180 9 is_stmt 1 view .LVU126
+ 180:src/hbprotocol/cobsr.c ****         return result;
+ 345              		.loc 1 180 23 is_stmt 0 view .LVU127
+ 346 001c 0123     		movs	r3, #1
+ 347              	.LVL45:
+ 180:src/hbprotocol/cobsr.c ****         return result;
+ 348              		.loc 1 180 23 view .LVU128
+ 349 001e 0371     		strb	r3, [r0, #4]
+ 181:src/hbprotocol/cobsr.c ****     }
+ 350              		.loc 1 181 9 is_stmt 1 view .LVU129
+ 181:src/hbprotocol/cobsr.c ****     }
+ 351              		.loc 1 181 16 is_stmt 0 view .LVU130
+ 352 0020 06E0     		b	.L21
+ 353              	.LVL46:
+ 354              	.L46:
+ 185:src/hbprotocol/cobsr.c ****     {
+ 186:src/hbprotocol/cobsr.c ****         for (;;)
+ 187:src/hbprotocol/cobsr.c ****         {
+ 188:src/hbprotocol/cobsr.c ****             len_code = *src_read_ptr++;
+ 189:src/hbprotocol/cobsr.c ****             if (len_code == 0)
+ 190:src/hbprotocol/cobsr.c ****             {
+ 191:src/hbprotocol/cobsr.c ****                 result.status |= COBSR_DECODE_ZERO_BYTE_IN_INPUT;
+ 355              		.loc 1 191 17 is_stmt 1 view .LVU131
+ 356              		.loc 1 191 23 is_stmt 0 view .LVU132
+ 357 0022 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 358              	.LVL47:
+ 359              		.loc 1 191 31 view .LVU133
+ 360 0024 43F00403 		orr	r3, r3, #4
+ 361 0028 0371     		strb	r3, [r0, #4]
+ 192:src/hbprotocol/cobsr.c ****                 break;
+ARM GAS  /tmp/ccCKyHOs.s 			page 12
+
+
+ 362              		.loc 1 192 17 is_stmt 1 view .LVU134
+ 363              	.LVL48:
+ 364              	.L28:
+ 193:src/hbprotocol/cobsr.c ****             }
+ 194:src/hbprotocol/cobsr.c **** 
+ 195:src/hbprotocol/cobsr.c ****             /* Calculate remaining input bytes */
+ 196:src/hbprotocol/cobsr.c ****             remaining_input_bytes = src_end_ptr - src_read_ptr;
+ 197:src/hbprotocol/cobsr.c **** 
+ 198:src/hbprotocol/cobsr.c ****             if ((len_code - 1u) < remaining_input_bytes)
+ 199:src/hbprotocol/cobsr.c ****             {
+ 200:src/hbprotocol/cobsr.c ****                 num_output_bytes = len_code - 1;
+ 201:src/hbprotocol/cobsr.c **** 
+ 202:src/hbprotocol/cobsr.c ****                 /* Check length code against remaining output buffer space */
+ 203:src/hbprotocol/cobsr.c ****                 remaining_output_bytes = dst_buf_end_ptr - dst_write_ptr;
+ 204:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 205:src/hbprotocol/cobsr.c ****                 {
+ 206:src/hbprotocol/cobsr.c ****                     result.status |= COBSR_DECODE_OUT_BUFFER_OVERFLOW;
+ 207:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 208:src/hbprotocol/cobsr.c ****                 }
+ 209:src/hbprotocol/cobsr.c **** 
+ 210:src/hbprotocol/cobsr.c ****                 for (i = num_output_bytes; i != 0; i--)
+ 211:src/hbprotocol/cobsr.c ****                 {
+ 212:src/hbprotocol/cobsr.c ****                     src_byte = *src_read_ptr++;
+ 213:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 214:src/hbprotocol/cobsr.c ****                     {
+ 215:src/hbprotocol/cobsr.c ****                         result.status |= COBSR_DECODE_ZERO_BYTE_IN_INPUT;
+ 216:src/hbprotocol/cobsr.c ****                     }
+ 217:src/hbprotocol/cobsr.c ****                     *dst_write_ptr++ = src_byte;
+ 218:src/hbprotocol/cobsr.c ****                 }
+ 219:src/hbprotocol/cobsr.c **** 
+ 220:src/hbprotocol/cobsr.c ****                 /* Add a zero to the end */
+ 221:src/hbprotocol/cobsr.c ****                 if (len_code != 0xFF)
+ 222:src/hbprotocol/cobsr.c ****                 {
+ 223:src/hbprotocol/cobsr.c ****                     if (dst_write_ptr >= dst_buf_end_ptr)
+ 224:src/hbprotocol/cobsr.c ****                     {
+ 225:src/hbprotocol/cobsr.c ****                         result.status |= COBSR_DECODE_OUT_BUFFER_OVERFLOW;
+ 226:src/hbprotocol/cobsr.c ****                         break;
+ 227:src/hbprotocol/cobsr.c ****                     }
+ 228:src/hbprotocol/cobsr.c ****                     *dst_write_ptr++ = 0;
+ 229:src/hbprotocol/cobsr.c ****                 }
+ 230:src/hbprotocol/cobsr.c ****             }
+ 231:src/hbprotocol/cobsr.c ****             else
+ 232:src/hbprotocol/cobsr.c ****             {
+ 233:src/hbprotocol/cobsr.c ****                 /* We've reached the last length code, so write the remaining
+ 234:src/hbprotocol/cobsr.c ****                  * bytes and then exit the loop. */
+ 235:src/hbprotocol/cobsr.c **** 
+ 236:src/hbprotocol/cobsr.c ****                 num_output_bytes = remaining_input_bytes;
+ 237:src/hbprotocol/cobsr.c **** 
+ 238:src/hbprotocol/cobsr.c ****                 /* Check length code against remaining output buffer space */
+ 239:src/hbprotocol/cobsr.c ****                 remaining_output_bytes = dst_buf_end_ptr - dst_write_ptr;
+ 240:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 241:src/hbprotocol/cobsr.c ****                 {
+ 242:src/hbprotocol/cobsr.c ****                     result.status |= COBSR_DECODE_OUT_BUFFER_OVERFLOW;
+ 243:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 244:src/hbprotocol/cobsr.c ****                 }
+ 245:src/hbprotocol/cobsr.c **** 
+ 246:src/hbprotocol/cobsr.c ****                 for (i = num_output_bytes; i != 0; i--)
+ARM GAS  /tmp/ccCKyHOs.s 			page 13
+
+
+ 247:src/hbprotocol/cobsr.c ****                 {
+ 248:src/hbprotocol/cobsr.c ****                     src_byte = *src_read_ptr++;
+ 249:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 250:src/hbprotocol/cobsr.c ****                     {
+ 251:src/hbprotocol/cobsr.c ****                         result.status |= COBSR_DECODE_ZERO_BYTE_IN_INPUT;
+ 252:src/hbprotocol/cobsr.c ****                     }
+ 253:src/hbprotocol/cobsr.c ****                     *dst_write_ptr++ = src_byte;
+ 254:src/hbprotocol/cobsr.c ****                 }
+ 255:src/hbprotocol/cobsr.c **** 
+ 256:src/hbprotocol/cobsr.c ****                 /* Write final data byte, if applicable for COBS/R encoding. */
+ 257:src/hbprotocol/cobsr.c ****                 if (len_code - 1u > remaining_input_bytes)
+ 258:src/hbprotocol/cobsr.c ****                 {
+ 259:src/hbprotocol/cobsr.c ****                     if (dst_write_ptr >= dst_buf_end_ptr)
+ 260:src/hbprotocol/cobsr.c ****                     {
+ 261:src/hbprotocol/cobsr.c ****                         result.status |= COBSR_DECODE_OUT_BUFFER_OVERFLOW;
+ 262:src/hbprotocol/cobsr.c ****                     }
+ 263:src/hbprotocol/cobsr.c ****                     else
+ 264:src/hbprotocol/cobsr.c ****                     {
+ 265:src/hbprotocol/cobsr.c ****                         *dst_write_ptr++ = len_code;
+ 266:src/hbprotocol/cobsr.c ****                     }
+ 267:src/hbprotocol/cobsr.c ****                 }
+ 268:src/hbprotocol/cobsr.c **** 
+ 269:src/hbprotocol/cobsr.c ****                 /* Exit the loop */
+ 270:src/hbprotocol/cobsr.c ****                 break;
+ 271:src/hbprotocol/cobsr.c ****             }
+ 272:src/hbprotocol/cobsr.c ****         }
+ 273:src/hbprotocol/cobsr.c **** 
+ 274:src/hbprotocol/cobsr.c ****         result.out_len = dst_write_ptr - dst_buf_start_ptr;
+ 365              		.loc 1 274 9 view .LVU135
+ 366              		.loc 1 274 40 is_stmt 0 view .LVU136
+ 367 002a ACEB0404 		sub	r4, ip, r4
+ 368              	.LVL49:
+ 369              		.loc 1 274 24 view .LVU137
+ 370 002e 0460     		str	r4, [r0]
+ 275:src/hbprotocol/cobsr.c ****     }
+ 276:src/hbprotocol/cobsr.c **** 
+ 277:src/hbprotocol/cobsr.c ****     return result;
+ 371              		.loc 1 277 5 is_stmt 1 view .LVU138
+ 372              	.LVL50:
+ 373              	.L21:
+ 278:src/hbprotocol/cobsr.c **** }
+ 374              		.loc 1 278 1 is_stmt 0 view .LVU139
+ 375 0030 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 376              	.LVL51:
+ 377              	.L32:
+ 217:src/hbprotocol/cobsr.c ****                 }
+ 378              		.loc 1 217 21 is_stmt 1 view .LVU140
+ 217:src/hbprotocol/cobsr.c ****                 }
+ 379              		.loc 1 217 38 is_stmt 0 view .LVU141
+ 380 0034 0CF8011B 		strb	r1, [ip], #1
+ 381              	.LVL52:
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 382              		.loc 1 210 53 is_stmt 1 discriminator 2 view .LVU142
+ 383 0038 013A     		subs	r2, r2, #1
+ 384              	.LVL53:
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 385              		.loc 1 210 53 is_stmt 0 discriminator 2 view .LVU143
+ARM GAS  /tmp/ccCKyHOs.s 			page 14
+
+
+ 386 003a D2B2     		uxtb	r2, r2
+ 387              	.LVL54:
+ 388              	.L31:
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 389              		.loc 1 210 46 is_stmt 1 discriminator 1 view .LVU144
+ 390 003c 52B1     		cbz	r2, .L44
+ 212:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 391              		.loc 1 212 21 view .LVU145
+ 392              	.LVL55:
+ 212:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 393              		.loc 1 212 30 is_stmt 0 view .LVU146
+ 394 003e 13F8011B 		ldrb	r1, [r3], #1	@ zero_extendqisi2
+ 395              	.LVL56:
+ 213:src/hbprotocol/cobsr.c ****                     {
+ 396              		.loc 1 213 21 is_stmt 1 view .LVU147
+ 213:src/hbprotocol/cobsr.c ****                     {
+ 397              		.loc 1 213 24 is_stmt 0 view .LVU148
+ 398 0042 0029     		cmp	r1, #0
+ 399 0044 F6D1     		bne	.L32
+ 215:src/hbprotocol/cobsr.c ****                     }
+ 400              		.loc 1 215 25 is_stmt 1 view .LVU149
+ 215:src/hbprotocol/cobsr.c ****                     }
+ 401              		.loc 1 215 31 is_stmt 0 view .LVU150
+ 402 0046 90F804E0 		ldrb	lr, [r0, #4]	@ zero_extendqisi2
+ 215:src/hbprotocol/cobsr.c ****                     }
+ 403              		.loc 1 215 39 view .LVU151
+ 404 004a 4EF0040E 		orr	lr, lr, #4
+ 405 004e 80F804E0 		strb	lr, [r0, #4]
+ 406 0052 EFE7     		b	.L32
+ 407              	.LVL57:
+ 408              	.L44:
+ 221:src/hbprotocol/cobsr.c ****                 {
+ 409              		.loc 1 221 17 is_stmt 1 view .LVU152
+ 221:src/hbprotocol/cobsr.c ****                 {
+ 410              		.loc 1 221 20 is_stmt 0 view .LVU153
+ 411 0054 FF2F     		cmp	r7, #255
+ 412 0056 04D0     		beq	.L25
+ 223:src/hbprotocol/cobsr.c ****                     {
+ 413              		.loc 1 223 21 is_stmt 1 view .LVU154
+ 223:src/hbprotocol/cobsr.c ****                     {
+ 414              		.loc 1 223 24 is_stmt 0 view .LVU155
+ 415 0058 AC45     		cmp	ip, r5
+ 416 005a 17D2     		bcs	.L45
+ 228:src/hbprotocol/cobsr.c ****                 }
+ 417              		.loc 1 228 21 is_stmt 1 view .LVU156
+ 418              	.LVL58:
+ 228:src/hbprotocol/cobsr.c ****                 }
+ 419              		.loc 1 228 38 is_stmt 0 view .LVU157
+ 420 005c 0022     		movs	r2, #0
+ 421              	.LVL59:
+ 228:src/hbprotocol/cobsr.c ****                 }
+ 422              		.loc 1 228 38 view .LVU158
+ 423 005e 0CF8012B 		strb	r2, [ip], #1
+ 424              	.LVL60:
+ 425              	.L25:
+ 186:src/hbprotocol/cobsr.c ****         {
+ 426              		.loc 1 186 9 is_stmt 1 view .LVU159
+ARM GAS  /tmp/ccCKyHOs.s 			page 15
+
+
+ 188:src/hbprotocol/cobsr.c ****             if (len_code == 0)
+ 427              		.loc 1 188 13 view .LVU160
+ 188:src/hbprotocol/cobsr.c ****             if (len_code == 0)
+ 428              		.loc 1 188 22 is_stmt 0 view .LVU161
+ 429 0062 13F8017B 		ldrb	r7, [r3], #1	@ zero_extendqisi2
+ 430              	.LVL61:
+ 189:src/hbprotocol/cobsr.c ****             {
+ 431              		.loc 1 189 13 is_stmt 1 view .LVU162
+ 189:src/hbprotocol/cobsr.c ****             {
+ 432              		.loc 1 189 16 is_stmt 0 view .LVU163
+ 433 0066 002F     		cmp	r7, #0
+ 434 0068 DBD0     		beq	.L46
+ 196:src/hbprotocol/cobsr.c **** 
+ 435              		.loc 1 196 13 is_stmt 1 view .LVU164
+ 196:src/hbprotocol/cobsr.c **** 
+ 436              		.loc 1 196 49 is_stmt 0 view .LVU165
+ 437 006a F21A     		subs	r2, r6, r3
+ 438              	.LVL62:
+ 198:src/hbprotocol/cobsr.c ****             {
+ 439              		.loc 1 198 13 is_stmt 1 view .LVU166
+ 198:src/hbprotocol/cobsr.c ****             {
+ 440              		.loc 1 198 27 is_stmt 0 view .LVU167
+ 441 006c 07F1FF3E 		add	lr, r7, #-1
+ 198:src/hbprotocol/cobsr.c ****             {
+ 442              		.loc 1 198 16 view .LVU168
+ 443 0070 9645     		cmp	lr, r2
+ 444 0072 10D2     		bcs	.L29
+ 200:src/hbprotocol/cobsr.c **** 
+ 445              		.loc 1 200 17 is_stmt 1 view .LVU169
+ 200:src/hbprotocol/cobsr.c **** 
+ 446              		.loc 1 200 45 is_stmt 0 view .LVU170
+ 447 0074 7246     		mov	r2, lr
+ 448              	.LVL63:
+ 203:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 449              		.loc 1 203 17 is_stmt 1 view .LVU171
+ 203:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 450              		.loc 1 203 58 is_stmt 0 view .LVU172
+ 451 0076 A5EB0C01 		sub	r1, r5, ip
+ 452              	.LVL64:
+ 204:src/hbprotocol/cobsr.c ****                 {
+ 453              		.loc 1 204 17 is_stmt 1 view .LVU173
+ 204:src/hbprotocol/cobsr.c ****                 {
+ 454              		.loc 1 204 20 is_stmt 0 view .LVU174
+ 455 007a 8E45     		cmp	lr, r1
+ 456 007c 04D9     		bls	.L30
+ 206:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 457              		.loc 1 206 21 is_stmt 1 view .LVU175
+ 206:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 458              		.loc 1 206 27 is_stmt 0 view .LVU176
+ 459 007e 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+ 460              	.LVL65:
+ 206:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 461              		.loc 1 206 35 view .LVU177
+ 462 0080 42F00202 		orr	r2, r2, #2
+ 463 0084 0271     		strb	r2, [r0, #4]
+ 207:src/hbprotocol/cobsr.c ****                 }
+ 464              		.loc 1 207 21 is_stmt 1 view .LVU178
+ARM GAS  /tmp/ccCKyHOs.s 			page 16
+
+
+ 465              	.LVL66:
+ 207:src/hbprotocol/cobsr.c ****                 }
+ 466              		.loc 1 207 38 is_stmt 0 view .LVU179
+ 467 0086 0A46     		mov	r2, r1
+ 468              	.LVL67:
+ 469              	.L30:
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 470              		.loc 1 210 17 is_stmt 1 view .LVU180
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 471              		.loc 1 210 24 is_stmt 0 view .LVU181
+ 472 0088 D2B2     		uxtb	r2, r2
+ 473              	.LVL68:
+ 210:src/hbprotocol/cobsr.c ****                 {
+ 474              		.loc 1 210 17 view .LVU182
+ 475 008a D7E7     		b	.L31
+ 476              	.LVL69:
+ 477              	.L45:
+ 225:src/hbprotocol/cobsr.c ****                         break;
+ 478              		.loc 1 225 25 is_stmt 1 view .LVU183
+ 225:src/hbprotocol/cobsr.c ****                         break;
+ 479              		.loc 1 225 31 is_stmt 0 view .LVU184
+ 480 008c 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 481              	.LVL70:
+ 225:src/hbprotocol/cobsr.c ****                         break;
+ 482              		.loc 1 225 39 view .LVU185
+ 483 008e 43F00203 		orr	r3, r3, #2
+ 484 0092 0371     		strb	r3, [r0, #4]
+ 226:src/hbprotocol/cobsr.c ****                     }
+ 485              		.loc 1 226 25 is_stmt 1 view .LVU186
+ 486 0094 C9E7     		b	.L28
+ 487              	.LVL71:
+ 488              	.L29:
+ 236:src/hbprotocol/cobsr.c **** 
+ 489              		.loc 1 236 17 view .LVU187
+ 239:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 490              		.loc 1 239 17 view .LVU188
+ 239:src/hbprotocol/cobsr.c ****                 if (num_output_bytes > remaining_output_bytes)
+ 491              		.loc 1 239 58 is_stmt 0 view .LVU189
+ 492 0096 A5EB0C06 		sub	r6, r5, ip
+ 493              	.LVL72:
+ 240:src/hbprotocol/cobsr.c ****                 {
+ 494              		.loc 1 240 17 is_stmt 1 view .LVU190
+ 240:src/hbprotocol/cobsr.c ****                 {
+ 495              		.loc 1 240 20 is_stmt 0 view .LVU191
+ 496 009a B242     		cmp	r2, r6
+ 497 009c 05D9     		bls	.L42
+ 242:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 498              		.loc 1 242 21 is_stmt 1 view .LVU192
+ 242:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 499              		.loc 1 242 27 is_stmt 0 view .LVU193
+ 500 009e 0179     		ldrb	r1, [r0, #4]	@ zero_extendqisi2
+ 242:src/hbprotocol/cobsr.c ****                     num_output_bytes = remaining_output_bytes;
+ 501              		.loc 1 242 35 view .LVU194
+ 502 00a0 41F00201 		orr	r1, r1, #2
+ 503 00a4 0171     		strb	r1, [r0, #4]
+ 243:src/hbprotocol/cobsr.c ****                 }
+ 504              		.loc 1 243 21 is_stmt 1 view .LVU195
+ARM GAS  /tmp/ccCKyHOs.s 			page 17
+
+
+ 505              	.LVL73:
+ 506              	.L36:
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 507              		.loc 1 246 17 view .LVU196
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 508              		.loc 1 246 24 is_stmt 0 view .LVU197
+ 509 00a6 F6B2     		uxtb	r6, r6
+ 510              	.LVL74:
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 511              		.loc 1 246 17 view .LVU198
+ 512 00a8 05E0     		b	.L37
+ 513              	.LVL75:
+ 514              	.L42:
+ 236:src/hbprotocol/cobsr.c **** 
+ 515              		.loc 1 236 34 view .LVU199
+ 516 00aa 1646     		mov	r6, r2
+ 517              	.LVL76:
+ 236:src/hbprotocol/cobsr.c **** 
+ 518              		.loc 1 236 34 view .LVU200
+ 519 00ac FBE7     		b	.L36
+ 520              	.LVL77:
+ 521              	.L38:
+ 253:src/hbprotocol/cobsr.c ****                 }
+ 522              		.loc 1 253 21 is_stmt 1 view .LVU201
+ 253:src/hbprotocol/cobsr.c ****                 }
+ 523              		.loc 1 253 38 is_stmt 0 view .LVU202
+ 524 00ae 0CF8011B 		strb	r1, [ip], #1
+ 525              	.LVL78:
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 526              		.loc 1 246 53 is_stmt 1 discriminator 2 view .LVU203
+ 527 00b2 013E     		subs	r6, r6, #1
+ 528              	.LVL79:
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 529              		.loc 1 246 53 is_stmt 0 discriminator 2 view .LVU204
+ 530 00b4 F6B2     		uxtb	r6, r6
+ 531              	.LVL80:
+ 532              	.L37:
+ 246:src/hbprotocol/cobsr.c ****                 {
+ 533              		.loc 1 246 46 is_stmt 1 discriminator 1 view .LVU205
+ 534 00b6 56B1     		cbz	r6, .L47
+ 248:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 535              		.loc 1 248 21 view .LVU206
+ 536              	.LVL81:
+ 248:src/hbprotocol/cobsr.c ****                     if (src_byte == 0)
+ 537              		.loc 1 248 30 is_stmt 0 view .LVU207
+ 538 00b8 13F8011B 		ldrb	r1, [r3], #1	@ zero_extendqisi2
+ 539              	.LVL82:
+ 249:src/hbprotocol/cobsr.c ****                     {
+ 540              		.loc 1 249 21 is_stmt 1 view .LVU208
+ 249:src/hbprotocol/cobsr.c ****                     {
+ 541              		.loc 1 249 24 is_stmt 0 view .LVU209
+ 542 00bc 0029     		cmp	r1, #0
+ 543 00be F6D1     		bne	.L38
+ 251:src/hbprotocol/cobsr.c ****                     }
+ 544              		.loc 1 251 25 is_stmt 1 view .LVU210
+ 251:src/hbprotocol/cobsr.c ****                     }
+ 545              		.loc 1 251 31 is_stmt 0 view .LVU211
+ARM GAS  /tmp/ccCKyHOs.s 			page 18
+
+
+ 546 00c0 90F80480 		ldrb	r8, [r0, #4]	@ zero_extendqisi2
+ 251:src/hbprotocol/cobsr.c ****                     }
+ 547              		.loc 1 251 39 view .LVU212
+ 548 00c4 48F00408 		orr	r8, r8, #4
+ 549 00c8 80F80480 		strb	r8, [r0, #4]
+ 550 00cc EFE7     		b	.L38
+ 551              	.LVL83:
+ 552              	.L47:
+ 257:src/hbprotocol/cobsr.c ****                 {
+ 553              		.loc 1 257 17 is_stmt 1 view .LVU213
+ 257:src/hbprotocol/cobsr.c ****                 {
+ 554              		.loc 1 257 20 is_stmt 0 view .LVU214
+ 555 00ce 9645     		cmp	lr, r2
+ 556 00d0 ABD9     		bls	.L28
+ 259:src/hbprotocol/cobsr.c ****                     {
+ 557              		.loc 1 259 21 is_stmt 1 view .LVU215
+ 259:src/hbprotocol/cobsr.c ****                     {
+ 558              		.loc 1 259 24 is_stmt 0 view .LVU216
+ 559 00d2 AC45     		cmp	ip, r5
+ 560 00d4 04D3     		bcc	.L40
+ 261:src/hbprotocol/cobsr.c ****                     }
+ 561              		.loc 1 261 25 is_stmt 1 view .LVU217
+ 261:src/hbprotocol/cobsr.c ****                     }
+ 562              		.loc 1 261 31 is_stmt 0 view .LVU218
+ 563 00d6 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 564              	.LVL84:
+ 261:src/hbprotocol/cobsr.c ****                     }
+ 565              		.loc 1 261 39 view .LVU219
+ 566 00d8 43F00203 		orr	r3, r3, #2
+ 567 00dc 0371     		strb	r3, [r0, #4]
+ 568 00de A4E7     		b	.L28
+ 569              	.LVL85:
+ 570              	.L40:
+ 265:src/hbprotocol/cobsr.c ****                     }
+ 571              		.loc 1 265 25 is_stmt 1 view .LVU220
+ 265:src/hbprotocol/cobsr.c ****                     }
+ 572              		.loc 1 265 42 is_stmt 0 view .LVU221
+ 573 00e0 0CF8017B 		strb	r7, [ip], #1
+ 574              	.LVL86:
+ 265:src/hbprotocol/cobsr.c ****                     }
+ 575              		.loc 1 265 42 view .LVU222
+ 576 00e4 A1E7     		b	.L28
+ 577              		.cfi_endproc
+ 578              	.LFE1:
+ 580              		.text
+ 581              	.Letext0:
+ 582              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 583              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 584              		.file 4 "src/hbprotocol/cobsr.h"
+ARM GAS  /tmp/ccCKyHOs.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 cobsr.c
+     /tmp/ccCKyHOs.s:19     .text.cobsr_encode:00000000 $t
+     /tmp/ccCKyHOs.s:25     .text.cobsr_encode:00000000 cobsr_encode
+     /tmp/ccCKyHOs.s:282    .text.cobsr_decode:00000000 $t
+     /tmp/ccCKyHOs.s:288    .text.cobsr_decode:00000000 cobsr_decode
+
+NO UNDEFINED SYMBOLS

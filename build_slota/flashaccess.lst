@@ -1,0 +1,1445 @@
+ARM GAS  /tmp/ccRjGKyO.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"flashaccess.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "src/flashaccess.c"
+  18              		.section	.rodata.writeFlash.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 0D0A666C 		.ascii	"\015\012flash root %lx\000"
+  21      61736820 
+  21      726F6F74 
+  21      20256C78 
+  21      00
+  22 0011 000000   		.align	2
+  23              	.LC1:
+  24 0014 0D0A7065 		.ascii	"\015\012pe %d\000"
+  24      20256400 
+  25              		.align	2
+  26              	.LC2:
+  27 001c 0D0A6572 		.ascii	"\015\012erase fail %d\000"
+  27      61736520 
+  27      6661696C 
+  27      20256400 
+  28              		.align	2
+  29              	.LC3:
+  30 002c 0D0A0D0A 		.ascii	"\015\012\015\012\015\012\015\012 ****** ERASED FLAS"
+  30      0D0A0D0A 
+  30      202A2A2A 
+  30      2A2A2A20 
+  30      45524153 
+  31 0047 48206174 		.ascii	"H at %lx (%ld pages)\000"
+  31      20256C78 
+  31      2028256C 
+  31      64207061 
+  31      67657329 
+  32              		.align	2
+  33              	.LC4:
+  34 005c 0D0A7772 		.ascii	"\015\012write fail %d\000"
+  34      69746520 
+  34      6661696C 
+  34      20256400 
+  35              		.align	2
+  36              	.LC5:
+  37 006c 0D0A7772 		.ascii	"\015\012wrote flash at %lx len %d\000"
+  37      6F746520 
+ARM GAS  /tmp/ccRjGKyO.s 			page 2
+
+
+  37      666C6173 
+  37      68206174 
+  37      20256C78 
+  38              		.section	.text.writeFlash,"ax",%progbits
+  39              		.align	1
+  40              		.global	writeFlash
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  45              	writeFlash:
+  46              	.LVL0:
+  47              	.LFB67:
+   1:src/flashaccess.c **** #include "stm32f1xx_hal.h"
+   2:src/flashaccess.c **** #include "defines.h"
+   3:src/flashaccess.c **** #include "config.h"
+   4:src/flashaccess.c **** #include "comms.h"
+   5:src/flashaccess.c **** #include "flashaccess.h"
+   6:src/flashaccess.c **** #include <string.h>
+   7:src/flashaccess.c **** #include "protocolfunctions.h"
+   8:src/flashaccess.c **** 
+   9:src/flashaccess.c **** 
+  10:src/flashaccess.c **** 
+  11:src/flashaccess.c **** // pages are 2k=0x400 bytes
+  12:src/flashaccess.c **** 
+  13:src/flashaccess.c **** 
+  14:src/flashaccess.c **** // last two pages of the first half
+  15:src/flashaccess.c **** volatile uint8_t *flash_data = (uint8_t *) 0x08000000 + 0x40000 - 0x800;
+  16:src/flashaccess.c **** int flashlen = 4096; // two pages
+  17:src/flashaccess.c **** 
+  18:src/flashaccess.c **** // routines to read and write config data
+  19:src/flashaccess.c **** // we will write at incrementing locations through the flash until we exhaust it, then erase and st
+  20:src/flashaccess.c **** 
+  21:src/flashaccess.c **** 
+  22:src/flashaccess.c **** unsigned short writeFlash16( volatile unsigned short *data, uint16_t len ){
+  23:src/flashaccess.c ****     int outlen = writeFlash( (unsigned char *)data, len*2 );
+  24:src/flashaccess.c ****     if (outlen >= 0){
+  25:src/flashaccess.c ****         outlen /=2;
+  26:src/flashaccess.c ****     }
+  27:src/flashaccess.c ****     return outlen;
+  28:src/flashaccess.c **** }
+  29:src/flashaccess.c **** 
+  30:src/flashaccess.c **** // data will be written 32 bit aligned, with the last long being a length.
+  31:src/flashaccess.c **** // everything AFTER will still be 0xFFFFFFFF
+  32:src/flashaccess.c **** int writeFlash( unsigned char *data, int len ){
+  48              		.loc 1 32 47 view -0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 104
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		.loc 1 32 47 is_stmt 0 view .LVU1
+  53 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  54              	.LCFI0:
+  55              		.cfi_def_cfa_offset 28
+  56              		.cfi_offset 4, -28
+  57              		.cfi_offset 5, -24
+  58              		.cfi_offset 6, -20
+  59              		.cfi_offset 7, -16
+  60              		.cfi_offset 8, -12
+ARM GAS  /tmp/ccRjGKyO.s 			page 3
+
+
+  61              		.cfi_offset 9, -8
+  62              		.cfi_offset 14, -4
+  63 0004 9BB0     		sub	sp, sp, #108
+  64              	.LCFI1:
+  65              		.cfi_def_cfa_offset 136
+  66 0006 0546     		mov	r5, r0
+  67 0008 0F46     		mov	r7, r1
+  33:src/flashaccess.c ****     char tmp[80];
+  68              		.loc 1 33 5 is_stmt 1 view .LVU2
+  34:src/flashaccess.c **** 
+  35:src/flashaccess.c ****     sprintf(tmp, "\r\nflash root %lx", (uint32_t)flash_data);
+  69              		.loc 1 35 5 view .LVU3
+  70 000a 534C     		ldr	r4, .L21
+  71 000c 2268     		ldr	r2, [r4]
+  72 000e 5349     		ldr	r1, .L21+4
+  73              	.LVL1:
+  74              		.loc 1 35 5 is_stmt 0 view .LVU4
+  75 0010 06A8     		add	r0, sp, #24
+  76              	.LVL2:
+  77              		.loc 1 35 5 view .LVU5
+  78 0012 FFF7FEFF 		bl	sprintf
+  79              	.LVL3:
+  36:src/flashaccess.c ****     consoleLog(tmp);
+  80              		.loc 1 36 5 is_stmt 1 view .LVU6
+  81 0016 06A8     		add	r0, sp, #24
+  82 0018 FFF7FEFF 		bl	consoleLog
+  83              	.LVL4:
+  37:src/flashaccess.c **** 
+  38:src/flashaccess.c ****     unsigned short *p = (unsigned short *)flash_data;
+  84              		.loc 1 38 5 view .LVU7
+  85              		.loc 1 38 21 is_stmt 0 view .LVU8
+  86 001c D4F80080 		ldr	r8, [r4]
+  87              	.LVL5:
+  39:src/flashaccess.c ****     int i = (flashlen/2) - 1;
+  88              		.loc 1 39 5 is_stmt 1 view .LVU9
+  89              		.loc 1 39 22 is_stmt 0 view .LVU10
+  90 0020 4F4B     		ldr	r3, .L21+8
+  91 0022 1C68     		ldr	r4, [r3]
+  92 0024 04EBD474 		add	r4, r4, r4, lsr #31
+  93 0028 6410     		asrs	r4, r4, #1
+  94              		.loc 1 39 9 view .LVU11
+  95 002a 013C     		subs	r4, r4, #1
+  96              	.LVL6:
+  40:src/flashaccess.c ****     for (; i > 0; i--){
+  97              		.loc 1 40 5 is_stmt 1 view .LVU12
+  98 002c 00E0     		b	.L2
+  99              	.L15:
+ 100              		.loc 1 40 20 view .LVU13
+ 101 002e 013C     		subs	r4, r4, #1
+ 102              	.LVL7:
+ 103              	.L2:
+ 104              		.loc 1 40 14 discriminator 1 view .LVU14
+ 105 0030 002C     		cmp	r4, #0
+ 106 0032 05DD     		ble	.L3
+  41:src/flashaccess.c ****         if (p[i] != 0xffff){
+ 107              		.loc 1 41 9 view .LVU15
+ 108              		.loc 1 41 14 is_stmt 0 view .LVU16
+ARM GAS  /tmp/ccRjGKyO.s 			page 4
+
+
+ 109 0034 38F81430 		ldrh	r3, [r8, r4, lsl #1]
+ 110              		.loc 1 41 12 view .LVU17
+ 111 0038 4FF6FF76 		movw	r6, #65535
+ 112 003c B342     		cmp	r3, r6
+ 113 003e F6D0     		beq	.L15
+ 114              	.L3:
+  42:src/flashaccess.c ****             break;
+  43:src/flashaccess.c ****         }
+  44:src/flashaccess.c ****     }
+  45:src/flashaccess.c ****     // if we found something, we want to start on the short after it.
+  46:src/flashaccess.c ****     if (i > 0){
+ 115              		.loc 1 46 5 is_stmt 1 view .LVU18
+ 116              		.loc 1 46 8 is_stmt 0 view .LVU19
+ 117 0040 002C     		cmp	r4, #0
+ 118 0042 00DD     		ble	.L5
+  47:src/flashaccess.c ****         i++;
+ 119              		.loc 1 47 9 is_stmt 1 view .LVU20
+ 120              		.loc 1 47 10 is_stmt 0 view .LVU21
+ 121 0044 0134     		adds	r4, r4, #1
+ 122              	.LVL8:
+ 123              	.L5:
+  48:src/flashaccess.c ****     }
+  49:src/flashaccess.c **** 
+  50:src/flashaccess.c ****     sprintf(tmp, "\r\npe %d", i);
+ 124              		.loc 1 50 5 is_stmt 1 view .LVU22
+ 125 0046 2246     		mov	r2, r4
+ 126 0048 4649     		ldr	r1, .L21+12
+ 127 004a 06A8     		add	r0, sp, #24
+ 128 004c FFF7FEFF 		bl	sprintf
+ 129              	.LVL9:
+  51:src/flashaccess.c ****     consoleLog(tmp);
+ 130              		.loc 1 51 5 view .LVU23
+ 131 0050 06A8     		add	r0, sp, #24
+ 132 0052 FFF7FEFF 		bl	consoleLog
+ 133              	.LVL10:
+  52:src/flashaccess.c **** 
+  53:src/flashaccess.c ****     HAL_FLASH_Unlock();
+ 134              		.loc 1 53 5 view .LVU24
+ 135 0056 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 136              	.LVL11:
+  54:src/flashaccess.c ****     unsigned char *start = (unsigned char *)&p[i];
+ 137              		.loc 1 54 5 view .LVU25
+ 138              		.loc 1 54 20 is_stmt 0 view .LVU26
+ 139 005a 08EB4408 		add	r8, r8, r4, lsl #1
+ 140              	.LVL12:
+  55:src/flashaccess.c ****     // if we can't fit in all our data (expanded to 2 byte align) plus the length
+  56:src/flashaccess.c ****     if (flashlen-(i*2) < (((len+1)/2)*2+2)){
+ 141              		.loc 1 56 5 is_stmt 1 view .LVU27
+ 142              		.loc 1 56 17 is_stmt 0 view .LVU28
+ 143 005e 404B     		ldr	r3, .L21+8
+ 144 0060 1B68     		ldr	r3, [r3]
+ 145 0062 A3EB4404 		sub	r4, r3, r4, lsl #1
+ 146              	.LVL13:
+ 147              		.loc 1 56 32 view .LVU29
+ 148 0066 07F10109 		add	r9, r7, #1
+ 149              		.loc 1 56 35 view .LVU30
+ 150 006a 09EBD979 		add	r9, r9, r9, lsr #31
+ARM GAS  /tmp/ccRjGKyO.s 			page 5
+
+
+ 151 006e 4FEA6909 		asr	r9, r9, #1
+ 152              		.loc 1 56 40 view .LVU31
+ 153 0072 09F10102 		add	r2, r9, #1
+ 154              		.loc 1 56 8 view .LVU32
+ 155 0076 B4EB420F 		cmp	r4, r2, lsl #1
+ 156 007a 02DB     		blt	.L16
+ 157              	.LVL14:
+ 158              	.L6:
+  57:src/flashaccess.c ****         // must erase flash page, and then write at start
+  58:src/flashaccess.c ****         i = 0;
+  59:src/flashaccess.c ****         start = (unsigned char *)flash_data;
+  60:src/flashaccess.c ****         FLASH_EraseInitTypeDef eraseinfo;
+  61:src/flashaccess.c ****         eraseinfo.NbPages = ((flashlen+2047)/2048);
+  62:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+  63:src/flashaccess.c ****         eraseinfo.TypeErase = FLASH_TYPEERASE_PAGES;
+  64:src/flashaccess.c **** 
+  65:src/flashaccess.c ****         uint32_t PageError = 0;
+  66:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASHEx_Erase(&eraseinfo, &PageError);
+  67:src/flashaccess.c **** 
+  68:src/flashaccess.c ****         if (res != HAL_OK){
+  69:src/flashaccess.c ****             sprintf(tmp, "\r\nerase fail %d", (int)res);
+  70:src/flashaccess.c ****             consoleLog(tmp);
+  71:src/flashaccess.c ****             HAL_FLASH_Lock();
+  72:src/flashaccess.c ****             return -1;
+  73:src/flashaccess.c ****         }
+  74:src/flashaccess.c **** 
+  75:src/flashaccess.c ****         sprintf(tmp, "\r\n\r\n\r\n\r\n ****** ERASED FLASH at %lx (%ld pages)", eraseinfo.PageAddre
+  76:src/flashaccess.c ****         consoleLog(tmp);
+  77:src/flashaccess.c **** 
+  78:src/flashaccess.c ****     }
+  79:src/flashaccess.c **** 
+  80:src/flashaccess.c ****     // for all our longs to store
+  81:src/flashaccess.c ****     unsigned short *src = (unsigned short *) data;
+ 159              		.loc 1 81 5 is_stmt 1 view .LVU33
+  82:src/flashaccess.c ****     unsigned short *dest = (unsigned short *)start;
+ 160              		.loc 1 82 5 view .LVU34
+  83:src/flashaccess.c ****     for (int j = 0; j < ((len+1)/2); j++){
+ 161              		.loc 1 83 5 view .LVU35
+ 162              	.LBB2:
+ 163              		.loc 1 83 10 view .LVU36
+ 164              		.loc 1 83 10 is_stmt 0 view .LVU37
+ 165              	.LBE2:
+  82:src/flashaccess.c ****     unsigned short *dest = (unsigned short *)start;
+ 166              		.loc 1 82 21 view .LVU38
+ 167 007c 4646     		mov	r6, r8
+ 168              	.LBB5:
+ 169              		.loc 1 83 14 view .LVU39
+ 170 007e 0024     		movs	r4, #0
+ 171              		.loc 1 83 5 view .LVU40
+ 172 0080 2FE0     		b	.L10
+ 173              	.LVL15:
+ 174              	.L16:
+ 175              		.loc 1 83 5 view .LVU41
+ 176              	.LBE5:
+ 177              	.LBB6:
+  58:src/flashaccess.c ****         start = (unsigned char *)flash_data;
+ 178              		.loc 1 58 9 is_stmt 1 view .LVU42
+ARM GAS  /tmp/ccRjGKyO.s 			page 6
+
+
+  59:src/flashaccess.c ****         FLASH_EraseInitTypeDef eraseinfo;
+ 179              		.loc 1 59 9 view .LVU43
+  59:src/flashaccess.c ****         FLASH_EraseInitTypeDef eraseinfo;
+ 180              		.loc 1 59 15 is_stmt 0 view .LVU44
+ 181 0082 354A     		ldr	r2, .L21
+ 182 0084 D2F80080 		ldr	r8, [r2]
+ 183              	.LVL16:
+  60:src/flashaccess.c ****         eraseinfo.NbPages = ((flashlen+2047)/2048);
+ 184              		.loc 1 60 9 is_stmt 1 view .LVU45
+  61:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+ 185              		.loc 1 61 9 view .LVU46
+  61:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+ 186              		.loc 1 61 39 is_stmt 0 view .LVU47
+ 187 0088 03F2FF73 		addw	r3, r3, #2047
+  61:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+ 188              		.loc 1 61 45 view .LVU48
+ 189 008c 002B     		cmp	r3, #0
+ 190 008e 16DB     		blt	.L17
+ 191              	.L7:
+ 192 0090 DB12     		asrs	r3, r3, #11
+  61:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+ 193              		.loc 1 61 27 view .LVU49
+ 194 0092 0593     		str	r3, [sp, #20]
+  62:src/flashaccess.c ****         eraseinfo.TypeErase = FLASH_TYPEERASE_PAGES;
+ 195              		.loc 1 62 9 is_stmt 1 view .LVU50
+  62:src/flashaccess.c ****         eraseinfo.TypeErase = FLASH_TYPEERASE_PAGES;
+ 196              		.loc 1 62 31 is_stmt 0 view .LVU51
+ 197 0094 CDF81080 		str	r8, [sp, #16]
+  63:src/flashaccess.c **** 
+ 198              		.loc 1 63 9 is_stmt 1 view .LVU52
+  63:src/flashaccess.c **** 
+ 199              		.loc 1 63 29 is_stmt 0 view .LVU53
+ 200 0098 0023     		movs	r3, #0
+ 201 009a 0293     		str	r3, [sp, #8]
+  65:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASHEx_Erase(&eraseinfo, &PageError);
+ 202              		.loc 1 65 9 is_stmt 1 view .LVU54
+  65:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASHEx_Erase(&eraseinfo, &PageError);
+ 203              		.loc 1 65 18 is_stmt 0 view .LVU55
+ 204 009c 0193     		str	r3, [sp, #4]
+  66:src/flashaccess.c **** 
+ 205              		.loc 1 66 9 is_stmt 1 view .LVU56
+  66:src/flashaccess.c **** 
+ 206              		.loc 1 66 33 is_stmt 0 view .LVU57
+ 207 009e 01A9     		add	r1, sp, #4
+ 208 00a0 02A8     		add	r0, sp, #8
+ 209 00a2 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 210              	.LVL17:
+  68:src/flashaccess.c ****             sprintf(tmp, "\r\nerase fail %d", (int)res);
+ 211              		.loc 1 68 9 is_stmt 1 view .LVU58
+  68:src/flashaccess.c ****             sprintf(tmp, "\r\nerase fail %d", (int)res);
+ 212              		.loc 1 68 12 is_stmt 0 view .LVU59
+ 213 00a6 0246     		mov	r2, r0
+ 214 00a8 60B9     		cbnz	r0, .L18
+  75:src/flashaccess.c ****         consoleLog(tmp);
+ 215              		.loc 1 75 9 is_stmt 1 view .LVU60
+ 216 00aa 059B     		ldr	r3, [sp, #20]
+ 217 00ac 049A     		ldr	r2, [sp, #16]
+ARM GAS  /tmp/ccRjGKyO.s 			page 7
+
+
+ 218 00ae 2E49     		ldr	r1, .L21+16
+ 219 00b0 06A8     		add	r0, sp, #24
+ 220              	.LVL18:
+  75:src/flashaccess.c ****         consoleLog(tmp);
+ 221              		.loc 1 75 9 is_stmt 0 view .LVU61
+ 222 00b2 FFF7FEFF 		bl	sprintf
+ 223              	.LVL19:
+  76:src/flashaccess.c **** 
+ 224              		.loc 1 76 9 is_stmt 1 view .LVU62
+ 225 00b6 06A8     		add	r0, sp, #24
+ 226 00b8 FFF7FEFF 		bl	consoleLog
+ 227              	.LVL20:
+ 228 00bc DEE7     		b	.L6
+ 229              	.LVL21:
+ 230              	.L17:
+  61:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)flash_data;
+ 231              		.loc 1 61 45 is_stmt 0 view .LVU63
+ 232 00be 03F2FF73 		addw	r3, r3, #2047
+ 233 00c2 E5E7     		b	.L7
+ 234              	.LVL22:
+ 235              	.L18:
+  69:src/flashaccess.c ****             consoleLog(tmp);
+ 236              		.loc 1 69 13 is_stmt 1 view .LVU64
+ 237 00c4 2949     		ldr	r1, .L21+20
+ 238 00c6 06A8     		add	r0, sp, #24
+ 239              	.LVL23:
+  69:src/flashaccess.c ****             consoleLog(tmp);
+ 240              		.loc 1 69 13 is_stmt 0 view .LVU65
+ 241 00c8 FFF7FEFF 		bl	sprintf
+ 242              	.LVL24:
+  70:src/flashaccess.c ****             HAL_FLASH_Lock();
+ 243              		.loc 1 70 13 is_stmt 1 view .LVU66
+ 244 00cc 06A8     		add	r0, sp, #24
+ 245 00ce FFF7FEFF 		bl	consoleLog
+ 246              	.LVL25:
+  71:src/flashaccess.c ****             return -1;
+ 247              		.loc 1 71 13 view .LVU67
+ 248 00d2 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 249              	.LVL26:
+  72:src/flashaccess.c ****         }
+ 250              		.loc 1 72 13 view .LVU68
+  72:src/flashaccess.c ****         }
+ 251              		.loc 1 72 20 is_stmt 0 view .LVU69
+ 252 00d6 4FF0FF30 		mov	r0, #-1
+ 253 00da 2DE0     		b	.L1
+ 254              	.LVL27:
+ 255              	.L11:
+  72:src/flashaccess.c ****         }
+ 256              		.loc 1 72 20 view .LVU70
+ 257              	.LBE6:
+ 258              	.LBB7:
+ 259              	.LBB3:
+  84:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+  85:src/flashaccess.c **** 
+  86:src/flashaccess.c ****         if (res != HAL_OK){
+  87:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+  88:src/flashaccess.c ****             consoleLog(tmp);
+ARM GAS  /tmp/ccRjGKyO.s 			page 8
+
+
+  89:src/flashaccess.c ****             HAL_FLASH_Lock();
+  90:src/flashaccess.c ****             return -1;
+  91:src/flashaccess.c ****         }
+  92:src/flashaccess.c **** 
+  93:src/flashaccess.c ****         dest++;
+ 260              		.loc 1 93 9 is_stmt 1 view .LVU71
+ 261              		.loc 1 93 13 is_stmt 0 view .LVU72
+ 262 00dc 0236     		adds	r6, r6, #2
+ 263              	.LVL28:
+  94:src/flashaccess.c ****         src++;
+ 264              		.loc 1 94 9 is_stmt 1 view .LVU73
+ 265              		.loc 1 94 12 is_stmt 0 view .LVU74
+ 266 00de 0235     		adds	r5, r5, #2
+ 267              	.LVL29:
+ 268              		.loc 1 94 12 view .LVU75
+ 269              	.LBE3:
+  83:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 270              		.loc 1 83 39 is_stmt 1 discriminator 2 view .LVU76
+ 271 00e0 0134     		adds	r4, r4, #1
+ 272              	.LVL30:
+ 273              	.L10:
+  83:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 274              		.loc 1 83 23 discriminator 1 view .LVU77
+ 275 00e2 A145     		cmp	r9, r4
+ 276 00e4 14DD     		ble	.L19
+ 277              	.LBB4:
+  84:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 278              		.loc 1 84 9 view .LVU78
+  84:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 279              		.loc 1 84 33 is_stmt 0 view .LVU79
+ 280 00e6 2A88     		ldrh	r2, [r5]
+ 281 00e8 0023     		movs	r3, #0
+ 282 00ea 3146     		mov	r1, r6
+ 283 00ec 0120     		movs	r0, #1
+ 284 00ee FFF7FEFF 		bl	HAL_FLASH_Program
+ 285              	.LVL31:
+  86:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ 286              		.loc 1 86 9 is_stmt 1 view .LVU80
+  86:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ 287              		.loc 1 86 12 is_stmt 0 view .LVU81
+ 288 00f2 0246     		mov	r2, r0
+ 289 00f4 0028     		cmp	r0, #0
+ 290 00f6 F1D0     		beq	.L11
+  87:src/flashaccess.c ****             consoleLog(tmp);
+ 291              		.loc 1 87 13 is_stmt 1 view .LVU82
+ 292 00f8 1D49     		ldr	r1, .L21+24
+ 293 00fa 06A8     		add	r0, sp, #24
+ 294              	.LVL32:
+  87:src/flashaccess.c ****             consoleLog(tmp);
+ 295              		.loc 1 87 13 is_stmt 0 view .LVU83
+ 296 00fc FFF7FEFF 		bl	sprintf
+ 297              	.LVL33:
+  88:src/flashaccess.c ****             HAL_FLASH_Lock();
+ 298              		.loc 1 88 13 is_stmt 1 view .LVU84
+ 299 0100 06A8     		add	r0, sp, #24
+ 300 0102 FFF7FEFF 		bl	consoleLog
+ 301              	.LVL34:
+ARM GAS  /tmp/ccRjGKyO.s 			page 9
+
+
+  89:src/flashaccess.c ****             return -1;
+ 302              		.loc 1 89 13 view .LVU85
+ 303 0106 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 304              	.LVL35:
+  90:src/flashaccess.c ****         }
+ 305              		.loc 1 90 13 view .LVU86
+  90:src/flashaccess.c ****         }
+ 306              		.loc 1 90 20 is_stmt 0 view .LVU87
+ 307 010a 4FF0FF30 		mov	r0, #-1
+ 308 010e 13E0     		b	.L1
+ 309              	.LVL36:
+ 310              	.L19:
+  90:src/flashaccess.c ****         }
+ 311              		.loc 1 90 20 view .LVU88
+ 312              	.LBE4:
+ 313              	.LBE7:
+  95:src/flashaccess.c ****     }
+  96:src/flashaccess.c **** 
+  97:src/flashaccess.c ****     // now finish with the len
+  98:src/flashaccess.c ****     HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, len);
+ 314              		.loc 1 98 5 is_stmt 1 view .LVU89
+ 315              		.loc 1 98 29 is_stmt 0 view .LVU90
+ 316 0110 3A46     		mov	r2, r7
+ 317 0112 FB17     		asrs	r3, r7, #31
+ 318 0114 3146     		mov	r1, r6
+ 319 0116 0120     		movs	r0, #1
+ 320 0118 FFF7FEFF 		bl	HAL_FLASH_Program
+ 321              	.LVL37:
+  99:src/flashaccess.c ****     if (res != HAL_OK){
+ 322              		.loc 1 99 5 is_stmt 1 view .LVU91
+ 323              		.loc 1 99 8 is_stmt 0 view .LVU92
+ 324 011c 0246     		mov	r2, r0
+ 325 011e 70B9     		cbnz	r0, .L20
+ 100:src/flashaccess.c ****         sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ 101:src/flashaccess.c ****         consoleLog(tmp);
+ 102:src/flashaccess.c ****         HAL_FLASH_Lock();
+ 103:src/flashaccess.c ****         return -1;
+ 104:src/flashaccess.c ****     }
+ 105:src/flashaccess.c **** 
+ 106:src/flashaccess.c ****     sprintf(tmp, "\r\nwrote flash at %lx len %d", (uint32_t)start, len);
+ 326              		.loc 1 106 5 is_stmt 1 view .LVU93
+ 327 0120 3B46     		mov	r3, r7
+ 328 0122 4246     		mov	r2, r8
+ 329 0124 1349     		ldr	r1, .L21+28
+ 330 0126 06A8     		add	r0, sp, #24
+ 331              	.LVL38:
+ 332              		.loc 1 106 5 is_stmt 0 view .LVU94
+ 333 0128 FFF7FEFF 		bl	sprintf
+ 334              	.LVL39:
+ 107:src/flashaccess.c ****     consoleLog(tmp);
+ 335              		.loc 1 107 5 is_stmt 1 view .LVU95
+ 336 012c 06A8     		add	r0, sp, #24
+ 337 012e FFF7FEFF 		bl	consoleLog
+ 338              	.LVL40:
+ 108:src/flashaccess.c ****     HAL_FLASH_Lock();
+ 339              		.loc 1 108 5 view .LVU96
+ 340 0132 FFF7FEFF 		bl	HAL_FLASH_Lock
+ARM GAS  /tmp/ccRjGKyO.s 			page 10
+
+
+ 341              	.LVL41:
+ 109:src/flashaccess.c **** 
+ 110:src/flashaccess.c ****     return len;
+ 342              		.loc 1 110 5 view .LVU97
+ 343              		.loc 1 110 12 is_stmt 0 view .LVU98
+ 344 0136 3846     		mov	r0, r7
+ 345              	.LVL42:
+ 346              	.L1:
+ 111:src/flashaccess.c **** }
+ 347              		.loc 1 111 1 view .LVU99
+ 348 0138 1BB0     		add	sp, sp, #108
+ 349              	.LCFI2:
+ 350              		.cfi_remember_state
+ 351              		.cfi_def_cfa_offset 28
+ 352              		@ sp needed
+ 353 013a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 354              	.LVL43:
+ 355              	.L20:
+ 356              	.LCFI3:
+ 357              		.cfi_restore_state
+ 100:src/flashaccess.c ****         consoleLog(tmp);
+ 358              		.loc 1 100 9 is_stmt 1 view .LVU100
+ 359 013e 0C49     		ldr	r1, .L21+24
+ 360 0140 06A8     		add	r0, sp, #24
+ 361              	.LVL44:
+ 100:src/flashaccess.c ****         consoleLog(tmp);
+ 362              		.loc 1 100 9 is_stmt 0 view .LVU101
+ 363 0142 FFF7FEFF 		bl	sprintf
+ 364              	.LVL45:
+ 101:src/flashaccess.c ****         HAL_FLASH_Lock();
+ 365              		.loc 1 101 9 is_stmt 1 view .LVU102
+ 366 0146 06A8     		add	r0, sp, #24
+ 367 0148 FFF7FEFF 		bl	consoleLog
+ 368              	.LVL46:
+ 102:src/flashaccess.c ****         return -1;
+ 369              		.loc 1 102 9 view .LVU103
+ 370 014c FFF7FEFF 		bl	HAL_FLASH_Lock
+ 371              	.LVL47:
+ 103:src/flashaccess.c ****     }
+ 372              		.loc 1 103 9 view .LVU104
+ 103:src/flashaccess.c ****     }
+ 373              		.loc 1 103 16 is_stmt 0 view .LVU105
+ 374 0150 4FF0FF30 		mov	r0, #-1
+ 375 0154 F0E7     		b	.L1
+ 376              	.L22:
+ 377 0156 00BF     		.align	2
+ 378              	.L21:
+ 379 0158 00000000 		.word	flash_data
+ 380 015c 00000000 		.word	.LC0
+ 381 0160 00000000 		.word	flashlen
+ 382 0164 14000000 		.word	.LC1
+ 383 0168 2C000000 		.word	.LC3
+ 384 016c 1C000000 		.word	.LC2
+ 385 0170 5C000000 		.word	.LC4
+ 386 0174 6C000000 		.word	.LC5
+ 387              		.cfi_endproc
+ 388              	.LFE67:
+ARM GAS  /tmp/ccRjGKyO.s 			page 11
+
+
+ 390              		.section	.text.writeFlash16,"ax",%progbits
+ 391              		.align	1
+ 392              		.global	writeFlash16
+ 393              		.syntax unified
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	writeFlash16:
+ 398              	.LVL48:
+ 399              	.LFB66:
+  22:src/flashaccess.c ****     int outlen = writeFlash( (unsigned char *)data, len*2 );
+ 400              		.loc 1 22 75 is_stmt 1 view -0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+  22:src/flashaccess.c ****     int outlen = writeFlash( (unsigned char *)data, len*2 );
+ 404              		.loc 1 22 75 is_stmt 0 view .LVU107
+ 405 0000 08B5     		push	{r3, lr}
+ 406              	.LCFI4:
+ 407              		.cfi_def_cfa_offset 8
+ 408              		.cfi_offset 3, -8
+ 409              		.cfi_offset 14, -4
+  23:src/flashaccess.c ****     if (outlen >= 0){
+ 410              		.loc 1 23 5 is_stmt 1 view .LVU108
+  23:src/flashaccess.c ****     if (outlen >= 0){
+ 411              		.loc 1 23 18 is_stmt 0 view .LVU109
+ 412 0002 4900     		lsls	r1, r1, #1
+ 413              	.LVL49:
+  23:src/flashaccess.c ****     if (outlen >= 0){
+ 414              		.loc 1 23 18 view .LVU110
+ 415 0004 FFF7FEFF 		bl	writeFlash
+ 416              	.LVL50:
+  24:src/flashaccess.c ****         outlen /=2;
+ 417              		.loc 1 24 5 is_stmt 1 view .LVU111
+  24:src/flashaccess.c ****         outlen /=2;
+ 418              		.loc 1 24 8 is_stmt 0 view .LVU112
+ 419 0008 0028     		cmp	r0, #0
+  24:src/flashaccess.c ****         outlen /=2;
+ 420              		.loc 1 24 8 view .LVU113
+ 421 000a 02DB     		blt	.L24
+  25:src/flashaccess.c ****     }
+ 422              		.loc 1 25 9 is_stmt 1 view .LVU114
+  25:src/flashaccess.c ****     }
+ 423              		.loc 1 25 16 is_stmt 0 view .LVU115
+ 424 000c 00EBD070 		add	r0, r0, r0, lsr #31
+ 425              	.LVL51:
+  25:src/flashaccess.c ****     }
+ 426              		.loc 1 25 16 view .LVU116
+ 427 0010 4010     		asrs	r0, r0, #1
+ 428              	.LVL52:
+ 429              	.L24:
+  27:src/flashaccess.c **** }
+ 430              		.loc 1 27 5 is_stmt 1 view .LVU117
+  28:src/flashaccess.c **** 
+ 431              		.loc 1 28 1 is_stmt 0 view .LVU118
+ 432 0012 80B2     		uxth	r0, r0
+ 433              	.LVL53:
+  28:src/flashaccess.c **** 
+ARM GAS  /tmp/ccRjGKyO.s 			page 12
+
+
+ 434              		.loc 1 28 1 view .LVU119
+ 435 0014 08BD     		pop	{r3, pc}
+ 436              		.cfi_endproc
+ 437              	.LFE66:
+ 439              		.section	.rodata.readFlash.str1.4,"aMS",%progbits,1
+ 440              		.align	2
+ 441              	.LC6:
+ 442 0000 0D0A666C 		.ascii	"\015\012flashread - len %d seems wrong?\000"
+ 442      61736872 
+ 442      65616420 
+ 442      2D206C65 
+ 442      6E202564 
+ 443 0022 0000     		.align	2
+ 444              	.LC7:
+ 445 0024 0D0A666C 		.ascii	"\015\012flashread - no end found?\000"
+ 445      61736872 
+ 445      65616420 
+ 445      2D206E6F 
+ 445      20656E64 
+ 446              		.section	.text.readFlash,"ax",%progbits
+ 447              		.align	1
+ 448              		.global	readFlash
+ 449              		.syntax unified
+ 450              		.thumb
+ 451              		.thumb_func
+ 453              	readFlash:
+ 454              	.LVL54:
+ 455              	.LFB69:
+ 112:src/flashaccess.c **** 
+ 113:src/flashaccess.c **** 
+ 114:src/flashaccess.c **** unsigned short readFlash16( volatile unsigned short *data, uint16_t len ){
+ 115:src/flashaccess.c ****     int outlen = readFlash( (unsigned char *)data, len*2 );
+ 116:src/flashaccess.c ****     if (outlen >= 0){
+ 117:src/flashaccess.c ****         outlen /=2;
+ 118:src/flashaccess.c ****     }
+ 119:src/flashaccess.c ****     return outlen;
+ 120:src/flashaccess.c **** }
+ 121:src/flashaccess.c **** // the last data written will be read
+ 122:src/flashaccess.c **** int readFlash( unsigned char *data, int len ){
+ 456              		.loc 1 122 46 is_stmt 1 view -0
+ 457              		.cfi_startproc
+ 458              		@ args = 0, pretend = 0, frame = 160
+ 459              		@ frame_needed = 0, uses_anonymous_args = 0
+ 460              		.loc 1 122 46 is_stmt 0 view .LVU121
+ 461 0000 30B5     		push	{r4, r5, lr}
+ 462              	.LCFI5:
+ 463              		.cfi_def_cfa_offset 12
+ 464              		.cfi_offset 4, -12
+ 465              		.cfi_offset 5, -8
+ 466              		.cfi_offset 14, -4
+ 467 0002 A9B0     		sub	sp, sp, #164
+ 468              	.LCFI6:
+ 469              		.cfi_def_cfa_offset 176
+ 470 0004 0C46     		mov	r4, r1
+ 123:src/flashaccess.c ****     unsigned short *p = (unsigned short *)flash_data;
+ 471              		.loc 1 123 5 is_stmt 1 view .LVU122
+ 472              		.loc 1 123 21 is_stmt 0 view .LVU123
+ARM GAS  /tmp/ccRjGKyO.s 			page 13
+
+
+ 473 0006 204B     		ldr	r3, .L37
+ 474 0008 1A68     		ldr	r2, [r3]
+ 475              	.LVL55:
+ 124:src/flashaccess.c ****     int i = (flashlen/2) - 1;
+ 476              		.loc 1 124 5 is_stmt 1 view .LVU124
+ 477              		.loc 1 124 22 is_stmt 0 view .LVU125
+ 478 000a 204B     		ldr	r3, .L37+4
+ 479 000c 1B68     		ldr	r3, [r3]
+ 480 000e 03EBD373 		add	r3, r3, r3, lsr #31
+ 481 0012 5B10     		asrs	r3, r3, #1
+ 482              		.loc 1 124 9 view .LVU126
+ 483 0014 013B     		subs	r3, r3, #1
+ 484              	.LVL56:
+ 125:src/flashaccess.c ****     for (; i > 0; i--){
+ 485              		.loc 1 125 5 is_stmt 1 view .LVU127
+ 486 0016 00E0     		b	.L27
+ 487              	.L35:
+ 488              		.loc 1 125 20 view .LVU128
+ 489 0018 013B     		subs	r3, r3, #1
+ 490              	.LVL57:
+ 491              	.L27:
+ 492              		.loc 1 125 14 discriminator 1 view .LVU129
+ 493 001a 002B     		cmp	r3, #0
+ 494 001c 05DD     		ble	.L28
+ 126:src/flashaccess.c ****         if (p[i] != 0xffff){
+ 495              		.loc 1 126 9 view .LVU130
+ 496              		.loc 1 126 14 is_stmt 0 view .LVU131
+ 497 001e 32F813E0 		ldrh	lr, [r2, r3, lsl #1]
+ 498              		.loc 1 126 12 view .LVU132
+ 499 0022 4FF6FF7C 		movw	ip, #65535
+ 500 0026 E645     		cmp	lr, ip
+ 501 0028 F6D0     		beq	.L35
+ 502              	.L28:
+ 127:src/flashaccess.c ****             break;
+ 128:src/flashaccess.c ****         }
+ 129:src/flashaccess.c ****     }
+ 130:src/flashaccess.c **** 
+ 131:src/flashaccess.c ****     if (i > 0){
+ 503              		.loc 1 131 5 is_stmt 1 view .LVU133
+ 504              		.loc 1 131 8 is_stmt 0 view .LVU134
+ 505 002a 002B     		cmp	r3, #0
+ 506 002c 1DDD     		ble	.L30
+ 507              	.LBB8:
+ 132:src/flashaccess.c ****         int flen = p[i];
+ 508              		.loc 1 132 9 is_stmt 1 view .LVU135
+ 509              		.loc 1 132 21 is_stmt 0 view .LVU136
+ 510 002e 32F813C0 		ldrh	ip, [r2, r3, lsl #1]
+ 511              	.LVL58:
+ 133:src/flashaccess.c ****         unsigned char *start = (unsigned char *)&p[i];
+ 512              		.loc 1 133 9 is_stmt 1 view .LVU137
+ 134:src/flashaccess.c ****         start -= ((flen+1)/2)*2; // get to aligned start of data
+ 513              		.loc 1 134 9 view .LVU138
+ 514              		.loc 1 134 27 is_stmt 0 view .LVU139
+ 515 0032 0CF10101 		add	r1, ip, #1
+ 516              	.LVL59:
+ 517              		.loc 1 134 27 view .LVU140
+ 518 0036 4910     		asrs	r1, r1, #1
+ARM GAS  /tmp/ccRjGKyO.s 			page 14
+
+
+ 519              		.loc 1 134 30 view .LVU141
+ 520 0038 4900     		lsls	r1, r1, #1
+ 521              		.loc 1 134 15 view .LVU142
+ 522 003a C1EB4301 		rsb	r1, r1, r3, lsl #1
+ 523              	.LVL60:
+ 135:src/flashaccess.c ****         if ((uint32_t)start < (uint32_t)flash_data){
+ 524              		.loc 1 135 9 is_stmt 1 view .LVU143
+ 525              		.loc 1 135 12 is_stmt 0 view .LVU144
+ 526 003e 5118     		adds	r1, r2, r1
+ 527              	.LVL61:
+ 528              		.loc 1 135 12 view .LVU145
+ 529 0040 08D2     		bcs	.L36
+ 136:src/flashaccess.c ****             char tmp[80];
+ 137:src/flashaccess.c ****             sprintf(tmp, "\r\nflashread - len %d seems wrong?", i);
+ 138:src/flashaccess.c ****             consoleLog(tmp);
+ 139:src/flashaccess.c ****             return -1;
+ 140:src/flashaccess.c ****         }
+ 141:src/flashaccess.c **** 
+ 142:src/flashaccess.c ****         if (flen > len){
+ 530              		.loc 1 142 9 is_stmt 1 view .LVU146
+ 531              		.loc 1 142 12 is_stmt 0 view .LVU147
+ 532 0042 A445     		cmp	ip, r4
+ 533 0044 00DC     		bgt	.L33
+ 132:src/flashaccess.c ****         unsigned char *start = (unsigned char *)&p[i];
+ 534              		.loc 1 132 13 view .LVU148
+ 535 0046 6446     		mov	r4, ip
+ 536              	.LVL62:
+ 537              	.L33:
+ 143:src/flashaccess.c ****             flen = len;
+ 144:src/flashaccess.c ****         }
+ 145:src/flashaccess.c ****         memcpy(data, start, flen);
+ 538              		.loc 1 145 9 is_stmt 1 view .LVU149
+ 539 0048 2246     		mov	r2, r4
+ 540              	.LVL63:
+ 541              		.loc 1 145 9 is_stmt 0 view .LVU150
+ 542 004a FFF7FEFF 		bl	memcpy
+ 543              	.LVL64:
+ 146:src/flashaccess.c ****         return flen;
+ 544              		.loc 1 146 9 is_stmt 1 view .LVU151
+ 545              		.loc 1 146 16 is_stmt 0 view .LVU152
+ 546 004e 2046     		mov	r0, r4
+ 547              	.LVL65:
+ 548              	.L26:
+ 549              		.loc 1 146 16 view .LVU153
+ 550              	.LBE8:
+ 147:src/flashaccess.c ****     }
+ 148:src/flashaccess.c ****     char tmp[80];
+ 149:src/flashaccess.c ****     sprintf(tmp, "\r\nflashread - no end found?");
+ 150:src/flashaccess.c ****     consoleLog(tmp);
+ 151:src/flashaccess.c ****     return -1;
+ 152:src/flashaccess.c **** }
+ 551              		.loc 1 152 1 view .LVU154
+ 552 0050 29B0     		add	sp, sp, #164
+ 553              	.LCFI7:
+ 554              		.cfi_remember_state
+ 555              		.cfi_def_cfa_offset 12
+ 556              		@ sp needed
+ARM GAS  /tmp/ccRjGKyO.s 			page 15
+
+
+ 557 0052 30BD     		pop	{r4, r5, pc}
+ 558              	.LVL66:
+ 559              	.L36:
+ 560              	.LCFI8:
+ 561              		.cfi_restore_state
+ 562              	.LBB10:
+ 563              	.LBB9:
+ 136:src/flashaccess.c ****             sprintf(tmp, "\r\nflashread - len %d seems wrong?", i);
+ 564              		.loc 1 136 13 is_stmt 1 view .LVU155
+ 137:src/flashaccess.c ****             consoleLog(tmp);
+ 565              		.loc 1 137 13 view .LVU156
+ 566 0054 1A46     		mov	r2, r3
+ 567              	.LVL67:
+ 137:src/flashaccess.c ****             consoleLog(tmp);
+ 568              		.loc 1 137 13 is_stmt 0 view .LVU157
+ 569 0056 0E49     		ldr	r1, .L37+8
+ 570              	.LVL68:
+ 137:src/flashaccess.c ****             consoleLog(tmp);
+ 571              		.loc 1 137 13 view .LVU158
+ 572 0058 6846     		mov	r0, sp
+ 573              	.LVL69:
+ 137:src/flashaccess.c ****             consoleLog(tmp);
+ 574              		.loc 1 137 13 view .LVU159
+ 575 005a FFF7FEFF 		bl	sprintf
+ 576              	.LVL70:
+ 138:src/flashaccess.c ****             return -1;
+ 577              		.loc 1 138 13 is_stmt 1 view .LVU160
+ 578 005e 6846     		mov	r0, sp
+ 579 0060 FFF7FEFF 		bl	consoleLog
+ 580              	.LVL71:
+ 139:src/flashaccess.c ****         }
+ 581              		.loc 1 139 13 view .LVU161
+ 139:src/flashaccess.c ****         }
+ 582              		.loc 1 139 20 is_stmt 0 view .LVU162
+ 583 0064 4FF0FF30 		mov	r0, #-1
+ 584 0068 F2E7     		b	.L26
+ 585              	.LVL72:
+ 586              	.L30:
+ 139:src/flashaccess.c ****         }
+ 587              		.loc 1 139 20 view .LVU163
+ 588              	.LBE9:
+ 589              	.LBE10:
+ 148:src/flashaccess.c ****     sprintf(tmp, "\r\nflashread - no end found?");
+ 590              		.loc 1 148 5 is_stmt 1 view .LVU164
+ 149:src/flashaccess.c ****     consoleLog(tmp);
+ 591              		.loc 1 149 5 view .LVU165
+ 592 006a 14AC     		add	r4, sp, #80
+ 593 006c 094D     		ldr	r5, .L37+12
+ 594 006e 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 595              	.LVL73:
+ 149:src/flashaccess.c ****     consoleLog(tmp);
+ 596              		.loc 1 149 5 is_stmt 0 view .LVU166
+ 597 0070 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 598 0072 95E80700 		ldm	r5, {r0, r1, r2}
+ 599 0076 84E80700 		stm	r4, {r0, r1, r2}
+ 150:src/flashaccess.c ****     return -1;
+ 600              		.loc 1 150 5 is_stmt 1 view .LVU167
+ARM GAS  /tmp/ccRjGKyO.s 			page 16
+
+
+ 601 007a 14A8     		add	r0, sp, #80
+ 602 007c FFF7FEFF 		bl	consoleLog
+ 603              	.LVL74:
+ 151:src/flashaccess.c **** }
+ 604              		.loc 1 151 5 view .LVU168
+ 151:src/flashaccess.c **** }
+ 605              		.loc 1 151 12 is_stmt 0 view .LVU169
+ 606 0080 4FF0FF30 		mov	r0, #-1
+ 607 0084 E4E7     		b	.L26
+ 608              	.L38:
+ 609 0086 00BF     		.align	2
+ 610              	.L37:
+ 611 0088 00000000 		.word	flash_data
+ 612 008c 00000000 		.word	flashlen
+ 613 0090 00000000 		.word	.LC6
+ 614 0094 24000000 		.word	.LC7
+ 615              		.cfi_endproc
+ 616              	.LFE69:
+ 618              		.section	.text.readFlash16,"ax",%progbits
+ 619              		.align	1
+ 620              		.global	readFlash16
+ 621              		.syntax unified
+ 622              		.thumb
+ 623              		.thumb_func
+ 625              	readFlash16:
+ 626              	.LVL75:
+ 627              	.LFB68:
+ 114:src/flashaccess.c ****     int outlen = readFlash( (unsigned char *)data, len*2 );
+ 628              		.loc 1 114 74 is_stmt 1 view -0
+ 629              		.cfi_startproc
+ 630              		@ args = 0, pretend = 0, frame = 0
+ 631              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114:src/flashaccess.c ****     int outlen = readFlash( (unsigned char *)data, len*2 );
+ 632              		.loc 1 114 74 is_stmt 0 view .LVU171
+ 633 0000 08B5     		push	{r3, lr}
+ 634              	.LCFI9:
+ 635              		.cfi_def_cfa_offset 8
+ 636              		.cfi_offset 3, -8
+ 637              		.cfi_offset 14, -4
+ 115:src/flashaccess.c ****     if (outlen >= 0){
+ 638              		.loc 1 115 5 is_stmt 1 view .LVU172
+ 115:src/flashaccess.c ****     if (outlen >= 0){
+ 639              		.loc 1 115 18 is_stmt 0 view .LVU173
+ 640 0002 4900     		lsls	r1, r1, #1
+ 641              	.LVL76:
+ 115:src/flashaccess.c ****     if (outlen >= 0){
+ 642              		.loc 1 115 18 view .LVU174
+ 643 0004 FFF7FEFF 		bl	readFlash
+ 644              	.LVL77:
+ 116:src/flashaccess.c ****         outlen /=2;
+ 645              		.loc 1 116 5 is_stmt 1 view .LVU175
+ 116:src/flashaccess.c ****         outlen /=2;
+ 646              		.loc 1 116 8 is_stmt 0 view .LVU176
+ 647 0008 0028     		cmp	r0, #0
+ 116:src/flashaccess.c ****         outlen /=2;
+ 648              		.loc 1 116 8 view .LVU177
+ 649 000a 02DB     		blt	.L40
+ARM GAS  /tmp/ccRjGKyO.s 			page 17
+
+
+ 117:src/flashaccess.c ****     }
+ 650              		.loc 1 117 9 is_stmt 1 view .LVU178
+ 117:src/flashaccess.c ****     }
+ 651              		.loc 1 117 16 is_stmt 0 view .LVU179
+ 652 000c 00EBD070 		add	r0, r0, r0, lsr #31
+ 653              	.LVL78:
+ 117:src/flashaccess.c ****     }
+ 654              		.loc 1 117 16 view .LVU180
+ 655 0010 4010     		asrs	r0, r0, #1
+ 656              	.LVL79:
+ 657              	.L40:
+ 119:src/flashaccess.c **** }
+ 658              		.loc 1 119 5 is_stmt 1 view .LVU181
+ 120:src/flashaccess.c **** // the last data written will be read
+ 659              		.loc 1 120 1 is_stmt 0 view .LVU182
+ 660 0012 80B2     		uxth	r0, r0
+ 661              	.LVL80:
+ 120:src/flashaccess.c **** // the last data written will be read
+ 662              		.loc 1 120 1 view .LVU183
+ 663 0014 08BD     		pop	{r3, pc}
+ 664              		.cfi_endproc
+ 665              	.LFE68:
+ 667              		.section	.text.flashposn,"ax",%progbits
+ 668              		.align	1
+ 669              		.global	flashposn
+ 670              		.syntax unified
+ 671              		.thumb
+ 672              		.thumb_func
+ 674              	flashposn:
+ 675              	.LVL81:
+ 676              	.LFB70:
+ 153:src/flashaccess.c **** 
+ 154:src/flashaccess.c **** int flashposn(int *len){
+ 677              		.loc 1 154 24 is_stmt 1 view -0
+ 678              		.cfi_startproc
+ 679              		@ args = 0, pretend = 0, frame = 0
+ 680              		@ frame_needed = 0, uses_anonymous_args = 0
+ 681              		@ link register save eliminated.
+ 682              		.loc 1 154 24 is_stmt 0 view .LVU185
+ 683 0000 10B4     		push	{r4}
+ 684              	.LCFI10:
+ 685              		.cfi_def_cfa_offset 4
+ 686              		.cfi_offset 4, -4
+ 155:src/flashaccess.c ****     unsigned short *p = (unsigned short *)flash_data;
+ 687              		.loc 1 155 5 is_stmt 1 view .LVU186
+ 688              		.loc 1 155 21 is_stmt 0 view .LVU187
+ 689 0002 104B     		ldr	r3, .L51
+ 690 0004 1C68     		ldr	r4, [r3]
+ 691              	.LVL82:
+ 156:src/flashaccess.c **** 
+ 157:src/flashaccess.c ****     int i = (flashlen/2) - 1;
+ 692              		.loc 1 157 5 is_stmt 1 view .LVU188
+ 693              		.loc 1 157 22 is_stmt 0 view .LVU189
+ 694 0006 104B     		ldr	r3, .L51+4
+ 695 0008 1B68     		ldr	r3, [r3]
+ 696 000a 03EBD373 		add	r3, r3, r3, lsr #31
+ 697 000e 5B10     		asrs	r3, r3, #1
+ARM GAS  /tmp/ccRjGKyO.s 			page 18
+
+
+ 698              		.loc 1 157 9 view .LVU190
+ 699 0010 013B     		subs	r3, r3, #1
+ 700              	.LVL83:
+ 158:src/flashaccess.c ****     for (; i > 0; i--){
+ 701              		.loc 1 158 5 is_stmt 1 view .LVU191
+ 702 0012 00E0     		b	.L43
+ 703              	.L50:
+ 704              		.loc 1 158 20 view .LVU192
+ 705 0014 013B     		subs	r3, r3, #1
+ 706              	.LVL84:
+ 707              	.L43:
+ 708              		.loc 1 158 14 discriminator 1 view .LVU193
+ 709 0016 002B     		cmp	r3, #0
+ 710 0018 05DD     		ble	.L44
+ 159:src/flashaccess.c ****         if (p[i] != 0xffff){
+ 711              		.loc 1 159 9 view .LVU194
+ 712              		.loc 1 159 14 is_stmt 0 view .LVU195
+ 713 001a 34F81310 		ldrh	r1, [r4, r3, lsl #1]
+ 714              		.loc 1 159 12 view .LVU196
+ 715 001e 4FF6FF72 		movw	r2, #65535
+ 716 0022 9142     		cmp	r1, r2
+ 717 0024 F6D0     		beq	.L50
+ 718              	.L44:
+ 160:src/flashaccess.c ****             break;
+ 161:src/flashaccess.c ****         }
+ 162:src/flashaccess.c ****     }
+ 163:src/flashaccess.c **** 
+ 164:src/flashaccess.c ****     if (i > 0){
+ 719              		.loc 1 164 5 is_stmt 1 view .LVU197
+ 720              		.loc 1 164 8 is_stmt 0 view .LVU198
+ 721 0026 002B     		cmp	r3, #0
+ 722 0028 09DD     		ble	.L48
+ 723              	.LBB11:
+ 165:src/flashaccess.c ****         int flen = p[i];
+ 724              		.loc 1 165 9 is_stmt 1 view .LVU199
+ 725              		.loc 1 165 21 is_stmt 0 view .LVU200
+ 726 002a 34F81320 		ldrh	r2, [r4, r3, lsl #1]
+ 727              	.LVL85:
+ 166:src/flashaccess.c ****         if (len){
+ 728              		.loc 1 166 9 is_stmt 1 view .LVU201
+ 729              		.loc 1 166 12 is_stmt 0 view .LVU202
+ 730 002e 00B1     		cbz	r0, .L47
+ 167:src/flashaccess.c ****             *len = flen;
+ 731              		.loc 1 167 13 is_stmt 1 view .LVU203
+ 732              		.loc 1 167 18 is_stmt 0 view .LVU204
+ 733 0030 0260     		str	r2, [r0]
+ 734              	.L47:
+ 168:src/flashaccess.c ****         }
+ 169:src/flashaccess.c ****         return i*2 - ((flen+1)/2)*2;
+ 735              		.loc 1 169 9 is_stmt 1 view .LVU205
+ 736              		.loc 1 169 31 is_stmt 0 view .LVU206
+ 737 0032 0132     		adds	r2, r2, #1
+ 738              	.LVL86:
+ 739              		.loc 1 169 20 view .LVU207
+ 740 0034 A3EB6200 		sub	r0, r3, r2, asr #1
+ 741              	.LVL87:
+ 742              		.loc 1 169 20 view .LVU208
+ARM GAS  /tmp/ccRjGKyO.s 			page 19
+
+
+ 743 0038 4000     		lsls	r0, r0, #1
+ 744              	.LVL88:
+ 745              	.L42:
+ 746              		.loc 1 169 20 view .LVU209
+ 747              	.LBE11:
+ 170:src/flashaccess.c ****     }
+ 171:src/flashaccess.c ****     return -1;
+ 172:src/flashaccess.c **** }
+ 748              		.loc 1 172 1 view .LVU210
+ 749 003a 10BC     		pop	{r4}
+ 750              	.LCFI11:
+ 751              		.cfi_remember_state
+ 752              		.cfi_restore 4
+ 753              		.cfi_def_cfa_offset 0
+ 754              	.LVL89:
+ 755              		.loc 1 172 1 view .LVU211
+ 756 003c 7047     		bx	lr
+ 757              	.LVL90:
+ 758              	.L48:
+ 759              	.LCFI12:
+ 760              		.cfi_restore_state
+ 171:src/flashaccess.c **** }
+ 761              		.loc 1 171 12 view .LVU212
+ 762 003e 4FF0FF30 		mov	r0, #-1
+ 763              	.LVL91:
+ 171:src/flashaccess.c **** }
+ 764              		.loc 1 171 12 view .LVU213
+ 765 0042 FAE7     		b	.L42
+ 766              	.L52:
+ 767              		.align	2
+ 768              	.L51:
+ 769 0044 00000000 		.word	flash_data
+ 770 0048 00000000 		.word	flashlen
+ 771              		.cfi_endproc
+ 772              	.LFE70:
+ 774              		.section	.text.writeflashchunk,"ax",%progbits
+ 775              		.align	1
+ 776              		.global	writeflashchunk
+ 777              		.syntax unified
+ 778              		.thumb
+ 779              		.thumb_func
+ 781              	writeflashchunk:
+ 782              	.LVL92:
+ 783              	.LFB71:
+ 173:src/flashaccess.c **** 
+ 174:src/flashaccess.c **** 
+ 175:src/flashaccess.c **** ///////////////////////////////////////////////////
+ 176:src/flashaccess.c **** // generic flash routines for firmware upgrade use
+ 177:src/flashaccess.c **** // we have 256K, so pages 0-127, all 2k (0x800) long
+ 178:src/flashaccess.c **** // note: this won't write across pages.
+ 179:src/flashaccess.c **** // design expected len value 128 or 256.
+ 180:src/flashaccess.c **** // UNTESTED
+ 181:src/flashaccess.c **** int writeflashchunk( void *addr, unsigned char *data, int len ){
+ 784              		.loc 1 181 64 is_stmt 1 view -0
+ 785              		.cfi_startproc
+ 786              		@ args = 0, pretend = 0, frame = 64
+ 787              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccRjGKyO.s 			page 20
+
+
+ 788              		.loc 1 181 64 is_stmt 0 view .LVU215
+ 789 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 790              	.LCFI13:
+ 791              		.cfi_def_cfa_offset 20
+ 792              		.cfi_offset 4, -20
+ 793              		.cfi_offset 5, -16
+ 794              		.cfi_offset 6, -12
+ 795              		.cfi_offset 7, -8
+ 796              		.cfi_offset 14, -4
+ 797 0002 91B0     		sub	sp, sp, #68
+ 798              	.LCFI14:
+ 799              		.cfi_def_cfa_offset 88
+ 182:src/flashaccess.c ****     char tmp[40];
+ 800              		.loc 1 182 5 is_stmt 1 view .LVU216
+ 183:src/flashaccess.c ****     // don't allow write in areas < page 64
+ 184:src/flashaccess.c ****     if ((uint32_t)addr < (0x8000000 + 64*0x800))
+ 801              		.loc 1 184 5 view .LVU217
+ 802              		.loc 1 184 8 is_stmt 0 view .LVU218
+ 803 0004 244B     		ldr	r3, .L63
+ 804 0006 9842     		cmp	r0, r3
+ 805 0008 42D9     		bls	.L60
+ 806 000a 0446     		mov	r4, r0
+ 807 000c 0D46     		mov	r5, r1
+ 808 000e 1746     		mov	r7, r2
+ 185:src/flashaccess.c ****         return -1;
+ 186:src/flashaccess.c **** 
+ 187:src/flashaccess.c ****     HAL_FLASH_Unlock();
+ 809              		.loc 1 187 5 is_stmt 1 view .LVU219
+ 810 0010 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 811              	.LVL93:
+ 188:src/flashaccess.c ****     // if at the start of a page, then erase....
+ 189:src/flashaccess.c ****     if (!(((uint32_t)addr) % 0x800)){
+ 812              		.loc 1 189 5 view .LVU220
+ 813              		.loc 1 189 28 is_stmt 0 view .LVU221
+ 814 0014 C4F30A03 		ubfx	r3, r4, #0, #11
+ 815              		.loc 1 189 8 view .LVU222
+ 816 0018 0BB1     		cbz	r3, .L62
+ 817              	.L55:
+ 181:src/flashaccess.c ****     char tmp[40];
+ 818              		.loc 1 181 64 view .LVU223
+ 819 001a 0026     		movs	r6, #0
+ 820 001c 1BE0     		b	.L57
+ 821              	.L62:
+ 822              	.LBB12:
+ 190:src/flashaccess.c ****         //uint32_t start = addr;
+ 191:src/flashaccess.c ****         FLASH_EraseInitTypeDef eraseinfo;
+ 823              		.loc 1 191 9 is_stmt 1 view .LVU224
+ 192:src/flashaccess.c ****         // only ever 1 page here
+ 193:src/flashaccess.c ****         eraseinfo.NbPages = 1;
+ 824              		.loc 1 193 9 view .LVU225
+ 825              		.loc 1 193 27 is_stmt 0 view .LVU226
+ 826 001e 0123     		movs	r3, #1
+ 827 0020 0593     		str	r3, [sp, #20]
+ 194:src/flashaccess.c ****         eraseinfo.PageAddress = (uint32_t)addr;
+ 828              		.loc 1 194 9 is_stmt 1 view .LVU227
+ 829              		.loc 1 194 31 is_stmt 0 view .LVU228
+ 830 0022 0494     		str	r4, [sp, #16]
+ARM GAS  /tmp/ccRjGKyO.s 			page 21
+
+
+ 195:src/flashaccess.c ****         eraseinfo.TypeErase = FLASH_TYPEERASE_PAGES;
+ 831              		.loc 1 195 9 is_stmt 1 view .LVU229
+ 832              		.loc 1 195 29 is_stmt 0 view .LVU230
+ 833 0024 0023     		movs	r3, #0
+ 834 0026 0293     		str	r3, [sp, #8]
+ 196:src/flashaccess.c **** 
+ 197:src/flashaccess.c ****         uint32_t PageError = 0;
+ 835              		.loc 1 197 9 is_stmt 1 view .LVU231
+ 836              		.loc 1 197 18 is_stmt 0 view .LVU232
+ 837 0028 0193     		str	r3, [sp, #4]
+ 198:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASHEx_Erase(&eraseinfo, &PageError);
+ 838              		.loc 1 198 9 is_stmt 1 view .LVU233
+ 839              		.loc 1 198 33 is_stmt 0 view .LVU234
+ 840 002a 01A9     		add	r1, sp, #4
+ 841 002c 02A8     		add	r0, sp, #8
+ 842 002e FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 843              	.LVL94:
+ 199:src/flashaccess.c **** 
+ 200:src/flashaccess.c ****         if (res != HAL_OK){
+ 844              		.loc 1 200 9 is_stmt 1 view .LVU235
+ 845              		.loc 1 200 12 is_stmt 0 view .LVU236
+ 846 0032 0246     		mov	r2, r0
+ 847 0034 0028     		cmp	r0, #0
+ 848 0036 F0D0     		beq	.L55
+ 201:src/flashaccess.c ****             sprintf(tmp, "\r\nerase fail %d", (int)res);
+ 849              		.loc 1 201 13 is_stmt 1 view .LVU237
+ 850 0038 1849     		ldr	r1, .L63+4
+ 851 003a 06A8     		add	r0, sp, #24
+ 852              	.LVL95:
+ 853              		.loc 1 201 13 is_stmt 0 view .LVU238
+ 854 003c FFF7FEFF 		bl	sprintf
+ 855              	.LVL96:
+ 202:src/flashaccess.c ****             consoleLog(tmp);
+ 856              		.loc 1 202 13 is_stmt 1 view .LVU239
+ 857 0040 06A8     		add	r0, sp, #24
+ 858 0042 FFF7FEFF 		bl	consoleLog
+ 859              	.LVL97:
+ 203:src/flashaccess.c ****             HAL_FLASH_Lock();
+ 860              		.loc 1 203 13 view .LVU240
+ 861 0046 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 862              	.LVL98:
+ 204:src/flashaccess.c ****             return -1;
+ 863              		.loc 1 204 13 view .LVU241
+ 864              		.loc 1 204 20 is_stmt 0 view .LVU242
+ 865 004a 4FF0FF37 		mov	r7, #-1
+ 866              	.LVL99:
+ 867              		.loc 1 204 20 view .LVU243
+ 868 004e 1CE0     		b	.L54
+ 869              	.LVL100:
+ 870              	.L58:
+ 871              		.loc 1 204 20 view .LVU244
+ 872              	.LBE12:
+ 873              	.LBB13:
+ 874              	.LBB14:
+ 205:src/flashaccess.c ****         }
+ 206:src/flashaccess.c ****     }
+ 207:src/flashaccess.c **** 
+ARM GAS  /tmp/ccRjGKyO.s 			page 22
+
+
+ 208:src/flashaccess.c ****     // write the data
+ 209:src/flashaccess.c ****     // for all our longs to store
+ 210:src/flashaccess.c ****     unsigned short *src = (unsigned short *) data;
+ 211:src/flashaccess.c ****     unsigned short *dest = (unsigned short *)addr;
+ 212:src/flashaccess.c ****     for (int j = 0; j < ((len+1)/2); j++){
+ 213:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 214:src/flashaccess.c **** 
+ 215:src/flashaccess.c ****         if (res != HAL_OK){
+ 216:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ 217:src/flashaccess.c ****             consoleLog(tmp);
+ 218:src/flashaccess.c ****             HAL_FLASH_Lock();
+ 219:src/flashaccess.c ****             return -1;
+ 220:src/flashaccess.c ****         }
+ 221:src/flashaccess.c **** 
+ 222:src/flashaccess.c ****         dest++;
+ 875              		.loc 1 222 9 is_stmt 1 view .LVU245
+ 876              		.loc 1 222 13 is_stmt 0 view .LVU246
+ 877 0050 0234     		adds	r4, r4, #2
+ 878              	.LVL101:
+ 223:src/flashaccess.c ****         src++;
+ 879              		.loc 1 223 9 is_stmt 1 view .LVU247
+ 880              		.loc 1 223 12 is_stmt 0 view .LVU248
+ 881 0052 0235     		adds	r5, r5, #2
+ 882              	.LVL102:
+ 883              		.loc 1 223 12 view .LVU249
+ 884              	.LBE14:
+ 212:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 885              		.loc 1 212 39 is_stmt 1 discriminator 2 view .LVU250
+ 886 0054 0136     		adds	r6, r6, #1
+ 887              	.LVL103:
+ 888              	.L57:
+ 212:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 889              		.loc 1 212 23 discriminator 1 view .LVU251
+ 212:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 890              		.loc 1 212 30 is_stmt 0 discriminator 1 view .LVU252
+ 891 0056 7B1C     		adds	r3, r7, #1
+ 212:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 892              		.loc 1 212 33 discriminator 1 view .LVU253
+ 893 0058 03EBD373 		add	r3, r3, r3, lsr #31
+ 212:src/flashaccess.c ****         HAL_StatusTypeDef res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)dest, (uint
+ 894              		.loc 1 212 23 discriminator 1 view .LVU254
+ 895 005c B6EB630F 		cmp	r6, r3, asr #1
+ 896 0060 13DA     		bge	.L54
+ 897              	.LBB15:
+ 213:src/flashaccess.c **** 
+ 898              		.loc 1 213 9 is_stmt 1 view .LVU255
+ 213:src/flashaccess.c **** 
+ 899              		.loc 1 213 33 is_stmt 0 view .LVU256
+ 900 0062 2A88     		ldrh	r2, [r5]
+ 901 0064 0023     		movs	r3, #0
+ 902 0066 2146     		mov	r1, r4
+ 903 0068 0120     		movs	r0, #1
+ 904 006a FFF7FEFF 		bl	HAL_FLASH_Program
+ 905              	.LVL104:
+ 215:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ 906              		.loc 1 215 9 is_stmt 1 view .LVU257
+ 215:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
+ARM GAS  /tmp/ccRjGKyO.s 			page 23
+
+
+ 907              		.loc 1 215 12 is_stmt 0 view .LVU258
+ 908 006e 0246     		mov	r2, r0
+ 909 0070 0028     		cmp	r0, #0
+ 910 0072 EDD0     		beq	.L58
+ 216:src/flashaccess.c ****             consoleLog(tmp);
+ 911              		.loc 1 216 13 is_stmt 1 view .LVU259
+ 912 0074 0A49     		ldr	r1, .L63+8
+ 913 0076 06A8     		add	r0, sp, #24
+ 914              	.LVL105:
+ 216:src/flashaccess.c ****             consoleLog(tmp);
+ 915              		.loc 1 216 13 is_stmt 0 view .LVU260
+ 916 0078 FFF7FEFF 		bl	sprintf
+ 917              	.LVL106:
+ 217:src/flashaccess.c ****             HAL_FLASH_Lock();
+ 918              		.loc 1 217 13 is_stmt 1 view .LVU261
+ 919 007c 06A8     		add	r0, sp, #24
+ 920 007e FFF7FEFF 		bl	consoleLog
+ 921              	.LVL107:
+ 218:src/flashaccess.c ****             return -1;
+ 922              		.loc 1 218 13 view .LVU262
+ 923 0082 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 924              	.LVL108:
+ 219:src/flashaccess.c ****         }
+ 925              		.loc 1 219 13 view .LVU263
+ 219:src/flashaccess.c ****         }
+ 926              		.loc 1 219 20 is_stmt 0 view .LVU264
+ 927 0086 4FF0FF37 		mov	r7, #-1
+ 928              	.LVL109:
+ 929              	.L54:
+ 219:src/flashaccess.c ****         }
+ 930              		.loc 1 219 20 view .LVU265
+ 931              	.LBE15:
+ 932              	.LBE13:
+ 224:src/flashaccess.c ****     }
+ 225:src/flashaccess.c **** 
+ 226:src/flashaccess.c ****     return len;
+ 227:src/flashaccess.c **** }
+ 933              		.loc 1 227 1 view .LVU266
+ 934 008a 3846     		mov	r0, r7
+ 935 008c 11B0     		add	sp, sp, #68
+ 936              	.LCFI15:
+ 937              		.cfi_remember_state
+ 938              		.cfi_def_cfa_offset 20
+ 939              		@ sp needed
+ 940 008e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 941              	.LVL110:
+ 942              	.L60:
+ 943              	.LCFI16:
+ 944              		.cfi_restore_state
+ 185:src/flashaccess.c **** 
+ 945              		.loc 1 185 16 view .LVU267
+ 946 0090 4FF0FF37 		mov	r7, #-1
+ 947 0094 F9E7     		b	.L54
+ 948              	.L64:
+ 949 0096 00BF     		.align	2
+ 950              	.L63:
+ 951 0098 FFFF0108 		.word	134348799
+ARM GAS  /tmp/ccRjGKyO.s 			page 24
+
+
+ 952 009c 1C000000 		.word	.LC2
+ 953 00a0 5C000000 		.word	.LC4
+ 954              		.cfi_endproc
+ 955              	.LFE71:
+ 957              		.global	flashlen
+ 958              		.section	.data.flashlen,"aw"
+ 959              		.align	2
+ 962              	flashlen:
+ 963 0000 00100000 		.word	4096
+ 964              		.global	flash_data
+ 965              		.section	.data.flash_data,"aw"
+ 966              		.align	2
+ 969              	flash_data:
+ 970 0000 00F80308 		.word	134477824
+ 971              		.text
+ 972              	.Letext0:
+ 973              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 974              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 975              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 976              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h"
+ 977              		.file 6 "inc/protocol.h"
+ 978              		.file 7 "/usr/include/newlib/string.h"
+ 979              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h"
+ 980              		.file 9 "/usr/include/newlib/stdio.h"
+ 981              		.file 10 "inc/protocolfunctions.h"
+ 982              		.file 11 "<built-in>"
+ARM GAS  /tmp/ccRjGKyO.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 flashaccess.c
+     /tmp/ccRjGKyO.s:19     .rodata.writeFlash.str1.4:00000000 $d
+     /tmp/ccRjGKyO.s:39     .text.writeFlash:00000000 $t
+     /tmp/ccRjGKyO.s:45     .text.writeFlash:00000000 writeFlash
+     /tmp/ccRjGKyO.s:379    .text.writeFlash:00000158 $d
+     /tmp/ccRjGKyO.s:969    .data.flash_data:00000000 flash_data
+     /tmp/ccRjGKyO.s:962    .data.flashlen:00000000 flashlen
+     /tmp/ccRjGKyO.s:391    .text.writeFlash16:00000000 $t
+     /tmp/ccRjGKyO.s:397    .text.writeFlash16:00000000 writeFlash16
+     /tmp/ccRjGKyO.s:440    .rodata.readFlash.str1.4:00000000 $d
+     /tmp/ccRjGKyO.s:447    .text.readFlash:00000000 $t
+     /tmp/ccRjGKyO.s:453    .text.readFlash:00000000 readFlash
+     /tmp/ccRjGKyO.s:611    .text.readFlash:00000088 $d
+     /tmp/ccRjGKyO.s:619    .text.readFlash16:00000000 $t
+     /tmp/ccRjGKyO.s:625    .text.readFlash16:00000000 readFlash16
+     /tmp/ccRjGKyO.s:668    .text.flashposn:00000000 $t
+     /tmp/ccRjGKyO.s:674    .text.flashposn:00000000 flashposn
+     /tmp/ccRjGKyO.s:769    .text.flashposn:00000044 $d
+     /tmp/ccRjGKyO.s:775    .text.writeflashchunk:00000000 $t
+     /tmp/ccRjGKyO.s:781    .text.writeflashchunk:00000000 writeflashchunk
+     /tmp/ccRjGKyO.s:951    .text.writeflashchunk:00000098 $d
+     /tmp/ccRjGKyO.s:959    .data.flashlen:00000000 $d
+     /tmp/ccRjGKyO.s:966    .data.flash_data:00000000 $d
+
+UNDEFINED SYMBOLS
+sprintf
+consoleLog
+HAL_FLASH_Unlock
+HAL_FLASHEx_Erase
+HAL_FLASH_Lock
+HAL_FLASH_Program
+memcpy

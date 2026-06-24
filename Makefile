@@ -99,7 +99,9 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F103xE
+-DSTM32F103xE \
+-DENABLE_CAN_BUS=1 \
+-DCAN_SPEED=MCP2515_SPEED_250KBPS
 
 
 # AS includes
@@ -118,7 +120,7 @@ C_INCLUDES =  \
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -std=gnu11
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -std=gnu11 -fcommon
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
