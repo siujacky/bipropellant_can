@@ -2,12 +2,12 @@
  * mcp2515_bl.c — bare-metal software SPI MCP2515 driver for hoverboard bootloader.
  * No HAL, no SPI peripheral. Polling only (CANINTE=0x00).
  *
- * Pin assignments:
- *   MOSI = PA2   GPIOA CRL bits[11:8]  output 50MHz PP = 0x3
- *   MISO = PA3   GPIOA CRL bits[15:12] input floating = 0x4
- *   SCK  = PB10  GPIOB CRH bits[11:8]  output 50MHz PP = 0x3
- *   CS   = PB11  GPIOB CRH bits[15:12] output 50MHz PP = 0x3
- *   INT  = PB12  GPIOB CRH bits[19:16] input pull-up  = 0x8, ODR[12]=1
+ * Pin assignments (confirmed working 2026-06-24):
+ *   SI/MOSI = PB11  GPIOB CRH bits[15:12] output 50MHz PP = 0x3
+ *   SO/MISO = PB10  GPIOB CRH bits[11:8]  input floating = 0x4
+ *   SCK     = PA3   GPIOA CRL bits[15:12] output 50MHz PP = 0x3
+ *   CS      = PA2   GPIOA CRL bits[11:8]  output 50MHz PP = 0x3
+ *   INT     = PB12  GPIOB CRH bits[19:16] input pull-up  = 0x8, ODR[12]=1
  *
  * MCP2515 bit timing: 250 kbps @ 8 MHz crystal
  *   CNF1=0x00, CNF2=0x9E, CNF3=0x03
@@ -39,20 +39,20 @@
  * Pin macros — use BSRR: upper 16 bits = reset (BR), lower 16 bits = set (BS)
  * -------------------------------------------------------------------------- */
 
-/* CS = PB11 */
-#define CS_HIGH()   (GPIOB_BSRR = (1U << 11))
-#define CS_LOW()    (GPIOB_BSRR = (1U << (11 + 16)))
+/* CS = PA2 */
+#define CS_HIGH()   (GPIOA_BSRR = (1U << 2))
+#define CS_LOW()    (GPIOA_BSRR = (1U << (2 + 16)))
 
-/* SCK = PB10 */
-#define SCK_HIGH()  (GPIOB_BSRR = (1U << 10))
-#define SCK_LOW()   (GPIOB_BSRR = (1U << (10 + 16)))
+/* SCK = PA3 */
+#define SCK_HIGH()  (GPIOA_BSRR = (1U << 3))
+#define SCK_LOW()   (GPIOA_BSRR = (1U << (3 + 16)))
 
-/* MOSI = PA2 */
-#define MOSI_HIGH() (GPIOA_BSRR = (1U << 2))
-#define MOSI_LOW()  (GPIOA_BSRR = (1U << (2 + 16)))
+/* MOSI/SI = PB11 */
+#define MOSI_HIGH() (GPIOB_BSRR = (1U << 11))
+#define MOSI_LOW()  (GPIOB_BSRR = (1U << (11 + 16)))
 
-/* MISO = PA3 */
-#define MISO_READ() ((GPIOA_IDR >> 3) & 1U)
+/* MISO/SO = PB10 */
+#define MISO_READ() ((GPIOB_IDR >> 10) & 1U)
 
 /* --------------------------------------------------------------------------
  * MCP2515 SPI instruction bytes
@@ -111,22 +111,22 @@ static void gpio_init(void)
     RCC_APB2ENR |= (1U << 2) | (1U << 3);
 
     /* ----- GPIOA CRL (pins 0-7) ----------------------------------------- */
-    /* PA2 MOSI: output 50MHz push-pull → CNF=00, MODE=11 → 0x3 in bits[11:8]  */
-    /* PA3 MISO: input floating         → CNF=01, MODE=00 → 0x4 in bits[15:12] */
+    /* PA2 CS:  output 50MHz push-pull → CNF=00, MODE=11 → 0x3 in bits[11:8]  */
+    /* PA3 SCK: output 50MHz push-pull → CNF=00, MODE=11 → 0x3 in bits[15:12] */
     GPIOA_CRL = (GPIOA_CRL
                  & ~(0xFFU << 8))          /* clear bits[15:8] for PA2+PA3 */
-                | (0x3U  << 8)             /* PA2: out PP 50MHz */
-                | (0x4U  << 12);           /* PA3: input floating */
+                | (0x3U  << 8)             /* PA2: CS out PP 50MHz */
+                | (0x3U  << 12);           /* PA3: SCK out PP 50MHz */
 
     /* ----- GPIOB CRH (pins 8-15) ---------------------------------------- */
-    /* PB10 SCK:  output 50MHz PP → 0x3 in bits[11:8]  (pin10 → CRH offset 8)  */
-    /* PB11 CS:   output 50MHz PP → 0x3 in bits[15:12] (pin11 → CRH offset 12) */
-    /* PB12 INT:  input pull-up   → CNF=10, MODE=00 → 0x8 in bits[19:16]       */
+    /* PB10 MISO/SO: input floating → CNF=01, MODE=00 → 0x4 in bits[11:8]    */
+    /* PB11 MOSI/SI: output 50MHz PP → CNF=00, MODE=11 → 0x3 in bits[15:12] */
+    /* PB12 INT:  input pull-up   → CNF=10, MODE=00 → 0x8 in bits[19:16]     */
     GPIOB_CRH = (GPIOB_CRH
                  & ~(0xFFFU << 8))         /* clear bits[19:8] for PB10-12 */
-                | (0x3U << 8)              /* PB10: out PP 50MHz */
-                | (0x3U << 12)             /* PB11: out PP 50MHz */
-                | (0x8U << 16);            /* PB12: input with pull (ODR selects up/dn) */
+                | (0x4U << 8)              /* PB10: MISO input floating */
+                | (0x3U << 12)             /* PB11: MOSI out PP 50MHz */
+                | (0x8U << 16);            /* PB12: INT input pull (ODR selects up/dn) */
 
     /* PB12 pull-up: set ODR bit12 */
     GPIOB_ODR |= (1U << 12);

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccidYgsI.s 			page 1
+ARM GAS  /tmp/ccOk6KMZ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
   39      65657220 
   40 00bb 640D0A00 		.ascii	"d\015\012\000"
   41              		.section	.text.immediate_dir,"ax",%progbits
-ARM GAS  /tmp/ccidYgsI.s 			page 2
+ARM GAS  /tmp/ccOk6KMZ.s 			page 2
 
 
   42              		.align	1
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
   47:src/ascii_proto_funcs.c **** extern int control_type;
   48:src/ascii_proto_funcs.c **** //////////////////////////////////////////////////////////
   49:src/ascii_proto_funcs.c **** 
-ARM GAS  /tmp/ccidYgsI.s 			page 3
+ARM GAS  /tmp/ccOk6KMZ.s 			page 3
 
 
   50:src/ascii_proto_funcs.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  104:src/ascii_proto_funcs.c **** 
  105:src/ascii_proto_funcs.c **** 
  106:src/ascii_proto_funcs.c **** int immediate_dir(PROTOCOL_STAT *s, char byte, char *ascii_out) {
-ARM GAS  /tmp/ccidYgsI.s 			page 4
+ARM GAS  /tmp/ccOk6KMZ.s 			page 4
 
 
   51              		.loc 1 106 65 view -0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  103 003c 6000     		.2byte	(.L2-.L4)/2
  104 003e 3700     		.2byte	(.L3-.L4)/2
  105 0040 6000     		.2byte	(.L2-.L4)/2
-ARM GAS  /tmp/ccidYgsI.s 			page 5
+ARM GAS  /tmp/ccOk6KMZ.s 			page 5
 
 
  106 0042 6000     		.2byte	(.L2-.L4)/2
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  154 008e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  155              		.loc 1 114 16 view .LVU9
  156 0090 1BB9     		cbnz	r3, .L8
-ARM GAS  /tmp/ccidYgsI.s 			page 6
+ARM GAS  /tmp/ccOk6KMZ.s 			page 6
 
 
  157              		.loc 1 114 28 is_stmt 1 discriminator 1 view .LVU10
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  204 00c6 0B44     		add	r3, r3, r1
  205 00c8 4360     		str	r3, [r0, #4]
  122:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "wanted_posn now %ldmm %ldmm\r\n", PosnData.wanted_posn_mm[0
-ARM GAS  /tmp/ccidYgsI.s 			page 7
+ARM GAS  /tmp/ccOk6KMZ.s 			page 7
 
 
  206              		.loc 1 122 21 is_stmt 1 view .LVU28
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  213              		.loc 1 169 5 view .LVU30
  170:src/ascii_proto_funcs.c **** }
  214              		.loc 1 170 1 is_stmt 0 view .LVU31
-ARM GAS  /tmp/ccidYgsI.s 			page 8
+ARM GAS  /tmp/ccOk6KMZ.s 			page 8
 
 
  215 00d2 0120     		movs	r0, #1
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  263 011a FFF7FEFF 		bl	__aeabi_dsub
  264              	.LVL16:
  265 011e 0246     		mov	r2, r0
-ARM GAS  /tmp/ccidYgsI.s 			page 9
+ARM GAS  /tmp/ccOk6KMZ.s 			page 9
 
 
  266 0120 0B46     		mov	r3, r1
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  311 0170 77A3     		adr	r3, .L42
  312 0172 D3E90023 		ldrd	r2, [r3]
  313 0176 3046     		mov	r0, r6
-ARM GAS  /tmp/ccidYgsI.s 			page 10
+ARM GAS  /tmp/ccOk6KMZ.s 			page 10
 
 
  314 0178 3946     		mov	r1, r7
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  358 01b6 1D68     		ldr	r5, [r3]
  359 01b8 05EB4105 		add	r5, r5, r1, lsl #1
  360 01bc 1D60     		str	r5, [r3]
-ARM GAS  /tmp/ccidYgsI.s 			page 11
+ARM GAS  /tmp/ccOk6KMZ.s 			page 11
 
 
  132:src/ascii_proto_funcs.c ****                     PWMData.pwm[0] = CLAMP(speedB * SPEED_COEFFICIENT +  steerB * STEER_COEFFICIENT
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  409 021a FFF7FEFF 		bl	__aeabi_d2iz
  410              	.LVL35:
  411 021e 8046     		mov	r8, r0
-ARM GAS  /tmp/ccidYgsI.s 			page 12
+ARM GAS  /tmp/ccOk6KMZ.s 			page 12
 
 
  412 0220 01E0     		b	.L13
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  457              	.L14:
  133:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "speed now %d, steer now %d, pwm %ld, pwm %ld\r\n", speedB, 
  458              		.loc 1 133 36 discriminator 8 view .LVU72
-ARM GAS  /tmp/ccidYgsI.s 			page 13
+ARM GAS  /tmp/ccOk6KMZ.s 			page 13
 
 
  459 026a 474B     		ldr	r3, .L42+56
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  145:src/ascii_proto_funcs.c ****             input_timeout_counter = 0;
  500              		.loc 1 145 20 is_stmt 0 view .LVU86
  501 0298 2F4A     		ldr	r2, .L42+8
-ARM GAS  /tmp/ccidYgsI.s 			page 14
+ARM GAS  /tmp/ccOk6KMZ.s 			page 14
 
 
  502 029a 0121     		movs	r1, #1
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  152:src/ascii_proto_funcs.c ****                 case CONTROL_TYPE_SPEED:
  543              		.loc 1 152 21 view .LVU100
  544 02d4 FDE6     		b	.L2
-ARM GAS  /tmp/ccidYgsI.s 			page 15
+ARM GAS  /tmp/ccOk6KMZ.s 			page 15
 
 
  545              	.LVL47:
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  592 0326 FFF7FEFF 		bl	__aeabi_dcmpgt
  593              	.LVL55:
  594 032a 88BB     		cbnz	r0, .L32
-ARM GAS  /tmp/ccidYgsI.s 			page 16
+ARM GAS  /tmp/ccOk6KMZ.s 			page 16
 
 
  155:src/ascii_proto_funcs.c ****                     SpeedData.wanted_speed_mm_per_sec[0] = CLAMP(speedB * SPEED_COEFFICIENT +  stee
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  642              	.LVL58:
  643 03a6 0646     		mov	r6, r0
  644 03a8 0F46     		mov	r7, r1
-ARM GAS  /tmp/ccidYgsI.s 			page 17
+ARM GAS  /tmp/ccOk6KMZ.s 			page 17
 
 
  156:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "speed now %d, steer now %d, speedL %ld, speedR %ld\r\n", sp
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  690 03f2 F1E7     		b	.L19
  691              	.LVL63:
  692              	.L17:
-ARM GAS  /tmp/ccidYgsI.s 			page 18
+ARM GAS  /tmp/ccOk6KMZ.s 			page 18
 
 
  160:src/ascii_proto_funcs.c ****                     PWMData.pwm[1] = CLAMP(speedB * SPEED_COEFFICIENT -  steerB * STEER_COEFFICIENT
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  740 0448 68B9     		cbnz	r0, .L36
  161:src/ascii_proto_funcs.c ****                     PWMData.pwm[0] = CLAMP(speedB * SPEED_COEFFICIENT +  steerB * STEER_COEFFICIENT
  741              		.loc 1 161 36 discriminator 2 view .LVU130
-ARM GAS  /tmp/ccidYgsI.s 			page 19
+ARM GAS  /tmp/ccOk6KMZ.s 			page 19
 
 
  742 044a 23A3     		adr	r3, .L44
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  788 049e FFF7FEFF 		bl	__aeabi_d2iz
  789              	.LVL77:
  790 04a2 04E0     		b	.L21
-ARM GAS  /tmp/ccidYgsI.s 			page 20
+ARM GAS  /tmp/ccOk6KMZ.s 			page 20
 
 
  791              	.L37:
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  840              		.section	.rodata.immediate_stop.str1.4,"aMS",%progbits,1
  841              		.align	2
  842              	.LC4:
-ARM GAS  /tmp/ccidYgsI.s 			page 21
+ARM GAS  /tmp/ccOk6KMZ.s 			page 21
 
 
  843 0000 53746F70 		.ascii	"Stop set\015\012\000"
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  179:src/ascii_proto_funcs.c ****     HallData[0].HallSpeed_mm_per_s = HallData[1].HallSpeed_mm_per_s = 0;
  888              		.loc 1 179 5 is_stmt 1 view .LVU159
  889              		.loc 1 179 69 is_stmt 0 view .LVU160
-ARM GAS  /tmp/ccidYgsI.s 			page 22
+ARM GAS  /tmp/ccOk6KMZ.s 			page 22
 
 
  890 0018 1249     		ldr	r1, .L48+16
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  935 004a 9372     		strb	r3, [r2, #10]
  189:src/ascii_proto_funcs.c ****     return 1;
  936              		.loc 1 189 5 view .LVU180
-ARM GAS  /tmp/ccidYgsI.s 			page 23
+ARM GAS  /tmp/ccOk6KMZ.s 			page 23
 
 
  190:src/ascii_proto_funcs.c **** }
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  193:src/ascii_proto_funcs.c ****     s->ascii.enable_immediate = 0;
  986              		.loc 1 193 5 is_stmt 1 view .LVU184
  987              		.loc 1 193 31 is_stmt 0 view .LVU185
-ARM GAS  /tmp/ccidYgsI.s 			page 24
+ARM GAS  /tmp/ccOk6KMZ.s 			page 24
 
 
  988 0004 00F58050 		add	r0, r0, #4096
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1034              		.loc 1 201 32 view .LVU208
  1035 002e 1649     		ldr	r1, .L52+24
  1036 0030 0860     		str	r0, [r1]
-ARM GAS  /tmp/ccidYgsI.s 			page 25
+ARM GAS  /tmp/ccOk6KMZ.s 			page 25
 
 
  202:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1082 0080 00000000 		.word	HallData
  1083 0084 00000000 		.word	pwms
  1084 0088 00000000 		.word	PosnData
-ARM GAS  /tmp/ccidYgsI.s 			page 26
+ARM GAS  /tmp/ccOk6KMZ.s 			page 26
 
 
  1085 008c 00000000 		.word	sensor_control
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1128 0006 0D92     		str	r2, [sp, #52]
  213:src/ascii_proto_funcs.c ****     sprintf(ascii_out,
  1129              		.loc 1 213 5 is_stmt 1 view .LVU223
-ARM GAS  /tmp/ccidYgsI.s 			page 27
+ARM GAS  /tmp/ccOk6KMZ.s 			page 27
 
 
  214:src/ascii_proto_funcs.c ****         "L: P:%ld(%ldmm) S:%ld(%ldmm/s) dT:%lu Skip:%lu Dma:%d\r\n"\
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1179 005c 0D98     		ldr	r0, [sp, #52]
  1180 005e FFF7FEFF 		bl	sprintf
  1181              	.LVL91:
-ARM GAS  /tmp/ccidYgsI.s 			page 28
+ARM GAS  /tmp/ccOk6KMZ.s 			page 28
 
 
  218:src/ascii_proto_funcs.c ****     );
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1225              		.cfi_offset 5, -16
  1226              		.cfi_offset 6, -12
  1227              		.cfi_offset 7, -8
-ARM GAS  /tmp/ccidYgsI.s 			page 29
+ARM GAS  /tmp/ccOk6KMZ.s 			page 29
 
 
  1228              		.cfi_offset 14, -4
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1275 0054 FFF7FEFF 		bl	sprintf
  1276              	.LVL97:
  229:src/ascii_proto_funcs.c ****     );
-ARM GAS  /tmp/ccidYgsI.s 			page 30
+ARM GAS  /tmp/ccOk6KMZ.s 			page 30
 
 
  230:src/ascii_proto_funcs.c **** #else
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  260:src/ascii_proto_funcs.c **** 
  261:src/ascii_proto_funcs.c **** int immediate_toggle_control(PROTOCOL_STAT *s, char byte, char *ascii_out) {
  262:src/ascii_proto_funcs.c **** //case 'O':
-ARM GAS  /tmp/ccidYgsI.s 			page 31
+ARM GAS  /tmp/ccOk6KMZ.s 			page 31
 
 
  263:src/ascii_proto_funcs.c ****     int control_old = control_type;
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  317:src/ascii_proto_funcs.c ****         (int)(timeStats.main_interval_ms * 1000), timeStats.main_late_count, (int)(timeStats.main_p
  318:src/ascii_proto_funcs.c ****     return 1;
  319:src/ascii_proto_funcs.c **** }
-ARM GAS  /tmp/ccidYgsI.s 			page 32
+ARM GAS  /tmp/ccOk6KMZ.s 			page 32
 
 
  320:src/ascii_proto_funcs.c **** 
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  374:src/ascii_proto_funcs.c ****                                     s->send_serial_data_wait((unsigned char *)ascii_out, strlen(asc
  375:src/ascii_proto_funcs.c ****                                     ascii_out[0] = 0; // don't print last one twice
  376:src/ascii_proto_funcs.c ****                                     break;
-ARM GAS  /tmp/ccidYgsI.s 			page 33
+ARM GAS  /tmp/ccOk6KMZ.s 			page 33
 
 
  377:src/ascii_proto_funcs.c ****                                 }
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  431:src/ascii_proto_funcs.c ****                                         break;
  432:src/ascii_proto_funcs.c ****                                 }
  433:src/ascii_proto_funcs.c ****                                 break; // found our param, now leave
-ARM GAS  /tmp/ccidYgsI.s 			page 34
+ARM GAS  /tmp/ccOk6KMZ.s 			page 34
 
 
  434:src/ascii_proto_funcs.c ****                             }
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  488:src/ascii_proto_funcs.c **** int line_stm32(PROTOCOL_STAT *s, char *cmd, char *ascii_out) {
  489:src/ascii_proto_funcs.c **** //case 'G':
  490:src/ascii_proto_funcs.c ****     immediate_stm32(s, *cmd, ascii_out);
-ARM GAS  /tmp/ccidYgsI.s 			page 35
+ARM GAS  /tmp/ccOk6KMZ.s 			page 35
 
 
  491:src/ascii_proto_funcs.c ****     return 1;
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1312              		.cfi_offset 14, -4
  536:src/ascii_proto_funcs.c **** //case 'N':
  537:src/ascii_proto_funcs.c ****     immediate_sensors(s, *cmd, ascii_out);
-ARM GAS  /tmp/ccidYgsI.s 			page 36
+ARM GAS  /tmp/ccOk6KMZ.s 			page 36
 
 
  1313              		.loc 1 537 5 is_stmt 1 view .LVU261
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1354              		.cfi_offset 5, -32
  1355              		.cfi_offset 6, -28
  1356              		.cfi_offset 7, -24
-ARM GAS  /tmp/ccidYgsI.s 			page 37
+ARM GAS  /tmp/ccOk6KMZ.s 			page 37
 
 
  1357              		.cfi_offset 8, -20
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1399              		.loc 1 243 114 view .LVU278
  1400 0034 0022     		movs	r2, #0
  1401 0036 284B     		ldr	r3, .L66+8
-ARM GAS  /tmp/ccidYgsI.s 			page 38
+ARM GAS  /tmp/ccOk6KMZ.s 			page 38
 
 
  1402 0038 FFF7FEFF 		bl	__aeabi_dmul
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1447 0092 0690     		str	r0, [sp, #24]
  1448 0094 CDF814A0 		str	r10, [sp, #20]
  1449 0098 CDF81090 		str	r9, [sp, #16]
-ARM GAS  /tmp/ccidYgsI.s 			page 39
+ARM GAS  /tmp/ccOk6KMZ.s 			page 39
 
 
  1450 009c DDE90E01 		ldrd	r0, [sp, #56]
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1502              		@ frame_needed = 0, uses_anonymous_args = 0
  307:src/ascii_proto_funcs.c **** //case 'c':
  1503              		.loc 1 307 67 is_stmt 0 view .LVU292
-ARM GAS  /tmp/ccidYgsI.s 			page 40
+ARM GAS  /tmp/ccOk6KMZ.s 			page 40
 
 
  1504 0000 08B5     		push	{r3, lr}
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1547              		.cfi_offset 6, -12
  1548              		.cfi_offset 7, -8
  1549              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccidYgsI.s 			page 41
+ARM GAS  /tmp/ccOk6KMZ.s 			page 41
 
 
  1550 0002 87B0     		sub	sp, sp, #28
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1592 003c 07B0     		add	sp, sp, #28
  1593              	.LCFI21:
  1594              		.cfi_def_cfa_offset 20
-ARM GAS  /tmp/ccidYgsI.s 			page 42
+ARM GAS  /tmp/ccOk6KMZ.s 			page 42
 
 
  1595              		@ sp needed
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1643      6F6C206E 
  1643      6F772025 
  1644              		.section	.text.line_toggle_sensor_control,"ax",%progbits
-ARM GAS  /tmp/ccidYgsI.s 			page 43
+ARM GAS  /tmp/ccOk6KMZ.s 			page 43
 
 
  1645              		.align	1
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1688 001a 0B60     		str	r3, [r1]
  298:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[0] = HallData[0].HallPosn_mm;
  1689              		.loc 1 298 5 is_stmt 1 view .LVU329
-ARM GAS  /tmp/ccidYgsI.s 			page 44
+ARM GAS  /tmp/ccOk6KMZ.s 			page 44
 
 
  298:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[0] = HallData[0].HallPosn_mm;
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1732      7020696E 
  1732      74657276 
  1732      616C5F75 
-ARM GAS  /tmp/ccidYgsI.s 			page 45
+ARM GAS  /tmp/ccOk6KMZ.s 			page 45
 
 
  1733 0033 640D0A00 		.ascii	"d\015\012\000"
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  319:src/ascii_proto_funcs.c **** 
  1779              		.loc 1 319 1 is_stmt 0 view .LVU350
  1780 0022 0120     		movs	r0, #1
-ARM GAS  /tmp/ccidYgsI.s 			page 46
+ARM GAS  /tmp/ccOk6KMZ.s 			page 46
 
 
  1781 0024 02B0     		add	sp, sp, #8
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1828              	.LVL144:
  266:src/ascii_proto_funcs.c ****     control_type = (control_old+1) % CONTROL_TYPE_MAX;
  1829              		.loc 1 266 5 view .LVU356
-ARM GAS  /tmp/ccidYgsI.s 			page 47
+ARM GAS  /tmp/ccOk6KMZ.s 			page 47
 
 
  266:src/ascii_proto_funcs.c ****     control_type = (control_old+1) % CONTROL_TYPE_MAX;
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1872      77202564 
  1872      0D0A656E 
  1873              		.section	.text.line_debug_control,"ax",%progbits
-ARM GAS  /tmp/ccidYgsI.s 			page 48
+ARM GAS  /tmp/ccOk6KMZ.s 			page 48
 
 
  1874              		.align	1
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1917              		.loc 1 332 12 is_stmt 0 view .LVU378
  1918 001a 632B     		cmp	r3, #99
  1919 001c 15D0     		beq	.L95
-ARM GAS  /tmp/ccidYgsI.s 			page 49
+ARM GAS  /tmp/ccOk6KMZ.s 			page 49
 
 
  1920              	.L90:
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1961 004c 0122     		movs	r2, #1
  1962 004e 1A70     		strb	r2, [r3]
  1963 0050 E5E7     		b	.L90
-ARM GAS  /tmp/ccidYgsI.s 			page 50
+ARM GAS  /tmp/ccOk6KMZ.s 			page 50
 
 
  1964              	.L97:
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  1998              	.LFB83:
  500:src/ascii_proto_funcs.c **** //case 'I':
  1999              		.loc 1 500 66 is_stmt 1 view -0
-ARM GAS  /tmp/ccidYgsI.s 			page 51
+ARM GAS  /tmp/ccOk6KMZ.s 			page 51
 
 
  2000              		.cfi_startproc
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2039              		.loc 1 507 29 is_stmt 0 view .LVU407
  2040 001e 514A     		ldr	r2, .L110+16
  2041 0020 5360     		str	r3, [r2, #4]
-ARM GAS  /tmp/ccidYgsI.s 			page 52
+ARM GAS  /tmp/ccOk6KMZ.s 			page 52
 
 
  507:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[0] = HallData[0].HallPosn_mm;
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  521:src/ascii_proto_funcs.c ****                 control_type = CONTROL_TYPE_POSITION;
  2080              		.loc 1 521 43 is_stmt 0 view .LVU424
  2081 004c 04F58054 		add	r4, r4, #4096
-ARM GAS  /tmp/ccidYgsI.s 			page 53
+ARM GAS  /tmp/ccOk6KMZ.s 			page 53
 
 
  2082              	.LVL159:
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  512:src/ascii_proto_funcs.c ****     } else {
  2126              		.loc 1 512 9 is_stmt 1 view .LVU435
  2127 009c 364C     		ldr	r4, .L110+36
-ARM GAS  /tmp/ccidYgsI.s 			page 54
+ARM GAS  /tmp/ccOk6KMZ.s 			page 54
 
 
  2128              	.LVL164:
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  518:src/ascii_proto_funcs.c ****                 break;
  2172              		.loc 1 518 17 is_stmt 0 view .LVU446
  2173 00e6 B446     		mov	ip, r6
-ARM GAS  /tmp/ccidYgsI.s 			page 55
+ARM GAS  /tmp/ccOk6KMZ.s 			page 55
 
 
  2174 00e8 04F13006 		add	r6, r4, #48
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2218 0132 2C46     		mov	r4, r5
  2219 0134 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
  2220 0136 CCF80000 		str	r0, [ip]	@ unaligned
-ARM GAS  /tmp/ccidYgsI.s 			page 56
+ARM GAS  /tmp/ccOk6KMZ.s 			page 56
 
 
  2221 013a CCF80410 		str	r1, [ip, #4]	@ unaligned
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2269 0000 30B5     		push	{r4, r5, lr}
  2270              	.LCFI30:
  2271              		.cfi_def_cfa_offset 12
-ARM GAS  /tmp/ccidYgsI.s 			page 57
+ARM GAS  /tmp/ccOk6KMZ.s 			page 57
 
 
  2272              		.cfi_offset 4, -12
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2310              		.loc 1 281 9 is_stmt 1 view .LVU474
  281:src/ascii_proto_funcs.c ****     }
  2311              		.loc 1 281 11 is_stmt 0 view .LVU475
-ARM GAS  /tmp/ccidYgsI.s 			page 58
+ARM GAS  /tmp/ccOk6KMZ.s 			page 58
 
 
  2312 0022 4FF47A73 		mov	r3, #1000
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  278:src/ascii_proto_funcs.c ****     }
  2355              		.loc 1 278 9 is_stmt 1 view .LVU487
  2356 0054 03AB     		add	r3, sp, #12
-ARM GAS  /tmp/ccidYgsI.s 			page 59
+ARM GAS  /tmp/ccOk6KMZ.s 			page 59
 
 
  2357 0056 0093     		str	r3, [sp]
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2395      72202573 
  2395      28257329 
  2395      20756E73 
-ARM GAS  /tmp/ccidYgsI.s 			page 60
+ARM GAS  /tmp/ccOk6KMZ.s 			page 60
 
 
  2396              		.align	2
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2440              		.loc 1 346 8 is_stmt 0 view .LVU494
  2441 0012 0128     		cmp	r0, #1
  2442 0014 09D0     		beq	.L141
-ARM GAS  /tmp/ccidYgsI.s 			page 61
+ARM GAS  /tmp/ccOk6KMZ.s 			page 61
 
 
  349:src/ascii_proto_funcs.c ****             memset(&FlashContent, 0, sizeof(FlashContent));
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2486              	.LVL187:
  351:src/ascii_proto_funcs.c ****             writeFlash( (unsigned char *)&FlashContent, sizeof(FlashContent) );
  2487              		.loc 1 351 13 is_stmt 1 view .LVU506
-ARM GAS  /tmp/ccidYgsI.s 			page 62
+ARM GAS  /tmp/ccOk6KMZ.s 			page 62
 
 
  2488 004e 2A46     		mov	r2, r5
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2533              		.loc 1 375 37 is_stmt 1 view .LVU515
  375:src/ascii_proto_funcs.c ****                                     break;
  2534              		.loc 1 375 50 is_stmt 0 view .LVU516
-ARM GAS  /tmp/ccidYgsI.s 			page 63
+ARM GAS  /tmp/ccOk6KMZ.s 			page 63
 
 
  2535 0092 0023     		movs	r3, #0
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2574 00c0 FFF7FEFF 		bl	memset
  2575              	.LVL195:
  368:src/ascii_proto_funcs.c **** 
-ARM GAS  /tmp/ccidYgsI.s 			page 64
+ARM GAS  /tmp/ccOk6KMZ.s 			page 64
 
 
  2576              		.loc 1 368 37 view .LVU532
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2617 00f0 0AF1010A 		add	r10, r10, #1
  394:src/ascii_proto_funcs.c **** 
  2618              		.loc 1 394 49 discriminator 1 view .LVU546
-ARM GAS  /tmp/ccidYgsI.s 			page 65
+ARM GAS  /tmp/ccOk6KMZ.s 			page 65
 
 
  2619 00f4 19F80A30 		ldrb	r3, [r9, r10]	@ zero_extendqisi2
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2660              		.loc 1 420 80 view .LVU559
  2661 0130 1969     		ldr	r1, [r3, #16]
  420:src/ascii_proto_funcs.c ****                                             );
-ARM GAS  /tmp/ccidYgsI.s 			page 66
+ARM GAS  /tmp/ccOk6KMZ.s 			page 66
 
 
  2662              		.loc 1 420 58 view .LVU560
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  399:src/ascii_proto_funcs.c ****                                             newMsg.code = s->params[i]->code;
  2704              		.loc 1 399 85 discriminator 1 view .LVU573
  2705 016a 0130     		adds	r0, r0, #1
-ARM GAS  /tmp/ccidYgsI.s 			page 67
+ARM GAS  /tmp/ccOk6KMZ.s 			page 67
 
 
  399:src/ascii_proto_funcs.c ****                                             newMsg.code = s->params[i]->code;
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2744              		.loc 1 406 45 view .LVU589
  2745 01a4 4AB1     		cbz	r2, .L145
  2746              	.L133:
-ARM GAS  /tmp/ccidYgsI.s 			page 68
+ARM GAS  /tmp/ccOk6KMZ.s 			page 68
 
 
  409:src/ascii_proto_funcs.c ****                                         } else {
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2788              		.loc 1 388 33 is_stmt 0 view .LVU602
  2789 01cc 04F20A33 		addw	r3, r4, #778
  2790 01d0 06EB8303 		add	r3, r6, r3, lsl #2
-ARM GAS  /tmp/ccidYgsI.s 			page 69
+ARM GAS  /tmp/ccOk6KMZ.s 			page 69
 
 
  2791 01d4 5D68     		ldr	r5, [r3, #4]
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2830              	.L137:
  427:src/ascii_proto_funcs.c ****                                                 (s->params[i]->description)?s->params[i]->descripti
  2831              		.loc 1 427 41 discriminator 4 view .LVU618
-ARM GAS  /tmp/ccidYgsI.s 			page 70
+ARM GAS  /tmp/ccOk6KMZ.s 			page 70
 
 
  2832 020c 4346     		mov	r3, r8
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2879 0250 80000000 		.word	.LC26
  2880              	.LBE11:
  2881              		.cfi_endproc
-ARM GAS  /tmp/ccidYgsI.s 			page 71
+ARM GAS  /tmp/ccOk6KMZ.s 			page 71
 
 
  2882              	.LFE79:
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2926 000a 0846     		mov	r0, r1
  2927              	.LVL217:
  2928              		.loc 1 543 9 view .LVU630
-ARM GAS  /tmp/ccidYgsI.s 			page 72
+ARM GAS  /tmp/ccOk6KMZ.s 			page 72
 
 
  2929 000c FFF7FEFF 		bl	strlen
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  2968 0038 1A70     		strb	r2, [r3]
  545:src/ascii_proto_funcs.c ****     } else {
  2969              		.loc 1 545 9 is_stmt 1 view .LVU646
-ARM GAS  /tmp/ccidYgsI.s 			page 73
+ARM GAS  /tmp/ccOk6KMZ.s 			page 73
 
 
  545:src/ascii_proto_funcs.c ****     } else {
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3003 005e AA60     		str	r2, [r5, #8]	@ unaligned
  3004 0060 EB60     		str	r3, [r5, #12]	@ unaligned
  3005 0062 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
-ARM GAS  /tmp/ccidYgsI.s 			page 74
+ARM GAS  /tmp/ccOk6KMZ.s 			page 74
 
 
  3006 0064 2B74     		strb	r3, [r5, #16]
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  561:src/ascii_proto_funcs.c ****                     powerofftimer = 1; // immediate
  3047              		.loc 1 561 20 is_stmt 0 view .LVU665
  3048 009a 1BB9     		cbnz	r3, .L157
-ARM GAS  /tmp/ccidYgsI.s 			page 75
+ARM GAS  /tmp/ccOk6KMZ.s 			page 75
 
 
  562:src/ascii_proto_funcs.c ****                 } else {
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  582:src/ascii_proto_funcs.c ****         // send a test message in machine protocol
  583:src/ascii_proto_funcs.c ****         switch (cmd[1]){
  584:src/ascii_proto_funcs.c ****             case 'A':
-ARM GAS  /tmp/ccidYgsI.s 			page 76
+ARM GAS  /tmp/ccOk6KMZ.s 			page 76
 
 
  585:src/ascii_proto_funcs.c ****             case 'a':
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3112 0008 0120     		movs	r0, #1
  3113 000a 38BD     		pop	{r3, r4, r5, pc}
  3114              	.LVL232:
-ARM GAS  /tmp/ccidYgsI.s 			page 77
+ARM GAS  /tmp/ccOk6KMZ.s 			page 77
 
 
  3115              	.L166:
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3158              	.L167:
  3159 0044 00000000 		.word	.LC30
  3160              		.cfi_endproc
-ARM GAS  /tmp/ccidYgsI.s 			page 78
+ARM GAS  /tmp/ccOk6KMZ.s 			page 78
 
 
  3161              	.LFE87:
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3207 0012 0CD9     		bls	.L176
  583:src/ascii_proto_funcs.c ****             case 'A':
  3208              		.loc 1 583 9 is_stmt 1 view .LVU696
-ARM GAS  /tmp/ccidYgsI.s 			page 79
+ARM GAS  /tmp/ccOk6KMZ.s 			page 79
 
 
  583:src/ascii_proto_funcs.c ****             case 'A':
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3255 0050 B442     		cmp	r4, r6
  3256 0052 F0D1     		bne	.L171
  3257 0054 03CD     		ldmia	r5!, {r0, r1}
-ARM GAS  /tmp/ccidYgsI.s 			page 80
+ARM GAS  /tmp/ccOk6KMZ.s 			page 80
 
 
  3258 0056 CCF80000 		str	r0, [ip]	@ unaligned
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3306              		@ args = 0, pretend = 0, frame = 120
  3307              		@ frame_needed = 0, uses_anonymous_args = 0
  3308              		.loc 1 618 68 is_stmt 0 view .LVU710
-ARM GAS  /tmp/ccidYgsI.s 			page 81
+ARM GAS  /tmp/ccOk6KMZ.s 			page 81
 
 
  3309 0000 F0B5     		push	{r4, r5, r6, r7, lr}
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3350 0020 FFF7FEFF 		bl	sscanf
  3351              	.LVL252:
  3352              	.L181:
-ARM GAS  /tmp/ccidYgsI.s 			page 82
+ARM GAS  /tmp/ccOk6KMZ.s 			page 82
 
 
  632:src/ascii_proto_funcs.c ****     }
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3399 005c FFF7FEFF 		bl	strlen
  3400              	.LVL259:
  3401              		.loc 1 639 13 is_stmt 0 discriminator 1 view .LVU736
-ARM GAS  /tmp/ccidYgsI.s 			page 83
+ARM GAS  /tmp/ccOk6KMZ.s 			page 83
 
 
  3402 0060 2A18     		adds	r2, r5, r0
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3445              		.loc 1 626 12 is_stmt 0 view .LVU751
  3446 008a 0028     		cmp	r0, #0
  626:src/ascii_proto_funcs.c ****             addr = tmp;
-ARM GAS  /tmp/ccidYgsI.s 			page 84
+ARM GAS  /tmp/ccOk6KMZ.s 			page 84
 
 
  3447              		.loc 1 626 12 view .LVU752
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3492              		.align	2
  3493              	.LC36:
  3494 0000 7072696E 		.ascii	"print/set a flash constant (Fa to print all, Fi to "
-ARM GAS  /tmp/ccidYgsI.s 			page 85
+ARM GAS  /tmp/ccOk6KMZ.s 			page 85
 
 
  3494      742F7365 
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3533              		.loc 1 455 10 view .LVU768
  455:src/ascii_proto_funcs.c ****         char *t = "print/set a flash constant (Fa to print all, Fi to default all):\r\n"
  3534              		.loc 1 455 14 is_stmt 0 view .LVU769
-ARM GAS  /tmp/ccidYgsI.s 			page 86
+ARM GAS  /tmp/ccOk6KMZ.s 			page 86
 
 
  3535 0008 4FF00008 		mov	r8, #0
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  467:src/ascii_proto_funcs.c ****                         "  F%s<n> - %s\r\n",
  3576              		.loc 1 467 21 view .LVU783
  470:src/ascii_proto_funcs.c ****                         );
-ARM GAS  /tmp/ccidYgsI.s 			page 87
+ARM GAS  /tmp/ccOk6KMZ.s 			page 87
 
 
  3577              		.loc 1 470 42 is_stmt 0 view .LVU784
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3618              		.loc 1 455 29 is_stmt 1 discriminator 2 view .LVU797
  3619 0058 08F10108 		add	r8, r8, #1
  3620              	.LVL278:
-ARM GAS  /tmp/ccidYgsI.s 			page 88
+ARM GAS  /tmp/ccOk6KMZ.s 			page 88
 
 
  3621              	.L191:
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3663 0084 0370     		strb	r3, [r0]
  3664 0086 E7E7     		b	.L198
  3665              	.LVL285:
-ARM GAS  /tmp/ccidYgsI.s 			page 89
+ARM GAS  /tmp/ccOk6KMZ.s 			page 89
 
 
  3666              	.L204:
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3714              	.LVL289:
  497:src/ascii_proto_funcs.c **** }
  3715              		.loc 1 497 5 is_stmt 1 view .LVU818
-ARM GAS  /tmp/ccidYgsI.s 			page 90
+ARM GAS  /tmp/ccOk6KMZ.s 			page 90
 
 
  498:src/ascii_proto_funcs.c **** 
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3749      74726963 
  3749      616C206D 
  3750              		.align	2
-ARM GAS  /tmp/ccidYgsI.s 			page 91
+ARM GAS  /tmp/ccOk6KMZ.s 			page 91
 
 
  3751              	.LC47:
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3774      69726D77 
  3775              		.align	2
  3776              	.LC55:
-ARM GAS  /tmp/ccidYgsI.s 			page 92
+ARM GAS  /tmp/ccOk6KMZ.s 			page 92
 
 
  3777 0168 7474202D 		.ascii	"tt - send a test protocol message \000"
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3800              	.LFB89:
  647:src/ascii_proto_funcs.c **** 
  648:src/ascii_proto_funcs.c **** 
-ARM GAS  /tmp/ccidYgsI.s 			page 93
+ARM GAS  /tmp/ccOk6KMZ.s 			page 93
 
 
  649:src/ascii_proto_funcs.c **** 
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3844 0032 5820     		movs	r0, #88
  3845 0034 FFF7FEFF 		bl	ascii_add_immediate
  3846              	.LVL296:
-ARM GAS  /tmp/ccidYgsI.s 			page 94
+ARM GAS  /tmp/ccOk6KMZ.s 			page 94
 
 
  660:src/ascii_proto_funcs.c ****     ascii_add_immediate( 'Q', immediate_quit, "Quit Immediate");
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3891              		.loc 1 669 5 view .LVU835
  3892 0082 354A     		ldr	r2, .L211+84
  3893 0084 3549     		ldr	r1, .L211+88
-ARM GAS  /tmp/ccidYgsI.s 			page 95
+ARM GAS  /tmp/ccOk6KMZ.s 			page 95
 
 
  3894 0086 4220     		movs	r0, #66
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3935 00ca 3249     		ldr	r1, .L211+144
  3936 00cc 4D20     		movs	r0, #77
  3937 00ce FFF7FEFF 		bl	ascii_add_line_fn
-ARM GAS  /tmp/ccidYgsI.s 			page 96
+ARM GAS  /tmp/ccOk6KMZ.s 			page 96
 
 
  3938              	.LVL311:
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  3982 011c 00000000 		.word	immediate_stop
  3983 0120 30000000 		.word	.LC43
  3984 0124 00000000 		.word	immediate_quit
-ARM GAS  /tmp/ccidYgsI.s 			page 97
+ARM GAS  /tmp/ccOk6KMZ.s 			page 97
 
 
  3985 0128 40000000 		.word	.LC44
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  4034              		.section	.rodata.control_types,"a"
  4035              		.align	2
  4038              	control_types:
-ARM GAS  /tmp/ccidYgsI.s 			page 98
+ARM GAS  /tmp/ccOk6KMZ.s 			page 98
 
 
  4039 0000 00000000 		.word	.LC59
@@ -5857,114 +5857,114 @@ ARM GAS  /tmp/ccidYgsI.s 			page 1
  4075              		.file 15 "/usr/include/newlib/string.h"
  4076              		.file 16 "<built-in>"
  4077              		.file 17 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/ccidYgsI.s 			page 99
+ARM GAS  /tmp/ccOk6KMZ.s 			page 99
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ascii_proto_funcs.c
-     /tmp/ccidYgsI.s:19     .rodata.immediate_dir.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:42     .text.immediate_dir:00000000 $t
-     /tmp/ccidYgsI.s:48     .text.immediate_dir:00000000 immediate_dir
-     /tmp/ccidYgsI.s:82     .text.immediate_dir:00000012 $d
-     /tmp/ccidYgsI.s:137    .text.immediate_dir:00000080 $t
-     /tmp/ccidYgsI.s:612    .text.immediate_dir:00000350 $d
-     /tmp/ccidYgsI.s:4053   .bss.speedB:00000000 speedB
-     /tmp/ccidYgsI.s:4047   .bss.steerB:00000000 steerB
-     /tmp/ccidYgsI.s:630    .text.immediate_dir:00000390 $t
-     /tmp/ccidYgsI.s:825    .text.immediate_dir:000004d8 $d
-     /tmp/ccidYgsI.s:841    .rodata.immediate_stop.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:845    .text.immediate_stop:00000000 $t
-     /tmp/ccidYgsI.s:851    .text.immediate_stop:00000000 immediate_stop
-     /tmp/ccidYgsI.s:947    .text.immediate_stop:00000054 $d
-     /tmp/ccidYgsI.s:962    .rodata.immediate_quit.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:966    .text.immediate_quit:00000000 $t
-     /tmp/ccidYgsI.s:972    .text.immediate_quit:00000000 immediate_quit
-     /tmp/ccidYgsI.s:1078   .text.immediate_quit:00000070 $d
-     /tmp/ccidYgsI.s:1093   .rodata.immediate_hall.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1099   .text.immediate_hall:00000000 $t
-     /tmp/ccidYgsI.s:1105   .text.immediate_hall:00000000 immediate_hall
-     /tmp/ccidYgsI.s:1195   .text.immediate_hall:0000006c $d
-     /tmp/ccidYgsI.s:1202   .rodata.immediate_sensors.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1207   .text.immediate_sensors:00000000 $t
-     /tmp/ccidYgsI.s:1213   .text.immediate_sensors:00000000 immediate_sensors
-     /tmp/ccidYgsI.s:1288   .text.immediate_sensors:00000060 $d
-     /tmp/ccidYgsI.s:1294   .text.line_sensors:00000000 $t
-     /tmp/ccidYgsI.s:1300   .text.line_sensors:00000000 line_sensors
-     /tmp/ccidYgsI.s:1330   .rodata.immediate_electrical.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1336   .text.immediate_electrical:00000000 $t
-     /tmp/ccidYgsI.s:1342   .text.immediate_electrical:00000000 immediate_electrical
-     /tmp/ccidYgsI.s:1482   .text.immediate_electrical:000000d0 $d
-     /tmp/ccidYgsI.s:1490   .text.line_electrical:00000000 $t
-     /tmp/ccidYgsI.s:1496   .text.line_electrical:00000000 line_electrical
-     /tmp/ccidYgsI.s:1523   .rodata.immediate_stm32.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1528   .text.immediate_stm32:00000000 $t
-     /tmp/ccidYgsI.s:1534   .text.immediate_stm32:00000000 immediate_stm32
-     /tmp/ccidYgsI.s:1600   .text.immediate_stm32:00000040 $d
-     /tmp/ccidYgsI.s:1608   .text.line_stm32:00000000 $t
-     /tmp/ccidYgsI.s:1614   .text.line_stm32:00000000 line_stm32
-     /tmp/ccidYgsI.s:1641   .rodata.line_toggle_sensor_control.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1645   .text.line_toggle_sensor_control:00000000 $t
-     /tmp/ccidYgsI.s:1651   .text.line_toggle_sensor_control:00000000 line_toggle_sensor_control
-     /tmp/ccidYgsI.s:1718   .text.line_toggle_sensor_control:00000038 $d
-     /tmp/ccidYgsI.s:1730   .rodata.line_main_timing_stats.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1735   .text.line_main_timing_stats:00000000 $t
-     /tmp/ccidYgsI.s:1741   .text.line_main_timing_stats:00000000 line_main_timing_stats
-     /tmp/ccidYgsI.s:1789   .text.line_main_timing_stats:00000028 $d
-     /tmp/ccidYgsI.s:1795   .rodata.immediate_toggle_control.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1799   .text.immediate_toggle_control:00000000 $t
-     /tmp/ccidYgsI.s:1805   .text.immediate_toggle_control:00000000 immediate_toggle_control
-     /tmp/ccidYgsI.s:1863   .text.immediate_toggle_control:00000038 $d
-     /tmp/ccidYgsI.s:4038   .rodata.control_types:00000000 control_types
-     /tmp/ccidYgsI.s:1870   .rodata.line_debug_control.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1874   .text.line_debug_control:00000000 $t
-ARM GAS  /tmp/ccidYgsI.s 			page 100
+     /tmp/ccOk6KMZ.s:19     .rodata.immediate_dir.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:42     .text.immediate_dir:00000000 $t
+     /tmp/ccOk6KMZ.s:48     .text.immediate_dir:00000000 immediate_dir
+     /tmp/ccOk6KMZ.s:82     .text.immediate_dir:00000012 $d
+     /tmp/ccOk6KMZ.s:137    .text.immediate_dir:00000080 $t
+     /tmp/ccOk6KMZ.s:612    .text.immediate_dir:00000350 $d
+     /tmp/ccOk6KMZ.s:4053   .bss.speedB:00000000 speedB
+     /tmp/ccOk6KMZ.s:4047   .bss.steerB:00000000 steerB
+     /tmp/ccOk6KMZ.s:630    .text.immediate_dir:00000390 $t
+     /tmp/ccOk6KMZ.s:825    .text.immediate_dir:000004d8 $d
+     /tmp/ccOk6KMZ.s:841    .rodata.immediate_stop.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:845    .text.immediate_stop:00000000 $t
+     /tmp/ccOk6KMZ.s:851    .text.immediate_stop:00000000 immediate_stop
+     /tmp/ccOk6KMZ.s:947    .text.immediate_stop:00000054 $d
+     /tmp/ccOk6KMZ.s:962    .rodata.immediate_quit.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:966    .text.immediate_quit:00000000 $t
+     /tmp/ccOk6KMZ.s:972    .text.immediate_quit:00000000 immediate_quit
+     /tmp/ccOk6KMZ.s:1078   .text.immediate_quit:00000070 $d
+     /tmp/ccOk6KMZ.s:1093   .rodata.immediate_hall.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1099   .text.immediate_hall:00000000 $t
+     /tmp/ccOk6KMZ.s:1105   .text.immediate_hall:00000000 immediate_hall
+     /tmp/ccOk6KMZ.s:1195   .text.immediate_hall:0000006c $d
+     /tmp/ccOk6KMZ.s:1202   .rodata.immediate_sensors.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1207   .text.immediate_sensors:00000000 $t
+     /tmp/ccOk6KMZ.s:1213   .text.immediate_sensors:00000000 immediate_sensors
+     /tmp/ccOk6KMZ.s:1288   .text.immediate_sensors:00000060 $d
+     /tmp/ccOk6KMZ.s:1294   .text.line_sensors:00000000 $t
+     /tmp/ccOk6KMZ.s:1300   .text.line_sensors:00000000 line_sensors
+     /tmp/ccOk6KMZ.s:1330   .rodata.immediate_electrical.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1336   .text.immediate_electrical:00000000 $t
+     /tmp/ccOk6KMZ.s:1342   .text.immediate_electrical:00000000 immediate_electrical
+     /tmp/ccOk6KMZ.s:1482   .text.immediate_electrical:000000d0 $d
+     /tmp/ccOk6KMZ.s:1490   .text.line_electrical:00000000 $t
+     /tmp/ccOk6KMZ.s:1496   .text.line_electrical:00000000 line_electrical
+     /tmp/ccOk6KMZ.s:1523   .rodata.immediate_stm32.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1528   .text.immediate_stm32:00000000 $t
+     /tmp/ccOk6KMZ.s:1534   .text.immediate_stm32:00000000 immediate_stm32
+     /tmp/ccOk6KMZ.s:1600   .text.immediate_stm32:00000040 $d
+     /tmp/ccOk6KMZ.s:1608   .text.line_stm32:00000000 $t
+     /tmp/ccOk6KMZ.s:1614   .text.line_stm32:00000000 line_stm32
+     /tmp/ccOk6KMZ.s:1641   .rodata.line_toggle_sensor_control.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1645   .text.line_toggle_sensor_control:00000000 $t
+     /tmp/ccOk6KMZ.s:1651   .text.line_toggle_sensor_control:00000000 line_toggle_sensor_control
+     /tmp/ccOk6KMZ.s:1718   .text.line_toggle_sensor_control:00000038 $d
+     /tmp/ccOk6KMZ.s:1730   .rodata.line_main_timing_stats.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1735   .text.line_main_timing_stats:00000000 $t
+     /tmp/ccOk6KMZ.s:1741   .text.line_main_timing_stats:00000000 line_main_timing_stats
+     /tmp/ccOk6KMZ.s:1789   .text.line_main_timing_stats:00000028 $d
+     /tmp/ccOk6KMZ.s:1795   .rodata.immediate_toggle_control.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1799   .text.immediate_toggle_control:00000000 $t
+     /tmp/ccOk6KMZ.s:1805   .text.immediate_toggle_control:00000000 immediate_toggle_control
+     /tmp/ccOk6KMZ.s:1863   .text.immediate_toggle_control:00000038 $d
+     /tmp/ccOk6KMZ.s:4038   .rodata.control_types:00000000 control_types
+     /tmp/ccOk6KMZ.s:1870   .rodata.line_debug_control.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1874   .text.line_debug_control:00000000 $t
+ARM GAS  /tmp/ccOk6KMZ.s 			page 100
 
 
-     /tmp/ccidYgsI.s:1880   .text.line_debug_control:00000000 line_debug_control
-     /tmp/ccidYgsI.s:1967   .text.line_debug_control:00000054 $d
-     /tmp/ccidYgsI.s:1974   .rodata.line_immediate.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:1990   .text.line_immediate:00000000 $t
-     /tmp/ccidYgsI.s:1996   .text.line_immediate:00000000 line_immediate
-     /tmp/ccidYgsI.s:2232   .text.line_immediate:00000154 $d
-     /tmp/ccidYgsI.s:2248   .rodata.line_set_alarm.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:2255   .text.line_set_alarm:00000000 $t
-     /tmp/ccidYgsI.s:2261   .text.line_set_alarm:00000000 line_set_alarm
-     /tmp/ccidYgsI.s:2368   .text.line_set_alarm:00000068 $d
-     /tmp/ccidYgsI.s:2378   .rodata.line_generic_var.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:2400   .text.line_generic_var:00000000 $t
-     /tmp/ccidYgsI.s:2406   .text.line_generic_var:00000000 line_generic_var
-     /tmp/ccidYgsI.s:2871   .text.line_generic_var:00000230 $d
-     /tmp/ccidYgsI.s:2885   .rodata.line_poweroff_control.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:2896   .text.line_poweroff_control:00000000 $t
-     /tmp/ccidYgsI.s:2902   .text.line_poweroff_control:00000000 line_poweroff_control
-     /tmp/ccidYgsI.s:3067   .text.line_poweroff_control:000000b0 $d
-     /tmp/ccidYgsI.s:3077   .rodata.line_reset_firmware.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:3081   .text.line_reset_firmware:00000000 $t
-     /tmp/ccidYgsI.s:3087   .text.line_reset_firmware:00000000 line_reset_firmware
-     /tmp/ccidYgsI.s:3159   .text.line_reset_firmware:00000044 $d
-     /tmp/ccidYgsI.s:3164   .rodata.line_test_message.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:3171   .text.line_test_message:00000000 $t
-     /tmp/ccidYgsI.s:3177   .text.line_test_message:00000000 line_test_message
-     /tmp/ccidYgsI.s:3281   .text.line_test_message:00000078 $d
-     /tmp/ccidYgsI.s:3288   .rodata.line_read_memory.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:3295   .text.line_read_memory:00000000 $t
-     /tmp/ccidYgsI.s:3301   .text.line_read_memory:00000000 line_read_memory
-     /tmp/ccidYgsI.s:3485   .text.line_read_memory:000000b0 $d
-     /tmp/ccidYgsI.s:3492   .rodata.get_F_description.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:3501   .text.get_F_description:00000000 $t
-     /tmp/ccidYgsI.s:3507   .text.get_F_description:00000000 get_F_description
-     /tmp/ccidYgsI.s:3683   .text.get_F_description:00000090 $d
-     /tmp/ccidYgsI.s:3690   .text.line_hall:00000000 $t
-     /tmp/ccidYgsI.s:3696   .text.line_hall:00000000 line_hall
-     /tmp/ccidYgsI.s:3723   .rodata.main_ascii_init.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:3792   .text.main_ascii_init:00000000 $t
-     /tmp/ccidYgsI.s:3798   .text.main_ascii_init:00000000 main_ascii_init
-     /tmp/ccidYgsI.s:3976   .text.main_ascii_init:00000104 $d
-     /tmp/ccidYgsI.s:4022   .rodata.str1.4:00000000 $d
-     /tmp/ccidYgsI.s:4035   .rodata.control_types:00000000 $d
-     /tmp/ccidYgsI.s:4044   .bss.steerB:00000000 $d
-     /tmp/ccidYgsI.s:4050   .bss.speedB:00000000 $d
-     /tmp/ccidYgsI.s:4056   .rodata:00000000 $d
+     /tmp/ccOk6KMZ.s:1880   .text.line_debug_control:00000000 line_debug_control
+     /tmp/ccOk6KMZ.s:1967   .text.line_debug_control:00000054 $d
+     /tmp/ccOk6KMZ.s:1974   .rodata.line_immediate.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:1990   .text.line_immediate:00000000 $t
+     /tmp/ccOk6KMZ.s:1996   .text.line_immediate:00000000 line_immediate
+     /tmp/ccOk6KMZ.s:2232   .text.line_immediate:00000154 $d
+     /tmp/ccOk6KMZ.s:2248   .rodata.line_set_alarm.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:2255   .text.line_set_alarm:00000000 $t
+     /tmp/ccOk6KMZ.s:2261   .text.line_set_alarm:00000000 line_set_alarm
+     /tmp/ccOk6KMZ.s:2368   .text.line_set_alarm:00000068 $d
+     /tmp/ccOk6KMZ.s:2378   .rodata.line_generic_var.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:2400   .text.line_generic_var:00000000 $t
+     /tmp/ccOk6KMZ.s:2406   .text.line_generic_var:00000000 line_generic_var
+     /tmp/ccOk6KMZ.s:2871   .text.line_generic_var:00000230 $d
+     /tmp/ccOk6KMZ.s:2885   .rodata.line_poweroff_control.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:2896   .text.line_poweroff_control:00000000 $t
+     /tmp/ccOk6KMZ.s:2902   .text.line_poweroff_control:00000000 line_poweroff_control
+     /tmp/ccOk6KMZ.s:3067   .text.line_poweroff_control:000000b0 $d
+     /tmp/ccOk6KMZ.s:3077   .rodata.line_reset_firmware.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:3081   .text.line_reset_firmware:00000000 $t
+     /tmp/ccOk6KMZ.s:3087   .text.line_reset_firmware:00000000 line_reset_firmware
+     /tmp/ccOk6KMZ.s:3159   .text.line_reset_firmware:00000044 $d
+     /tmp/ccOk6KMZ.s:3164   .rodata.line_test_message.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:3171   .text.line_test_message:00000000 $t
+     /tmp/ccOk6KMZ.s:3177   .text.line_test_message:00000000 line_test_message
+     /tmp/ccOk6KMZ.s:3281   .text.line_test_message:00000078 $d
+     /tmp/ccOk6KMZ.s:3288   .rodata.line_read_memory.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:3295   .text.line_read_memory:00000000 $t
+     /tmp/ccOk6KMZ.s:3301   .text.line_read_memory:00000000 line_read_memory
+     /tmp/ccOk6KMZ.s:3485   .text.line_read_memory:000000b0 $d
+     /tmp/ccOk6KMZ.s:3492   .rodata.get_F_description.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:3501   .text.get_F_description:00000000 $t
+     /tmp/ccOk6KMZ.s:3507   .text.get_F_description:00000000 get_F_description
+     /tmp/ccOk6KMZ.s:3683   .text.get_F_description:00000090 $d
+     /tmp/ccOk6KMZ.s:3690   .text.line_hall:00000000 $t
+     /tmp/ccOk6KMZ.s:3696   .text.line_hall:00000000 line_hall
+     /tmp/ccOk6KMZ.s:3723   .rodata.main_ascii_init.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:3792   .text.main_ascii_init:00000000 $t
+     /tmp/ccOk6KMZ.s:3798   .text.main_ascii_init:00000000 main_ascii_init
+     /tmp/ccOk6KMZ.s:3976   .text.main_ascii_init:00000104 $d
+     /tmp/ccOk6KMZ.s:4022   .rodata.str1.4:00000000 $d
+     /tmp/ccOk6KMZ.s:4035   .rodata.control_types:00000000 $d
+     /tmp/ccOk6KMZ.s:4044   .bss.steerB:00000000 $d
+     /tmp/ccOk6KMZ.s:4050   .bss.speedB:00000000 $d
+     /tmp/ccOk6KMZ.s:4056   .rodata:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_i2d
@@ -5977,7 +5977,7 @@ __aeabi_dadd
 sprintf
 enable
 input_timeout_counter
-ARM GAS  /tmp/ccidYgsI.s 			page 101
+ARM GAS  /tmp/ccOk6KMZ.s 			page 101
 
 
 control_type

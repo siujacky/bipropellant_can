@@ -3,16 +3,16 @@
 #include "stm32f1xx_hal.h"
 #include <stdint.h>
 
-// Software SPI Pin Configuration
-// Using shared pins with USART2/USART3 for auto-detection
-#define SOFT_SPI_MOSI_PORT    GPIOA
-#define SOFT_SPI_MOSI_PIN     GPIO_PIN_2   // PA2 (USART2_TX)
-#define SOFT_SPI_MISO_PORT    GPIOA
-#define SOFT_SPI_MISO_PIN     GPIO_PIN_3   // PA3 (USART2_RX)
-#define SOFT_SPI_SCK_PORT     GPIOB
-#define SOFT_SPI_SCK_PIN      GPIO_PIN_10  // PB10 (USART3_TX)
-#define SOFT_SPI_CS_PORT      GPIOB
-#define SOFT_SPI_CS_PIN       GPIO_PIN_11  // PB11 (USART3_RX)
+// Software SPI Pin Configuration — confirmed working 2026-06-24
+// SO(MISO)=PB10  SI(MOSI)=PB11  CS=PA2  SCK=PA3
+#define SOFT_SPI_MOSI_PORT    GPIOB
+#define SOFT_SPI_MOSI_PIN     GPIO_PIN_11  // PB11 → MCP2515 SI
+#define SOFT_SPI_MISO_PORT    GPIOB
+#define SOFT_SPI_MISO_PIN     GPIO_PIN_10  // PB10 ← MCP2515 SO
+#define SOFT_SPI_SCK_PORT     GPIOA
+#define SOFT_SPI_SCK_PIN      GPIO_PIN_3   // PA3  → MCP2515 SCK
+#define SOFT_SPI_CS_PORT      GPIOA
+#define SOFT_SPI_CS_PIN       GPIO_PIN_2   // PA2  → MCP2515 /CS
 #define SOFT_SPI_INT_PORT     GPIOB
 #define SOFT_SPI_INT_PIN      GPIO_PIN_12  // PB12 (Free pin)
 

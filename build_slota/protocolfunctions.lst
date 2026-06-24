@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc0kyNAB.s 			page 1
+ARM GAS  /tmp/ccVdRm1d.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
   29:src/protocolfunctions.c **** #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
   30:src/protocolfunctions.c ****     PROTOCOL_STAT sUSART3;
   31:src/protocolfunctions.c **** #endif
-ARM GAS  /tmp/cc0kyNAB.s 			page 2
+ARM GAS  /tmp/ccVdRm1d.s 			page 2
 
 
   32:src/protocolfunctions.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
   57 0018 124B     		ldr	r3, .L9
   58              	.LVL1:
   59              		.loc 1 56 17 view .LVU5
-ARM GAS  /tmp/cc0kyNAB.s 			page 3
+ARM GAS  /tmp/ccVdRm1d.s 			page 3
 
 
   60 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
   92              		.loc 1 72 5 view .LVU16
   93 0034 2B46     		mov	r3, r5
   94 0036 2246     		mov	r2, r4
-ARM GAS  /tmp/cc0kyNAB.s 			page 4
+ARM GAS  /tmp/ccVdRm1d.s 			page 4
 
 
   95 0038 3946     		mov	r1, r7
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
   67:src/protocolfunctions.c ****             }
  133              		.loc 1 67 17 is_stmt 1 view .LVU33
  134 005c FFF7FEFF 		bl	init_PID_control
-ARM GAS  /tmp/cc0kyNAB.s 			page 5
+ARM GAS  /tmp/ccVdRm1d.s 			page 5
 
 
  135              	.LVL11:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  104:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  105:src/protocolfunctions.c **** // Variable & Functions for 0x03 SpeedData
  106:src/protocolfunctions.c **** 
-ARM GAS  /tmp/cc0kyNAB.s 			page 6
+ARM GAS  /tmp/ccVdRm1d.s 			page 6
 
 
  107:src/protocolfunctions.c **** PROTOCOL_SPEED_DATA SpeedData = {
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  195              	.L16:
  196              		.align	2
  197              	.L15:
-ARM GAS  /tmp/cc0kyNAB.s 			page 7
+ARM GAS  /tmp/ccVdRm1d.s 			page 7
 
 
  198 001c 00000000 		.word	control_type
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  243 0012 1669     		ldr	r6, [r2, #16]
  244              		.loc 1 136 50 view .LVU52
  245 0014 0E60     		str	r6, [r1]
-ARM GAS  /tmp/cc0kyNAB.s 			page 8
+ARM GAS  /tmp/ccVdRm1d.s 			page 8
 
 
  137:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn_mm - HallData[0].HallPosn_mm_
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  288              		.loc 1 148 63 is_stmt 0 view .LVU72
  289 0040 2B69     		ldr	r3, [r5, #16]
  290              		.loc 1 148 70 view .LVU73
-ARM GAS  /tmp/cc0kyNAB.s 			page 9
+ARM GAS  /tmp/ccVdRm1d.s 			page 9
 
 
  291 0042 1A68     		ldr	r2, [r3]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  336              		.cfi_offset 6, -12
  337              		.cfi_offset 7, -8
  338              		.cfi_offset 14, -4
-ARM GAS  /tmp/cc0kyNAB.s 			page 10
+ARM GAS  /tmp/ccVdRm1d.s 			page 10
 
 
  339 0002 0746     		mov	r7, r0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  378              		.loc 1 174 13 view .LVU94
  379              		.loc 1 174 20 is_stmt 0 view .LVU95
  380 0036 094B     		ldr	r3, .L31+4
-ARM GAS  /tmp/cc0kyNAB.s 			page 11
+ARM GAS  /tmp/ccVdRm1d.s 			page 11
 
 
  381 0038 0122     		movs	r2, #1
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  428              		.thumb_func
  430              	fn_RawPosition:
  431              	.LVL23:
-ARM GAS  /tmp/cc0kyNAB.s 			page 12
+ARM GAS  /tmp/ccVdRm1d.s 			page 12
 
 
  432              	.LFB71:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  464              		.loc 1 204 59 view .LVU117
  465 0014 0E60     		str	r6, [r1]
  205:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn - HallData[0].HallPo
-ARM GAS  /tmp/cc0kyNAB.s 			page 13
+ARM GAS  /tmp/ccVdRm1d.s 			page 13
 
 
  466              		.loc 1 205 13 is_stmt 1 view .LVU118
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  509 0040 2A69     		ldr	r2, [r5, #16]
  510              		.loc 1 216 76 view .LVU138
  511 0042 1168     		ldr	r1, [r2]
-ARM GAS  /tmp/cc0kyNAB.s 			page 14
+ARM GAS  /tmp/ccVdRm1d.s 			page 14
 
 
  512              		.loc 1 216 43 view .LVU139
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  242:src/protocolfunctions.c **** 
  243:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
  244:src/protocolfunctions.c **** 
-ARM GAS  /tmp/cc0kyNAB.s 			page 15
+ARM GAS  /tmp/ccVdRm1d.s 			page 15
 
 
  245:src/protocolfunctions.c ****     switch (cmd) {
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  566              	.LVL29:
  567              		.loc 1 275 26 view .LVU151
  568 0010 0321     		movs	r1, #3
-ARM GAS  /tmp/cc0kyNAB.s 			page 16
+ARM GAS  /tmp/ccVdRm1d.s 			page 16
 
 
  569              	.LVL30:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
  596              		.loc 1 295 50 is_stmt 0 view .LVU160
  597 002c 2269     		ldr	r2, [r4, #16]
-ARM GAS  /tmp/cc0kyNAB.s 			page 17
+ARM GAS  /tmp/ccVdRm1d.s 			page 17
 
 
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  635              		.loc 1 290 21 is_stmt 1 view .LVU177
  290:src/protocolfunctions.c ****                 }
  636              		.loc 1 290 65 is_stmt 0 view .LVU178
-ARM GAS  /tmp/cc0kyNAB.s 			page 18
+ARM GAS  /tmp/ccVdRm1d.s 			page 18
 
 
  637 0058 42F82310 		str	r1, [r2, r3, lsl #2]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  676 0086 D7E7     		b	.L50
  677              	.L55:
  678 0088 0023     		movs	r3, #0
-ARM GAS  /tmp/cc0kyNAB.s 			page 19
+ARM GAS  /tmp/ccVdRm1d.s 			page 19
 
 
  679 008a D5E7     		b	.L50
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  319:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
  320:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerFreq       = buzzerFreq;
  718              		.loc 1 320 13 view .LVU197
-ARM GAS  /tmp/cc0kyNAB.s 			page 20
+ARM GAS  /tmp/ccVdRm1d.s 			page 20
 
 
  719              		.loc 1 320 44 is_stmt 0 view .LVU198
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  762 003c 1170     		strb	r1, [r2]
  332:src/protocolfunctions.c ****             buzzerLen       = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerLen;
  763              		.loc 1 332 13 is_stmt 1 view .LVU214
-ARM GAS  /tmp/cc0kyNAB.s 			page 21
+ARM GAS  /tmp/ccVdRm1d.s 			page 21
 
 
  764              		.loc 1 332 69 is_stmt 0 view .LVU215
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  353:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
  354:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
  355:src/protocolfunctions.c ****             if (FlashContent.magic != CURRENT_MAGIC){
-ARM GAS  /tmp/cc0kyNAB.s 			page 22
+ARM GAS  /tmp/ccVdRm1d.s 			page 22
 
 
  356:src/protocolfunctions.c ****                 char temp[128];
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  822 0010 064B     		ldr	r3, .L73
  823 0012 5B8A     		ldrh	r3, [r3, #18]
  824 0014 B3F5C86F 		cmp	r3, #1600
-ARM GAS  /tmp/cc0kyNAB.s 			page 23
+ARM GAS  /tmp/ccVdRm1d.s 			page 23
 
 
  825 0018 04D2     		bcs	.L71
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  875              		.loc 1 86 5 is_stmt 1 view .LVU237
  876 0002 522A     		cmp	r2, #82
  877 0004 01D0     		beq	.L76
-ARM GAS  /tmp/cc0kyNAB.s 			page 24
+ARM GAS  /tmp/ccVdRm1d.s 			page 24
 
 
  878 0006 732A     		cmp	r2, #115
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  927 0000 10B5     		push	{r4, lr}
  928              	.LCFI9:
  929              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/cc0kyNAB.s 			page 25
+ARM GAS  /tmp/ccVdRm1d.s 			page 25
 
 
  930              		.cfi_offset 4, -8
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  977              		.cfi_startproc
  978              		@ args = 0, pretend = 0, frame = 0
  979              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc0kyNAB.s 			page 26
+ARM GAS  /tmp/ccVdRm1d.s 			page 26
 
 
  368:src/protocolfunctions.c **** 
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  401:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  402:src/protocolfunctions.c **** // initialize protocol and register functions
  403:src/protocolfunctions.c **** int setup_protocol(PROTOCOL_STAT *s) {
-ARM GAS  /tmp/cc0kyNAB.s 			page 27
+ARM GAS  /tmp/ccVdRm1d.s 			page 27
 
 
  1019              		.loc 1 403 38 is_stmt 1 view -0
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1061              		.loc 1 415 17 view .LVU272
  1062 001e FFF7FEFF 		bl	protocol_init
  1063              	.LVL56:
-ARM GAS  /tmp/cc0kyNAB.s 			page 28
+ARM GAS  /tmp/ccVdRm1d.s 			page 28
 
 
  1064 0022 0446     		mov	r4, r0
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  432:src/protocolfunctions.c ****       sUSART2.send_serial_data_wait=USART2_IT_send;
  1102              		.loc 1 432 7 is_stmt 1 view .LVU290
  1103              		.loc 1 432 36 is_stmt 0 view .LVU291
-ARM GAS  /tmp/cc0kyNAB.s 			page 29
+ARM GAS  /tmp/ccVdRm1d.s 			page 29
 
 
  1104 0056 C6F82431 		str	r3, [r6, #292]
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  460:src/protocolfunctions.c ****         setParamHandler( s, 0x01, fn_SensorData );
  1131              		.loc 1 460 9 is_stmt 1 view .LVU302
  1132 0082 CE4A     		ldr	r2, .L93+48
-ARM GAS  /tmp/cc0kyNAB.s 			page 30
+ARM GAS  /tmp/ccVdRm1d.s 			page 30
 
 
  1133 0084 4946     		mov	r1, r9
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1179              		.loc 1 468 16 discriminator 1 view .LVU312
  1180 00ce 0444     		add	r4, r4, r0
  1181              	.LVL71:
-ARM GAS  /tmp/cc0kyNAB.s 			page 31
+ARM GAS  /tmp/ccVdRm1d.s 			page 31
 
 
  469:src/protocolfunctions.c ****         setParamHandler( s, 0x04, fn_Position );
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1228              	.LVL78:
  1229              		.loc 1 476 16 discriminator 1 view .LVU323
  1230 0118 0444     		add	r4, r4, r0
-ARM GAS  /tmp/cc0kyNAB.s 			page 32
+ARM GAS  /tmp/ccVdRm1d.s 			page 32
 
 
  1231              	.LVL79:
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1277              	.LVL86:
  1278              		.loc 1 484 16 discriminator 1 view .LVU334
  1279 0162 0444     		add	r4, r4, r0
-ARM GAS  /tmp/cc0kyNAB.s 			page 33
+ARM GAS  /tmp/ccVdRm1d.s 			page 33
 
 
  1280              	.LVL87:
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1326 01ac DFF85882 		ldr	r8, .L93+124
  1327 01b0 4246     		mov	r2, r8
  1328 01b2 0D21     		movs	r1, #13
-ARM GAS  /tmp/cc0kyNAB.s 			page 34
+ARM GAS  /tmp/ccVdRm1d.s 			page 34
 
 
  1329 01b4 2846     		mov	r0, r5
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1375 01f8 1222     		movs	r2, #18
  1376 01fa 8021     		movs	r1, #128
  1377 01fc 2846     		mov	r0, r5
-ARM GAS  /tmp/cc0kyNAB.s 			page 35
+ARM GAS  /tmp/ccVdRm1d.s 			page 35
 
 
  1378 01fe FFF7FEFF 		bl	setParamVariable
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1425 0246 FFF7FEFF 		bl	setParamHandler
  1426              	.LVL110:
  508:src/protocolfunctions.c **** 
-ARM GAS  /tmp/cc0kyNAB.s 			page 36
+ARM GAS  /tmp/ccVdRm1d.s 			page 36
 
 
  509:src/protocolfunctions.c ****         errors += setParamVariable( s, 0x83, UI_SHORT, &FlashContent.PositionKdx100, sizeof(short) 
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1474              	.LVL118:
  516:src/protocolfunctions.c ****         setParamHandler( s, 0x85, fn_FlashContentPID );
  1475              		.loc 1 516 9 is_stmt 1 view .LVU377
-ARM GAS  /tmp/cc0kyNAB.s 			page 37
+ARM GAS  /tmp/ccVdRm1d.s 			page 37
 
 
  1476 0292 4A46     		mov	r2, r9
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1522 02dc 8821     		movs	r1, #136
  1523 02de 2846     		mov	r0, r5
  1524 02e0 FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/cc0kyNAB.s 			page 38
+ARM GAS  /tmp/ccVdRm1d.s 			page 38
 
 
  1525              	.LVL126:
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1571 0328 A021     		movs	r1, #160
  1572 032a 2846     		mov	r0, r5
  1573 032c FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/cc0kyNAB.s 			page 39
+ARM GAS  /tmp/ccVdRm1d.s 			page 39
 
 
  1574              	.LVL134:
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1619 0372 C221     		movs	r1, #194
  1620 0374 2846     		mov	r0, r5
  1621 0376 FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/cc0kyNAB.s 			page 40
+ARM GAS  /tmp/ccVdRm1d.s 			page 40
 
 
  1622              	.LVL142:
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1671 040c 00000000 		.word	BuzzerData
  1672 0410 00000000 		.word	fn_BuzzerData
  1673 0414 00000000 		.word	FlashContent
-ARM GAS  /tmp/cc0kyNAB.s 			page 41
+ARM GAS  /tmp/ccVdRm1d.s 			page 41
 
 
  1674 0418 00000000 		.word	fn_FlashContentMagic
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1721 000e 33B9     		cbnz	r3, .L101
  1722              	.L96:
  556:src/protocolfunctions.c ****     #endif
-ARM GAS  /tmp/cc0kyNAB.s 			page 42
+ARM GAS  /tmp/ccVdRm1d.s 			page 42
 
 
  557:src/protocolfunctions.c **** 
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1761      0A00
  1762              		.section	.text.fn_FlashContentMagic,"ax",%progbits
  1763              		.align	1
-ARM GAS  /tmp/cc0kyNAB.s 			page 43
+ARM GAS  /tmp/ccVdRm1d.s 			page 43
 
 
  1764              		.global	fn_FlashContentMagic
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1811 001a 40F2D643 		movw	r3, #1238
  1812 001e 9A42     		cmp	r2, r3
  1813 0020 0BD0     		beq	.L107
-ARM GAS  /tmp/cc0kyNAB.s 			page 44
+ARM GAS  /tmp/ccVdRm1d.s 			page 44
 
 
  1814              	.LBB3:
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1861              	consoleLogRaw:
  1862              	.LVL158:
  1863              	.LFB80:
-ARM GAS  /tmp/cc0kyNAB.s 			page 45
+ARM GAS  /tmp/ccVdRm1d.s 			page 45
 
 
  562:src/protocolfunctions.c **** 
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1906 0018 2246     		mov	r2, r4
  1907 001a 2946     		mov	r1, r5
  1908 001c 0548     		ldr	r0, .L118
-ARM GAS  /tmp/cc0kyNAB.s 			page 46
+ARM GAS  /tmp/ccVdRm1d.s 			page 46
 
 
  1909              	.LVL163:
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  1953 0004 00000000 		.word	0
  1954 0008 58020000 		.word	600
  1955 000c A8FDFFFF 		.word	-600
-ARM GAS  /tmp/cc0kyNAB.s 			page 47
+ARM GAS  /tmp/ccVdRm1d.s 			page 47
 
 
  1956 0010 28000000 		.word	40
@@ -2817,76 +2817,76 @@ ARM GAS  /tmp/cc0kyNAB.s 			page 1
  2009              		.file 17 "inc/flashaccess.h"
  2010              		.file 18 "/usr/include/newlib/stdio.h"
  2011              		.file 19 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/cc0kyNAB.s 			page 48
+ARM GAS  /tmp/ccVdRm1d.s 			page 48
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 protocolfunctions.c
-     /tmp/cc0kyNAB.s:19     .text.fn_enable:00000000 $t
-     /tmp/cc0kyNAB.s:25     .text.fn_enable:00000000 fn_enable
-     /tmp/cc0kyNAB.s:141    .text.fn_enable:00000064 $d
-     /tmp/cc0kyNAB.s:1988   .bss.protocol_enable:00000000 protocol_enable
-     /tmp/cc0kyNAB.s:1963   .data.PosnData:00000000 PosnData
-     /tmp/cc0kyNAB.s:1976   .data.SpeedData:00000000 SpeedData
-     /tmp/cc0kyNAB.s:1951   .data.PWMData:00000000 PWMData
-     /tmp/cc0kyNAB.s:151    .text.fn_SpeedData:00000000 $t
-     /tmp/cc0kyNAB.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
-     /tmp/cc0kyNAB.s:198    .text.fn_SpeedData:0000001c $d
-     /tmp/cc0kyNAB.s:204    .text.fn_Position:00000000 $t
-     /tmp/cc0kyNAB.s:210    .text.fn_Position:00000000 fn_Position
-     /tmp/cc0kyNAB.s:311    .text.fn_Position:00000050 $d
-     /tmp/cc0kyNAB.s:316    .text.fn_PositionIncr:00000000 $t
-     /tmp/cc0kyNAB.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
-     /tmp/cc0kyNAB.s:416    .text.fn_PositionIncr:00000058 $d
-     /tmp/cc0kyNAB.s:424    .text.fn_RawPosition:00000000 $t
-     /tmp/cc0kyNAB.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
-     /tmp/cc0kyNAB.s:529    .text.fn_RawPosition:00000050 $d
-     /tmp/cc0kyNAB.s:534    .text.fn_PWMData:00000000 $t
-     /tmp/cc0kyNAB.s:540    .text.fn_PWMData:00000000 fn_PWMData
-     /tmp/cc0kyNAB.s:683    .text.fn_PWMData:0000008c $d
-     /tmp/cc0kyNAB.s:689    .text.fn_BuzzerData:00000000 $t
-     /tmp/cc0kyNAB.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
-     /tmp/cc0kyNAB.s:784    .text.fn_BuzzerData:0000004c $d
-     /tmp/cc0kyNAB.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
-     /tmp/cc0kyNAB.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
-     /tmp/cc0kyNAB.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
-     /tmp/cc0kyNAB.s:854    .text.fn_SensorData:00000000 $t
-     /tmp/cc0kyNAB.s:860    .text.fn_SensorData:00000000 fn_SensorData
-     /tmp/cc0kyNAB.s:907    .text.fn_SensorData:00000044 $d
+     /tmp/ccVdRm1d.s:19     .text.fn_enable:00000000 $t
+     /tmp/ccVdRm1d.s:25     .text.fn_enable:00000000 fn_enable
+     /tmp/ccVdRm1d.s:141    .text.fn_enable:00000064 $d
+     /tmp/ccVdRm1d.s:1988   .bss.protocol_enable:00000000 protocol_enable
+     /tmp/ccVdRm1d.s:1963   .data.PosnData:00000000 PosnData
+     /tmp/ccVdRm1d.s:1976   .data.SpeedData:00000000 SpeedData
+     /tmp/ccVdRm1d.s:1951   .data.PWMData:00000000 PWMData
+     /tmp/ccVdRm1d.s:151    .text.fn_SpeedData:00000000 $t
+     /tmp/ccVdRm1d.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
+     /tmp/ccVdRm1d.s:198    .text.fn_SpeedData:0000001c $d
+     /tmp/ccVdRm1d.s:204    .text.fn_Position:00000000 $t
+     /tmp/ccVdRm1d.s:210    .text.fn_Position:00000000 fn_Position
+     /tmp/ccVdRm1d.s:311    .text.fn_Position:00000050 $d
+     /tmp/ccVdRm1d.s:316    .text.fn_PositionIncr:00000000 $t
+     /tmp/ccVdRm1d.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
+     /tmp/ccVdRm1d.s:416    .text.fn_PositionIncr:00000058 $d
+     /tmp/ccVdRm1d.s:424    .text.fn_RawPosition:00000000 $t
+     /tmp/ccVdRm1d.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
+     /tmp/ccVdRm1d.s:529    .text.fn_RawPosition:00000050 $d
+     /tmp/ccVdRm1d.s:534    .text.fn_PWMData:00000000 $t
+     /tmp/ccVdRm1d.s:540    .text.fn_PWMData:00000000 fn_PWMData
+     /tmp/ccVdRm1d.s:683    .text.fn_PWMData:0000008c $d
+     /tmp/ccVdRm1d.s:689    .text.fn_BuzzerData:00000000 $t
+     /tmp/ccVdRm1d.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
+     /tmp/ccVdRm1d.s:784    .text.fn_BuzzerData:0000004c $d
+     /tmp/ccVdRm1d.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
+     /tmp/ccVdRm1d.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
+     /tmp/ccVdRm1d.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
+     /tmp/ccVdRm1d.s:854    .text.fn_SensorData:00000000 $t
+     /tmp/ccVdRm1d.s:860    .text.fn_SensorData:00000000 fn_SensorData
+     /tmp/ccVdRm1d.s:907    .text.fn_SensorData:00000044 $d
                             *COM*:00000014 sensor_copy
-     /tmp/cc0kyNAB.s:913    .text.fn_xytPosn:00000000 $t
-     /tmp/cc0kyNAB.s:919    .text.fn_xytPosn:00000000 fn_xytPosn
-     /tmp/cc0kyNAB.s:962    .text.fn_xytPosn:00000024 $d
-     /tmp/cc0kyNAB.s:967    .text.fn_FlashContentPID:00000000 $t
-     /tmp/cc0kyNAB.s:973    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
-     /tmp/cc0kyNAB.s:1010   .text.setup_protocol:00000000 $t
-     /tmp/cc0kyNAB.s:1016   .text.setup_protocol:00000000 setup_protocol
-     /tmp/cc0kyNAB.s:1639   .text.setup_protocol:0000038c $d
+     /tmp/ccVdRm1d.s:913    .text.fn_xytPosn:00000000 $t
+     /tmp/ccVdRm1d.s:919    .text.fn_xytPosn:00000000 fn_xytPosn
+     /tmp/ccVdRm1d.s:962    .text.fn_xytPosn:00000024 $d
+     /tmp/ccVdRm1d.s:967    .text.fn_FlashContentPID:00000000 $t
+     /tmp/ccVdRm1d.s:973    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
+     /tmp/ccVdRm1d.s:1010   .text.setup_protocol:00000000 $t
+     /tmp/ccVdRm1d.s:1016   .text.setup_protocol:00000000 setup_protocol
+     /tmp/ccVdRm1d.s:1639   .text.setup_protocol:0000038c $d
                             *COM*:00001254 sSoftwareSerial
                             *COM*:00001254 sUSART2
                             *COM*:00000010 Position
                             *COM*:00000008 PositionIncr
                             *COM*:00000010 RawPosition
-     /tmp/cc0kyNAB.s:1944   .bss.BuzzerData:00000000 BuzzerData
-     /tmp/cc0kyNAB.s:1769   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
-     /tmp/cc0kyNAB.s:1678   .text.setup_protocol:00000424 $t
-     /tmp/cc0kyNAB.s:1688   .text.consoleLog:00000000 $t
-     /tmp/cc0kyNAB.s:1694   .text.consoleLog:00000000 consoleLog
-     /tmp/cc0kyNAB.s:1748   .text.consoleLog:0000002c $d
-     /tmp/cc0kyNAB.s:1755   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
-     /tmp/cc0kyNAB.s:1763   .text.fn_FlashContentMagic:00000000 $t
-     /tmp/cc0kyNAB.s:1848   .text.fn_FlashContentMagic:0000004c $d
-     /tmp/cc0kyNAB.s:1855   .text.consoleLogRaw:00000000 $t
-ARM GAS  /tmp/cc0kyNAB.s 			page 49
+     /tmp/ccVdRm1d.s:1944   .bss.BuzzerData:00000000 BuzzerData
+     /tmp/ccVdRm1d.s:1769   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
+     /tmp/ccVdRm1d.s:1678   .text.setup_protocol:00000424 $t
+     /tmp/ccVdRm1d.s:1688   .text.consoleLog:00000000 $t
+     /tmp/ccVdRm1d.s:1694   .text.consoleLog:00000000 consoleLog
+     /tmp/ccVdRm1d.s:1748   .text.consoleLog:0000002c $d
+     /tmp/ccVdRm1d.s:1755   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
+     /tmp/ccVdRm1d.s:1763   .text.fn_FlashContentMagic:00000000 $t
+     /tmp/ccVdRm1d.s:1848   .text.fn_FlashContentMagic:0000004c $d
+     /tmp/ccVdRm1d.s:1855   .text.consoleLogRaw:00000000 $t
+ARM GAS  /tmp/ccVdRm1d.s 			page 49
 
 
-     /tmp/cc0kyNAB.s:1861   .text.consoleLogRaw:00000000 consoleLogRaw
-     /tmp/cc0kyNAB.s:1935   .text.consoleLogRaw:00000034 $d
-     /tmp/cc0kyNAB.s:1941   .bss.BuzzerData:00000000 $d
-     /tmp/cc0kyNAB.s:1948   .data.PWMData:00000000 $d
-     /tmp/cc0kyNAB.s:1960   .data.PosnData:00000000 $d
-     /tmp/cc0kyNAB.s:1973   .data.SpeedData:00000000 $d
-     /tmp/cc0kyNAB.s:1989   .bss.protocol_enable:00000000 $d
+     /tmp/ccVdRm1d.s:1861   .text.consoleLogRaw:00000000 consoleLogRaw
+     /tmp/ccVdRm1d.s:1935   .text.consoleLogRaw:00000034 $d
+     /tmp/ccVdRm1d.s:1941   .bss.BuzzerData:00000000 $d
+     /tmp/ccVdRm1d.s:1948   .data.PWMData:00000000 $d
+     /tmp/ccVdRm1d.s:1960   .data.PosnData:00000000 $d
+     /tmp/ccVdRm1d.s:1973   .data.SpeedData:00000000 $d
+     /tmp/ccVdRm1d.s:1989   .bss.protocol_enable:00000000 $d
 
 UNDEFINED SYMBOLS
 fn_defaultProcessing

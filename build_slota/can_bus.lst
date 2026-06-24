@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccD59jZC.s 			page 1
+ARM GAS  /tmp/cccpjzgJ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
   31:src/can_bus.c **** bool CAN_IsSoftwareSerialReady(void) {
   32:src/can_bus.c ****     return software_serial_ready;
   33:src/can_bus.c **** }
-ARM GAS  /tmp/ccD59jZC.s 			page 2
+ARM GAS  /tmp/cccpjzgJ.s 			page 2
 
 
   34:src/can_bus.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
   88:src/can_bus.c **** static void CAN_Init_IDs(void) {
   26              		.loc 1 88 32 view -0
   27              		.cfi_startproc
-ARM GAS  /tmp/ccD59jZC.s 			page 3
+ARM GAS  /tmp/cccpjzgJ.s 			page 3
 
 
   28              		@ args = 0, pretend = 0, frame = 0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
   70 0020 0460     		str	r4, [r0]
  101:src/can_bus.c ****     can_cmd_enable = cmd_base + offset + CAN_CMD_ENABLE_OFFSET;
   71              		.loc 1 101 5 is_stmt 1 view .LVU19
-ARM GAS  /tmp/ccD59jZC.s 			page 4
+ARM GAS  /tmp/cccpjzgJ.s 			page 4
 
 
   72              		.loc 1 101 40 is_stmt 0 view .LVU20
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  119 0064 00000000 		.word	can_status_batt
  120 0068 00000000 		.word	can_status_bootup
  121              		.cfi_endproc
-ARM GAS  /tmp/ccD59jZC.s 			page 5
+ARM GAS  /tmp/cccpjzgJ.s 			page 5
 
 
  122              	.LFE68:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  174              		.align	1
  175              		.global	CAN_Fallback_To_USART
  176              		.syntax unified
-ARM GAS  /tmp/ccD59jZC.s 			page 6
+ARM GAS  /tmp/cccpjzgJ.s 			page 6
 
 
  177              		.thumb
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  159:src/can_bus.c ****                 forceLog("\r\n=== SPI DIAGNOSTIC ===\r\n");
  160:src/can_bus.c **** 
  161:src/can_bus.c ****                 // Single byte reads
-ARM GAS  /tmp/ccD59jZC.s 			page 7
+ARM GAS  /tmp/cccpjzgJ.s 			page 7
 
 
  162:src/can_bus.c ****                 uint8_t cnf1 = MCP2515_ReadRegister(MCP2515_CNF1);
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  216:src/can_bus.c **** // Fall back to USART2/USART3 mode
  217:src/can_bus.c **** void CAN_Fallback_To_USART(void) {
  182              		.loc 1 217 34 is_stmt 1 view -0
-ARM GAS  /tmp/ccD59jZC.s 			page 8
+ARM GAS  /tmp/cccpjzgJ.s 			page 8
 
 
  183              		.cfi_startproc
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  220 0044 4D435032 		.ascii	"MCP2515 DETECTED!\015\012\000"
  220      35313520 
  220      44455445 
-ARM GAS  /tmp/ccD59jZC.s 			page 9
+ARM GAS  /tmp/cccpjzgJ.s 			page 9
 
 
  220      43544544 
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  244              		.section	.text.CAN_AutoDetectAndInit,"ax",%progbits
  245              		.align	1
  246              		.global	CAN_AutoDetectAndInit
-ARM GAS  /tmp/ccD59jZC.s 			page 10
+ARM GAS  /tmp/cccpjzgJ.s 			page 10
 
 
  247              		.syntax unified
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  292              	.LVL15:
  130:src/can_bus.c ****         
  293              		.loc 1 130 9 view .LVU58
-ARM GAS  /tmp/ccD59jZC.s 			page 11
+ARM GAS  /tmp/cccpjzgJ.s 			page 11
 
 
  294 002a 6846     		mov	r0, sp
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  336 0064 FFF7FEFF 		bl	forceLog
  337              	.LVL22:
  193:src/can_bus.c ****             return true;
-ARM GAS  /tmp/ccD59jZC.s 			page 12
+ARM GAS  /tmp/cccpjzgJ.s 			page 12
 
 
  338              		.loc 1 193 13 view .LVU71
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  384              		.cfi_endproc
  385              	.LFE69:
  387              		.section	.rodata.CAN_ProcessMessages.str1.4,"aMS",%progbits,1
-ARM GAS  /tmp/ccD59jZC.s 			page 13
+ARM GAS  /tmp/cccpjzgJ.s 			page 13
 
 
  388              		.align	2
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  418 00f5 000000   		.align	2
  419              	.LC19:
  420 00f8 20204368 		.ascii	"  Check CAN bus wiring, termination, and crystal fr"
-ARM GAS  /tmp/ccD59jZC.s 			page 14
+ARM GAS  /tmp/cccpjzgJ.s 			page 14
 
 
  420      65636B20 
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  446      72732045 
  446      4E41424C 
  446      45440D0A 
-ARM GAS  /tmp/ccD59jZC.s 			page 15
+ARM GAS  /tmp/cccpjzgJ.s 			page 15
 
 
  447 01dd 000000   		.align	2
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  237:src/can_bus.c ****     
  238:src/can_bus.c ****     // Check if CAN message available
  239:src/can_bus.c ****     while (MCP2515_Available()) {
-ARM GAS  /tmp/ccD59jZC.s 			page 16
+ARM GAS  /tmp/cccpjzgJ.s 			page 16
 
 
  486              		.loc 1 239 12 is_stmt 1 view .LVU85
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  519              		.loc 1 260 13 is_stmt 1 view .LVU98
  520              		.loc 1 260 22 is_stmt 0 view .LVU99
  521 0034 8548     		ldr	r0, .L69+8
-ARM GAS  /tmp/ccD59jZC.s 			page 17
+ARM GAS  /tmp/cccpjzgJ.s 			page 17
 
 
  522 0036 0368     		ldr	r3, [r0]
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  565              		.loc 1 244 33 view .LVU111
  566 0052 0133     		adds	r3, r3, #1
  567 0054 9362     		str	r3, [r2, #40]
-ARM GAS  /tmp/ccD59jZC.s 			page 18
+ARM GAS  /tmp/cccpjzgJ.s 			page 18
 
 
  245:src/can_bus.c ****                         rx_frame.dlc, (unsigned int)rx_frame.id);
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  612 008c 02AB     		add	r3, sp, #8
  613 008e 5819     		adds	r0, r3, r5
  614 0090 FFF7FEFF 		bl	sprintf
-ARM GAS  /tmp/ccD59jZC.s 			page 19
+ARM GAS  /tmp/cccpjzgJ.s 			page 19
 
 
  615              	.LVL36:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  277:src/can_bus.c ****                 forceLog(" [PWM CMD]");
  278:src/can_bus.c **** 
  279:src/can_bus.c ****                 // PWM Command Frame
-ARM GAS  /tmp/ccD59jZC.s 			page 20
+ARM GAS  /tmp/cccpjzgJ.s 			page 20
 
 
  280:src/can_bus.c ****                 if (rx_frame.dlc >= 8) {
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  327:src/can_bus.c ****                     memcpy(&speed1, &rx_frame.data[0], 4);
  328:src/can_bus.c ****                     memcpy(&speed2, &rx_frame.data[4], 4);
  329:src/can_bus.c **** 
-ARM GAS  /tmp/ccD59jZC.s 			page 21
+ARM GAS  /tmp/cccpjzgJ.s 			page 21
 
 
  330:src/can_bus.c ****                     // Bounds check: limit to reasonable speed range (-5000 to 5000 mm/s = 18 km/h)
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  377:src/can_bus.c ****                     enable = 1;
  378:src/can_bus.c ****                     input_timeout_counter = 0;
  379:src/can_bus.c ****                     inactivity_timeout_counter = 0;    // Reset inactivity timeout
-ARM GAS  /tmp/ccD59jZC.s 			page 22
+ARM GAS  /tmp/cccpjzgJ.s 			page 22
 
 
  380:src/can_bus.c ****                 }
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  692 00f0 5F4A     		ldr	r2, .L69+44
  693 00f2 9342     		cmp	r3, r2
  694 00f4 00F03A81 		beq	.L64
-ARM GAS  /tmp/ccD59jZC.s 			page 23
+ARM GAS  /tmp/cccpjzgJ.s 			page 23
 
 
  695              	.L43:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  732 0122 F0D9     		bls	.L32
  733              	.LBB6:
  282:src/can_bus.c ****                     memcpy(&pwm1, &rx_frame.data[0], 4);
-ARM GAS  /tmp/ccD59jZC.s 			page 24
+ARM GAS  /tmp/cccpjzgJ.s 			page 24
 
 
  734              		.loc 1 282 21 is_stmt 1 view .LVU163
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  776 015c 83FB0521 		smull	r2, r1, r3, r5
  777 0160 EA17     		asrs	r2, r5, #31
  778 0162 C2EBA102 		rsb	r2, r2, r1, asr #2
-ARM GAS  /tmp/ccD59jZC.s 			page 25
+ARM GAS  /tmp/cccpjzgJ.s 			page 25
 
 
  779              	.LVL51:
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  302:src/can_bus.c **** 
  821              		.loc 1 302 25 is_stmt 1 view .LVU188
  822 0194 02A8     		add	r0, sp, #8
-ARM GAS  /tmp/ccD59jZC.s 			page 26
+ARM GAS  /tmp/cccpjzgJ.s 			page 26
 
 
  823 0196 FFF7FEFF 		bl	forceLog
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  296:src/can_bus.c ****                         const char* dir2 = (pwm2 > 0) ? "FWD" : (pwm2 < 0) ? "REV" : "STOP";
  860              		.loc 1 296 63 discriminator 4 view .LVU206
  861 01ba 3B4B     		ldr	r3, .L69+100
-ARM GAS  /tmp/ccD59jZC.s 			page 27
+ARM GAS  /tmp/cccpjzgJ.s 			page 27
 
 
  862 01bc DBE7     		b	.L35
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  327:src/can_bus.c ****                     memcpy(&speed2, &rx_frame.data[4], 4);
  903              		.loc 1 327 21 view .LVU220
  904 01e2 194B     		ldr	r3, .L69+4
-ARM GAS  /tmp/ccD59jZC.s 			page 28
+ARM GAS  /tmp/cccpjzgJ.s 			page 28
 
 
  905 01e4 5D68     		ldr	r5, [r3, #4]
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  945 0210 00E0     		b	.L39
  946              	.LVL70:
  947              	.L51:
-ARM GAS  /tmp/ccD59jZC.s 			page 29
+ARM GAS  /tmp/cccpjzgJ.s 			page 29
 
 
  334:src/can_bus.c ****                     if (speed2 > MAX_SPEED_MM_S) speed2 = MAX_SPEED_MM_S;
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  985              		.loc 1 350 43 is_stmt 0 view .LVU251
  986 0238 0023     		movs	r3, #0
  987 023a 194A     		ldr	r2, .L69+92
-ARM GAS  /tmp/ccD59jZC.s 			page 30
+ARM GAS  /tmp/cccpjzgJ.s 			page 30
 
 
  988 023c 1360     		str	r3, [r2]
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1036              		.loc 1 355 38 view .LVU257
  1037 02c4 0133     		adds	r3, r3, #1
  1038 02c6 D360     		str	r3, [r2, #12]
-ARM GAS  /tmp/ccD59jZC.s 			page 31
+ARM GAS  /tmp/cccpjzgJ.s 			page 31
 
 
  356:src/can_bus.c ****                 
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  375:src/can_bus.c ****                     control_type = CONTROL_TYPE_POSITION;  // Enable Position mode
  1078              		.loc 1 375 21 is_stmt 1 view .LVU273
  375:src/can_bus.c ****                     control_type = CONTROL_TYPE_POSITION;  // Enable Position mode
-ARM GAS  /tmp/ccD59jZC.s 			page 32
+ARM GAS  /tmp/cccpjzgJ.s 			page 32
 
 
  1079              		.loc 1 375 48 is_stmt 0 view .LVU274
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1118 031c 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
  387:src/can_bus.c ****                     uint8_t en_val = rx_frame.data[0];
  1119              		.loc 1 387 20 view .LVU290
-ARM GAS  /tmp/ccD59jZC.s 			page 33
+ARM GAS  /tmp/cccpjzgJ.s 			page 33
 
 
  1120 031e 002B     		cmp	r3, #0
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1158              		.loc 1 400 25 is_stmt 1 view .LVU306
  1159 034a 1648     		ldr	r0, .L71+44
  1160 034c FFF7FEFF 		bl	forceLog
-ARM GAS  /tmp/ccD59jZC.s 			page 34
+ARM GAS  /tmp/cccpjzgJ.s 			page 34
 
 
  1161              	.LVL85:
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1200              	.LVL89:
  1201              	.L57:
  422:src/can_bus.c ****         }
-ARM GAS  /tmp/ccD59jZC.s 			page 35
+ARM GAS  /tmp/cccpjzgJ.s 			page 35
 
 
  423:src/can_bus.c ****     }
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1243      74657279 
  1243      3A202564 
  1244 0072 0000     		.align	2
-ARM GAS  /tmp/ccD59jZC.s 			page 36
+ARM GAS  /tmp/cccpjzgJ.s 			page 36
 
 
  1245              	.LC35:
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  435:src/can_bus.c ****     extern volatile HALL_DATA_STRUCT HallData[2];
  1282              		.loc 1 435 5 is_stmt 1 view .LVU328
  436:src/can_bus.c ****     extern volatile ELECTRICAL_PARAMS electrical_measurements;
-ARM GAS  /tmp/ccD59jZC.s 			page 37
+ARM GAS  /tmp/cccpjzgJ.s 			page 37
 
 
  1283              		.loc 1 436 5 view .LVU329
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1322              	.L76:
  451:src/can_bus.c ****     if (posR >  POS_CLAMP_MM) posR =  POS_CLAMP_MM;
  1323              		.loc 1 451 5 is_stmt 1 view .LVU346
-ARM GAS  /tmp/ccD59jZC.s 			page 38
+ARM GAS  /tmp/cccpjzgJ.s 			page 38
 
 
  1324              		.loc 1 451 8 is_stmt 0 view .LVU347
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  460:src/can_bus.c **** 
  461:src/can_bus.c ****     // Status Frame 1: Speed (ID with board offset)
  462:src/can_bus.c ****     tx_frame.id = can_status_speed;
-ARM GAS  /tmp/ccD59jZC.s 			page 39
+ARM GAS  /tmp/cccpjzgJ.s 			page 39
 
 
  1369              		.loc 1 462 5 view .LVU364
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  475:src/can_bus.c ****     tx_frame.data[6] = (uint8_t)((speedR >> 16) & 0xFF);
  1411              		.loc 1 475 5 is_stmt 1 view .LVU388
  1412              		.loc 1 475 24 is_stmt 0 view .LVU389
-ARM GAS  /tmp/ccD59jZC.s 			page 40
+ARM GAS  /tmp/cccpjzgJ.s 			page 40
 
 
  1413 009c C6F30743 		ubfx	r3, r6, #16, #8
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1452 00cc 1B68     		ldr	r3, [r3]
  1453 00ce 2C93     		str	r3, [sp, #176]
  491:src/can_bus.c ****     tx_frame.data[0] = (uint8_t)(posL & 0xFF);
-ARM GAS  /tmp/ccD59jZC.s 			page 41
+ARM GAS  /tmp/cccpjzgJ.s 			page 41
 
 
  1454              		.loc 1 491 5 is_stmt 1 view .LVU408
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1497              		.loc 1 502 9 is_stmt 1 view .LVU433
  1498              		.loc 1 502 18 is_stmt 0 view .LVU434
  1499 010c 544B     		ldr	r3, .L104+28
-ARM GAS  /tmp/ccD59jZC.s 			page 42
+ARM GAS  /tmp/cccpjzgJ.s 			page 42
 
 
  1500 010e 9A69     		ldr	r2, [r3, #24]
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1538              		.loc 1 518 5 is_stmt 1 view .LVU453
  1539              		.loc 1 518 24 is_stmt 0 view .LVU454
  1540 013e C9F30723 		ubfx	r3, r9, #8, #8
-ARM GAS  /tmp/ccD59jZC.s 			page 43
+ARM GAS  /tmp/cccpjzgJ.s 			page 43
 
 
  1541              		.loc 1 518 22 view .LVU455
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1581 0170 04F0FC01 		and	r1, r4, #252
  1582 0174 01EBA401 		add	r1, r1, r4, asr #2
  1583 0178 A2EB4102 		sub	r2, r2, r1, lsl #1
-ARM GAS  /tmp/ccD59jZC.s 			page 44
+ARM GAS  /tmp/cccpjzgJ.s 			page 44
 
 
  1584              		.loc 1 532 21 view .LVU472
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1631 01ba 0029     		cmp	r1, #0
  1632 01bc 37DD     		ble	.L100
  1633              		.loc 1 539 21 discriminator 2 view .LVU490
-ARM GAS  /tmp/ccD59jZC.s 			page 45
+ARM GAS  /tmp/cccpjzgJ.s 			page 45
 
 
  1634 01be 2F4B     		ldr	r3, .L104+56
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1678              		.cfi_remember_state
  1679              		.cfi_def_cfa_offset 28
  1680              		@ sp needed
-ARM GAS  /tmp/ccD59jZC.s 			page 46
+ARM GAS  /tmp/cccpjzgJ.s 			page 46
 
 
  1681 01ee BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1728 022e 01DB     		blt	.L102
  539:src/can_bus.c ****         const char* dir2 = (pwms[1] > 0) ? "FWD" : (pwms[1] < 0) ? "REV" : "---";
  1729              		.loc 1 539 21 discriminator 4 view .LVU508
-ARM GAS  /tmp/ccD59jZC.s 			page 47
+ARM GAS  /tmp/cccpjzgJ.s 			page 47
 
 
  1730 0230 174B     		ldr	r3, .L104+76
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1777 0268 00000000 		.word	can_status_pos
  1778 026c 00000000 		.word	can_status_batt
  1779 0270 67666666 		.word	1717986919
-ARM GAS  /tmp/ccD59jZC.s 			page 48
+ARM GAS  /tmp/cccpjzgJ.s 			page 48
 
 
  1780 0274 00000000 		.word	motor_status_counter.0
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1828 0014 0B4A     		ldr	r2, .L109+12
  1829 0016 1268     		ldr	r2, [r2]
  1830 0018 C260     		str	r2, [r0, #12]
-ARM GAS  /tmp/ccD59jZC.s 			page 49
+ARM GAS  /tmp/cccpjzgJ.s 			page 49
 
 
  1831              	.L107:
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1875      545D2042 
  1875      6F617264 
  1875      2049443A 
-ARM GAS  /tmp/ccD59jZC.s 			page 50
+ARM GAS  /tmp/cccpjzgJ.s 			page 50
 
 
  1876              		.section	.text.CAN_SendBootAnnouncement,"ax",%progbits
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  580:src/can_bus.c ****     tx_frame.rtr = false;
  1917              		.loc 1 580 5 is_stmt 1 view .LVU549
  1918              		.loc 1 580 18 is_stmt 0 view .LVU550
-ARM GAS  /tmp/ccD59jZC.s 			page 51
+ARM GAS  /tmp/cccpjzgJ.s 			page 51
 
 
  1919 0018 8DF81230 		strb	r3, [sp, #18]
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1954              		.loc 1 599 22 is_stmt 0 view .LVU571
  1955 0046 1923     		movs	r3, #25
  1956 0048 8DF80F30 		strb	r3, [sp, #15]
-ARM GAS  /tmp/ccD59jZC.s 			page 52
+ARM GAS  /tmp/cccpjzgJ.s 			page 52
 
 
  600:src/can_bus.c **** 
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  1998 0078 00000000 		.word	can_status_bootup
  1999 007c 00000000 		.word	FlashContent
  2000 0080 00000000 		.word	can_stats
-ARM GAS  /tmp/ccD59jZC.s 			page 53
+ARM GAS  /tmp/cccpjzgJ.s 			page 53
 
 
  2001 0084 00000000 		.word	.LC36
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2029      30782530 
  2029      33580D0A 
  2030 00a9 000000   		.align	2
-ARM GAS  /tmp/ccD59jZC.s 			page 54
+ARM GAS  /tmp/cccpjzgJ.s 			page 54
 
 
  2031              	.LC45:
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2059              	.LFB75:
  608:src/can_bus.c **** 
  609:src/can_bus.c **** // Print current CAN configuration to console
-ARM GAS  /tmp/ccD59jZC.s 			page 55
+ARM GAS  /tmp/cccpjzgJ.s 			page 55
 
 
  610:src/can_bus.c **** void CAN_PrintConfiguration(void) {
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2102              		.loc 1 621 5 view .LVU590
  622:src/can_bus.c ****         case MCP2515_SPEED_125KBPS: speed_str = "125 kbps"; break;
  623:src/can_bus.c ****         case MCP2515_SPEED_250KBPS: speed_str = "250 kbps"; break;
-ARM GAS  /tmp/ccD59jZC.s 			page 56
+ARM GAS  /tmp/cccpjzgJ.s 			page 56
 
 
  2103              		.loc 1 623 37 view .LVU591
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2142              		.loc 1 638 5 view .LVU600
  2143 0070 2046     		mov	r0, r4
  2144 0072 FFF7FEFF 		bl	forceLog
-ARM GAS  /tmp/ccD59jZC.s 			page 57
+ARM GAS  /tmp/cccpjzgJ.s 			page 57
 
 
  2145              	.LVL146:
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2191              	.LVL154:
  647:src/can_bus.c ****     
  648:src/can_bus.c ****     sprintf(msg, "\r\nStatus IDs:\r\n");
-ARM GAS  /tmp/ccD59jZC.s 			page 58
+ARM GAS  /tmp/cccpjzgJ.s 			page 58
 
 
  2192              		.loc 1 648 5 view .LVU609
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2238 010e FFF7FEFF 		bl	sprintf
  2239              	.LVL162:
  657:src/can_bus.c ****     forceLog(msg);
-ARM GAS  /tmp/ccD59jZC.s 			page 59
+ARM GAS  /tmp/cccpjzgJ.s 			page 59
 
 
  2240              		.loc 1 657 5 view .LVU618
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2290              	.LFE75:
  2292              		.section	.rodata.CAN_PrintStatistics.str1.4,"aMS",%progbits,1
  2293              		.align	2
-ARM GAS  /tmp/ccD59jZC.s 			page 60
+ARM GAS  /tmp/cccpjzgJ.s 			page 60
 
 
  2294              	.LC52:
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2319      2020256C 
  2319      750D0A00 
  2320              		.align	2
-ARM GAS  /tmp/ccD59jZC.s 			page 61
+ARM GAS  /tmp/cccpjzgJ.s 			page 61
 
 
  2321              	.LC61:
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2349              		.cfi_startproc
  2350              		@ args = 0, pretend = 0, frame = 128
  2351              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccD59jZC.s 			page 62
+ARM GAS  /tmp/cccpjzgJ.s 			page 62
 
 
  2352 0000 70B5     		push	{r4, r5, r6, lr}
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2397              	.LVL169:
  674:src/can_bus.c ****     sprintf(msg, "  Speed:      %lu\r\n", can_stats.rx_speed);
  2398              		.loc 1 674 5 view .LVU630
-ARM GAS  /tmp/ccD59jZC.s 			page 63
+ARM GAS  /tmp/cccpjzgJ.s 			page 63
 
 
  2399 004a 454E     		ldr	r6, .L136+16
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2444 0094 FFF7FEFF 		bl	sprintf
  2445              	.LVL178:
  684:src/can_bus.c ****     forceLog(msg);
-ARM GAS  /tmp/ccD59jZC.s 			page 64
+ARM GAS  /tmp/cccpjzgJ.s 			page 64
 
 
  2446              		.loc 1 684 5 view .LVU639
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  695:src/can_bus.c ****     if (can_stats.last_error_flags) {
  2490              		.loc 1 695 5 view .LVU648
  2491              		.loc 1 695 18 is_stmt 0 view .LVU649
-ARM GAS  /tmp/ccD59jZC.s 			page 65
+ARM GAS  /tmp/cccpjzgJ.s 			page 65
 
 
  2492 00de E26A     		ldr	r2, [r4, #44]
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2526 00fc 09D0     		beq	.L135
  2527              		.loc 1 715 74 discriminator 6 view .LVU666
  2528 00fe 1F4B     		ldr	r3, .L136+44
-ARM GAS  /tmp/ccD59jZC.s 			page 66
+ARM GAS  /tmp/cccpjzgJ.s 			page 66
 
 
  2529 0100 0CE0     		b	.L129
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2576              	.LVL203:
  2577              		.loc 1 720 5 view .LVU677
  2578 0136 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
-ARM GAS  /tmp/ccD59jZC.s 			page 67
+ARM GAS  /tmp/cccpjzgJ.s 			page 67
 
 
  2579 0138 0FC4     		stmia	r4!, {r0, r1, r2, r3}
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2627              		.section	.text.CAN_ResetStatistics,"ax",%progbits
  2628              		.align	1
  2629              		.global	CAN_ResetStatistics
-ARM GAS  /tmp/ccD59jZC.s 			page 68
+ARM GAS  /tmp/cccpjzgJ.s 			page 68
 
 
  2630              		.syntax unified
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2674      4F565200 
  2675              		.align	2
  2676              	.LC71:
-ARM GAS  /tmp/ccD59jZC.s 			page 69
+ARM GAS  /tmp/cccpjzgJ.s 			page 69
 
 
  2677 0038 20545842 		.ascii	" TXBO\000"
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2720              		.cfi_offset 14, -4
  2721 000a A1B0     		sub	sp, sp, #132
  2722              	.LCFI30:
-ARM GAS  /tmp/ccD59jZC.s 			page 70
+ARM GAS  /tmp/cccpjzgJ.s 			page 70
 
 
  2723              		.cfi_def_cfa_offset 144
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2743              	.LCFI32:
  2744              		.cfi_restore_state
  2745              	.LBB14:
-ARM GAS  /tmp/ccD59jZC.s 			page 71
+ARM GAS  /tmp/cccpjzgJ.s 			page 71
 
 
  740:src/can_bus.c ****         char msg[120];
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2785              		.loc 1 752 9 view .LVU709
  752:src/can_bus.c ****         if (error_flags & 0x40) forceLog(" RX0OVR");
  2786              		.loc 1 752 12 is_stmt 0 view .LVU710
-ARM GAS  /tmp/ccD59jZC.s 			page 72
+ARM GAS  /tmp/cccpjzgJ.s 			page 72
 
 
  2787 0044 14F0800F 		tst	r4, #128
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2826 0074 1648     		ldr	r0, .L166+12
  2827 0076 FFF7FEFF 		bl	forceLog
  2828              	.LVL218:
-ARM GAS  /tmp/ccD59jZC.s 			page 73
+ARM GAS  /tmp/cccpjzgJ.s 			page 73
 
 
  764:src/can_bus.c ****     }
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2875              	.LVL226:
  2876 00ba D8E7     		b	.L150
  2877              	.L165:
-ARM GAS  /tmp/ccD59jZC.s 			page 74
+ARM GAS  /tmp/cccpjzgJ.s 			page 74
 
 
  759:src/can_bus.c **** 
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2937              		.align	2
  2940              	can_status_pos:
  2941 0000 00000000 		.space	4
-ARM GAS  /tmp/ccD59jZC.s 			page 75
+ARM GAS  /tmp/cccpjzgJ.s 			page 75
 
 
  2942              		.section	.bss.can_status_speed,"aw",%nobits
@@ -4482,89 +4482,89 @@ ARM GAS  /tmp/ccD59jZC.s 			page 1
  2994              		.file 10 "/usr/include/newlib/stdio.h"
  2995              		.file 11 "inc/protocolfunctions.h"
  2996              		.file 12 "<built-in>"
-ARM GAS  /tmp/ccD59jZC.s 			page 76
+ARM GAS  /tmp/cccpjzgJ.s 			page 76
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 can_bus.c
-     /tmp/ccD59jZC.s:19     .text.CAN_Init_IDs:00000000 $t
-     /tmp/ccD59jZC.s:24     .text.CAN_Init_IDs:00000000 CAN_Init_IDs
-     /tmp/ccD59jZC.s:112    .text.CAN_Init_IDs:00000048 $d
-     /tmp/ccD59jZC.s:2970   .bss.can_cmd_pwm:00000000 can_cmd_pwm
-     /tmp/ccD59jZC.s:2964   .bss.can_cmd_speed:00000000 can_cmd_speed
-     /tmp/ccD59jZC.s:2958   .bss.can_cmd_position:00000000 can_cmd_position
-     /tmp/ccD59jZC.s:2952   .bss.can_cmd_enable:00000000 can_cmd_enable
-     /tmp/ccD59jZC.s:2946   .bss.can_status_speed:00000000 can_status_speed
-     /tmp/ccD59jZC.s:2940   .bss.can_status_pos:00000000 can_status_pos
-     /tmp/ccD59jZC.s:2934   .bss.can_status_batt:00000000 can_status_batt
-     /tmp/ccD59jZC.s:2928   .bss.can_status_bootup:00000000 can_status_bootup
-     /tmp/ccD59jZC.s:125    .text.forceLog:00000000 $t
-     /tmp/ccD59jZC.s:131    .text.forceLog:00000000 forceLog
-     /tmp/ccD59jZC.s:153    .text.CAN_IsSoftwareSerialReady:00000000 $t
-     /tmp/ccD59jZC.s:159    .text.CAN_IsSoftwareSerialReady:00000000 CAN_IsSoftwareSerialReady
-     /tmp/ccD59jZC.s:174    .text.CAN_Fallback_To_USART:00000000 $t
-     /tmp/ccD59jZC.s:180    .text.CAN_Fallback_To_USART:00000000 CAN_Fallback_To_USART
-     /tmp/ccD59jZC.s:207    .text.CAN_Fallback_To_USART:00000014 $d
-     /tmp/ccD59jZC.s:2976   .bss.usart_mode_active:00000000 usart_mode_active
-     /tmp/ccD59jZC.s:212    .rodata.CAN_AutoDetectAndInit.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:245    .text.CAN_AutoDetectAndInit:00000000 $t
-     /tmp/ccD59jZC.s:251    .text.CAN_AutoDetectAndInit:00000000 CAN_AutoDetectAndInit
-     /tmp/ccD59jZC.s:371    .text.CAN_AutoDetectAndInit:00000088 $d
-     /tmp/ccD59jZC.s:2982   .bss.can_mode_active:00000000 can_mode_active
-     /tmp/ccD59jZC.s:2916   .bss.can_stats:00000000 can_stats
-     /tmp/ccD59jZC.s:388    .rodata.CAN_ProcessMessages.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:457    .text.CAN_ProcessMessages:00000000 $t
-     /tmp/ccD59jZC.s:463    .text.CAN_ProcessMessages:00000000 CAN_ProcessMessages
-     /tmp/ccD59jZC.s:997    .text.CAN_ProcessMessages:00000244 $d
-     /tmp/ccD59jZC.s:2922   .bss.rx_frame:00000000 rx_frame
-     /tmp/ccD59jZC.s:1034   .text.CAN_ProcessMessages:000002c0 $t
-     /tmp/ccD59jZC.s:1211   .text.CAN_ProcessMessages:00000378 $d
-     /tmp/ccD59jZC.s:1230   .rodata.CAN_SendStatus.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:1249   .text.CAN_SendStatus:00000000 $t
-     /tmp/ccD59jZC.s:1255   .text.CAN_SendStatus:00000000 CAN_SendStatus
-     /tmp/ccD59jZC.s:1768   .text.CAN_SendStatus:00000244 $d
-     /tmp/ccD59jZC.s:2910   .bss.verbose_counter.1:00000000 verbose_counter.1
-     /tmp/ccD59jZC.s:2905   .bss.motor_status_counter.0:00000000 motor_status_counter.0
-     /tmp/ccD59jZC.s:1794   .text.CAN_GetCurrentIDs:00000000 $t
-     /tmp/ccD59jZC.s:1800   .text.CAN_GetCurrentIDs:00000000 CAN_GetCurrentIDs
-     /tmp/ccD59jZC.s:1861   .text.CAN_GetCurrentIDs:00000038 $d
-     /tmp/ccD59jZC.s:1873   .rodata.CAN_SendBootAnnouncement.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:1877   .text.CAN_SendBootAnnouncement:00000000 $t
-     /tmp/ccD59jZC.s:1883   .text.CAN_SendBootAnnouncement:00000000 CAN_SendBootAnnouncement
-     /tmp/ccD59jZC.s:1997   .text.CAN_SendBootAnnouncement:00000074 $d
-     /tmp/ccD59jZC.s:2006   .rodata.CAN_PrintConfiguration.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:2052   .text.CAN_PrintConfiguration:00000000 $t
-     /tmp/ccD59jZC.s:2058   .text.CAN_PrintConfiguration:00000000 CAN_PrintConfiguration
-     /tmp/ccD59jZC.s:2265   .text.CAN_PrintConfiguration:00000138 $d
-     /tmp/ccD59jZC.s:2293   .rodata.CAN_PrintStatistics.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:2340   .text.CAN_PrintStatistics:00000000 $t
-     /tmp/ccD59jZC.s:2346   .text.CAN_PrintStatistics:00000000 CAN_PrintStatistics
-     /tmp/ccD59jZC.s:2604   .text.CAN_PrintStatistics:00000150 $d
-     /tmp/ccD59jZC.s:2624   .rodata.CAN_ResetStatistics.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:2628   .text.CAN_ResetStatistics:00000000 $t
-ARM GAS  /tmp/ccD59jZC.s 			page 77
+     /tmp/cccpjzgJ.s:19     .text.CAN_Init_IDs:00000000 $t
+     /tmp/cccpjzgJ.s:24     .text.CAN_Init_IDs:00000000 CAN_Init_IDs
+     /tmp/cccpjzgJ.s:112    .text.CAN_Init_IDs:00000048 $d
+     /tmp/cccpjzgJ.s:2970   .bss.can_cmd_pwm:00000000 can_cmd_pwm
+     /tmp/cccpjzgJ.s:2964   .bss.can_cmd_speed:00000000 can_cmd_speed
+     /tmp/cccpjzgJ.s:2958   .bss.can_cmd_position:00000000 can_cmd_position
+     /tmp/cccpjzgJ.s:2952   .bss.can_cmd_enable:00000000 can_cmd_enable
+     /tmp/cccpjzgJ.s:2946   .bss.can_status_speed:00000000 can_status_speed
+     /tmp/cccpjzgJ.s:2940   .bss.can_status_pos:00000000 can_status_pos
+     /tmp/cccpjzgJ.s:2934   .bss.can_status_batt:00000000 can_status_batt
+     /tmp/cccpjzgJ.s:2928   .bss.can_status_bootup:00000000 can_status_bootup
+     /tmp/cccpjzgJ.s:125    .text.forceLog:00000000 $t
+     /tmp/cccpjzgJ.s:131    .text.forceLog:00000000 forceLog
+     /tmp/cccpjzgJ.s:153    .text.CAN_IsSoftwareSerialReady:00000000 $t
+     /tmp/cccpjzgJ.s:159    .text.CAN_IsSoftwareSerialReady:00000000 CAN_IsSoftwareSerialReady
+     /tmp/cccpjzgJ.s:174    .text.CAN_Fallback_To_USART:00000000 $t
+     /tmp/cccpjzgJ.s:180    .text.CAN_Fallback_To_USART:00000000 CAN_Fallback_To_USART
+     /tmp/cccpjzgJ.s:207    .text.CAN_Fallback_To_USART:00000014 $d
+     /tmp/cccpjzgJ.s:2976   .bss.usart_mode_active:00000000 usart_mode_active
+     /tmp/cccpjzgJ.s:212    .rodata.CAN_AutoDetectAndInit.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:245    .text.CAN_AutoDetectAndInit:00000000 $t
+     /tmp/cccpjzgJ.s:251    .text.CAN_AutoDetectAndInit:00000000 CAN_AutoDetectAndInit
+     /tmp/cccpjzgJ.s:371    .text.CAN_AutoDetectAndInit:00000088 $d
+     /tmp/cccpjzgJ.s:2982   .bss.can_mode_active:00000000 can_mode_active
+     /tmp/cccpjzgJ.s:2916   .bss.can_stats:00000000 can_stats
+     /tmp/cccpjzgJ.s:388    .rodata.CAN_ProcessMessages.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:457    .text.CAN_ProcessMessages:00000000 $t
+     /tmp/cccpjzgJ.s:463    .text.CAN_ProcessMessages:00000000 CAN_ProcessMessages
+     /tmp/cccpjzgJ.s:997    .text.CAN_ProcessMessages:00000244 $d
+     /tmp/cccpjzgJ.s:2922   .bss.rx_frame:00000000 rx_frame
+     /tmp/cccpjzgJ.s:1034   .text.CAN_ProcessMessages:000002c0 $t
+     /tmp/cccpjzgJ.s:1211   .text.CAN_ProcessMessages:00000378 $d
+     /tmp/cccpjzgJ.s:1230   .rodata.CAN_SendStatus.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:1249   .text.CAN_SendStatus:00000000 $t
+     /tmp/cccpjzgJ.s:1255   .text.CAN_SendStatus:00000000 CAN_SendStatus
+     /tmp/cccpjzgJ.s:1768   .text.CAN_SendStatus:00000244 $d
+     /tmp/cccpjzgJ.s:2910   .bss.verbose_counter.1:00000000 verbose_counter.1
+     /tmp/cccpjzgJ.s:2905   .bss.motor_status_counter.0:00000000 motor_status_counter.0
+     /tmp/cccpjzgJ.s:1794   .text.CAN_GetCurrentIDs:00000000 $t
+     /tmp/cccpjzgJ.s:1800   .text.CAN_GetCurrentIDs:00000000 CAN_GetCurrentIDs
+     /tmp/cccpjzgJ.s:1861   .text.CAN_GetCurrentIDs:00000038 $d
+     /tmp/cccpjzgJ.s:1873   .rodata.CAN_SendBootAnnouncement.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:1877   .text.CAN_SendBootAnnouncement:00000000 $t
+     /tmp/cccpjzgJ.s:1883   .text.CAN_SendBootAnnouncement:00000000 CAN_SendBootAnnouncement
+     /tmp/cccpjzgJ.s:1997   .text.CAN_SendBootAnnouncement:00000074 $d
+     /tmp/cccpjzgJ.s:2006   .rodata.CAN_PrintConfiguration.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:2052   .text.CAN_PrintConfiguration:00000000 $t
+     /tmp/cccpjzgJ.s:2058   .text.CAN_PrintConfiguration:00000000 CAN_PrintConfiguration
+     /tmp/cccpjzgJ.s:2265   .text.CAN_PrintConfiguration:00000138 $d
+     /tmp/cccpjzgJ.s:2293   .rodata.CAN_PrintStatistics.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:2340   .text.CAN_PrintStatistics:00000000 $t
+     /tmp/cccpjzgJ.s:2346   .text.CAN_PrintStatistics:00000000 CAN_PrintStatistics
+     /tmp/cccpjzgJ.s:2604   .text.CAN_PrintStatistics:00000150 $d
+     /tmp/cccpjzgJ.s:2624   .rodata.CAN_ResetStatistics.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:2628   .text.CAN_ResetStatistics:00000000 $t
+ARM GAS  /tmp/cccpjzgJ.s 			page 77
 
 
-     /tmp/ccD59jZC.s:2634   .text.CAN_ResetStatistics:00000000 CAN_ResetStatistics
-     /tmp/ccD59jZC.s:2660   .text.CAN_ResetStatistics:00000014 $d
-     /tmp/ccD59jZC.s:2666   .rodata.CAN_CheckErrors.str1.4:00000000 $d
-     /tmp/ccD59jZC.s:2694   .text.CAN_CheckErrors:00000000 $t
-     /tmp/ccD59jZC.s:2700   .text.CAN_CheckErrors:00000000 CAN_CheckErrors
-     /tmp/ccD59jZC.s:2886   .text.CAN_CheckErrors:000000c4 $d
-     /tmp/ccD59jZC.s:2906   .bss.motor_status_counter.0:00000000 $d
-     /tmp/ccD59jZC.s:2911   .bss.verbose_counter.1:00000000 $d
-     /tmp/ccD59jZC.s:2913   .bss.can_stats:00000000 $d
-     /tmp/ccD59jZC.s:2919   .bss.rx_frame:00000000 $d
-     /tmp/ccD59jZC.s:2925   .bss.can_status_bootup:00000000 $d
-     /tmp/ccD59jZC.s:2931   .bss.can_status_batt:00000000 $d
-     /tmp/ccD59jZC.s:2937   .bss.can_status_pos:00000000 $d
-     /tmp/ccD59jZC.s:2943   .bss.can_status_speed:00000000 $d
-     /tmp/ccD59jZC.s:2949   .bss.can_cmd_enable:00000000 $d
-     /tmp/ccD59jZC.s:2955   .bss.can_cmd_position:00000000 $d
-     /tmp/ccD59jZC.s:2961   .bss.can_cmd_speed:00000000 $d
-     /tmp/ccD59jZC.s:2967   .bss.can_cmd_pwm:00000000 $d
-     /tmp/ccD59jZC.s:2977   .bss.usart_mode_active:00000000 $d
-     /tmp/ccD59jZC.s:2983   .bss.can_mode_active:00000000 $d
+     /tmp/cccpjzgJ.s:2634   .text.CAN_ResetStatistics:00000000 CAN_ResetStatistics
+     /tmp/cccpjzgJ.s:2660   .text.CAN_ResetStatistics:00000014 $d
+     /tmp/cccpjzgJ.s:2666   .rodata.CAN_CheckErrors.str1.4:00000000 $d
+     /tmp/cccpjzgJ.s:2694   .text.CAN_CheckErrors:00000000 $t
+     /tmp/cccpjzgJ.s:2700   .text.CAN_CheckErrors:00000000 CAN_CheckErrors
+     /tmp/cccpjzgJ.s:2886   .text.CAN_CheckErrors:000000c4 $d
+     /tmp/cccpjzgJ.s:2906   .bss.motor_status_counter.0:00000000 $d
+     /tmp/cccpjzgJ.s:2911   .bss.verbose_counter.1:00000000 $d
+     /tmp/cccpjzgJ.s:2913   .bss.can_stats:00000000 $d
+     /tmp/cccpjzgJ.s:2919   .bss.rx_frame:00000000 $d
+     /tmp/cccpjzgJ.s:2925   .bss.can_status_bootup:00000000 $d
+     /tmp/cccpjzgJ.s:2931   .bss.can_status_batt:00000000 $d
+     /tmp/cccpjzgJ.s:2937   .bss.can_status_pos:00000000 $d
+     /tmp/cccpjzgJ.s:2943   .bss.can_status_speed:00000000 $d
+     /tmp/cccpjzgJ.s:2949   .bss.can_cmd_enable:00000000 $d
+     /tmp/cccpjzgJ.s:2955   .bss.can_cmd_position:00000000 $d
+     /tmp/cccpjzgJ.s:2961   .bss.can_cmd_speed:00000000 $d
+     /tmp/cccpjzgJ.s:2967   .bss.can_cmd_pwm:00000000 $d
+     /tmp/cccpjzgJ.s:2977   .bss.usart_mode_active:00000000 $d
+     /tmp/cccpjzgJ.s:2983   .bss.can_mode_active:00000000 $d
 
 UNDEFINED SYMBOLS
 FlashContent

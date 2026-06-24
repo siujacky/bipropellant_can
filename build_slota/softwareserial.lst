@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc076w2I.s 			page 1
+ARM GAS  /tmp/ccbDAC3y.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
   30:src/softwareserial.c **** // assume 10 bit
   31:src/softwareserial.c **** #define SOFTWARE_SERIAL_MS_PER_BYTE (1000.0/((float)SOFTWARE_SERIAL_BAUD/10.0))
   32:src/softwareserial.c **** 
-ARM GAS  /tmp/cc076w2I.s 			page 2
+ARM GAS  /tmp/ccbDAC3y.s 			page 2
 
 
   33:src/softwareserial.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
   53              		.section	.text.SoftwareSerialInit,"ax",%progbits
   54              		.align	1
   55              		.global	SoftwareSerialInit
-ARM GAS  /tmp/cc076w2I.s 			page 3
+ARM GAS  /tmp/ccbDAC3y.s 			page 3
 
 
   56              		.syntax unified
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  100              		.loc 1 72 3 view .LVU15
  101              		.loc 1 72 25 is_stmt 0 view .LVU16
  102 002c 0024     		movs	r4, #0
-ARM GAS  /tmp/cc076w2I.s 			page 4
+ARM GAS  /tmp/ccbDAC3y.s 			page 4
 
 
  103 002e 0394     		str	r4, [sp, #12]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
   84:src/softwareserial.c ****   softwareserialtimer.Init.Prescaler         = 64000000 / 2 / SOFTWARE_SERIAL_RX_TIMER_FREQ;
  146              		.loc 1 84 3 is_stmt 1 view .LVU34
  147              		.loc 1 84 46 is_stmt 0 view .LVU35
-ARM GAS  /tmp/cc076w2I.s 			page 5
+ARM GAS  /tmp/ccbDAC3y.s 			page 5
 
 
  148 0062 40F24133 		movw	r3, #833
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
   99:src/softwareserial.c ****   HAL_GPIO_Init(SOFTWARE_SERIAL_TX_PORT, &GPIO_InitStruct);
  188              		.loc 1 99 3 is_stmt 1 view .LVU56
  189 0090 02A9     		add	r1, sp, #8
-ARM GAS  /tmp/cc076w2I.s 			page 6
+ARM GAS  /tmp/ccbDAC3y.s 			page 6
 
 
  190 0092 2048     		ldr	r0, .L6+28
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  233 00c0 2846     		mov	r0, r5
  234 00c2 FFF7FEFF 		bl	HAL_TIM_Base_Init
  235              	.LVL7:
-ARM GAS  /tmp/cc076w2I.s 			page 7
+ARM GAS  /tmp/ccbDAC3y.s 			page 7
 
 
  111:src/softwareserial.c ****   HAL_TIM_Base_Start(&softwareserialtimerTX);
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  267 00f0 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
  268              	.LVL12:
  134:src/softwareserial.c ****   } else if (pin == GPIO_PIN_3) {
-ARM GAS  /tmp/cc076w2I.s 			page 8
+ARM GAS  /tmp/ccbDAC3y.s 			page 8
 
 
  135:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  155:src/softwareserial.c ****     short t = -1;
  305              		.loc 1 155 5 view .LVU90
  306              	.LVL13:
-ARM GAS  /tmp/cc076w2I.s 			page 9
+ARM GAS  /tmp/ccbDAC3y.s 			page 9
 
 
  156:src/softwareserial.c ****     if (softwareserialRXbuffer.head != softwareserialRXbuffer.tail){
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  355              		.syntax unified
  356              		.thumb
  357              		.thumb_func
-ARM GAS  /tmp/cc076w2I.s 			page 10
+ARM GAS  /tmp/ccbDAC3y.s 			page 10
 
 
  359              	softwareserial_peekrx:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  402              		.align	1
  403              		.global	softwareserial_available
  404              		.syntax unified
-ARM GAS  /tmp/cc076w2I.s 			page 11
+ARM GAS  /tmp/ccbDAC3y.s 			page 11
 
 
  405              		.thumb
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  184:src/softwareserial.c ****     }
  185:src/softwareserial.c ****     return 0;
  449              		.loc 1 185 12 view .LVU135
-ARM GAS  /tmp/cc076w2I.s 			page 12
+ARM GAS  /tmp/ccbDAC3y.s 			page 12
 
 
  450 0022 0020     		movs	r0, #0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
   21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
   22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARM GAS  /tmp/cc076w2I.s 			page 13
+ARM GAS  /tmp/ccbDAC3y.s 			page 13
 
 
   24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  485              	@ 0 "" 2
  486              		.thumb
  487              		.syntax unified
-ARM GAS  /tmp/cc076w2I.s 			page 14
+ARM GAS  /tmp/ccbDAC3y.s 			page 14
 
 
  488              	.LBE14:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  534              	.LBB17:
  535              	.LBI17:
   69:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/cc076w2I.s 			page 15
+ARM GAS  /tmp/ccbDAC3y.s 			page 15
 
 
  536              		.loc 2 69 57 view .LVU150
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  205:src/softwareserial.c **** //////////////////////////////////////////////////////////
  206:src/softwareserial.c **** // put a single character if room in output buffer
  207:src/softwareserial.c **** void softwareserial_puttx(unsigned char value){
-ARM GAS  /tmp/cc076w2I.s 			page 16
+ARM GAS  /tmp/ccbDAC3y.s 			page 16
 
 
  586              		.loc 1 207 47 is_stmt 1 view -0
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  630 0032 C2F80034 		str	r3, [r2, #1024]
  218:src/softwareserial.c **** }
  631              		.loc 1 218 1 view .LVU176
-ARM GAS  /tmp/cc076w2I.s 			page 17
+ARM GAS  /tmp/ccbDAC3y.s 			page 17
 
 
  632 0036 7047     		bx	lr
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  676              		.cfi_def_cfa_offset 16
  677              		.cfi_offset 4, -16
  678              		.cfi_offset 5, -12
-ARM GAS  /tmp/cc076w2I.s 			page 18
+ARM GAS  /tmp/ccbDAC3y.s 			page 18
 
 
  679              		.cfi_offset 6, -8
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  720              	.LVL40:
  721              	.L46:
  229:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
-ARM GAS  /tmp/cc076w2I.s 			page 19
+ARM GAS  /tmp/ccbDAC3y.s 			page 19
 
 
  722              		.loc 1 229 9 is_stmt 1 view .LVU200
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  766              		.global	__aeabi_d2f
  767              		.global	__aeabi_f2iz
  768              		.section	.text.softwareserial_Send_Wait,"ax",%progbits
-ARM GAS  /tmp/cc076w2I.s 			page 20
+ARM GAS  /tmp/ccbDAC3y.s 			page 20
 
 
  769              		.align	1
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  809 0010 04F58064 		add	r4, r4, #1024
  810              	.LVL49:
  811              		.loc 1 251 19 view .LVU221
-ARM GAS  /tmp/cc076w2I.s 			page 21
+ARM GAS  /tmp/ccbDAC3y.s 			page 21
 
 
  812 0014 11E0     		b	.L51
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  848 002e D3F80044 		ldr	r4, [r3, #1024]
  249:src/softwareserial.c ****         if (count < 0)
  849              		.loc 1 249 73 view .LVU236
-ARM GAS  /tmp/cc076w2I.s 			page 22
+ARM GAS  /tmp/ccbDAC3y.s 			page 22
 
 
  850 0032 D3F80434 		ldr	r3, [r3, #1028]
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  890 0054 FFF7FEFF 		bl	__aeabi_f2d
  891              	.LVL64:
  892              		.loc 1 266 22 view .LVU252
-ARM GAS  /tmp/cc076w2I.s 			page 23
+ARM GAS  /tmp/ccbDAC3y.s 			page 23
 
 
  893 0058 07A3     		adr	r3, .L59
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  938              		.cfi_startproc
  939              		@ args = 0, pretend = 0, frame = 0
  940              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc076w2I.s 			page 24
+ARM GAS  /tmp/ccbDAC3y.s 			page 24
 
 
  941 0000 30B5     		push	{r4, r5, lr}
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  984              	.LVL76:
  289:src/softwareserial.c **** 
  290:src/softwareserial.c ****     if (bits > 10) {
-ARM GAS  /tmp/cc076w2I.s 			page 25
+ARM GAS  /tmp/ccbDAC3y.s 			page 25
 
 
  985              		.loc 1 290 5 is_stmt 1 view .LVU276
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  286:src/softwareserial.c **** 
  1026              		.loc 1 286 26 is_stmt 0 discriminator 1 view .LVU292
  1027 0050 03F58033 		add	r3, r3, #65536
-ARM GAS  /tmp/cc076w2I.s 			page 26
+ARM GAS  /tmp/ccbDAC3y.s 			page 26
 
 
  1028              	.LVL81:
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  305:src/softwareserial.c ****             }
  306:src/softwareserial.c ****             softwareserialRXbuffer.bit++;
  1070              		.loc 1 306 13 is_stmt 1 view .LVU306
-ARM GAS  /tmp/cc076w2I.s 			page 27
+ARM GAS  /tmp/ccbDAC3y.s 			page 27
 
 
  1071              		.loc 1 306 35 is_stmt 0 view .LVU307
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  304:src/softwareserial.c ****             }
  1112              		.loc 1 304 115 discriminator 1 view .LVU324
  1113 00c2 4FF0800E 		mov	lr, #128
-ARM GAS  /tmp/cc076w2I.s 			page 28
+ARM GAS  /tmp/ccbDAC3y.s 			page 28
 
 
  1114 00c6 D9E7     		b	.L69
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1153 00ea 104B     		ldr	r3, .L82+12
  1154 00ec 83F810C4 		strb	ip, [r3, #1040]
  323:src/softwareserial.c ****     softwareserialRXbuffer.lasttime = time;
-ARM GAS  /tmp/cc076w2I.s 			page 29
+ARM GAS  /tmp/ccbDAC3y.s 			page 29
 
 
  1155              		.loc 1 323 5 is_stmt 1 view .LVU340
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1196              	.L82:
  1197 0120 000C0140 		.word	1073810432
  1198 0124 00000000 		.word	softwareserialtimer
-ARM GAS  /tmp/cc076w2I.s 			page 30
+ARM GAS  /tmp/ccbDAC3y.s 			page 30
 
 
  1199 0128 00000000 		.word	timerval
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1244              		.loc 1 335 8 view .LVU364
  1245 001e 9A42     		cmp	r2, r3
  1246 0020 64D0     		beq	.L86
-ARM GAS  /tmp/cc076w2I.s 			page 31
+ARM GAS  /tmp/ccbDAC3y.s 			page 31
 
 
  336:src/softwareserial.c ****         t = softwareserialTXbuffer.buff[softwareserialTXbuffer.tail];
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  352:src/softwareserial.c ****                     } else {
  353:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
  354:src/softwareserial.c ****                         softwareserialTXbuffer.tail = ((softwareserialTXbuffer.tail + 1 ) % SOFTWAR
-ARM GAS  /tmp/cc076w2I.s 			page 32
+ARM GAS  /tmp/ccbDAC3y.s 			page 32
 
 
  355:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1321              	.L84:
  373:src/softwareserial.c ****         softwareserialRXInterrupt();
  374:src/softwareserial.c ****     }
-ARM GAS  /tmp/cc076w2I.s 			page 33
+ARM GAS  /tmp/ccbDAC3y.s 			page 33
 
 
  375:src/softwareserial.c **** 
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1362 00b0 4FF40071 		mov	r1, #512
  1363 00b4 1648     		ldr	r0, .L99+8
  1364 00b6 FFF7FEFF 		bl	HAL_GPIO_WritePin
-ARM GAS  /tmp/cc076w2I.s 			page 34
+ARM GAS  /tmp/ccbDAC3y.s 			page 34
 
 
  1365              	.LVL109:
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  368:src/softwareserial.c ****     int bits = (tdiff+2)/8;
  1408              		.loc 1 368 26 discriminator 1 view .LVU417
  1409 00fe BAE7     		b	.L93
-ARM GAS  /tmp/cc076w2I.s 			page 35
+ARM GAS  /tmp/ccbDAC3y.s 			page 35
 
 
  1410              	.LVL115:
@@ -2087,55 +2087,55 @@ ARM GAS  /tmp/cc076w2I.s 			page 1
  1457              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
  1458              		.file 13 "/usr/include/newlib/string.h"
  1459              		.file 14 "<built-in>"
-ARM GAS  /tmp/cc076w2I.s 			page 36
+ARM GAS  /tmp/ccbDAC3y.s 			page 36
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 softwareserial.c
-     /tmp/cc076w2I.s:19     .text.SoftwareSerialReadTimer:00000000 $t
-     /tmp/cc076w2I.s:25     .text.SoftwareSerialReadTimer:00000000 SoftwareSerialReadTimer
-     /tmp/cc076w2I.s:48     .text.SoftwareSerialReadTimer:0000000c $d
+     /tmp/ccbDAC3y.s:19     .text.SoftwareSerialReadTimer:00000000 $t
+     /tmp/ccbDAC3y.s:25     .text.SoftwareSerialReadTimer:00000000 SoftwareSerialReadTimer
+     /tmp/ccbDAC3y.s:48     .text.SoftwareSerialReadTimer:0000000c $d
                             *COM*:00000040 softwareserialtimer
-     /tmp/cc076w2I.s:1442   .bss.timerval:00000000 timerval
-     /tmp/cc076w2I.s:54     .text.SoftwareSerialInit:00000000 $t
-     /tmp/cc076w2I.s:60     .text.SoftwareSerialInit:00000000 SoftwareSerialInit
-     /tmp/cc076w2I.s:278    .text.SoftwareSerialInit:000000f8 $d
+     /tmp/ccbDAC3y.s:1442   .bss.timerval:00000000 timerval
+     /tmp/ccbDAC3y.s:54     .text.SoftwareSerialInit:00000000 $t
+     /tmp/ccbDAC3y.s:60     .text.SoftwareSerialInit:00000000 SoftwareSerialInit
+     /tmp/ccbDAC3y.s:278    .text.SoftwareSerialInit:000000f8 $d
                             *COM*:00000418 softwareserialRXbuffer
                             *COM*:00000418 softwareserialTXbuffer
                             *COM*:00000040 softwareserialtimerTX
-     /tmp/cc076w2I.s:292    .text.softwareserial_getrx:00000000 $t
-     /tmp/cc076w2I.s:298    .text.softwareserial_getrx:00000000 softwareserial_getrx
-     /tmp/cc076w2I.s:348    .text.softwareserial_getrx:00000038 $d
-     /tmp/cc076w2I.s:353    .text.softwareserial_peekrx:00000000 $t
-     /tmp/cc076w2I.s:359    .text.softwareserial_peekrx:00000000 softwareserial_peekrx
-     /tmp/cc076w2I.s:397    .text.softwareserial_peekrx:00000020 $d
-     /tmp/cc076w2I.s:402    .text.softwareserial_available:00000000 $t
-     /tmp/cc076w2I.s:408    .text.softwareserial_available:00000000 softwareserial_available
-     /tmp/cc076w2I.s:457    .text.softwareserial_available:00000028 $d
-     /tmp/cc076w2I.s:462    .text.softwareserial_flushRX:00000000 $t
-     /tmp/cc076w2I.s:468    .text.softwareserial_flushRX:00000000 softwareserial_flushRX
-     /tmp/cc076w2I.s:515    .text.softwareserial_flushRX:00000010 $d
-     /tmp/cc076w2I.s:520    .text.softwareserial_flushTX:00000000 $t
-     /tmp/cc076w2I.s:526    .text.softwareserial_flushTX:00000000 softwareserial_flushTX
-     /tmp/cc076w2I.s:572    .text.softwareserial_flushTX:00000010 $d
-     /tmp/cc076w2I.s:577    .text.softwareserial_puttx:00000000 $t
-     /tmp/cc076w2I.s:583    .text.softwareserial_puttx:00000000 softwareserial_puttx
-     /tmp/cc076w2I.s:655    .text.softwareserial_puttx:0000004c $d
-     /tmp/cc076w2I.s:660    .text.softwareserial_Send:00000000 $t
-     /tmp/cc076w2I.s:666    .text.softwareserial_Send:00000000 softwareserial_Send
-     /tmp/cc076w2I.s:759    .text.softwareserial_Send:00000048 $d
-     /tmp/cc076w2I.s:769    .text.softwareserial_Send_Wait:00000000 $t
-     /tmp/cc076w2I.s:775    .text.softwareserial_Send_Wait:00000000 softwareserial_Send_Wait
-     /tmp/cc076w2I.s:922    .text.softwareserial_Send_Wait:00000078 $d
-     /tmp/cc076w2I.s:929    .text.softwareserialRXInterrupt:00000000 $t
-     /tmp/cc076w2I.s:935    .text.softwareserialRXInterrupt:00000000 softwareserialRXInterrupt
-     /tmp/cc076w2I.s:1197   .text.softwareserialRXInterrupt:00000120 $d
-     /tmp/cc076w2I.s:1207   .text.TIM3_IRQHandler:00000000 $t
-     /tmp/cc076w2I.s:1213   .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
-     /tmp/cc076w2I.s:1420   .text.TIM3_IRQHandler:00000108 $d
-     /tmp/cc076w2I.s:1435   .bss.ssbits:00000000 ssbits
-     /tmp/cc076w2I.s:1432   .bss.ssbits:00000000 $d
-     /tmp/cc076w2I.s:1439   .bss.timerval:00000000 $d
+     /tmp/ccbDAC3y.s:292    .text.softwareserial_getrx:00000000 $t
+     /tmp/ccbDAC3y.s:298    .text.softwareserial_getrx:00000000 softwareserial_getrx
+     /tmp/ccbDAC3y.s:348    .text.softwareserial_getrx:00000038 $d
+     /tmp/ccbDAC3y.s:353    .text.softwareserial_peekrx:00000000 $t
+     /tmp/ccbDAC3y.s:359    .text.softwareserial_peekrx:00000000 softwareserial_peekrx
+     /tmp/ccbDAC3y.s:397    .text.softwareserial_peekrx:00000020 $d
+     /tmp/ccbDAC3y.s:402    .text.softwareserial_available:00000000 $t
+     /tmp/ccbDAC3y.s:408    .text.softwareserial_available:00000000 softwareserial_available
+     /tmp/ccbDAC3y.s:457    .text.softwareserial_available:00000028 $d
+     /tmp/ccbDAC3y.s:462    .text.softwareserial_flushRX:00000000 $t
+     /tmp/ccbDAC3y.s:468    .text.softwareserial_flushRX:00000000 softwareserial_flushRX
+     /tmp/ccbDAC3y.s:515    .text.softwareserial_flushRX:00000010 $d
+     /tmp/ccbDAC3y.s:520    .text.softwareserial_flushTX:00000000 $t
+     /tmp/ccbDAC3y.s:526    .text.softwareserial_flushTX:00000000 softwareserial_flushTX
+     /tmp/ccbDAC3y.s:572    .text.softwareserial_flushTX:00000010 $d
+     /tmp/ccbDAC3y.s:577    .text.softwareserial_puttx:00000000 $t
+     /tmp/ccbDAC3y.s:583    .text.softwareserial_puttx:00000000 softwareserial_puttx
+     /tmp/ccbDAC3y.s:655    .text.softwareserial_puttx:0000004c $d
+     /tmp/ccbDAC3y.s:660    .text.softwareserial_Send:00000000 $t
+     /tmp/ccbDAC3y.s:666    .text.softwareserial_Send:00000000 softwareserial_Send
+     /tmp/ccbDAC3y.s:759    .text.softwareserial_Send:00000048 $d
+     /tmp/ccbDAC3y.s:769    .text.softwareserial_Send_Wait:00000000 $t
+     /tmp/ccbDAC3y.s:775    .text.softwareserial_Send_Wait:00000000 softwareserial_Send_Wait
+     /tmp/ccbDAC3y.s:922    .text.softwareserial_Send_Wait:00000078 $d
+     /tmp/ccbDAC3y.s:929    .text.softwareserialRXInterrupt:00000000 $t
+     /tmp/ccbDAC3y.s:935    .text.softwareserialRXInterrupt:00000000 softwareserialRXInterrupt
+     /tmp/ccbDAC3y.s:1197   .text.softwareserialRXInterrupt:00000120 $d
+     /tmp/ccbDAC3y.s:1207   .text.TIM3_IRQHandler:00000000 $t
+     /tmp/ccbDAC3y.s:1213   .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
+     /tmp/ccbDAC3y.s:1420   .text.TIM3_IRQHandler:00000108 $d
+     /tmp/ccbDAC3y.s:1435   .bss.ssbits:00000000 ssbits
+     /tmp/ccbDAC3y.s:1432   .bss.ssbits:00000000 $d
+     /tmp/ccbDAC3y.s:1439   .bss.timerval:00000000 $d
 
 UNDEFINED SYMBOLS
 memset
@@ -2147,7 +2147,7 @@ HAL_NVIC_EnableIRQ
 __aeabi_i2f
 __aeabi_f2d
 __aeabi_dmul
-ARM GAS  /tmp/cc076w2I.s 			page 37
+ARM GAS  /tmp/ccbDAC3y.s 			page 37
 
 
 __aeabi_d2f

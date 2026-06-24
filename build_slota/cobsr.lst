@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccCKyHOs.s 			page 1
+ARM GAS  /tmp/ccbmBiUS.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
   29:src/hbprotocol/cobsr.c ****  *
   30:src/hbprotocol/cobsr.c ****  * dst_buf_ptr:    The buffer into which the result will be written
   31:src/hbprotocol/cobsr.c ****  * dst_buf_len:    Length of the buffer into which the result will be written
-ARM GAS  /tmp/ccCKyHOs.s 			page 2
+ARM GAS  /tmp/ccbmBiUS.s 			page 2
 
 
   32:src/hbprotocol/cobsr.c ****  * src_ptr:        The byte string to be encoded
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
   63              		.loc 1 50 5 view .LVU13
   64              		.loc 1 50 25 is_stmt 0 view .LVU14
   65 0010 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
-ARM GAS  /tmp/ccCKyHOs.s 			page 3
+ARM GAS  /tmp/ccbmBiUS.s 			page 3
 
 
   66              	.LVL4:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
   84:src/hbprotocol/cobsr.c ****                 if (src_read_ptr >= src_end_ptr)
   85:src/hbprotocol/cobsr.c ****                 {
   86:src/hbprotocol/cobsr.c ****                     break;
-ARM GAS  /tmp/ccCKyHOs.s 			page 4
+ARM GAS  /tmp/ccbmBiUS.s 			page 4
 
 
   87:src/hbprotocol/cobsr.c ****                 }
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  128:src/hbprotocol/cobsr.c ****         if (src_byte < search_len)
  129:src/hbprotocol/cobsr.c ****         {
  130:src/hbprotocol/cobsr.c ****             /* Encoding same as plain COBS */
-ARM GAS  /tmp/ccCKyHOs.s 			page 5
+ARM GAS  /tmp/ccbmBiUS.s 			page 5
 
 
  131:src/hbprotocol/cobsr.c ****             *dst_code_write_ptr = search_len;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  127 0046 14E0     		b	.L4
  128              	.LVL13:
  129              	.L20:
-ARM GAS  /tmp/ccCKyHOs.s 			page 6
+ARM GAS  /tmp/ccbmBiUS.s 			page 6
 
 
   70:src/hbprotocol/cobsr.c ****                 break;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  168 0066 BCF1FF0F 		cmp	ip, #255
  169 006a 15D0     		beq	.L19
  170              	.LVL22:
-ARM GAS  /tmp/ccCKyHOs.s 			page 7
+ARM GAS  /tmp/ccbmBiUS.s 			page 7
 
 
  171              	.L9:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
   82:src/hbprotocol/cobsr.c ****                 search_len = 1;
  209              		.loc 1 82 17 is_stmt 1 view .LVU74
   82:src/hbprotocol/cobsr.c ****                 search_len = 1;
-ARM GAS  /tmp/ccCKyHOs.s 			page 8
+ARM GAS  /tmp/ccbmBiUS.s 			page 8
 
 
  210              		.loc 1 82 51 is_stmt 0 view .LVU75
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  249              	.LVL35:
  250              	.L16:
   92:src/hbprotocol/cobsr.c ****                 search_len++;
-ARM GAS  /tmp/ccCKyHOs.s 			page 9
+ARM GAS  /tmp/ccbmBiUS.s 			page 9
 
 
  251              		.loc 1 92 31 view .LVU91
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  153:src/hbprotocol/cobsr.c ****  * src_ptr:        The byte string to be decoded
  154:src/hbprotocol/cobsr.c ****  * src_len         Length of the byte string to be decoded
  155:src/hbprotocol/cobsr.c ****  *
-ARM GAS  /tmp/ccCKyHOs.s 			page 10
+ARM GAS  /tmp/ccbmBiUS.s 			page 10
 
 
  156:src/hbprotocol/cobsr.c ****  * returns:        A struct containing the success status of the decoding
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  172:src/hbprotocol/cobsr.c ****     uint8_t             src_byte;
  329              		.loc 1 172 5 view .LVU117
  173:src/hbprotocol/cobsr.c ****     uint8_t             i;
-ARM GAS  /tmp/ccCKyHOs.s 			page 11
+ARM GAS  /tmp/ccbmBiUS.s 			page 11
 
 
  330              		.loc 1 173 5 view .LVU118
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  360 0024 43F00403 		orr	r3, r3, #4
  361 0028 0371     		strb	r3, [r0, #4]
  192:src/hbprotocol/cobsr.c ****                 break;
-ARM GAS  /tmp/ccCKyHOs.s 			page 12
+ARM GAS  /tmp/ccbmBiUS.s 			page 12
 
 
  362              		.loc 1 192 17 is_stmt 1 view .LVU134
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  244:src/hbprotocol/cobsr.c ****                 }
  245:src/hbprotocol/cobsr.c **** 
  246:src/hbprotocol/cobsr.c ****                 for (i = num_output_bytes; i != 0; i--)
-ARM GAS  /tmp/ccCKyHOs.s 			page 13
+ARM GAS  /tmp/ccbmBiUS.s 			page 13
 
 
  247:src/hbprotocol/cobsr.c ****                 {
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  384              	.LVL53:
  210:src/hbprotocol/cobsr.c ****                 {
  385              		.loc 1 210 53 is_stmt 0 discriminator 2 view .LVU143
-ARM GAS  /tmp/ccCKyHOs.s 			page 14
+ARM GAS  /tmp/ccbmBiUS.s 			page 14
 
 
  386 003a D2B2     		uxtb	r2, r2
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  425              	.L25:
  186:src/hbprotocol/cobsr.c ****         {
  426              		.loc 1 186 9 is_stmt 1 view .LVU159
-ARM GAS  /tmp/ccCKyHOs.s 			page 15
+ARM GAS  /tmp/ccbmBiUS.s 			page 15
 
 
  188:src/hbprotocol/cobsr.c ****             if (len_code == 0)
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  463 0084 0271     		strb	r2, [r0, #4]
  207:src/hbprotocol/cobsr.c ****                 }
  464              		.loc 1 207 21 is_stmt 1 view .LVU178
-ARM GAS  /tmp/ccCKyHOs.s 			page 16
+ARM GAS  /tmp/ccbmBiUS.s 			page 16
 
 
  465              	.LVL66:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  503 00a4 0171     		strb	r1, [r0, #4]
  243:src/hbprotocol/cobsr.c ****                 }
  504              		.loc 1 243 21 is_stmt 1 view .LVU195
-ARM GAS  /tmp/ccCKyHOs.s 			page 17
+ARM GAS  /tmp/ccbmBiUS.s 			page 17
 
 
  505              	.LVL73:
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  544              		.loc 1 251 25 is_stmt 1 view .LVU210
  251:src/hbprotocol/cobsr.c ****                     }
  545              		.loc 1 251 31 is_stmt 0 view .LVU211
-ARM GAS  /tmp/ccCKyHOs.s 			page 18
+ARM GAS  /tmp/ccbmBiUS.s 			page 18
 
 
  546 00c0 90F80480 		ldrb	r8, [r0, #4]	@ zero_extendqisi2
@@ -1070,14 +1070,14 @@ ARM GAS  /tmp/ccCKyHOs.s 			page 1
  582              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
  583              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
  584              		.file 4 "src/hbprotocol/cobsr.h"
-ARM GAS  /tmp/ccCKyHOs.s 			page 19
+ARM GAS  /tmp/ccbmBiUS.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 cobsr.c
-     /tmp/ccCKyHOs.s:19     .text.cobsr_encode:00000000 $t
-     /tmp/ccCKyHOs.s:25     .text.cobsr_encode:00000000 cobsr_encode
-     /tmp/ccCKyHOs.s:282    .text.cobsr_decode:00000000 $t
-     /tmp/ccCKyHOs.s:288    .text.cobsr_decode:00000000 cobsr_decode
+     /tmp/ccbmBiUS.s:19     .text.cobsr_encode:00000000 $t
+     /tmp/ccbmBiUS.s:25     .text.cobsr_encode:00000000 cobsr_encode
+     /tmp/ccbmBiUS.s:282    .text.cobsr_decode:00000000 $t
+     /tmp/ccbmBiUS.s:288    .text.cobsr_decode:00000000 cobsr_decode
 
 NO UNDEFINED SYMBOLS

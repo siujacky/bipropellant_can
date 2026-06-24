@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccv9k4vC.s 			page 1
+ARM GAS  /tmp/cc8VfJGj.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
   29:src/comms.c   ****   volatile SERIAL_USART_BUFFER usart2_it_RXbuffer;
   30:src/comms.c   **** #endif
   31:src/comms.c   **** #if defined(SERIAL_USART3_IT)
-ARM GAS  /tmp/ccv9k4vC.s 			page 2
+ARM GAS  /tmp/cc8VfJGj.s 			page 2
 
 
   32:src/comms.c   ****   volatile SERIAL_USART_BUFFER usart3_it_TXbuffer;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
   65 0000 1A4B     		ldr	r3, .L11
   66 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
   67              		.loc 1 46 6 view .LVU7
-ARM GAS  /tmp/ccv9k4vC.s 			page 3
+ARM GAS  /tmp/cc8VfJGj.s 			page 3
 
 
   68 0004 13B1     		cbz	r3, .L7
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
   78              		.loc 1 45 21 view .LVU11
   79 000e F0B5     		push	{r4, r5, r6, r7, lr}
   80              	.LCFI0:
-ARM GAS  /tmp/ccv9k4vC.s 			page 4
+ARM GAS  /tmp/cc8VfJGj.s 			page 4
 
 
   81              		.cfi_def_cfa_offset 20
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  133              	.LVL2:
   92:src/comms.c   ****       softwareserial_Send((unsigned char *)uart_buf, strlen((char*)uart_buf));
  134              		.loc 1 92 7 is_stmt 1 view .LVU23
-ARM GAS  /tmp/ccv9k4vC.s 			page 5
+ARM GAS  /tmp/cc8VfJGj.s 			page 5
 
 
  135              		.loc 1 92 54 is_stmt 0 view .LVU24
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  181              		.loc 1 102 5 view .LVU29
  103:src/comms.c   **** }
  182              		.loc 1 103 1 is_stmt 0 view .LVU30
-ARM GAS  /tmp/ccv9k4vC.s 			page 6
+ARM GAS  /tmp/cc8VfJGj.s 			page 6
 
 
  183 000c 0120     		movs	r0, #1
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  142:src/comms.c   ****   return;
  143:src/comms.c   **** }
  144:src/comms.c   **** 
-ARM GAS  /tmp/ccv9k4vC.s 			page 7
+ARM GAS  /tmp/cc8VfJGj.s 			page 7
 
 
  145:src/comms.c   **** #endif
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  169:src/comms.c   **** //////////////////////////////////////////////////////
  170:src/comms.c   **** // called from actual IRQ routines
  171:src/comms.c   **** void USART3_IT_IRQ(USART_TypeDef *us) {
-ARM GAS  /tmp/ccv9k4vC.s 			page 8
+ARM GAS  /tmp/cc8VfJGj.s 			page 8
 
 
  172:src/comms.c   ****   volatile uint32_t *SR     = &us->SR;  // USART Status register
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  198:src/comms.c   ****     if (count < 0) count += SERIAL_USART_BUFFER_SIZE;
  257              		.loc 1 198 26 is_stmt 0 discriminator 1 view .LVU44
  258 000e 00F58060 		add	r0, r0, #1024
-ARM GAS  /tmp/ccv9k4vC.s 			page 9
+ARM GAS  /tmp/cc8VfJGj.s 			page 9
 
 
  259              	.LVL10:
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  210:src/comms.c   ****     usart_buf->head = ((usart_buf->head + 1 ) % SERIAL_USART_BUFFER_SIZE);
  304              		.loc 1 210 5 is_stmt 1 view .LVU56
  305              		.loc 1 210 34 is_stmt 0 view .LVU57
-ARM GAS  /tmp/ccv9k4vC.s 			page 10
+ARM GAS  /tmp/cc8VfJGj.s 			page 10
 
 
  306 001a D4F80038 		ldr	r3, [r4, #2048]
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  355 0002 0646     		mov	r6, r0
  356 0004 0D46     		mov	r5, r1
  107:src/comms.c   ****     if (count + len + 1 > SERIAL_USART_BUFFER_SIZE-3){
-ARM GAS  /tmp/ccv9k4vC.s 			page 11
+ARM GAS  /tmp/cc8VfJGj.s 			page 11
 
 
  357              		.loc 1 107 5 is_stmt 1 view .LVU68
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  398              	.LVL20:
  399              	.L28:
  113:src/comms.c   ****         serial_usart_buffer_push(&usart2_it_TXbuffer, (SERIAL_USART_IT_BUFFERTYPE) data[i]);
-ARM GAS  /tmp/ccv9k4vC.s 			page 12
+ARM GAS  /tmp/cc8VfJGj.s 			page 12
 
 
  400              		.loc 1 113 23 discriminator 1 view .LVU82
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  156:src/comms.c   ****     if (count + len + 1 > SERIAL_USART_BUFFER_SIZE-3){
  448              		.loc 1 156 17 view .LVU91
  449 0008 FFF7FEFF 		bl	serial_usart_buffer_count
-ARM GAS  /tmp/ccv9k4vC.s 			page 13
+ARM GAS  /tmp/cc8VfJGj.s 			page 13
 
 
  450              	.LVL25:
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  491              		.loc 1 166 5 view .LVU104
  166:src/comms.c   **** }
  492              		.loc 1 166 12 is_stmt 0 view .LVU105
-ARM GAS  /tmp/ccv9k4vC.s 			page 14
+ARM GAS  /tmp/cc8VfJGj.s 			page 14
 
 
  493 0038 FFF7FEFF 		bl	USART3_IT_starttx
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  542              	.LVL35:
  217:src/comms.c   ****       usart_buf->tail = ((usart_buf->tail + 1 ) % SERIAL_USART_BUFFER_SIZE);
  543              		.loc 1 217 7 is_stmt 1 view .LVU119
-ARM GAS  /tmp/ccv9k4vC.s 			page 15
+ARM GAS  /tmp/cc8VfJGj.s 			page 15
 
 
  544              		.loc 1 217 36 is_stmt 0 view .LVU120
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  125:src/comms.c   **** 
  592              		.loc 1 125 3 view .LVU131
  128:src/comms.c   ****     if (serial_usart_buffer_count(&usart2_it_TXbuffer) == 0) {
-ARM GAS  /tmp/ccv9k4vC.s 			page 16
+ARM GAS  /tmp/cc8VfJGj.s 			page 16
 
 
  593              		.loc 1 128 3 view .LVU132
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  631              		.loc 1 132 14 is_stmt 0 view .LVU148
  632 0028 0648     		ldr	r0, .L55
  633 002a FFF7FEFF 		bl	serial_usart_buffer_pop
-ARM GAS  /tmp/ccv9k4vC.s 			page 17
+ARM GAS  /tmp/cc8VfJGj.s 			page 17
 
 
  634              	.LVL44:
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  681              		.cfi_def_cfa_offset 8
  682              		.cfi_offset 4, -8
  683              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccv9k4vC.s 			page 18
+ARM GAS  /tmp/cc8VfJGj.s 			page 18
 
 
  684 0002 0446     		mov	r4, r0
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  721 0020 23F0C003 		bic	r3, r3, #192
  179:src/comms.c   ****     } else {
  722              		.loc 1 179 12 view .LVU175
-ARM GAS  /tmp/ccv9k4vC.s 			page 19
+ARM GAS  /tmp/cc8VfJGj.s 			page 19
 
 
  723 0024 E360     		str	r3, [r4, #12]
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  773              		.comm	usart3_it_TXbuffer,2060,4
  774              		.comm	usart2_it_RXbuffer,2060,4
  775              		.comm	usart2_it_TXbuffer,2060,4
-ARM GAS  /tmp/ccv9k4vC.s 			page 20
+ARM GAS  /tmp/cc8VfJGj.s 			page 20
 
 
  776              		.comm	ch_buf,16,4
@@ -1156,49 +1156,49 @@ ARM GAS  /tmp/ccv9k4vC.s 			page 1
  788              		.file 10 "/usr/include/newlib/string.h"
  789              		.file 11 "/usr/include/newlib/stdio.h"
  790              		.file 12 "<built-in>"
-ARM GAS  /tmp/ccv9k4vC.s 			page 21
+ARM GAS  /tmp/cc8VfJGj.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 comms.c
-     /tmp/ccv9k4vC.s:19     .text.setScopeChannel:00000000 $t
-     /tmp/ccv9k4vC.s:25     .text.setScopeChannel:00000000 setScopeChannel
-     /tmp/ccv9k4vC.s:42     .text.setScopeChannel:00000008 $d
+     /tmp/cc8VfJGj.s:19     .text.setScopeChannel:00000000 $t
+     /tmp/cc8VfJGj.s:25     .text.setScopeChannel:00000000 setScopeChannel
+     /tmp/cc8VfJGj.s:42     .text.setScopeChannel:00000008 $d
                             *COM*:00000010 ch_buf
-     /tmp/ccv9k4vC.s:47     .rodata.consoleScope.str1.4:00000000 $d
-     /tmp/ccv9k4vC.s:51     .text.consoleScope:00000000 $t
-     /tmp/ccv9k4vC.s:57     .text.consoleScope:00000000 consoleScope
-     /tmp/ccv9k4vC.s:153    .text.consoleScope:0000006c $d
-     /tmp/ccv9k4vC.s:764    .data.enablescope:00000000 enablescope
-     /tmp/ccv9k4vC.s:770    .data.debug_out:00000000 debug_out
+     /tmp/cc8VfJGj.s:47     .rodata.consoleScope.str1.4:00000000 $d
+     /tmp/cc8VfJGj.s:51     .text.consoleScope:00000000 $t
+     /tmp/cc8VfJGj.s:57     .text.consoleScope:00000000 consoleScope
+     /tmp/cc8VfJGj.s:153    .text.consoleScope:0000006c $d
+     /tmp/cc8VfJGj.s:764    .data.enablescope:00000000 enablescope
+     /tmp/cc8VfJGj.s:770    .data.debug_out:00000000 debug_out
                             *COM*:00000064 uart_buf
-     /tmp/ccv9k4vC.s:162    .text.USART2_IT_starttx:00000000 $t
-     /tmp/ccv9k4vC.s:168    .text.USART2_IT_starttx:00000000 USART2_IT_starttx
-     /tmp/ccv9k4vC.s:188    .text.USART2_IT_starttx:00000010 $d
-     /tmp/ccv9k4vC.s:193    .text.USART3_IT_starttx:00000000 $t
-     /tmp/ccv9k4vC.s:199    .text.USART3_IT_starttx:00000000 USART3_IT_starttx
-     /tmp/ccv9k4vC.s:219    .text.USART3_IT_starttx:00000010 $d
-     /tmp/ccv9k4vC.s:224    .text.serial_usart_buffer_count:00000000 $t
-     /tmp/ccv9k4vC.s:230    .text.serial_usart_buffer_count:00000000 serial_usart_buffer_count
-     /tmp/ccv9k4vC.s:267    .text.serial_usart_buffer_push:00000000 $t
-     /tmp/ccv9k4vC.s:273    .text.serial_usart_buffer_push:00000000 serial_usart_buffer_push
-     /tmp/ccv9k4vC.s:334    .text.USART2_IT_send:00000000 $t
-     /tmp/ccv9k4vC.s:340    .text.USART2_IT_send:00000000 USART2_IT_send
-     /tmp/ccv9k4vC.s:416    .text.USART2_IT_send:00000040 $d
+     /tmp/cc8VfJGj.s:162    .text.USART2_IT_starttx:00000000 $t
+     /tmp/cc8VfJGj.s:168    .text.USART2_IT_starttx:00000000 USART2_IT_starttx
+     /tmp/cc8VfJGj.s:188    .text.USART2_IT_starttx:00000010 $d
+     /tmp/cc8VfJGj.s:193    .text.USART3_IT_starttx:00000000 $t
+     /tmp/cc8VfJGj.s:199    .text.USART3_IT_starttx:00000000 USART3_IT_starttx
+     /tmp/cc8VfJGj.s:219    .text.USART3_IT_starttx:00000010 $d
+     /tmp/cc8VfJGj.s:224    .text.serial_usart_buffer_count:00000000 $t
+     /tmp/cc8VfJGj.s:230    .text.serial_usart_buffer_count:00000000 serial_usart_buffer_count
+     /tmp/cc8VfJGj.s:267    .text.serial_usart_buffer_push:00000000 $t
+     /tmp/cc8VfJGj.s:273    .text.serial_usart_buffer_push:00000000 serial_usart_buffer_push
+     /tmp/cc8VfJGj.s:334    .text.USART2_IT_send:00000000 $t
+     /tmp/cc8VfJGj.s:340    .text.USART2_IT_send:00000000 USART2_IT_send
+     /tmp/cc8VfJGj.s:416    .text.USART2_IT_send:00000040 $d
                             *COM*:0000080c usart2_it_TXbuffer
-     /tmp/ccv9k4vC.s:421    .text.USART3_IT_send:00000000 $t
-     /tmp/ccv9k4vC.s:427    .text.USART3_IT_send:00000000 USART3_IT_send
-     /tmp/ccv9k4vC.s:503    .text.USART3_IT_send:00000040 $d
+     /tmp/cc8VfJGj.s:421    .text.USART3_IT_send:00000000 $t
+     /tmp/cc8VfJGj.s:427    .text.USART3_IT_send:00000000 USART3_IT_send
+     /tmp/cc8VfJGj.s:503    .text.USART3_IT_send:00000040 $d
                             *COM*:0000080c usart3_it_TXbuffer
-     /tmp/ccv9k4vC.s:508    .text.serial_usart_buffer_pop:00000000 $t
-     /tmp/ccv9k4vC.s:514    .text.serial_usart_buffer_pop:00000000 serial_usart_buffer_pop
-     /tmp/ccv9k4vC.s:569    .text.USART2_IT_IRQ:00000000 $t
-     /tmp/ccv9k4vC.s:575    .text.USART2_IT_IRQ:00000000 USART2_IT_IRQ
-     /tmp/ccv9k4vC.s:659    .text.USART2_IT_IRQ:00000044 $d
+     /tmp/cc8VfJGj.s:508    .text.serial_usart_buffer_pop:00000000 $t
+     /tmp/cc8VfJGj.s:514    .text.serial_usart_buffer_pop:00000000 serial_usart_buffer_pop
+     /tmp/cc8VfJGj.s:569    .text.USART2_IT_IRQ:00000000 $t
+     /tmp/cc8VfJGj.s:575    .text.USART2_IT_IRQ:00000000 USART2_IT_IRQ
+     /tmp/cc8VfJGj.s:659    .text.USART2_IT_IRQ:00000044 $d
                             *COM*:0000080c usart2_it_RXbuffer
-     /tmp/ccv9k4vC.s:665    .text.USART3_IT_IRQ:00000000 $t
-     /tmp/ccv9k4vC.s:671    .text.USART3_IT_IRQ:00000000 USART3_IT_IRQ
-     /tmp/ccv9k4vC.s:755    .text.USART3_IT_IRQ:00000044 $d
+     /tmp/cc8VfJGj.s:665    .text.USART3_IT_IRQ:00000000 $t
+     /tmp/cc8VfJGj.s:671    .text.USART3_IT_IRQ:00000000 USART3_IT_IRQ
+     /tmp/cc8VfJGj.s:755    .text.USART3_IT_IRQ:00000044 $d
                             *COM*:0000080c usart3_it_RXbuffer
 
 UNDEFINED SYMBOLS
