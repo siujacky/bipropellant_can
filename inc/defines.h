@@ -108,6 +108,7 @@
 
 #define BUZZER_PIN GPIO_PIN_4
 #define BUZZER_PORT GPIOA
+#define DISABLE_BUZZER   1   /* Buzzer silenced — remove to re-enable */
 
 #define SWITCH_PIN GPIO_PIN_1
 #define SWITCH_PORT GPIOA

@@ -205,10 +205,14 @@ void DMA1_Channel1_IRQHandler() {
   buzzerTimer++;
   if (buzzerFreq != 0 && (buzzerTimer / 5000) % (buzzerPattern + 1) == 0) {
     if (buzzerTimer % buzzerFreq == 0) {
+#ifndef DISABLE_BUZZER
       HAL_GPIO_TogglePin(BUZZER_PORT, BUZZER_PIN);
+#endif
     }
   } else {
+#ifndef DISABLE_BUZZER
       HAL_GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, 0);
+#endif
   }
 
   // reduce to 8khz by running every other interrupt.

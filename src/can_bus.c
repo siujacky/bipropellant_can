@@ -407,6 +407,12 @@ void CAN_ProcessMessages(void) {
                         forceLog(" -> Motors DISABLED\r\n");
                     }
                 }
+            } else if (rx_frame.id == 0x7FFU && rx_frame.dlc >= 3 &&
+                       rx_frame.data[0] == 0xB0U && rx_frame.data[1] == 0x01U &&
+                       rx_frame.data[2] == 0xB2U) {
+                // OTA reboot trigger — host sends magic frame to enter bootloader
+                extern void ota_reboot_to_bootloader(void);
+                ota_reboot_to_bootloader();
             } else {
                 can_stats.rx_unknown++;
                 forceLog(" [UNKNOWN]");

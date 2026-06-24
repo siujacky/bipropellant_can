@@ -42,6 +42,18 @@
 #endif
 
 #include <string.h>
+
+// OTA reboot: write magic to backup register and reset into bootloader
+static void ota_reboot_to_bootloader(void) {
+    __disable_irq();
+    RCC->APB1ENR |= RCC_APB1ENR_BKPEN | RCC_APB1ENR_PWREN;
+    PWR->CR |= PWR_CR_DBP;
+    BKP->DR1 = 0xB001U;
+    NVIC_SystemReset();
+}
+// Called from can_bus.c when OTA magic frame is received
+void ota_reboot_to_bootloader_export(void) { ota_reboot_to_bootloader(); }
+extern void ota_reboot_to_bootloader_export(void);  // called from can_bus.c
 #include <stdlib.h>
 #include <math.h>
 void BldcController_Init();
@@ -130,11 +142,13 @@ void poweroff() {
         buzzerPattern = 0;
         enable = 0;
         // Gentle power-off beep - descending soft tone
+#ifndef DISABLE_BUZZER
         for (int i = 3; i >= 1; i--) {
             buzzerFreq = i;
             HAL_Delay(80);
         }
         buzzerFreq = 0;
+#endif
         HAL_Delay(100);
         HAL_GPIO_WritePin(OFF_PORT, OFF_PIN, 0);
 
@@ -277,6 +291,7 @@ void init_flash_content(){
 
 int main(void) {
   HAL_Init();
+  SCB->VTOR = 0x08008000UL;  // Slot A base
   __HAL_RCC_AFIO_CLK_ENABLE();
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
   /* System interrupt init*/
@@ -372,6 +387,7 @@ int main(void) {
 
 
   // Gentle startup beep - softer and shorter
+#ifndef DISABLE_BUZZER
   for (int i = 1; i <= 3; i++) {
     buzzerFreq = i;
     HAL_Delay(50);
@@ -381,6 +397,7 @@ int main(void) {
     HAL_Delay(50);
   }
   buzzerFreq = 0;
+#endif
 
   HAL_GPIO_WritePin(LED_PORT, LED_PIN, 1);
 

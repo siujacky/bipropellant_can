@@ -184,6 +184,48 @@ clean:
 flash:
 	st-flash --reset write $(BUILD_DIR)/$(TARGET).bin 0x8000000
 
+#######################################
+# slot-A / OTA build targets
+#######################################
+BUILD_DIR_SLOTA = build_slota
+TARGET_SLOTA    = hover_slota
+LDSCRIPT_SLOTA  = STM32F103RCTx_FLASH_SLOTA.ld
+
+OBJECTS_SLOTA = $(addprefix $(BUILD_DIR_SLOTA)/,$(notdir $(C_SOURCES:.c=.o)))
+OBJECTS_SLOTA += $(addprefix $(BUILD_DIR_SLOTA)/,$(notdir $(ASM_SOURCES:.s=.o)))
+
+LDFLAGS_SLOTA = $(MCU) -specs=nano.specs -T$(LDSCRIPT_SLOTA) $(LIBDIR) $(LIBS) \
+	-Wl,-Map=$(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).map,--cref -Wl,--gc-sections
+
+$(BUILD_DIR_SLOTA):
+	mkdir -p $@
+
+$(BUILD_DIR_SLOTA)/%.o: %.c inc/config.h Makefile | $(BUILD_DIR_SLOTA)
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR_SLOTA)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR_SLOTA)/%.o: %.s inc/config.h Makefile | $(BUILD_DIR_SLOTA)
+	$(AS) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).elf: $(OBJECTS_SLOTA) Makefile
+	$(CC) $(OBJECTS_SLOTA) $(LDFLAGS_SLOTA) -o $@
+	$(SZ) $@
+
+$(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).bin: $(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).elf | $(BUILD_DIR_SLOTA)
+	$(BIN) $< $@
+
+slota: $(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).bin
+
+bootloader:
+	$(MAKE) -C bootloader -f Makefile.bl
+
+all_ota: bootloader slota
+
+flash_slota:
+	st-flash write $(BUILD_DIR_SLOTA)/$(TARGET_SLOTA).bin 0x08008000
+
+flash_bl:
+	st-flash write bootloader/build_bl/bootloader.bin 0x08000000
+
 unlock:
 	openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg -c init -c "reset halt" -c "stm32f1x unlock 0"
 

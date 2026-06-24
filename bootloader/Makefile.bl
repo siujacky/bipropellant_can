@@ -1,0 +1,58 @@
+CC      = arm-none-eabi-gcc
+OBJCOPY = arm-none-eabi-objcopy
+
+CPU  = -mcpu=cortex-m3 -mthumb
+OPT  = -Os
+DEFS = -DSTM32F103xE -DUSE_HAL_DRIVER
+
+INCLUDES = \
+	-I../inc \
+	-I../Drivers/STM32F1xx_HAL_Driver/Inc \
+	-I../Drivers/CMSIS/Device/ST/STM32F1xx/Include \
+	-I../Drivers/CMSIS/Include
+
+CFLAGS  = $(CPU) $(OPT) -Wall -fdata-sections -ffunction-sections -std=gnu11 $(DEFS) $(INCLUDES)
+LDFLAGS = $(CPU) -specs=nano.specs -specs=nosys.specs -Tbootloader.ld -Wl,--gc-sections -lc -lgcc
+
+C_SRCS = \
+	main_bl.c \
+	mcp2515_bl.c \
+	flash_bl.c \
+	usart_bl.c
+
+ASM_SRCS = startup_bl.s
+
+OUTDIR = build_bl
+TARGET = $(OUTDIR)/bootloader
+
+C_OBJS   = $(patsubst %.c,   $(OUTDIR)/%.o, $(C_SRCS))
+ASM_OBJS = $(patsubst %.s,   $(OUTDIR)/%.o, $(ASM_SRCS))
+OBJS     = $(ASM_OBJS) $(C_OBJS)
+
+.PHONY: all flash clean
+
+all: $(TARGET).elf $(TARGET).bin $(TARGET).hex
+
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+$(OUTDIR)/%.o: %.c | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OUTDIR)/%.o: %.s | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET).elf: $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) -o $@
+
+$(TARGET).bin: $(TARGET).elf
+	$(OBJCOPY) -O binary $< $@
+
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -O ihex $< $@
+
+flash: $(TARGET).bin
+	st-flash write $(TARGET).bin 0x08000000
+
+clean:
+	rm -rf $(OUTDIR)
