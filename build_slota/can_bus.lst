@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccC7I5pD.s 			page 1
+ARM GAS  /tmp/ccRN9th6.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
   31:src/can_bus.c **** bool CAN_IsSoftwareSerialReady(void) {
   32:src/can_bus.c ****     return software_serial_ready;
   33:src/can_bus.c **** }
-ARM GAS  /tmp/ccC7I5pD.s 			page 2
+ARM GAS  /tmp/ccRN9th6.s 			page 2
 
 
   34:src/can_bus.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
   88:src/can_bus.c **** static void CAN_Init_IDs(void) {
   26              		.loc 1 88 32 view -0
   27              		.cfi_startproc
-ARM GAS  /tmp/ccC7I5pD.s 			page 3
+ARM GAS  /tmp/ccRN9th6.s 			page 3
 
 
   28              		@ args = 0, pretend = 0, frame = 0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
   70 0020 0460     		str	r4, [r0]
  101:src/can_bus.c ****     can_cmd_enable = cmd_base + offset + CAN_CMD_ENABLE_OFFSET;
   71              		.loc 1 101 5 is_stmt 1 view .LVU19
-ARM GAS  /tmp/ccC7I5pD.s 			page 4
+ARM GAS  /tmp/ccRN9th6.s 			page 4
 
 
   72              		.loc 1 101 40 is_stmt 0 view .LVU20
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  119 0064 00000000 		.word	can_status_batt
  120 0068 00000000 		.word	can_status_bootup
  121              		.cfi_endproc
-ARM GAS  /tmp/ccC7I5pD.s 			page 5
+ARM GAS  /tmp/ccRN9th6.s 			page 5
 
 
  122              	.LFE68:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  173              	.L8:
  174 0008 00000000 		.word	software_serial_ready
  175              		.cfi_endproc
-ARM GAS  /tmp/ccC7I5pD.s 			page 6
+ARM GAS  /tmp/ccRN9th6.s 			page 6
 
 
  176              	.LFE67:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  154:src/can_bus.c ****                 for(volatile int j = 0; j < 50000; j++);  // ~5ms
  155:src/can_bus.c ****             }
  156:src/can_bus.c ****             forceLog("PA13 test blink complete\r\n");
-ARM GAS  /tmp/ccC7I5pD.s 			page 7
+ARM GAS  /tmp/ccRN9th6.s 			page 7
 
 
  157:src/can_bus.c **** 
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  211:src/can_bus.c ****     can_mode_active = false;
  212:src/can_bus.c ****     CAN_Fallback_To_USART();
  213:src/can_bus.c ****     return false;
-ARM GAS  /tmp/ccC7I5pD.s 			page 8
+ARM GAS  /tmp/ccRN9th6.s 			page 8
 
 
  214:src/can_bus.c **** #endif
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  215      210D0A00 
  216              		.align	2
  217              	.LC3:
-ARM GAS  /tmp/ccC7I5pD.s 			page 9
+ARM GAS  /tmp/ccRN9th6.s 			page 9
 
 
  218 0058 496E6974 		.ascii	"Initializing CAN at %d kbps...\015\012\000"
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  241      32582028 
  241      30783030 
  242 0183 00       		.align	2
-ARM GAS  /tmp/ccC7I5pD.s 			page 10
+ARM GAS  /tmp/ccRN9th6.s 			page 10
 
 
  243              	.LC11:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  272              		.cfi_startproc
  273              		@ args = 0, pretend = 0, frame = 240
  274              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccC7I5pD.s 			page 11
+ARM GAS  /tmp/ccRN9th6.s 			page 11
 
 
  275 0000 F0B5     		push	{r4, r5, r6, r7, lr}
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  132:src/can_bus.c ****             /* SoftSPI_Init disabled TIM1/TIM8 IRQs to prevent motor-control
  319              		.loc 1 132 9 view .LVU57
  132:src/can_bus.c ****             /* SoftSPI_Init disabled TIM1/TIM8 IRQs to prevent motor-control
-ARM GAS  /tmp/ccC7I5pD.s 			page 12
+ARM GAS  /tmp/ccRN9th6.s 			page 12
 
 
  320              		.loc 1 132 13 is_stmt 0 view .LVU58
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  362 006c 4F4B     		ldr	r3, .L27+40
  363 006e 1E70     		strb	r6, [r3]
  150:src/can_bus.c ****                 HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, 1);
-ARM GAS  /tmp/ccC7I5pD.s 			page 13
+ARM GAS  /tmp/ccRN9th6.s 			page 13
 
 
  364              		.loc 1 150 13 is_stmt 1 view .LVU71
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  407 00a0 9A42     		cmp	r2, r3
  408 00a2 F7DD     		ble	.L20
  409              	.LBE4:
-ARM GAS  /tmp/ccC7I5pD.s 			page 14
+ARM GAS  /tmp/ccRN9th6.s 			page 14
 
 
  150:src/can_bus.c ****                 HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, 1);
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  451              		.loc 1 165 17 is_stmt 1 view .LVU95
  165:src/can_bus.c ****                 uint8_t cnf3 = MCP2515_ReadRegister(MCP2515_CNF3);
  452              		.loc 1 165 32 is_stmt 0 view .LVU96
-ARM GAS  /tmp/ccC7I5pD.s 			page 15
+ARM GAS  /tmp/ccRN9th6.s 			page 15
 
 
  453 00d0 2920     		movs	r0, #41
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  493              		.loc 1 178 28 is_stmt 0 view .LVU110
  494 0102 FF20     		movs	r0, #255
  495 0104 FFF7FEFF 		bl	SoftSPI_Transfer
-ARM GAS  /tmp/ccC7I5pD.s 			page 16
+ARM GAS  /tmp/ccRN9th6.s 			page 16
 
 
  496              	.LVL39:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  538 0144 0246     		mov	r2, r0
  539              	.LVL48:
  187:src/can_bus.c ****                 forceLog(dmsg);
-ARM GAS  /tmp/ccC7I5pD.s 			page 17
+ARM GAS  /tmp/ccRN9th6.s 			page 17
 
 
  540              		.loc 1 187 17 is_stmt 1 view .LVU123
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  583              	.LVL57:
  208:src/can_bus.c **** #else
  584              		.loc 1 208 5 view .LVU135
-ARM GAS  /tmp/ccC7I5pD.s 			page 18
+ARM GAS  /tmp/ccRN9th6.s 			page 18
 
 
  585              	.L22:
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  634 0042 0A00     		.ascii	"\012\000"
  635              		.align	2
  636              	.LC21:
-ARM GAS  /tmp/ccC7I5pD.s 			page 19
+ARM GAS  /tmp/ccRN9th6.s 			page 19
 
 
  637 0044 5B43414E 		.ascii	"[CAN CORRUPT] Std ID=0x%08X > 0x7FF - IGNORING\015\012"
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  662 0168 205B5350 		.ascii	" [SPEED CMD]\000"
  662      45454420 
  662      434D445D 
-ARM GAS  /tmp/ccC7I5pD.s 			page 20
+ARM GAS  /tmp/ccRN9th6.s 			page 20
 
 
  662      00
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  692              		.global	CAN_ProcessMessages
  693              		.syntax unified
  694              		.thumb
-ARM GAS  /tmp/ccC7I5pD.s 			page 21
+ARM GAS  /tmp/ccRN9th6.s 			page 21
 
 
  695              		.thumb_func
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  244:src/can_bus.c ****             if (rx_frame.dlc > 8) {
  734              		.loc 1 244 13 is_stmt 1 view .LVU147
  735              		.loc 1 244 25 is_stmt 0 view .LVU148
-ARM GAS  /tmp/ccC7I5pD.s 			page 22
+ARM GAS  /tmp/ccRN9th6.s 			page 22
 
 
  736 001e 8A4B     		ldr	r3, .L77+4
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  767              	.LVL60:
  768              		.loc 1 267 25 discriminator 1 view .LVU160
  769 0046 C5B2     		uxtb	r5, r0
-ARM GAS  /tmp/ccC7I5pD.s 			page 23
+ARM GAS  /tmp/ccRN9th6.s 			page 23
 
 
  770              	.LVL61:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  816              	.L67:
  254:src/can_bus.c ****                 sprintf(msg, "[CAN CORRUPT] Std ID=0x%08X > 0x7FF - IGNORING\r\n",
  817              		.loc 1 254 17 view .LVU172
-ARM GAS  /tmp/ccC7I5pD.s 			page 24
+ARM GAS  /tmp/ccRN9th6.s 			page 24
 
 
  254:src/can_bus.c ****                 sprintf(msg, "[CAN CORRUPT] Std ID=0x%08X > 0x7FF - IGNORING\r\n",
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  863              		.loc 1 269 54 is_stmt 1 discriminator 1 view .LVU185
  269:src/can_bus.c ****                     off += (uint8_t)sprintf(msg + off, " %02X", rx_frame.data[i]);
  864              		.loc 1 269 49 is_stmt 0 discriminator 1 view .LVU186
-ARM GAS  /tmp/ccC7I5pD.s 			page 25
+ARM GAS  /tmp/ccRN9th6.s 			page 25
 
 
  865 009c 6A4B     		ldr	r3, .L77+4
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  298:src/can_bus.c ****                         const char* dir2 = (pwm2 > 0) ? "FWD" : (pwm2 < 0) ? "REV" : "STOP";
  299:src/can_bus.c **** 
  300:src/can_bus.c ****                         sprintf(msg, "\r\n  >>> MOTOR1: %d%% %s | MOTOR2: %d%% %s <<<\r\n",
-ARM GAS  /tmp/ccC7I5pD.s 			page 26
+ARM GAS  /tmp/ccRN9th6.s 			page 26
 
 
  301:src/can_bus.c ****                                 pct1 < 0 ? -pct1 : pct1, dir1,
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  348:src/can_bus.c ****                     SpeedData.wanted_speed_mm_per_sec[1] = speed2;
  349:src/can_bus.c ****                     control_type = CONTROL_TYPE_SPEED;  // Enable Speed mode
  350:src/can_bus.c ****                     enable = 1;
-ARM GAS  /tmp/ccC7I5pD.s 			page 27
+ARM GAS  /tmp/ccRN9th6.s 			page 27
 
 
  351:src/can_bus.c ****                     input_timeout_counter = 0;
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  391:src/can_bus.c ****                     forceLog(msg);
  392:src/can_bus.c **** 
  393:src/can_bus.c ****                     extern uint8_t enable;
-ARM GAS  /tmp/ccC7I5pD.s 			page 28
+ARM GAS  /tmp/ccRN9th6.s 			page 28
 
 
  394:src/can_bus.c ****                     extern volatile uint32_t input_timeout_counter;
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  939 0102 FFF7FEFF 		bl	forceLog
  940              	.LVL74:
  941              	.L40:
-ARM GAS  /tmp/ccC7I5pD.s 			page 29
+ARM GAS  /tmp/ccRN9th6.s 			page 29
 
 
  420:src/can_bus.c ****             }
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  980 012e B3F5FA6F 		cmp	r3, #2000
  981 0132 05D8     		bhi	.L41
  288:src/can_bus.c ****                         sprintf(msg, "\r\n  !!! PWM OUT OF RANGE: %d, %d (expect -1000 to 1000) - R
-ARM GAS  /tmp/ccC7I5pD.s 			page 30
+ARM GAS  /tmp/ccRN9th6.s 			page 30
 
 
  982              		.loc 1 288 53 discriminator 1 view .LVU226
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1025 0174 454B     		ldr	r3, .L77+72
  1026              	.L43:
  1027              	.LVL85:
-ARM GAS  /tmp/ccC7I5pD.s 			page 31
+ARM GAS  /tmp/ccRN9th6.s 			page 31
 
 
  298:src/can_bus.c **** 
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1067              		.loc 1 312 25 is_stmt 1 view .LVU252
  312:src/can_bus.c ****                         control_type = CONTROL_TYPE_PWM;  // CRITICAL: Enable PWM mode
  1068              		.loc 1 312 40 is_stmt 0 view .LVU253
-ARM GAS  /tmp/ccC7I5pD.s 			page 32
+ARM GAS  /tmp/ccRN9th6.s 			page 32
 
 
  1069 019e 5C60     		str	r4, [r3, #4]
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1109              		.loc 1 298 63 discriminator 3 view .LVU267
  1110 01c8 3848     		ldr	r0, .L77+104
  1111 01ca D7E7     		b	.L44
-ARM GAS  /tmp/ccC7I5pD.s 			page 33
+ARM GAS  /tmp/ccRN9th6.s 			page 33
 
 
  1112              	.LVL94:
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1151 01ee 41F28833 		movw	r3, #5000
  1152 01f2 9D42     		cmp	r5, r3
  1153 01f4 03DD     		ble	.L46
-ARM GAS  /tmp/ccC7I5pD.s 			page 34
+ARM GAS  /tmp/ccRN9th6.s 			page 34
 
 
  334:src/can_bus.c ****                     if (speed2 < -MAX_SPEED_MM_S) speed2 = -MAX_SPEED_MM_S;
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1196              	.LVL105:
  342:src/can_bus.c ****                     extern uint8_t enable;
  1197              		.loc 1 342 21 view .LVU295
-ARM GAS  /tmp/ccC7I5pD.s 			page 35
+ARM GAS  /tmp/ccRN9th6.s 			page 35
 
 
  343:src/can_bus.c ****                     extern volatile uint32_t input_timeout_counter;
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1237 025c 98000000 		.word	.LC23
  1238 0260 00000000 		.word	can_cmd_pwm
  1239 0264 00000000 		.word	can_cmd_speed
-ARM GAS  /tmp/ccC7I5pD.s 			page 36
+ARM GAS  /tmp/ccRN9th6.s 			page 36
 
 
  1240 0268 00000000 		.word	can_cmd_position
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1285              		.loc 1 362 21 is_stmt 1 view .LVU319
  363:src/can_bus.c ****                     memcpy(&pos2, &rx_frame.data[4], 4);
  1286              		.loc 1 363 21 view .LVU320
-ARM GAS  /tmp/ccC7I5pD.s 			page 37
+ARM GAS  /tmp/ccRN9th6.s 			page 37
 
 
  1287 02d8 294B     		ldr	r3, .L79+8
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  379:src/can_bus.c ****                     inactivity_timeout_counter = 0;    // Reset inactivity timeout
  1325              		.loc 1 379 43 is_stmt 0 view .LVU337
  1326 0300 0023     		movs	r3, #0
-ARM GAS  /tmp/ccC7I5pD.s 			page 38
+ARM GAS  /tmp/ccRN9th6.s 			page 38
 
 
  1327 0302 244A     		ldr	r2, .L79+28
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  391:src/can_bus.c **** 
  1368              		.loc 1 391 21 view .LVU351
  1369 0332 02A8     		add	r0, sp, #8
-ARM GAS  /tmp/ccC7I5pD.s 			page 39
+ARM GAS  /tmp/ccRN9th6.s 			page 39
 
 
  1370 0334 FFF7FEFF 		bl	forceLog
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1407              		.loc 1 405 25 is_stmt 1 view .LVU368
  405:src/can_bus.c ****                         SpeedData.wanted_speed_mm_per_sec[0] = 0;
  1408              		.loc 1 405 40 is_stmt 0 view .LVU369
-ARM GAS  /tmp/ccC7I5pD.s 			page 40
+ARM GAS  /tmp/ccRN9th6.s 			page 40
 
 
  1409 035c 5360     		str	r3, [r2, #4]
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1450 038c 00000000 		.word	control_type
  1451 0390 00000000 		.word	enable
  1452 0394 00000000 		.word	input_timeout_counter
-ARM GAS  /tmp/ccC7I5pD.s 			page 41
+ARM GAS  /tmp/ccRN9th6.s 			page 41
 
 
  1453 0398 00000000 		.word	inactivity_timeout_counter
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1489              	CAN_SendStatus:
  1490              	.LFB72:
  427:src/can_bus.c **** 
-ARM GAS  /tmp/ccC7I5pD.s 			page 42
+ARM GAS  /tmp/ccRN9th6.s 			page 42
 
 
  428:src/can_bus.c **** // Send status via CAN bus
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  444:src/can_bus.c ****     // travel) it overflows int32_t and produces a discontinuous jump on
  445:src/can_bus.c ****     // the CAN bus that confuses odometry on the receiver side.
  446:src/can_bus.c ****     // Clamp to ±100,000,000 mm (±100 km) — practical rover range.
-ARM GAS  /tmp/ccC7I5pD.s 			page 43
+ARM GAS  /tmp/ccRN9th6.s 			page 43
 
 
  447:src/can_bus.c **** #define POS_CLAMP_MM 100000000L
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  452:src/can_bus.c ****     if (posR >  POS_CLAMP_MM) posR =  POS_CLAMP_MM;
  1574              		.loc 1 452 36 discriminator 1 view .LVU409
  1575 003c 834F     		ldr	r7, .L112+8
-ARM GAS  /tmp/ccC7I5pD.s 			page 44
+ARM GAS  /tmp/ccRN9th6.s 			page 44
 
 
  1576              	.LVL131:
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1617 0070 0823     		movs	r3, #8
  1618 0072 8DF8BC30 		strb	r3, [sp, #188]
  467:src/can_bus.c **** 
-ARM GAS  /tmp/ccC7I5pD.s 			page 45
+ARM GAS  /tmp/ccRN9th6.s 			page 45
 
 
  468:src/can_bus.c ****     // Pack speed values (int32_t, little endian)
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1661 00b0 58B1     		cbz	r0, .L86
  480:src/can_bus.c ****         can_stats.tx_total++;
  1662              		.loc 1 480 9 is_stmt 1 view .LVU454
-ARM GAS  /tmp/ccC7I5pD.s 			page 46
+ARM GAS  /tmp/ccRN9th6.s 			page 46
 
 
  1663              		.loc 1 480 18 is_stmt 0 view .LVU455
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1702              		.loc 1 495 24 is_stmt 0 view .LVU474
  1703 00e4 230E     		lsrs	r3, r4, #24
  1704              		.loc 1 495 22 view .LVU475
-ARM GAS  /tmp/ccC7I5pD.s 			page 47
+ARM GAS  /tmp/ccRN9th6.s 			page 47
 
 
  1705 00e6 8DF8B730 		strb	r3, [sp, #183]
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1748              		.loc 1 506 12 view .LVU498
  1749 011e 002B     		cmp	r3, #0
  1750 0120 71D0     		beq	.L106
-ARM GAS  /tmp/ccC7I5pD.s 			page 48
+ARM GAS  /tmp/ccRN9th6.s 			page 48
 
 
  1751              	.L87:
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1789 0152 0132     		adds	r2, r2, #1
  1790 0154 9A61     		str	r2, [r3, #24]
  523:src/can_bus.c ****         can_stats.tx_status_batt++;
-ARM GAS  /tmp/ccC7I5pD.s 			page 49
+ARM GAS  /tmp/ccRN9th6.s 			page 49
 
 
  1791              		.loc 1 523 9 is_stmt 1 view .LVU519
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1832 0192 0B70     		strb	r3, [r1]
  537:src/can_bus.c ****     if (motor_status_counter == 0 && (pwms[0] != 0 || pwms[1] != 0)) {
  1833              		.loc 1 537 5 is_stmt 1 view .LVU534
-ARM GAS  /tmp/ccC7I5pD.s 			page 50
+ARM GAS  /tmp/ccRN9th6.s 			page 50
 
 
  1834              		.loc 1 537 8 is_stmt 0 view .LVU535
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1882 01ca 0394     		str	r4, [sp, #12]
  1883 01cc 0297     		str	r7, [sp, #8]
  1884 01ce 0028     		cmp	r0, #0
-ARM GAS  /tmp/ccC7I5pD.s 			page 51
+ARM GAS  /tmp/ccRN9th6.s 			page 51
 
 
  1885 01d0 B8BF     		it	lt
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1930              	.LVL152:
  1931 0204 61E7     		b	.L86
  1932              	.L106:
-ARM GAS  /tmp/ccC7I5pD.s 			page 52
+ARM GAS  /tmp/ccRN9th6.s 			page 52
 
 
  507:src/can_bus.c ****                     (int)posL, (int)posR);
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  1977              		.loc 1 541 21 discriminator 4 view .LVU569
  1978 023c C3E7     		b	.L92
  1979              	.LVL160:
-ARM GAS  /tmp/ccC7I5pD.s 			page 53
+ARM GAS  /tmp/ccRN9th6.s 			page 53
 
 
  1980              	.L111:
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2032              		.thumb_func
  2034              	CAN_GetCurrentIDs:
  2035              	.LVL163:
-ARM GAS  /tmp/ccC7I5pD.s 			page 54
+ARM GAS  /tmp/ccRN9th6.s 			page 54
 
 
  2036              	.LFB73:
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2077 0024 1B68     		ldr	r3, [r3]
  2078 0026 4B60     		str	r3, [r1, #4]
  564:src/can_bus.c ****         status_ids[2] = can_status_batt;
-ARM GAS  /tmp/ccC7I5pD.s 			page 55
+ARM GAS  /tmp/ccRN9th6.s 			page 55
 
 
  2079              		.loc 1 564 9 is_stmt 1 view .LVU590
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2123              		.loc 1 572 5 view .LVU596
  2124              		.loc 1 572 9 is_stmt 0 view .LVU597
  2125 0000 1C4B     		ldr	r3, .L129
-ARM GAS  /tmp/ccC7I5pD.s 			page 56
+ARM GAS  /tmp/ccRN9th6.s 			page 56
 
 
  2126 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2160 0022 164A     		ldr	r2, .L129+8
  2161 0024 948B     		ldrh	r4, [r2, #28]
  2162              	.LVL164:
-ARM GAS  /tmp/ccC7I5pD.s 			page 57
+ARM GAS  /tmp/ccRN9th6.s 			page 57
 
 
  592:src/can_bus.c ****     
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2200 0054 1EB0     		add	sp, sp, #120
  2201              	.LCFI18:
  2202              		.cfi_remember_state
-ARM GAS  /tmp/ccC7I5pD.s 			page 58
+ARM GAS  /tmp/ccRN9th6.s 			page 58
 
 
  2203              		.cfi_def_cfa_offset 8
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2246 002f 00       		.align	2
  2247              	.LC46:
  2248 0030 32353020 		.ascii	"250 kbps\000"
-ARM GAS  /tmp/ccC7I5pD.s 			page 59
+ARM GAS  /tmp/ccRN9th6.s 			page 59
 
 
  2248      6B627073 
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2272      3A202020 
  2272      30782530 
  2272      33580D0A 
-ARM GAS  /tmp/ccC7I5pD.s 			page 60
+ARM GAS  /tmp/ccRN9th6.s 			page 60
 
 
  2273 00f1 000000   		.align	2
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  613:src/can_bus.c ****     
  614:src/can_bus.c ****     sprintf(msg, "\r\n=== CAN Configuration ===\r\n");
  2309              		.loc 1 614 5 view .LVU640
-ARM GAS  /tmp/ccC7I5pD.s 			page 61
+ARM GAS  /tmp/ccRN9th6.s 			page 61
 
 
  2310 0004 6C46     		mov	r4, sp
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2348              	.LVL173:
  631:src/can_bus.c ****     
  632:src/can_bus.c ****     sprintf(msg, "Base CMD ID: 0x%03X\r\n", (unsigned int)FlashContent.CAN_BaseID_CMD);
-ARM GAS  /tmp/ccC7I5pD.s 			page 62
+ARM GAS  /tmp/ccRN9th6.s 			page 62
 
 
  2349              		.loc 1 632 5 view .LVU652
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2393 008a 364B     		ldr	r3, .L133+44
  2394 008c 1A68     		ldr	r2, [r3]
  2395 008e 3146     		mov	r1, r6
-ARM GAS  /tmp/ccC7I5pD.s 			page 63
+ARM GAS  /tmp/ccRN9th6.s 			page 63
 
 
  2396 0090 2046     		mov	r0, r4
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  652:src/can_bus.c ****     forceLog(msg);
  2441              		.loc 1 652 5 view .LVU669
  2442 00dc 2046     		mov	r0, r4
-ARM GAS  /tmp/ccC7I5pD.s 			page 64
+ARM GAS  /tmp/ccRN9th6.s 			page 64
 
 
  2443 00de FFF7FEFF 		bl	forceLog
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2488 0130 FFF7FEFF 		bl	forceLog
  2489              	.LVL196:
  662:src/can_bus.c **** }
-ARM GAS  /tmp/ccC7I5pD.s 			page 65
+ARM GAS  /tmp/ccRN9th6.s 			page 65
 
 
  2490              		.loc 1 662 1 is_stmt 0 view .LVU678
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2538      6F74616C 
  2538      3A202020 
  2538      2020256C 
-ARM GAS  /tmp/ccC7I5pD.s 			page 66
+ARM GAS  /tmp/ccRN9th6.s 			page 66
 
 
  2538      750D0A00 
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2562      3A202020 
  2562      20202020 
  2562      256C750D 
-ARM GAS  /tmp/ccC7I5pD.s 			page 67
+ARM GAS  /tmp/ccRN9th6.s 			page 67
 
 
  2563 00e6 0000     		.align	2
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2600 000a 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
  2601 000c ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
  2602 0010 94E80700 		ldm	r4, {r0, r1, r2}
-ARM GAS  /tmp/ccC7I5pD.s 			page 68
+ARM GAS  /tmp/ccRN9th6.s 			page 68
 
 
  2603 0014 ACE80300 		stmia	ip!, {r0, r1}
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2648 0064 FFF7FEFF 		bl	sprintf
  2649              	.LVL204:
  678:src/can_bus.c ****     forceLog(msg);
-ARM GAS  /tmp/ccC7I5pD.s 			page 69
+ARM GAS  /tmp/ccRN9th6.s 			page 69
 
 
  2650              		.loc 1 678 5 view .LVU690
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2694              		.loc 1 688 5 view .LVU699
  2695 00ae 226A     		ldr	r2, [r4, #32]
  2696 00b0 2946     		mov	r1, r5
-ARM GAS  /tmp/ccC7I5pD.s 			page 70
+ARM GAS  /tmp/ccRN9th6.s 			page 70
 
 
  2697 00b2 02A8     		add	r0, sp, #8
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  703:src/can_bus.c ****     uint8_t cnf2 = MCP2515_ReadRegister(MCP2515_CNF2);
  2737              		.loc 1 703 5 is_stmt 1 view .LVU710
  2738              		.loc 1 703 20 is_stmt 0 view .LVU711
-ARM GAS  /tmp/ccC7I5pD.s 			page 71
+ARM GAS  /tmp/ccRN9th6.s 			page 71
 
 
  2739 00ea 2920     		movs	r0, #41
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2778              		.loc 1 716 52 is_stmt 0 discriminator 3 view .LVU726
  2779 0112 0328     		cmp	r0, #3
  2780 0114 1AD0     		beq	.L140
-ARM GAS  /tmp/ccC7I5pD.s 			page 72
+ARM GAS  /tmp/ccRN9th6.s 			page 72
 
 
  2781              		.loc 1 716 74 discriminator 6 view .LVU727
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2828              	.LVL237:
  2829              	.L140:
  2830              	.LCFI26:
-ARM GAS  /tmp/ccC7I5pD.s 			page 73
+ARM GAS  /tmp/ccRN9th6.s 			page 73
 
 
  2831              		.cfi_restore_state
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  727:src/can_bus.c ****     memset(&can_stats, 0, sizeof(can_stats));
  2879              		.loc 1 727 5 view .LVU739
  2880 0002 3022     		movs	r2, #48
-ARM GAS  /tmp/ccC7I5pD.s 			page 74
+ARM GAS  /tmp/ccRN9th6.s 			page 74
 
 
  2881 0004 0021     		movs	r1, #0
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  2923      415200
  2924 005f 00       		.align	2
  2925              	.LC83:
-ARM GAS  /tmp/ccC7I5pD.s 			page 75
+ARM GAS  /tmp/ccRN9th6.s 			page 75
 
 
  2926 0060 20455741 		.ascii	" EWARN\000"
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  741:src/can_bus.c ****         char msg[120];
  742:src/can_bus.c ****         can_stats.errors++;
  743:src/can_bus.c ****         can_stats.last_error_flags = error_flags;
-ARM GAS  /tmp/ccC7I5pD.s 			page 76
+ARM GAS  /tmp/ccRN9th6.s 			page 76
 
 
  744:src/can_bus.c **** 
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  746:src/can_bus.c ****         uint8_t rec = MCP2515_ReadRegister(0x1D);  // Receive Error Counter
  2991              		.loc 1 746 9 is_stmt 1 view .LVU758
  746:src/can_bus.c ****         uint8_t rec = MCP2515_ReadRegister(0x1D);  // Receive Error Counter
-ARM GAS  /tmp/ccC7I5pD.s 			page 77
+ARM GAS  /tmp/ccRN9th6.s 			page 77
 
 
  2992              		.loc 1 746 23 is_stmt 0 view .LVU759
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  756:src/can_bus.c ****         if (error_flags & 0x08) forceLog(" RXEP");
  3034              		.loc 1 756 9 is_stmt 1 view .LVU772
  756:src/can_bus.c ****         if (error_flags & 0x08) forceLog(" RXEP");
-ARM GAS  /tmp/ccC7I5pD.s 			page 78
+ARM GAS  /tmp/ccRN9th6.s 			page 78
 
 
  3035              		.loc 1 756 12 is_stmt 0 view .LVU773
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  3077 008c 1248     		ldr	r0, .L174+20
  3078 008e FFF7FEFF 		bl	forceLog
  3079              	.LVL253:
-ARM GAS  /tmp/ccC7I5pD.s 			page 79
+ARM GAS  /tmp/ccRN9th6.s 			page 79
 
 
  3080 0092 DDE7     		b	.L153
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  3128 00e4 48000000 		.word	.LC80
  3129 00e8 50000000 		.word	.LC81
  3130 00ec 58000000 		.word	.LC82
-ARM GAS  /tmp/ccC7I5pD.s 			page 80
+ARM GAS  /tmp/ccRN9th6.s 			page 80
 
 
  3131 00f0 60000000 		.word	.LC83
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  3201              		.align	2
  3204              	can_cmd_pwm:
  3205 0000 00000000 		.space	4
-ARM GAS  /tmp/ccC7I5pD.s 			page 81
+ARM GAS  /tmp/ccRN9th6.s 			page 81
 
 
  3206              		.section	.bss.software_serial_ready,"aw",%nobits
@@ -4828,92 +4828,92 @@ ARM GAS  /tmp/ccC7I5pD.s 			page 1
  3236              		.file 13 "/usr/include/newlib/stdio.h"
  3237              		.file 14 "inc/protocolfunctions.h"
  3238              		.file 15 "<built-in>"
-ARM GAS  /tmp/ccC7I5pD.s 			page 82
+ARM GAS  /tmp/ccRN9th6.s 			page 82
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 can_bus.c
-     /tmp/ccC7I5pD.s:19     .text.CAN_Init_IDs:00000000 $t
-     /tmp/ccC7I5pD.s:24     .text.CAN_Init_IDs:00000000 CAN_Init_IDs
-     /tmp/ccC7I5pD.s:112    .text.CAN_Init_IDs:00000048 $d
-     /tmp/ccC7I5pD.s:3204   .bss.can_cmd_pwm:00000000 can_cmd_pwm
-     /tmp/ccC7I5pD.s:3198   .bss.can_cmd_speed:00000000 can_cmd_speed
-     /tmp/ccC7I5pD.s:3192   .bss.can_cmd_position:00000000 can_cmd_position
-     /tmp/ccC7I5pD.s:3186   .bss.can_cmd_enable:00000000 can_cmd_enable
-     /tmp/ccC7I5pD.s:3180   .bss.can_status_speed:00000000 can_status_speed
-     /tmp/ccC7I5pD.s:3174   .bss.can_status_pos:00000000 can_status_pos
-     /tmp/ccC7I5pD.s:3168   .bss.can_status_batt:00000000 can_status_batt
-     /tmp/ccC7I5pD.s:3162   .bss.can_status_bootup:00000000 can_status_bootup
-     /tmp/ccC7I5pD.s:125    .text.forceLog:00000000 $t
-     /tmp/ccC7I5pD.s:131    .text.forceLog:00000000 forceLog
-     /tmp/ccC7I5pD.s:153    .text.CAN_IsSoftwareSerialReady:00000000 $t
-     /tmp/ccC7I5pD.s:159    .text.CAN_IsSoftwareSerialReady:00000000 CAN_IsSoftwareSerialReady
-     /tmp/ccC7I5pD.s:174    .text.CAN_IsSoftwareSerialReady:00000008 $d
-     /tmp/ccC7I5pD.s:3209   .bss.software_serial_ready:00000000 software_serial_ready
-     /tmp/ccC7I5pD.s:179    .text.CAN_Fallback_To_USART:00000000 $t
-     /tmp/ccC7I5pD.s:185    .text.CAN_Fallback_To_USART:00000000 CAN_Fallback_To_USART
-     /tmp/ccC7I5pD.s:202    .text.CAN_Fallback_To_USART:00000008 $d
-     /tmp/ccC7I5pD.s:3215   .bss.usart_mode_active:00000000 usart_mode_active
-     /tmp/ccC7I5pD.s:207    .rodata.CAN_AutoDetectAndInit.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:263    .text.CAN_AutoDetectAndInit:00000000 $t
-     /tmp/ccC7I5pD.s:269    .text.CAN_AutoDetectAndInit:00000000 CAN_AutoDetectAndInit
-     /tmp/ccC7I5pD.s:596    .text.CAN_AutoDetectAndInit:00000184 $d
-     /tmp/ccC7I5pD.s:3221   .bss.can_mode_active:00000000 can_mode_active
-     /tmp/ccC7I5pD.s:3150   .bss.can_stats:00000000 can_stats
-     /tmp/ccC7I5pD.s:622    .rodata.CAN_ProcessMessages.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:691    .text.CAN_ProcessMessages:00000000 $t
-     /tmp/ccC7I5pD.s:697    .text.CAN_ProcessMessages:00000000 CAN_ProcessMessages
-     /tmp/ccC7I5pD.s:1231   .text.CAN_ProcessMessages:00000244 $d
-     /tmp/ccC7I5pD.s:3156   .bss.rx_frame:00000000 rx_frame
-     /tmp/ccC7I5pD.s:1268   .text.CAN_ProcessMessages:000002c0 $t
-     /tmp/ccC7I5pD.s:1445   .text.CAN_ProcessMessages:00000378 $d
-     /tmp/ccC7I5pD.s:1464   .rodata.CAN_SendStatus.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:1483   .text.CAN_SendStatus:00000000 $t
-     /tmp/ccC7I5pD.s:1489   .text.CAN_SendStatus:00000000 CAN_SendStatus
-     /tmp/ccC7I5pD.s:2002   .text.CAN_SendStatus:00000244 $d
-     /tmp/ccC7I5pD.s:3144   .bss.verbose_counter.1:00000000 verbose_counter.1
-     /tmp/ccC7I5pD.s:3139   .bss.motor_status_counter.0:00000000 motor_status_counter.0
-     /tmp/ccC7I5pD.s:2028   .text.CAN_GetCurrentIDs:00000000 $t
-     /tmp/ccC7I5pD.s:2034   .text.CAN_GetCurrentIDs:00000000 CAN_GetCurrentIDs
-     /tmp/ccC7I5pD.s:2095   .text.CAN_GetCurrentIDs:00000038 $d
-     /tmp/ccC7I5pD.s:2107   .rodata.CAN_SendBootAnnouncement.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:2111   .text.CAN_SendBootAnnouncement:00000000 $t
-     /tmp/ccC7I5pD.s:2117   .text.CAN_SendBootAnnouncement:00000000 CAN_SendBootAnnouncement
-     /tmp/ccC7I5pD.s:2231   .text.CAN_SendBootAnnouncement:00000074 $d
-     /tmp/ccC7I5pD.s:2240   .rodata.CAN_PrintConfiguration.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:2286   .text.CAN_PrintConfiguration:00000000 $t
-     /tmp/ccC7I5pD.s:2292   .text.CAN_PrintConfiguration:00000000 CAN_PrintConfiguration
-     /tmp/ccC7I5pD.s:2499   .text.CAN_PrintConfiguration:00000138 $d
-     /tmp/ccC7I5pD.s:2527   .rodata.CAN_PrintStatistics.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:2574   .text.CAN_PrintStatistics:00000000 $t
-     /tmp/ccC7I5pD.s:2580   .text.CAN_PrintStatistics:00000000 CAN_PrintStatistics
-     /tmp/ccC7I5pD.s:2838   .text.CAN_PrintStatistics:00000150 $d
-ARM GAS  /tmp/ccC7I5pD.s 			page 83
+     /tmp/ccRN9th6.s:19     .text.CAN_Init_IDs:00000000 $t
+     /tmp/ccRN9th6.s:24     .text.CAN_Init_IDs:00000000 CAN_Init_IDs
+     /tmp/ccRN9th6.s:112    .text.CAN_Init_IDs:00000048 $d
+     /tmp/ccRN9th6.s:3204   .bss.can_cmd_pwm:00000000 can_cmd_pwm
+     /tmp/ccRN9th6.s:3198   .bss.can_cmd_speed:00000000 can_cmd_speed
+     /tmp/ccRN9th6.s:3192   .bss.can_cmd_position:00000000 can_cmd_position
+     /tmp/ccRN9th6.s:3186   .bss.can_cmd_enable:00000000 can_cmd_enable
+     /tmp/ccRN9th6.s:3180   .bss.can_status_speed:00000000 can_status_speed
+     /tmp/ccRN9th6.s:3174   .bss.can_status_pos:00000000 can_status_pos
+     /tmp/ccRN9th6.s:3168   .bss.can_status_batt:00000000 can_status_batt
+     /tmp/ccRN9th6.s:3162   .bss.can_status_bootup:00000000 can_status_bootup
+     /tmp/ccRN9th6.s:125    .text.forceLog:00000000 $t
+     /tmp/ccRN9th6.s:131    .text.forceLog:00000000 forceLog
+     /tmp/ccRN9th6.s:153    .text.CAN_IsSoftwareSerialReady:00000000 $t
+     /tmp/ccRN9th6.s:159    .text.CAN_IsSoftwareSerialReady:00000000 CAN_IsSoftwareSerialReady
+     /tmp/ccRN9th6.s:174    .text.CAN_IsSoftwareSerialReady:00000008 $d
+     /tmp/ccRN9th6.s:3209   .bss.software_serial_ready:00000000 software_serial_ready
+     /tmp/ccRN9th6.s:179    .text.CAN_Fallback_To_USART:00000000 $t
+     /tmp/ccRN9th6.s:185    .text.CAN_Fallback_To_USART:00000000 CAN_Fallback_To_USART
+     /tmp/ccRN9th6.s:202    .text.CAN_Fallback_To_USART:00000008 $d
+     /tmp/ccRN9th6.s:3215   .bss.usart_mode_active:00000000 usart_mode_active
+     /tmp/ccRN9th6.s:207    .rodata.CAN_AutoDetectAndInit.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:263    .text.CAN_AutoDetectAndInit:00000000 $t
+     /tmp/ccRN9th6.s:269    .text.CAN_AutoDetectAndInit:00000000 CAN_AutoDetectAndInit
+     /tmp/ccRN9th6.s:596    .text.CAN_AutoDetectAndInit:00000184 $d
+     /tmp/ccRN9th6.s:3221   .bss.can_mode_active:00000000 can_mode_active
+     /tmp/ccRN9th6.s:3150   .bss.can_stats:00000000 can_stats
+     /tmp/ccRN9th6.s:622    .rodata.CAN_ProcessMessages.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:691    .text.CAN_ProcessMessages:00000000 $t
+     /tmp/ccRN9th6.s:697    .text.CAN_ProcessMessages:00000000 CAN_ProcessMessages
+     /tmp/ccRN9th6.s:1231   .text.CAN_ProcessMessages:00000244 $d
+     /tmp/ccRN9th6.s:3156   .bss.rx_frame:00000000 rx_frame
+     /tmp/ccRN9th6.s:1268   .text.CAN_ProcessMessages:000002c0 $t
+     /tmp/ccRN9th6.s:1445   .text.CAN_ProcessMessages:00000378 $d
+     /tmp/ccRN9th6.s:1464   .rodata.CAN_SendStatus.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:1483   .text.CAN_SendStatus:00000000 $t
+     /tmp/ccRN9th6.s:1489   .text.CAN_SendStatus:00000000 CAN_SendStatus
+     /tmp/ccRN9th6.s:2002   .text.CAN_SendStatus:00000244 $d
+     /tmp/ccRN9th6.s:3144   .bss.verbose_counter.1:00000000 verbose_counter.1
+     /tmp/ccRN9th6.s:3139   .bss.motor_status_counter.0:00000000 motor_status_counter.0
+     /tmp/ccRN9th6.s:2028   .text.CAN_GetCurrentIDs:00000000 $t
+     /tmp/ccRN9th6.s:2034   .text.CAN_GetCurrentIDs:00000000 CAN_GetCurrentIDs
+     /tmp/ccRN9th6.s:2095   .text.CAN_GetCurrentIDs:00000038 $d
+     /tmp/ccRN9th6.s:2107   .rodata.CAN_SendBootAnnouncement.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:2111   .text.CAN_SendBootAnnouncement:00000000 $t
+     /tmp/ccRN9th6.s:2117   .text.CAN_SendBootAnnouncement:00000000 CAN_SendBootAnnouncement
+     /tmp/ccRN9th6.s:2231   .text.CAN_SendBootAnnouncement:00000074 $d
+     /tmp/ccRN9th6.s:2240   .rodata.CAN_PrintConfiguration.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:2286   .text.CAN_PrintConfiguration:00000000 $t
+     /tmp/ccRN9th6.s:2292   .text.CAN_PrintConfiguration:00000000 CAN_PrintConfiguration
+     /tmp/ccRN9th6.s:2499   .text.CAN_PrintConfiguration:00000138 $d
+     /tmp/ccRN9th6.s:2527   .rodata.CAN_PrintStatistics.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:2574   .text.CAN_PrintStatistics:00000000 $t
+     /tmp/ccRN9th6.s:2580   .text.CAN_PrintStatistics:00000000 CAN_PrintStatistics
+     /tmp/ccRN9th6.s:2838   .text.CAN_PrintStatistics:00000150 $d
+ARM GAS  /tmp/ccRN9th6.s 			page 83
 
 
-     /tmp/ccC7I5pD.s:2858   .rodata.CAN_ResetStatistics.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:2862   .text.CAN_ResetStatistics:00000000 $t
-     /tmp/ccC7I5pD.s:2868   .text.CAN_ResetStatistics:00000000 CAN_ResetStatistics
-     /tmp/ccC7I5pD.s:2894   .text.CAN_ResetStatistics:00000014 $d
-     /tmp/ccC7I5pD.s:2900   .rodata.CAN_CheckErrors.str1.4:00000000 $d
-     /tmp/ccC7I5pD.s:2928   .text.CAN_CheckErrors:00000000 $t
-     /tmp/ccC7I5pD.s:2934   .text.CAN_CheckErrors:00000000 CAN_CheckErrors
-     /tmp/ccC7I5pD.s:3120   .text.CAN_CheckErrors:000000c4 $d
-     /tmp/ccC7I5pD.s:3140   .bss.motor_status_counter.0:00000000 $d
-     /tmp/ccC7I5pD.s:3145   .bss.verbose_counter.1:00000000 $d
-     /tmp/ccC7I5pD.s:3147   .bss.can_stats:00000000 $d
-     /tmp/ccC7I5pD.s:3153   .bss.rx_frame:00000000 $d
-     /tmp/ccC7I5pD.s:3159   .bss.can_status_bootup:00000000 $d
-     /tmp/ccC7I5pD.s:3165   .bss.can_status_batt:00000000 $d
-     /tmp/ccC7I5pD.s:3171   .bss.can_status_pos:00000000 $d
-     /tmp/ccC7I5pD.s:3177   .bss.can_status_speed:00000000 $d
-     /tmp/ccC7I5pD.s:3183   .bss.can_cmd_enable:00000000 $d
-     /tmp/ccC7I5pD.s:3189   .bss.can_cmd_position:00000000 $d
-     /tmp/ccC7I5pD.s:3195   .bss.can_cmd_speed:00000000 $d
-     /tmp/ccC7I5pD.s:3201   .bss.can_cmd_pwm:00000000 $d
-     /tmp/ccC7I5pD.s:3210   .bss.software_serial_ready:00000000 $d
-     /tmp/ccC7I5pD.s:3216   .bss.usart_mode_active:00000000 $d
-     /tmp/ccC7I5pD.s:3222   .bss.can_mode_active:00000000 $d
+     /tmp/ccRN9th6.s:2858   .rodata.CAN_ResetStatistics.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:2862   .text.CAN_ResetStatistics:00000000 $t
+     /tmp/ccRN9th6.s:2868   .text.CAN_ResetStatistics:00000000 CAN_ResetStatistics
+     /tmp/ccRN9th6.s:2894   .text.CAN_ResetStatistics:00000014 $d
+     /tmp/ccRN9th6.s:2900   .rodata.CAN_CheckErrors.str1.4:00000000 $d
+     /tmp/ccRN9th6.s:2928   .text.CAN_CheckErrors:00000000 $t
+     /tmp/ccRN9th6.s:2934   .text.CAN_CheckErrors:00000000 CAN_CheckErrors
+     /tmp/ccRN9th6.s:3120   .text.CAN_CheckErrors:000000c4 $d
+     /tmp/ccRN9th6.s:3140   .bss.motor_status_counter.0:00000000 $d
+     /tmp/ccRN9th6.s:3145   .bss.verbose_counter.1:00000000 $d
+     /tmp/ccRN9th6.s:3147   .bss.can_stats:00000000 $d
+     /tmp/ccRN9th6.s:3153   .bss.rx_frame:00000000 $d
+     /tmp/ccRN9th6.s:3159   .bss.can_status_bootup:00000000 $d
+     /tmp/ccRN9th6.s:3165   .bss.can_status_batt:00000000 $d
+     /tmp/ccRN9th6.s:3171   .bss.can_status_pos:00000000 $d
+     /tmp/ccRN9th6.s:3177   .bss.can_status_speed:00000000 $d
+     /tmp/ccRN9th6.s:3183   .bss.can_cmd_enable:00000000 $d
+     /tmp/ccRN9th6.s:3189   .bss.can_cmd_position:00000000 $d
+     /tmp/ccRN9th6.s:3195   .bss.can_cmd_speed:00000000 $d
+     /tmp/ccRN9th6.s:3201   .bss.can_cmd_pwm:00000000 $d
+     /tmp/ccRN9th6.s:3210   .bss.software_serial_ready:00000000 $d
+     /tmp/ccRN9th6.s:3216   .bss.usart_mode_active:00000000 $d
+     /tmp/ccRN9th6.s:3222   .bss.can_mode_active:00000000 $d
 
 UNDEFINED SYMBOLS
 FlashContent

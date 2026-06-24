@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccG6nHMM.s 			page 1
+ARM GAS  /tmp/ccjeaNvM.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
   30:src/hbprotocol/machine_protocol.c **** #include <string.h>
   31:src/hbprotocol/machine_protocol.c **** #include <stdlib.h>
   32:src/hbprotocol/machine_protocol.c **** 
-ARM GAS  /tmp/ccG6nHMM.s 			page 2
+ARM GAS  /tmp/ccjeaNvM.s 			page 2
 
 
   33:src/hbprotocol/machine_protocol.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
   87:src/hbprotocol/machine_protocol.c **** {
   88:src/hbprotocol/machine_protocol.c ****     // COBSR encoding can result in a length which is 1 byte longer. Enough Memory has to be provid
   89:src/hbprotocol/machine_protocol.c ****     cobsr_encode_result result = cobsr_encode(msg->bytes, (size_t)msg->len + 1, msg->bytes, (size_t
-ARM GAS  /tmp/ccG6nHMM.s 			page 3
+ARM GAS  /tmp/ccjeaNvM.s 			page 3
 
 
   90:src/hbprotocol/machine_protocol.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  144:src/hbprotocol/machine_protocol.c ****             case PROTOCOL_STATE_WAIT_CI:
  145:src/hbprotocol/machine_protocol.c ****                 // Not idle, no new CI received yet. Send NACK with incremented CI.
  146:src/hbprotocol/machine_protocol.c ****                 protocol_send_nack(s->send_serial_data, s->curr_msg.CI+1, s->curr_msg.SOM);
-ARM GAS  /tmp/ccG6nHMM.s 			page 4
+ARM GAS  /tmp/ccjeaNvM.s 			page 4
 
 
  147:src/hbprotocol/machine_protocol.c ****                 break;
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  201:src/hbprotocol/machine_protocol.c ****             }
  202:src/hbprotocol/machine_protocol.c **** 
  203:src/hbprotocol/machine_protocol.c ****             // Verify Checksum
-ARM GAS  /tmp/ccG6nHMM.s 			page 5
+ARM GAS  /tmp/ccjeaNvM.s 			page 5
 
 
  204:src/hbprotocol/machine_protocol.c ****             s->CS = s->curr_msg.SOM + s->curr_msg.cmd + s->curr_msg.CI + s->curr_msg.len;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  258:src/hbprotocol/machine_protocol.c ****                     } else {
  259:src/hbprotocol/machine_protocol.c ****                         // unsolicited NACK received?
  260:src/hbprotocol/machine_protocol.c ****                         s->ack.counters.unwantednacks++;
-ARM GAS  /tmp/ccG6nHMM.s 			page 6
+ARM GAS  /tmp/ccjeaNvM.s 			page 6
 
 
  261:src/hbprotocol/machine_protocol.c ****                         // ignore
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  315:src/hbprotocol/machine_protocol.c ****                     }
  316:src/hbprotocol/machine_protocol.c ****                     break;
  317:src/hbprotocol/machine_protocol.c ****                 default:
-ARM GAS  /tmp/ccG6nHMM.s 			page 7
+ARM GAS  /tmp/ccjeaNvM.s 			page 7
 
 
  318:src/hbprotocol/machine_protocol.c ****                     if (s->CS != 0){
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  372:src/hbprotocol/machine_protocol.c ****     char tmp[] = { PROTOCOL_SOM_ACK, PROTOCOL_CMD_ACK, CI, 0, 0, 0, 0}; // Length 0, Memory for cod
  373:src/hbprotocol/machine_protocol.c ****     protocol_send_raw(send_serial_data, (PROTOCOL_MSG3full *)tmp);
  374:src/hbprotocol/machine_protocol.c **** }
-ARM GAS  /tmp/ccG6nHMM.s 			page 8
+ARM GAS  /tmp/ccjeaNvM.s 			page 8
 
 
  375:src/hbprotocol/machine_protocol.c **** 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  429:src/hbprotocol/machine_protocol.c ****             s->send_state = PROTOCOL_ACK_TX_WAITING;
  430:src/hbprotocol/machine_protocol.c ****             s->ack.last_send_time = protocol_GetTick();
  431:src/hbprotocol/machine_protocol.c ****             s->ack.retries = 2;
-ARM GAS  /tmp/ccG6nHMM.s 			page 9
+ARM GAS  /tmp/ccjeaNvM.s 			page 9
 
 
  432:src/hbprotocol/machine_protocol.c ****             return 0;
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  486:src/hbprotocol/machine_protocol.c **** 
  487:src/hbprotocol/machine_protocol.c ****     // Check if Messages is already encoded or not (Resends are already encoded.)
  488:src/hbprotocol/machine_protocol.c ****     if( msgFull->SOM != PROTOCOL_SOM) {
-ARM GAS  /tmp/ccG6nHMM.s 			page 10
+ARM GAS  /tmp/ccjeaNvM.s 			page 10
 
 
  489:src/hbprotocol/machine_protocol.c ****     // Encode SOM
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  543:src/hbprotocol/machine_protocol.c ****             // 'If an end does not receive an ACK response within (TIMEOUT1), it should resend the 
  544:src/hbprotocol/machine_protocol.c ****             if (s->ack.retries > 0){
  545:src/hbprotocol/machine_protocol.c ****                 s->ack.counters.txRetries++;
-ARM GAS  /tmp/ccG6nHMM.s 			page 11
+ARM GAS  /tmp/ccjeaNvM.s 			page 11
 
 
  546:src/hbprotocol/machine_protocol.c ****                 protocol_send_raw(s->send_serial_data, &s->ack.curr_send_msg);
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  600:src/hbprotocol/machine_protocol.c ****                 memset((void*)&newMsg,0x00,sizeof(PROTOCOL_MSG3full));
  601:src/hbprotocol/machine_protocol.c **** 
  602:src/hbprotocol/machine_protocol.c ****                 newMsg.cmd  = PROTOCOL_CMD_READVAL;
-ARM GAS  /tmp/ccG6nHMM.s 			page 12
+ARM GAS  /tmp/ccjeaNvM.s 			page 12
 
 
  603:src/hbprotocol/machine_protocol.c ****                 newMsg.code = s->subscriptions[index].code;
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
   45 0010 C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
   46              	.LVL1:
  639:src/hbprotocol/machine_protocol.c ****         buf->tail = ((buf->tail + 1 ) % MACHINE_PROTOCOL_TX_BUFFER_SIZE);
-ARM GAS  /tmp/ccG6nHMM.s 			page 13
+ARM GAS  /tmp/ccjeaNvM.s 			page 13
 
 
   47              		.loc 1 639 9 is_stmt 1 view .LVU9
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  657:src/hbprotocol/machine_protocol.c **** }
  658:src/hbprotocol/machine_protocol.c **** 
  659:src/hbprotocol/machine_protocol.c **** void mpPutTx(MACHINE_PROTOCOL_TX_BUFFER *buf, unsigned char value){
-ARM GAS  /tmp/ccG6nHMM.s 			page 14
+ARM GAS  /tmp/ccjeaNvM.s 			page 14
 
 
   85              		.loc 1 659 67 is_stmt 1 view -0
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  136 0004 0446     		mov	r4, r0
   67:src/hbprotocol/machine_protocol.c ****     cobsr_decode_result result = cobsr_decode(msg->bytes, (size_t)msg->len, msg->bytes, (size_t)msg
  137              		.loc 1 67 5 is_stmt 1 view .LVU30
-ARM GAS  /tmp/ccG6nHMM.s 			page 15
+ARM GAS  /tmp/ccjeaNvM.s 			page 15
 
 
   67:src/hbprotocol/machine_protocol.c ****     cobsr_decode_result result = cobsr_decode(msg->bytes, (size_t)msg->len, msg->bytes, (size_t)msg
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  176              		.cfi_def_cfa_offset 8
  177              		@ sp needed
  178 002a 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/ccG6nHMM.s 			page 16
+ARM GAS  /tmp/ccjeaNvM.s 			page 16
 
 
  179              	.LVL9:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  225              		.cfi_def_cfa_offset 24
  226 0004 0446     		mov	r4, r0
   89:src/hbprotocol/machine_protocol.c ****     cobsr_encode_result result = cobsr_encode(msg->bytes, (size_t)msg->len + 1, msg->bytes, (size_t
-ARM GAS  /tmp/ccG6nHMM.s 			page 17
+ARM GAS  /tmp/ccjeaNvM.s 			page 17
 
 
  227              		.loc 1 89 5 is_stmt 1 view .LVU57
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  268              	.LFE1:
  270              		.section	.text.protocol_SOM_decode,"ax",%progbits
  271              		.align	1
-ARM GAS  /tmp/ccG6nHMM.s 			page 18
+ARM GAS  /tmp/ccjeaNvM.s 			page 18
 
 
  272              		.global	protocol_SOM_decode
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  315              		.align	1
  316              		.global	protocol_SOM_encode
  317              		.syntax unified
-ARM GAS  /tmp/ccG6nHMM.s 			page 19
+ARM GAS  /tmp/ccjeaNvM.s 			page 19
 
 
  318              		.thumb
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  358 001a 1846     		mov	r0, r3
  359              	.LVL18:
  118:src/hbprotocol/machine_protocol.c ****         return 0; // all went well
-ARM GAS  /tmp/ccG6nHMM.s 			page 20
+ARM GAS  /tmp/ccjeaNvM.s 			page 20
 
 
  360              		.loc 1 118 16 view .LVU99
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  405 0002 0546     		mov	r5, r0
  406 0004 0C46     		mov	r4, r1
  484:src/hbprotocol/machine_protocol.c ****     PROTOCOL_MSG3 *msg = (PROTOCOL_MSG3 *) msgFull;
-ARM GAS  /tmp/ccG6nHMM.s 			page 21
+ARM GAS  /tmp/ccjeaNvM.s 			page 21
 
 
  407              		.loc 1 484 5 is_stmt 1 view .LVU111
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  493:src/hbprotocol/machine_protocol.c ****         unsigned char CS = -msgFull->SOM -msgFull->cmd -msgFull->CI - msgFull->lenPayload;
  446              		.loc 1 493 50 view .LVU127
  447 0022 6178     		ldrb	r1, [r4, #1]	@ zero_extendqisi2
-ARM GAS  /tmp/ccG6nHMM.s 			page 22
+ARM GAS  /tmp/ccjeaNvM.s 			page 22
 
 
  493:src/hbprotocol/machine_protocol.c ****         unsigned char CS = -msgFull->SOM -msgFull->cmd -msgFull->CI - msgFull->lenPayload;
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  499:src/hbprotocol/machine_protocol.c ****         CS -= msg->bytes[i];
  486              		.loc 1 499 12 view .LVU144
  487 0046 DBB2     		uxtb	r3, r3
-ARM GAS  /tmp/ccG6nHMM.s 			page 23
+ARM GAS  /tmp/ccjeaNvM.s 			page 23
 
 
  488              	.LVL32:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  529              		.section	.text.protocol_send_ack,"ax",%progbits
  530              		.align	1
  531              		.syntax unified
-ARM GAS  /tmp/ccG6nHMM.s 			page 24
+ARM GAS  /tmp/ccjeaNvM.s 			page 24
 
 
  532              		.thumb
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  581              		.thumb_func
  583              	protocol_send_nack:
  584              	.LVL40:
-ARM GAS  /tmp/ccG6nHMM.s 			page 25
+ARM GAS  /tmp/ccjeaNvM.s 			page 25
 
 
  585              	.LFB5:
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  627              		.loc 1 367 5 is_stmt 1 view .LVU177
  628 0032 6946     		mov	r1, sp
  629              	.LVL43:
-ARM GAS  /tmp/ccG6nHMM.s 			page 26
+ARM GAS  /tmp/ccjeaNvM.s 			page 26
 
 
  367:src/hbprotocol/machine_protocol.c ****     protocol_send_raw(send_serial_data, (PROTOCOL_MSG3full *)tmp);
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  674 0014 181A     		subs	r0, r3, r0
  675              	.LVL47:
  627:src/hbprotocol/machine_protocol.c ****         if (count < 0){
-ARM GAS  /tmp/ccG6nHMM.s 			page 27
+ARM GAS  /tmp/ccjeaNvM.s 			page 27
 
 
  676              		.loc 1 627 12 view .LVU190
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  645:src/hbprotocol/machine_protocol.c ****     if (mpTxQueued(buf)) {
  723              		.loc 1 645 5 is_stmt 1 view .LVU200
  645:src/hbprotocol/machine_protocol.c ****     if (mpTxQueued(buf)) {
-ARM GAS  /tmp/ccG6nHMM.s 			page 28
+ARM GAS  /tmp/ccjeaNvM.s 			page 28
 
 
  724              		.loc 1 645 9 is_stmt 0 view .LVU201
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  764              		.loc 1 649 15 is_stmt 0 view .LVU215
  765 002a 341D     		adds	r4, r6, #4
  766              	.LVL61:
-ARM GAS  /tmp/ccG6nHMM.s 			page 29
+ARM GAS  /tmp/ccjeaNvM.s 			page 29
 
 
  649:src/hbprotocol/machine_protocol.c ****         *(dest++) = mpGetTxByte(buf); // code
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  809              		.section	.text.protocol_send,"ax",%progbits
  810              		.align	1
  811              		.syntax unified
-ARM GAS  /tmp/ccG6nHMM.s 			page 30
+ARM GAS  /tmp/ccjeaNvM.s 			page 30
 
 
  812              		.thumb
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  854              		.loc 1 436 20 is_stmt 0 view .LVU241
  855 001a 04F5DE65 		add	r5, r4, #1776
  436:src/hbprotocol/machine_protocol.c ****             memcpy(&s->noack.curr_send_msg, msg, 5 + msg->lenPayload); // SOM, cmd, CI, len, code +
-ARM GAS  /tmp/ccG6nHMM.s 			page 31
+ARM GAS  /tmp/ccjeaNvM.s 			page 31
 
 
  856              		.loc 1 436 57 view .LVU242
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  895              	.LVL72:
  441:src/hbprotocol/machine_protocol.c ****             return 0;
  896              		.loc 1 441 13 view .LVU258
-ARM GAS  /tmp/ccG6nHMM.s 			page 32
+ARM GAS  /tmp/ccjeaNvM.s 			page 32
 
 
  441:src/hbprotocol/machine_protocol.c ****             return 0;
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  936              		.loc 1 425 28 is_stmt 0 view .LVU273
  937 0084 94F8B732 		ldrb	r3, [r4, #695]	@ zero_extendqisi2
  425:src/hbprotocol/machine_protocol.c ****             if( !(++(s->ack.lastTXCI)) ) s->ack.lastTXCI = 1;        // 0 is not a valid CI
-ARM GAS  /tmp/ccG6nHMM.s 			page 33
+ARM GAS  /tmp/ccjeaNvM.s 			page 33
 
 
  938              		.loc 1 425 19 view .LVU274
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  431:src/hbprotocol/machine_protocol.c ****             s->ack.retries = 2;
  977              		.loc 1 431 13 is_stmt 1 view .LVU290
  431:src/hbprotocol/machine_protocol.c ****             s->ack.retries = 2;
-ARM GAS  /tmp/ccG6nHMM.s 			page 34
+ARM GAS  /tmp/ccjeaNvM.s 			page 34
 
 
  978              		.loc 1 431 28 is_stmt 0 view .LVU291
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1017              		.loc 1 469 17 is_stmt 1 view .LVU306
  469:src/hbprotocol/machine_protocol.c ****                 if( !(++(s->noack.lastTXCI)) ) s->noack.lastTXCI = 1;        // 0 is not a valid CI
  1018              		.loc 1 469 34 is_stmt 0 view .LVU307
-ARM GAS  /tmp/ccG6nHMM.s 			page 35
+ARM GAS  /tmp/ccjeaNvM.s 			page 35
 
 
  1019 00f6 94F8F337 		ldrb	r3, [r4, #2035]	@ zero_extendqisi2
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1057              		.loc 1 452 13 is_stmt 1 view .LVU323
  1058 012c 04F2B511 		addw	r1, r4, #437
  1059 0130 2846     		mov	r0, r5
-ARM GAS  /tmp/ccG6nHMM.s 			page 36
+ARM GAS  /tmp/ccjeaNvM.s 			page 36
 
 
  1060 0132 FFF7FEFF 		bl	mpGetTxMsg
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1097              		.loc 1 458 27 is_stmt 0 view .LVU340
  1098 016e 0123     		movs	r3, #1
  1099 0170 84F81531 		strb	r3, [r4, #277]
-ARM GAS  /tmp/ccG6nHMM.s 			page 37
+ARM GAS  /tmp/ccjeaNvM.s 			page 37
 
 
  459:src/hbprotocol/machine_protocol.c ****             s->ack.last_send_time = protocol_GetTick();
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1145              	.LVL95:
  1146              	.LFB11:
  537:src/hbprotocol/machine_protocol.c **** void protocol_tick(PROTOCOL_STAT *s){
-ARM GAS  /tmp/ccG6nHMM.s 			page 38
+ARM GAS  /tmp/ccjeaNvM.s 			page 38
 
 
  1147              		.loc 1 537 37 is_stmt 1 view -0
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  566:src/hbprotocol/machine_protocol.c ****             if ((s->last_tick_time - s->last_char_time) > s->timeout2){
  1190              		.loc 1 566 13 is_stmt 1 view .LVU364
  566:src/hbprotocol/machine_protocol.c ****             if ((s->last_tick_time - s->last_char_time) > s->timeout2){
-ARM GAS  /tmp/ccG6nHMM.s 			page 39
+ARM GAS  /tmp/ccjeaNvM.s 			page 39
 
 
  1191              		.loc 1 566 19 is_stmt 0 view .LVU365
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  545:src/hbprotocol/machine_protocol.c ****                 s->ack.counters.txRetries++;
  1229              		.loc 1 545 32 is_stmt 0 view .LVU382
  1230 0054 D5F8CC32 		ldr	r3, [r5, #716]
-ARM GAS  /tmp/ccG6nHMM.s 			page 40
+ARM GAS  /tmp/ccjeaNvM.s 			page 40
 
 
  545:src/hbprotocol/machine_protocol.c ****                 s->ack.counters.txRetries++;
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1270              		.loc 1 569 26 is_stmt 0 view .LVU397
  1271 0094 2B72     		strb	r3, [r5, #8]
  1272 0096 CDE7     		b	.L77
-ARM GAS  /tmp/ccG6nHMM.s 			page 41
+ARM GAS  /tmp/ccjeaNvM.s 			page 41
 
 
  1273              	.L78:
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1312 00c4 05EB4303 		add	r3, r5, r3, lsl #1
  1313 00c8 93F82861 		ldrb	r6, [r3, #296]	@ zero_extendqisi2
  592:src/hbprotocol/machine_protocol.c ****         if( s->subscriptions[index].code != 0 && s->subscriptions[index].count != 0 ) {
-ARM GAS  /tmp/ccG6nHMM.s 			page 42
+ARM GAS  /tmp/ccjeaNvM.s 			page 42
 
 
  1314              		.loc 1 592 11 view .LVU413
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  604:src/hbprotocol/machine_protocol.c ****                 newMsg.SOM = s->subscriptions[index].som;
  1354              		.loc 1 604 28 view .LVU428
  1355 0114 8DF80430 		strb	r3, [sp, #4]
-ARM GAS  /tmp/ccG6nHMM.s 			page 43
+ARM GAS  /tmp/ccjeaNvM.s 			page 43
 
 
  606:src/hbprotocol/machine_protocol.c ****                 protocol_process_message(s, &newMsg);
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1395              	.L88:
  1396 0140 00000000 		.word	protocol_GetTick
  1397              		.cfi_endproc
-ARM GAS  /tmp/ccG6nHMM.s 			page 44
+ARM GAS  /tmp/ccjeaNvM.s 			page 44
 
 
  1398              	.LFE11:
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1444 001b 2A       		.byte	(.L100-.L96)/2
  1445 001c 2E       		.byte	(.L99-.L96)/2
  1446 001d 32       		.byte	(.L98-.L96)/2
-ARM GAS  /tmp/ccG6nHMM.s 			page 45
+ARM GAS  /tmp/ccjeaNvM.s 			page 45
 
 
  1447 001e 38       		.byte	(.L97-.L96)/2
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1486              		.loc 1 349 1 is_stmt 0 view .LVU468
  1487 0046 38BD     		pop	{r3, r4, r5, pc}
  1488              	.LVL111:
-ARM GAS  /tmp/ccG6nHMM.s 			page 46
+ARM GAS  /tmp/ccjeaNvM.s 			page 46
 
 
  1489              	.L93:
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1528              		.loc 1 177 9 is_stmt 1 view .LVU483
  1529 0074 E7E7     		b	.L90
  1530              	.L99:
-ARM GAS  /tmp/ccG6nHMM.s 			page 47
+ARM GAS  /tmp/ccjeaNvM.s 			page 47
 
 
  180:src/hbprotocol/machine_protocol.c ****         s->curr_msg.CI = byte;
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1567 0096 627D     		ldrb	r2, [r4, #21]	@ zero_extendqisi2
  193:src/hbprotocol/machine_protocol.c ****         if (s->count == s->curr_msg.len){
  1568              		.loc 1 193 12 view .LVU502
-ARM GAS  /tmp/ccG6nHMM.s 			page 48
+ARM GAS  /tmp/ccjeaNvM.s 			page 48
 
 
  1569 0098 9342     		cmp	r3, r2
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1606              		.loc 1 206 13 is_stmt 1 view .LVU519
  1607              	.LBB9:
  206:src/hbprotocol/machine_protocol.c ****             for (int i = 0; i < s->curr_msg.len + 2; i++) { // Include 'code' and CS in calculation
-ARM GAS  /tmp/ccG6nHMM.s 			page 49
+ARM GAS  /tmp/ccjeaNvM.s 			page 49
 
 
  1608              		.loc 1 206 18 view .LVU520
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1650              		.loc 1 213 13 view .LVU532
  213:src/hbprotocol/machine_protocol.c ****             switch(s->curr_msg.SOM) {
  1651              		.loc 1 213 31 is_stmt 0 view .LVU533
-ARM GAS  /tmp/ccG6nHMM.s 			page 50
+ARM GAS  /tmp/ccjeaNvM.s 			page 50
 
 
  1652 00ec A27C     		ldrb	r2, [r4, #18]	@ zero_extendqisi2
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1690              		.loc 1 283 84 view .LVU549
  1691 011c 0133     		adds	r3, r3, #1
  283:src/hbprotocol/machine_protocol.c ****                     s->ack.counters.rxMissing += s->curr_msg.CI - (s->ack.lastRXCI + 1);
-ARM GAS  /tmp/ccG6nHMM.s 			page 51
+ARM GAS  /tmp/ccjeaNvM.s 			page 51
 
 
  1692              		.loc 1 283 65 view .LVU550
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1730 0154 0133     		adds	r3, r3, #1
  1731 0156 C4F8D432 		str	r3, [r4, #724]
  1732 015a CDE7     		b	.L107
-ARM GAS  /tmp/ccG6nHMM.s 			page 52
+ARM GAS  /tmp/ccjeaNvM.s 			page 52
 
 
  1733              	.L131:
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  225:src/hbprotocol/machine_protocol.c ****                                 protocol_send(s, NULL);
  1771              		.loc 1 225 33 is_stmt 0 view .LVU583
  1772 018c FFF7FEFF 		bl	protocol_send
-ARM GAS  /tmp/ccG6nHMM.s 			page 53
+ARM GAS  /tmp/ccjeaNvM.s 			page 53
 
 
  1773              	.LVL125:
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1811 01c2 3D4B     		ldr	r3, .L135
  1812 01c4 1B68     		ldr	r3, [r3]
  1813 01c6 9847     		blx	r3
-ARM GAS  /tmp/ccG6nHMM.s 			page 54
+ARM GAS  /tmp/ccjeaNvM.s 			page 54
 
 
  1814              	.LVL128:
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1853              	.LVL132:
  1854              	.L129:
  255:src/hbprotocol/machine_protocol.c ****                                 protocol_send(s, NULL);
-ARM GAS  /tmp/ccG6nHMM.s 			page 55
+ARM GAS  /tmp/ccjeaNvM.s 			page 55
 
 
  1855              		.loc 1 255 33 view .LVU615
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1894              		.loc 1 331 25 view .LVU630
  335:src/hbprotocol/machine_protocol.c ****                     s->noack.counters.rxMissing += s->curr_msg.CI - (s->noack.lastRXCI + 1);
  1895              		.loc 1 335 21 view .LVU631
-ARM GAS  /tmp/ccG6nHMM.s 			page 56
+ARM GAS  /tmp/ccjeaNvM.s 			page 56
 
 
  335:src/hbprotocol/machine_protocol.c ****                     s->noack.counters.rxMissing += s->curr_msg.CI - (s->noack.lastRXCI + 1);
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1933 0262 94F8F237 		ldrb	r3, [r4, #2034]	@ zero_extendqisi2
  303:src/hbprotocol/machine_protocol.c ****                     if (s->noack.retries > 0){
  1934              		.loc 1 303 24 view .LVU649
-ARM GAS  /tmp/ccG6nHMM.s 			page 57
+ARM GAS  /tmp/ccjeaNvM.s 			page 57
 
 
  1935 0266 83B1     		cbz	r3, .L120
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  1974              	.LVL138:
  313:src/hbprotocol/machine_protocol.c ****                             protocol_send(s, NULL);
  1975              		.loc 1 313 29 is_stmt 0 view .LVU665
-ARM GAS  /tmp/ccG6nHMM.s 			page 58
+ARM GAS  /tmp/ccjeaNvM.s 			page 58
 
 
  1976 02a6 FFF7FEFF 		bl	protocol_send
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  2025 0006 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
  385:src/hbprotocol/machine_protocol.c ****     if(msg->SOM == PROTOCOL_SOM_ACK) {
  2026              		.loc 1 385 7 view .LVU673
-ARM GAS  /tmp/ccG6nHMM.s 			page 59
+ARM GAS  /tmp/ccjeaNvM.s 			page 59
 
 
  2027 0008 022B     		cmp	r3, #2
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  395:src/hbprotocol/machine_protocol.c ****         if (txcount + total >= MACHINE_PROTOCOL_TX_BUFFER_SIZE-2) {
  2066              		.loc 1 395 9 is_stmt 1 view .LVU689
  395:src/hbprotocol/machine_protocol.c ****         if (txcount + total >= MACHINE_PROTOCOL_TX_BUFFER_SIZE-2) {
-ARM GAS  /tmp/ccG6nHMM.s 			page 60
+ARM GAS  /tmp/ccjeaNvM.s 			page 60
 
 
  2067              		.loc 1 395 21 is_stmt 0 view .LVU690
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  397:src/hbprotocol/machine_protocol.c ****             return -1;
  2107              		.loc 1 397 13 is_stmt 1 view .LVU705
  397:src/hbprotocol/machine_protocol.c ****             return -1;
-ARM GAS  /tmp/ccG6nHMM.s 			page 61
+ARM GAS  /tmp/ccjeaNvM.s 			page 61
 
 
  2108              		.loc 1 397 20 is_stmt 0 view .LVU706
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  2154              	.LVL161:
  2155              	.LFB10:
  513:src/hbprotocol/machine_protocol.c **** int protocol_send_text(PROTOCOL_STAT *s, char *message, unsigned char som) {
-ARM GAS  /tmp/ccG6nHMM.s 			page 62
+ARM GAS  /tmp/ccjeaNvM.s 			page 62
 
 
  2156              		.loc 1 513 76 is_stmt 1 view -0
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  2199              		.loc 1 521 9 view .LVU728
  521:src/hbprotocol/machine_protocol.c ****         newMsg.SOM = som;
  2200              		.loc 1 521 20 is_stmt 0 view .LVU729
-ARM GAS  /tmp/ccG6nHMM.s 			page 63
+ARM GAS  /tmp/ccjeaNvM.s 			page 63
 
 
  2201 0028 8DF80450 		strb	r5, [sp, #4]
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  2241              		.cfi_def_cfa_offset 20
  2242              		@ sp needed
  2243 005e F0BD     		pop	{r4, r5, r6, r7, pc}
-ARM GAS  /tmp/ccG6nHMM.s 			page 64
+ARM GAS  /tmp/ccjeaNvM.s 			page 64
 
 
  2244              	.LVL169:
@@ -3809,48 +3809,48 @@ ARM GAS  /tmp/ccG6nHMM.s 			page 1
  2267              		.file 6 "/usr/include/newlib/string.h"
  2268              		.file 7 "src/hbprotocol/protocol_private.h"
  2269              		.file 8 "<built-in>"
-ARM GAS  /tmp/ccG6nHMM.s 			page 65
+ARM GAS  /tmp/ccjeaNvM.s 			page 65
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 machine_protocol.c
-     /tmp/ccG6nHMM.s:19     .text.mpGetTxByte:00000000 $t
-     /tmp/ccG6nHMM.s:24     .text.mpGetTxByte:00000000 mpGetTxByte
-     /tmp/ccG6nHMM.s:77     .text.mpPutTx:00000000 $t
-     /tmp/ccG6nHMM.s:82     .text.mpPutTx:00000000 mpPutTx
-     /tmp/ccG6nHMM.s:114    .text.protocol_cobsr_decode:00000000 $t
-     /tmp/ccG6nHMM.s:120    .text.protocol_cobsr_decode:00000000 protocol_cobsr_decode
-     /tmp/ccG6nHMM.s:204    .text.protocol_cobsr_encode:00000000 $t
-     /tmp/ccG6nHMM.s:210    .text.protocol_cobsr_encode:00000000 protocol_cobsr_encode
-     /tmp/ccG6nHMM.s:271    .text.protocol_SOM_decode:00000000 $t
-     /tmp/ccG6nHMM.s:277    .text.protocol_SOM_decode:00000000 protocol_SOM_decode
-     /tmp/ccG6nHMM.s:315    .text.protocol_SOM_encode:00000000 $t
-     /tmp/ccG6nHMM.s:321    .text.protocol_SOM_encode:00000000 protocol_SOM_encode
-     /tmp/ccG6nHMM.s:385    .text.protocol_send_raw:00000000 $t
-     /tmp/ccG6nHMM.s:390    .text.protocol_send_raw:00000000 protocol_send_raw
-     /tmp/ccG6nHMM.s:530    .text.protocol_send_ack:00000000 $t
-     /tmp/ccG6nHMM.s:535    .text.protocol_send_ack:00000000 protocol_send_ack
-     /tmp/ccG6nHMM.s:578    .text.protocol_send_nack:00000000 $t
-     /tmp/ccG6nHMM.s:583    .text.protocol_send_nack:00000000 protocol_send_nack
-     /tmp/ccG6nHMM.s:643    .text.mpTxQueued:00000000 $t
-     /tmp/ccG6nHMM.s:649    .text.mpTxQueued:00000000 mpTxQueued
-     /tmp/ccG6nHMM.s:699    .text.mpGetTxMsg:00000000 $t
-     /tmp/ccG6nHMM.s:704    .text.mpGetTxMsg:00000000 mpGetTxMsg
-     /tmp/ccG6nHMM.s:810    .text.protocol_send:00000000 $t
-     /tmp/ccG6nHMM.s:815    .text.protocol_send:00000000 protocol_send
-     /tmp/ccG6nHMM.s:1133   .text.protocol_send:00000194 $d
-     /tmp/ccG6nHMM.s:1138   .text.protocol_tick:00000000 $t
-     /tmp/ccG6nHMM.s:1144   .text.protocol_tick:00000000 protocol_tick
-     /tmp/ccG6nHMM.s:1396   .text.protocol_tick:00000140 $d
-     /tmp/ccG6nHMM.s:1401   .text.protocol_byte:00000000 $t
-     /tmp/ccG6nHMM.s:1407   .text.protocol_byte:00000000 protocol_byte
-     /tmp/ccG6nHMM.s:1443   .text.protocol_byte:0000001a $d
-     /tmp/ccG6nHMM.s:1449   .text.protocol_byte:00000020 $t
-     /tmp/ccG6nHMM.s:1993   .text.protocol_byte:000002b8 $d
-     /tmp/ccG6nHMM.s:1998   .text.protocol_post:00000000 $t
-     /tmp/ccG6nHMM.s:2004   .text.protocol_post:00000000 protocol_post
-     /tmp/ccG6nHMM.s:2147   .text.protocol_send_text:00000000 $t
-     /tmp/ccG6nHMM.s:2153   .text.protocol_send_text:00000000 protocol_send_text
+     /tmp/ccjeaNvM.s:19     .text.mpGetTxByte:00000000 $t
+     /tmp/ccjeaNvM.s:24     .text.mpGetTxByte:00000000 mpGetTxByte
+     /tmp/ccjeaNvM.s:77     .text.mpPutTx:00000000 $t
+     /tmp/ccjeaNvM.s:82     .text.mpPutTx:00000000 mpPutTx
+     /tmp/ccjeaNvM.s:114    .text.protocol_cobsr_decode:00000000 $t
+     /tmp/ccjeaNvM.s:120    .text.protocol_cobsr_decode:00000000 protocol_cobsr_decode
+     /tmp/ccjeaNvM.s:204    .text.protocol_cobsr_encode:00000000 $t
+     /tmp/ccjeaNvM.s:210    .text.protocol_cobsr_encode:00000000 protocol_cobsr_encode
+     /tmp/ccjeaNvM.s:271    .text.protocol_SOM_decode:00000000 $t
+     /tmp/ccjeaNvM.s:277    .text.protocol_SOM_decode:00000000 protocol_SOM_decode
+     /tmp/ccjeaNvM.s:315    .text.protocol_SOM_encode:00000000 $t
+     /tmp/ccjeaNvM.s:321    .text.protocol_SOM_encode:00000000 protocol_SOM_encode
+     /tmp/ccjeaNvM.s:385    .text.protocol_send_raw:00000000 $t
+     /tmp/ccjeaNvM.s:390    .text.protocol_send_raw:00000000 protocol_send_raw
+     /tmp/ccjeaNvM.s:530    .text.protocol_send_ack:00000000 $t
+     /tmp/ccjeaNvM.s:535    .text.protocol_send_ack:00000000 protocol_send_ack
+     /tmp/ccjeaNvM.s:578    .text.protocol_send_nack:00000000 $t
+     /tmp/ccjeaNvM.s:583    .text.protocol_send_nack:00000000 protocol_send_nack
+     /tmp/ccjeaNvM.s:643    .text.mpTxQueued:00000000 $t
+     /tmp/ccjeaNvM.s:649    .text.mpTxQueued:00000000 mpTxQueued
+     /tmp/ccjeaNvM.s:699    .text.mpGetTxMsg:00000000 $t
+     /tmp/ccjeaNvM.s:704    .text.mpGetTxMsg:00000000 mpGetTxMsg
+     /tmp/ccjeaNvM.s:810    .text.protocol_send:00000000 $t
+     /tmp/ccjeaNvM.s:815    .text.protocol_send:00000000 protocol_send
+     /tmp/ccjeaNvM.s:1133   .text.protocol_send:00000194 $d
+     /tmp/ccjeaNvM.s:1138   .text.protocol_tick:00000000 $t
+     /tmp/ccjeaNvM.s:1144   .text.protocol_tick:00000000 protocol_tick
+     /tmp/ccjeaNvM.s:1396   .text.protocol_tick:00000140 $d
+     /tmp/ccjeaNvM.s:1401   .text.protocol_byte:00000000 $t
+     /tmp/ccjeaNvM.s:1407   .text.protocol_byte:00000000 protocol_byte
+     /tmp/ccjeaNvM.s:1443   .text.protocol_byte:0000001a $d
+     /tmp/ccjeaNvM.s:1449   .text.protocol_byte:00000020 $t
+     /tmp/ccjeaNvM.s:1993   .text.protocol_byte:000002b8 $d
+     /tmp/ccjeaNvM.s:1998   .text.protocol_post:00000000 $t
+     /tmp/ccjeaNvM.s:2004   .text.protocol_post:00000000 protocol_post
+     /tmp/ccjeaNvM.s:2147   .text.protocol_send_text:00000000 $t
+     /tmp/ccjeaNvM.s:2153   .text.protocol_send_text:00000000 protocol_send_text
 
 UNDEFINED SYMBOLS
 cobsr_decode
