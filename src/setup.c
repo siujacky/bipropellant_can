@@ -519,8 +519,8 @@ void MX_TIM_Init(void) {
   HAL_TIM_PWM_ConfigChannel(&htim_right, &sConfigOC, TIM_CHANNEL_2);
   HAL_TIM_PWM_ConfigChannel(&htim_right, &sConfigOC, TIM_CHANNEL_3);
 
-  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_ENABLE;
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_ENABLE;
+  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_DISABLE; /* hi-Z when MOE=0: phases float → free-wheel, safer with damaged FETs */
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE; /* hi-Z when MOE=0 */
   sBreakDeadTimeConfig.LockLevel        = TIM_LOCKLEVEL_OFF;
   sBreakDeadTimeConfig.DeadTime         = DEAD_TIME;
   sBreakDeadTimeConfig.BreakState       = TIM_BREAK_DISABLE;
@@ -556,8 +556,8 @@ void MX_TIM_Init(void) {
   HAL_TIM_PWM_ConfigChannel(&htim_left, &sConfigOC, TIM_CHANNEL_2);
   HAL_TIM_PWM_ConfigChannel(&htim_left, &sConfigOC, TIM_CHANNEL_3);
 
-  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_ENABLE;
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_ENABLE;
+  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_DISABLE; /* hi-Z when MOE=0: phases float → free-wheel, safer with damaged FETs */
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE; /* hi-Z when MOE=0 */
   sBreakDeadTimeConfig.LockLevel        = TIM_LOCKLEVEL_OFF;
   sBreakDeadTimeConfig.DeadTime         = DEAD_TIME;
   sBreakDeadTimeConfig.BreakState       = TIM_BREAK_DISABLE;
