@@ -875,6 +875,14 @@ int main(void) {
 //      lastspeeds[i] = pwms[i];
 //    }
 
+    /* LED 1Hz heartbeat: PB2 (active-HIGH) blinks once per second.
+     * DELAY_IN_MAIN_LOOP=5ms → 1000ms/5ms = 200 iterations per second.
+     * Toggle every 100 iterations = 500ms on, 500ms off = 1Hz blink.
+     * This confirms the main loop is running (system working normally). */
+    if (debug_counter % 100 == 0) {
+        HAL_GPIO_TogglePin(LED_PORT, LED_PIN);
+    }
+
     if ((debug_counter++) % 100 == 0) {
       // ####### CALC BOARD TEMPERATURE #######
       board_temp_adc_filtered = board_temp_adc_filtered * 0.99 + (float)adc_buffer.temp * 0.01;

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccslMvv3.s 			page 1
+ARM GAS  /tmp/ccHry5xv.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
   30:src/control.c ****   // Dummy loop with 16 bit count wrap around
   31:src/control.c ****   uint16_t rc_delay = TIM2->CNT;
   32:src/control.c ****   TIM2->CNT = 0;
-ARM GAS  /tmp/ccslMvv3.s 			page 2
+ARM GAS  /tmp/ccHry5xv.s 			page 2
 
 
   33:src/control.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
   87:src/control.c **** void Nunchuck_Init() {
   27              		.loc 1 87 22 view -0
   28              		.cfi_startproc
-ARM GAS  /tmp/ccslMvv3.s 			page 3
+ARM GAS  /tmp/ccHry5xv.s 			page 3
 
 
   29              		@ args = 0, pretend = 0, frame = 0
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
   72              		.loc 1 98 3 is_stmt 1 view .LVU11
   73 002e 0096     		str	r6, [sp]
   74 0030 0223     		movs	r3, #2
-ARM GAS  /tmp/ccslMvv3.s 			page 4
+ARM GAS  /tmp/ccHry5xv.s 			page 4
 
 
   75 0032 2246     		mov	r2, r4
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
  125              		.loc 1 104 3 is_stmt 1 view .LVU17
  126 000a 124C     		ldr	r4, .L10+4
  127 000c 6425     		movs	r5, #100
-ARM GAS  /tmp/ccslMvv3.s 			page 5
+ARM GAS  /tmp/ccHry5xv.s 			page 5
 
 
  128 000e 0095     		str	r5, [sp]
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
  167              		.cfi_def_cfa_offset 12
  168              		@ sp needed
  169 0040 30BD     		pop	{r4, r5, pc}
-ARM GAS  /tmp/ccslMvv3.s 			page 6
+ARM GAS  /tmp/ccHry5xv.s 			page 6
 
 
  170              	.L9:
@@ -352,26 +352,26 @@ ARM GAS  /tmp/ccslMvv3.s 			page 1
  222              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
  223              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
  224              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/ccslMvv3.s 			page 7
+ARM GAS  /tmp/ccHry5xv.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 control.c
-     /tmp/ccslMvv3.s:19     .text.Nunchuck_Init:00000000 $t
-     /tmp/ccslMvv3.s:25     .text.Nunchuck_Init:00000000 Nunchuck_Init
-     /tmp/ccslMvv3.s:93     .text.Nunchuck_Init:00000048 $d
+     /tmp/ccHry5xv.s:19     .text.Nunchuck_Init:00000000 $t
+     /tmp/ccHry5xv.s:25     .text.Nunchuck_Init:00000000 Nunchuck_Init
+     /tmp/ccHry5xv.s:93     .text.Nunchuck_Init:00000048 $d
                             *COM*:00000002 i2cBuffer
-     /tmp/ccslMvv3.s:99     .text.Nunchuck_Read:00000000 $t
-     /tmp/ccslMvv3.s:105    .text.Nunchuck_Read:00000000 Nunchuck_Read
-     /tmp/ccslMvv3.s:185    .text.Nunchuck_Read:00000050 $d
-     /tmp/ccslMvv3.s:200    .bss.nunchuck_data:00000000 nunchuck_data
-     /tmp/ccslMvv3.s:207    .data.input_timeout_counter:00000000 input_timeout_counter
+     /tmp/ccHry5xv.s:99     .text.Nunchuck_Read:00000000 $t
+     /tmp/ccHry5xv.s:105    .text.Nunchuck_Read:00000000 Nunchuck_Read
+     /tmp/ccHry5xv.s:185    .text.Nunchuck_Read:00000050 $d
+     /tmp/ccHry5xv.s:200    .bss.nunchuck_data:00000000 nunchuck_data
+     /tmp/ccHry5xv.s:207    .data.input_timeout_counter:00000000 input_timeout_counter
                             *COM*:00000044 hdma_i2c2_tx
                             *COM*:00000044 hdma_i2c2_rx
-     /tmp/ccslMvv3.s:197    .bss.nunchuck_data:00000000 $d
-     /tmp/ccslMvv3.s:204    .data.input_timeout_counter:00000000 $d
-     /tmp/ccslMvv3.s:213    .bss.ppm_count:00000000 ppm_count
-     /tmp/ccslMvv3.s:214    .bss.ppm_count:00000000 $d
+     /tmp/ccHry5xv.s:197    .bss.nunchuck_data:00000000 $d
+     /tmp/ccHry5xv.s:204    .data.input_timeout_counter:00000000 $d
+     /tmp/ccHry5xv.s:213    .bss.ppm_count:00000000 ppm_count
+     /tmp/ccHry5xv.s:214    .bss.ppm_count:00000000 $d
                             *COM*:00000040 TimHandle
 
 UNDEFINED SYMBOLS

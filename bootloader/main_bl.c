@@ -986,14 +986,16 @@ int main(void)
     usart_init();
 
     /* ----------------------------------------------------------------
-     * LED init: PC13, active-LOW (Blue Pill onboard LED).
-     * Fast-blink during the bootloader window gives visual confirmation
-     * that the chip is alive and listening.
-     * RCC_APB2ENR IOPCEN = bit 4.
+     * LED init: PB2, active-HIGH (hoverboard onboard LED).
+     * Reference: bipropellant/bipropellant-hoverboard-firmware
+     *   defines.h: LED_PIN=GPIO_PIN_2, LED_PORT=GPIOB
+     *
+     * GPIOB clock already enabled (RCC_APB2ENR bit 3) from motor-safe
+     * code at the top of main().  Just configure PB2 as output.
      * ---------------------------------------------------------------- */
-    RCC_APB2ENR |= (1U << 4);   /* IOPCEN */
-    GPIOC->CRH   = (GPIOC->CRH & ~(0xFUL << 20)) | (0x3UL << 20); /* PC13 PP 50MHz */
-    GPIOC->BRR   = (1U << 13);   /* LED ON immediately (active-low) */
+    /* PB2: CRL bits[11:8] = 0x3 (output PP 50MHz) */
+    GPIOB->CRL = (GPIOB->CRL & ~(0xFUL << 8)) | (0x3UL << 8);
+    GPIOB->BSRR = (1U << 2);   /* LED ON immediately (active-high) */
 
     /* ----------------------------------------------------------------
      * 4. Build and broadcast CAN hello frame on CAN_TX_ID (0x7DE).
@@ -1061,9 +1063,11 @@ int main(void)
             last_hello_ms = ms;
             hello_count++;
 
+            /* Fast blink on PB2 (active-high) every hello interval.
+             * HELLO_INTERVAL_MS = 50ms → ~10 Hz fast flash during BL window. */
             led_state ^= 1U;
-            if (led_state) GPIOC->BRR  = (1U << 13);   /* LED on  */
-            else            GPIOC->BSRR = (1U << 13);   /* LED off */
+            if (led_state) GPIOB->BSRR = (1U << 2);         /* LED on  */
+            else            GPIOB->BSRR = (1U << (2 + 16));  /* LED off */
 
             /* In normal (non-extended) window: stop after max_hellos */
             if (hello_count >= max_hellos && poll_ms <= 500U) {
