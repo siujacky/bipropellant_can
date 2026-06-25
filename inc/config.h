@@ -167,8 +167,8 @@
   #define SOFTWARE_SERIAL_RX_PORT GPIOA
   #define SOFTWARE_SERIAL_TX_PIN GPIO_PIN_13
   #define SOFTWARE_SERIAL_TX_PORT GPIOA
-  #define SOFTWARE_SERIAL_USE_SWD_PINS   // Disable JTAG/SWD to use PA13/PA14
-  #define SOFTWARE_SERIAL_DEFERRED_INIT  // Don't init at startup, wait for CAN success
+  // #define SOFTWARE_SERIAL_USE_SWD_PINS  /* DISABLED: keep SWD accessible */   // Disable JTAG/SWD to use PA13/PA14
+  // #define SOFTWARE_SERIAL_DEFERRED_INIT  /* DISABLED: prevents SoftwareSerialInit() call */  // Don't init at startup, wait for CAN success
   #define DEBUG_SOFTWARE_SERIAL
 #endif
 
@@ -198,8 +198,8 @@
   #define SOFTWARE_SERIAL_RX_PORT GPIOA
   #define SOFTWARE_SERIAL_TX_PIN GPIO_PIN_13
   #define SOFTWARE_SERIAL_TX_PORT GPIOA
-  #define SOFTWARE_SERIAL_USE_SWD_PINS   // Disable JTAG/SWD to use PA13/PA14
-  #define SOFTWARE_SERIAL_DEFERRED_INIT  // Don't init at startup, wait for CAN success
+  // #define SOFTWARE_SERIAL_USE_SWD_PINS  /* DISABLED: keep SWD accessible */   // Disable JTAG/SWD to use PA13/PA14
+  // #define SOFTWARE_SERIAL_DEFERRED_INIT  /* DISABLED: prevents SoftwareSerialInit() call */  // Don't init at startup, wait for CAN success
   #define DEBUG_SOFTWARE_SERIAL
 #endif
 
@@ -230,8 +230,8 @@
   #define SOFTWARE_SERIAL_RX_PORT GPIOA
   #define SOFTWARE_SERIAL_TX_PIN GPIO_PIN_13
   #define SOFTWARE_SERIAL_TX_PORT GPIOA
-  #define SOFTWARE_SERIAL_USE_SWD_PINS   // Disable JTAG/SWD to use PA13/PA14
-  #define SOFTWARE_SERIAL_DEFERRED_INIT  // Don't init at startup, wait for CAN success
+  // #define SOFTWARE_SERIAL_USE_SWD_PINS  /* DISABLED: keep SWD accessible */   // Disable JTAG/SWD to use PA13/PA14
+  // #define SOFTWARE_SERIAL_DEFERRED_INIT  /* DISABLED: prevents SoftwareSerialInit() call */  // Don't init at startup, wait for CAN success
   #define DEBUG_SOFTWARE_SERIAL
 #endif
 

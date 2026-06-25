@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccMX7Nun.s 			page 1
+ARM GAS  /tmp/cczzaMxA.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
   29:inc/software_spi.h **** void SoftSPI_TransferBuffer(uint8_t *txData, uint8_t *rxData, uint16_t length);
   30:inc/software_spi.h **** void SoftSPI_CS_Low(void);
   31:inc/software_spi.h **** void SoftSPI_CS_High(void);
-ARM GAS  /tmp/ccMX7Nun.s 			page 2
+ARM GAS  /tmp/cczzaMxA.s 			page 2
 
 
   32:inc/software_spi.h **** void SoftSPI_SetMode(uint8_t mode);
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
   27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
   28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
   29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARM GAS  /tmp/ccMX7Nun.s 			page 3
+ARM GAS  /tmp/cczzaMxA.s 			page 3
 
 
   30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
   84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
   85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
   86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  /tmp/ccMX7Nun.s 			page 4
+ARM GAS  /tmp/cczzaMxA.s 			page 4
 
 
   87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/ccMX7Nun.s 			page 5
+ARM GAS  /tmp/cczzaMxA.s 			page 5
 
 
  144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
  200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccMX7Nun.s 			page 6
+ARM GAS  /tmp/cczzaMxA.s 			page 6
 
 
  201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  255:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  256:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  257:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/ccMX7Nun.s 			page 7
+ARM GAS  /tmp/cczzaMxA.s 			page 7
 
 
  258:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  312:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
  313:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  314:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_FPSCR(void)
-ARM GAS  /tmp/ccMX7Nun.s 			page 8
+ARM GAS  /tmp/cczzaMxA.s 			page 8
 
 
  315:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  369:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  370:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
  371:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
-ARM GAS  /tmp/ccMX7Nun.s 			page 9
+ARM GAS  /tmp/cczzaMxA.s 			page 9
 
 
  372:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
   92              		@ frame_needed = 0, uses_anonymous_args = 0
   93 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
   94              	.LCFI2:
-ARM GAS  /tmp/ccMX7Nun.s 			page 10
+ARM GAS  /tmp/cczzaMxA.s 			page 10
 
 
   95              		.cfi_def_cfa_offset 36
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  140 002e 03F00803 		and	r3, r3, #8
  141 0032 0193     		str	r3, [sp, #4]
  142              		.loc 1 14 5 view .LVU24
-ARM GAS  /tmp/ccMX7Nun.s 			page 11
+ARM GAS  /tmp/cczzaMxA.s 			page 11
 
 
  143 0034 019B     		ldr	r3, [sp, #4]
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  181              		.loc 1 30 25 is_stmt 0 view .LVU42
  182 0066 4FF0080A 		mov	r10, #8
  183 006a CDF808A0 		str	r10, [sp, #8]
-ARM GAS  /tmp/ccMX7Nun.s 			page 12
+ARM GAS  /tmp/cczzaMxA.s 			page 12
 
 
   31:src/software_spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  223 00a2 0394     		str	r4, [sp, #12]
   46:src/software_spi.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
  224              		.loc 1 46 5 is_stmt 1 view .LVU63
-ARM GAS  /tmp/ccMX7Nun.s 			page 13
+ARM GAS  /tmp/cczzaMxA.s 			page 13
 
 
  225              		.loc 1 46 26 is_stmt 0 view .LVU64
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  271              		.align	1
  272              		.p2align 2,,3
  273              		.global	SoftSPI_Deinit
-ARM GAS  /tmp/ccMX7Nun.s 			page 14
+ARM GAS  /tmp/cczzaMxA.s 			page 14
 
 
  274              		.syntax unified
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  317 0022 4FF48063 		mov	r3, #1024
  318 0026 0093     		str	r3, [sp]
   68:src/software_spi.c ****     HAL_GPIO_Init(SOFT_SPI_MISO_PORT, &GPIO_InitStruct);
-ARM GAS  /tmp/ccMX7Nun.s 			page 15
+ARM GAS  /tmp/cczzaMxA.s 			page 15
 
 
  319              		.loc 1 68 5 is_stmt 1 view .LVU83
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  363              		.cfi_endproc
  364              	.LFE68:
  366              		.section	.text.SoftSPI_SetMode,"ax",%progbits
-ARM GAS  /tmp/ccMX7Nun.s 			page 16
+ARM GAS  /tmp/cczzaMxA.s 			page 16
 
 
  367              		.align	1
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
   85:src/software_spi.c ****         HAL_GPIO_WritePin(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN, GPIO_PIN_SET);
  411              		.loc 1 85 9 is_stmt 1 view .LVU104
  412 001e 0122     		movs	r2, #1
-ARM GAS  /tmp/ccMX7Nun.s 			page 17
+ARM GAS  /tmp/cczzaMxA.s 			page 17
 
 
  413 0020 0821     		movs	r1, #8
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  464              		.p2align 2,,3
  465              		.global	SoftSPI_CS_High
  466              		.syntax unified
-ARM GAS  /tmp/ccMX7Nun.s 			page 18
+ARM GAS  /tmp/cczzaMxA.s 			page 18
 
 
  467              		.thumb
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  508              	.LBB91:
  509              		.loc 1 111 10 view .LVU117
  510              		.loc 1 111 23 discriminator 1 view .LVU118
-ARM GAS  /tmp/ccMX7Nun.s 			page 19
+ARM GAS  /tmp/cczzaMxA.s 			page 19
 
 
  511              	.LBE91:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  538              	.LVL19:
  539              	.L31:
  113:src/software_spi.c ****             SOFT_SPI_MOSI_PORT->BSRR = SOFT_SPI_MOSI_PIN;
-ARM GAS  /tmp/ccMX7Nun.s 			page 20
+ARM GAS  /tmp/cczzaMxA.s 			page 20
 
 
  540              		.loc 1 113 9 is_stmt 1 view .LVU127
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  584              	.LBE96:
  120:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
  585              		.loc 1 120 27 discriminator 2 view .LVU141
-ARM GAS  /tmp/ccMX7Nun.s 			page 21
+ARM GAS  /tmp/cczzaMxA.s 			page 21
 
 
  586              	.LBB98:
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  633              		.syntax unified
  634              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
  635 002a 00BF     		nop
-ARM GAS  /tmp/ccMX7Nun.s 			page 22
+ARM GAS  /tmp/cczzaMxA.s 			page 22
 
 
  636              	@ 0 "" 2
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  682              		.thumb
  683              		.syntax unified
  684              	.LBE111:
-ARM GAS  /tmp/ccMX7Nun.s 			page 23
+ARM GAS  /tmp/cczzaMxA.s 			page 23
 
 
  685              	.LBE110:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  731              		.loc 3 373 53 view .LVU174
  732              	.LBB119:
  733              		.loc 3 375 3 view .LVU175
-ARM GAS  /tmp/ccMX7Nun.s 			page 24
+ARM GAS  /tmp/cczzaMxA.s 			page 24
 
 
  734              		.syntax unified
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  782              	.LBE125:
  783              	.LBE124:
  129:src/software_spi.c ****         __NOP(); __NOP(); __NOP(); __NOP();
-ARM GAS  /tmp/ccMX7Nun.s 			page 25
+ARM GAS  /tmp/cczzaMxA.s 			page 25
 
 
  784              		.loc 1 129 9 view .LVU185
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  831              		.loc 3 375 3 view .LVU196
  832              		.syntax unified
  833              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
-ARM GAS  /tmp/ccMX7Nun.s 			page 26
+ARM GAS  /tmp/cczzaMxA.s 			page 26
 
 
  834 0048 00BF     		nop
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  130:src/software_spi.c **** 
  882              		.loc 1 130 36 discriminator 3 view .LVU206
  883              	.LBB140:
-ARM GAS  /tmp/ccMX7Nun.s 			page 27
+ARM GAS  /tmp/cczzaMxA.s 			page 27
 
 
  884              	.LBI140:
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  926              	.LBE143:
  927              	.LBE142:
  928              		.loc 1 141 18 discriminator 1 view .LVU221
-ARM GAS  /tmp/ccMX7Nun.s 			page 28
+ARM GAS  /tmp/cczzaMxA.s 			page 28
 
 
  929              	.LBB144:
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  978 006c 00BF     		nop
  979              	@ 0 "" 2
  980              		.thumb
-ARM GAS  /tmp/ccMX7Nun.s 			page 29
+ARM GAS  /tmp/cczzaMxA.s 			page 29
 
 
  981              		.syntax unified
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  1030              	.LBB159:
  1031              		.loc 3 375 3 view .LVU244
  1032              		.syntax unified
-ARM GAS  /tmp/ccMX7Nun.s 			page 30
+ARM GAS  /tmp/cczzaMxA.s 			page 30
 
 
  1033              	@ 375 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  1083              	.LBB166:
  1084              	.LBI166:
  373:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccMX7Nun.s 			page 31
+ARM GAS  /tmp/cczzaMxA.s 			page 31
 
 
  1085              		.loc 3 373 53 view .LVU255
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  1136              	.LBE173:
  1137              	.LBE172:
  111:src/software_spi.c ****         // 1. Set MOSI bit
-ARM GAS  /tmp/ccMX7Nun.s 			page 32
+ARM GAS  /tmp/cczzaMxA.s 			page 32
 
 
  1138              		.loc 1 111 30 discriminator 2 view .LVU266
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  1186 0006 1546     		mov	r5, r2
  151:src/software_spi.c ****     for (uint16_t i = 0; i < length; i++) {
  1187              		.loc 1 151 5 is_stmt 1 view .LVU274
-ARM GAS  /tmp/ccMX7Nun.s 			page 33
+ARM GAS  /tmp/cczzaMxA.s 			page 33
 
 
  1188              	.LBB176:
@@ -1967,35 +1967,35 @@ ARM GAS  /tmp/ccMX7Nun.s 			page 1
  1228              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
  1229              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
  1230              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
-ARM GAS  /tmp/ccMX7Nun.s 			page 34
+ARM GAS  /tmp/cczzaMxA.s 			page 34
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 software_spi.c
-     /tmp/ccMX7Nun.s:19     .text.SoftSPI_Delay:00000000 $t
-     /tmp/ccMX7Nun.s:25     .text.SoftSPI_Delay:00000000 SoftSPI_Delay
-     /tmp/ccMX7Nun.s:80     .text.SoftSPI_Init:00000000 $t
-     /tmp/ccMX7Nun.s:87     .text.SoftSPI_Init:00000000 SoftSPI_Init
-     /tmp/ccMX7Nun.s:263    .text.SoftSPI_Init:000000d8 $d
-     /tmp/ccMX7Nun.s:1224   .bss.spi_mode:00000000 spi_mode
-     /tmp/ccMX7Nun.s:271    .text.SoftSPI_Deinit:00000000 $t
-     /tmp/ccMX7Nun.s:278    .text.SoftSPI_Deinit:00000000 SoftSPI_Deinit
-     /tmp/ccMX7Nun.s:361    .text.SoftSPI_Deinit:0000005c $d
-     /tmp/ccMX7Nun.s:367    .text.SoftSPI_SetMode:00000000 $t
-     /tmp/ccMX7Nun.s:374    .text.SoftSPI_SetMode:00000000 SoftSPI_SetMode
-     /tmp/ccMX7Nun.s:421    .text.SoftSPI_SetMode:0000002c $d
-     /tmp/ccMX7Nun.s:427    .text.SoftSPI_CS_Low:00000000 $t
-     /tmp/ccMX7Nun.s:434    .text.SoftSPI_CS_Low:00000000 SoftSPI_CS_Low
-     /tmp/ccMX7Nun.s:458    .text.SoftSPI_CS_Low:00000010 $d
-     /tmp/ccMX7Nun.s:463    .text.SoftSPI_CS_High:00000000 $t
-     /tmp/ccMX7Nun.s:470    .text.SoftSPI_CS_High:00000000 SoftSPI_CS_High
-     /tmp/ccMX7Nun.s:487    .text.SoftSPI_CS_High:00000008 $d
-     /tmp/ccMX7Nun.s:492    .text.SoftSPI_Transfer:00000000 $t
-     /tmp/ccMX7Nun.s:499    .text.SoftSPI_Transfer:00000000 SoftSPI_Transfer
-     /tmp/ccMX7Nun.s:1154   .text.SoftSPI_Transfer:0000008c $d
-     /tmp/ccMX7Nun.s:1160   .text.SoftSPI_TransferBuffer:00000000 $t
-     /tmp/ccMX7Nun.s:1167   .text.SoftSPI_TransferBuffer:00000000 SoftSPI_TransferBuffer
-     /tmp/ccMX7Nun.s:1225   .bss.spi_mode:00000000 $d
+     /tmp/cczzaMxA.s:19     .text.SoftSPI_Delay:00000000 $t
+     /tmp/cczzaMxA.s:25     .text.SoftSPI_Delay:00000000 SoftSPI_Delay
+     /tmp/cczzaMxA.s:80     .text.SoftSPI_Init:00000000 $t
+     /tmp/cczzaMxA.s:87     .text.SoftSPI_Init:00000000 SoftSPI_Init
+     /tmp/cczzaMxA.s:263    .text.SoftSPI_Init:000000d8 $d
+     /tmp/cczzaMxA.s:1224   .bss.spi_mode:00000000 spi_mode
+     /tmp/cczzaMxA.s:271    .text.SoftSPI_Deinit:00000000 $t
+     /tmp/cczzaMxA.s:278    .text.SoftSPI_Deinit:00000000 SoftSPI_Deinit
+     /tmp/cczzaMxA.s:361    .text.SoftSPI_Deinit:0000005c $d
+     /tmp/cczzaMxA.s:367    .text.SoftSPI_SetMode:00000000 $t
+     /tmp/cczzaMxA.s:374    .text.SoftSPI_SetMode:00000000 SoftSPI_SetMode
+     /tmp/cczzaMxA.s:421    .text.SoftSPI_SetMode:0000002c $d
+     /tmp/cczzaMxA.s:427    .text.SoftSPI_CS_Low:00000000 $t
+     /tmp/cczzaMxA.s:434    .text.SoftSPI_CS_Low:00000000 SoftSPI_CS_Low
+     /tmp/cczzaMxA.s:458    .text.SoftSPI_CS_Low:00000010 $d
+     /tmp/cczzaMxA.s:463    .text.SoftSPI_CS_High:00000000 $t
+     /tmp/cczzaMxA.s:470    .text.SoftSPI_CS_High:00000000 SoftSPI_CS_High
+     /tmp/cczzaMxA.s:487    .text.SoftSPI_CS_High:00000008 $d
+     /tmp/cczzaMxA.s:492    .text.SoftSPI_Transfer:00000000 $t
+     /tmp/cczzaMxA.s:499    .text.SoftSPI_Transfer:00000000 SoftSPI_Transfer
+     /tmp/cczzaMxA.s:1154   .text.SoftSPI_Transfer:0000008c $d
+     /tmp/cczzaMxA.s:1160   .text.SoftSPI_TransferBuffer:00000000 $t
+     /tmp/cczzaMxA.s:1167   .text.SoftSPI_TransferBuffer:00000000 SoftSPI_TransferBuffer
+     /tmp/cczzaMxA.s:1225   .bss.spi_mode:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_Init

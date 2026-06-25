@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8pDC1F.s 			page 1
+ARM GAS  /tmp/ccFbbbSG.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   30:src/softwareserial.c **** // assume 10 bit
   31:src/softwareserial.c **** #define SOFTWARE_SERIAL_MS_PER_BYTE (1000.0/((float)SOFTWARE_SERIAL_BAUD/10.0))
   32:src/softwareserial.c **** 
-ARM GAS  /tmp/cc8pDC1F.s 			page 2
+ARM GAS  /tmp/ccFbbbSG.s 			page 2
 
 
   33:src/softwareserial.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   53              		.section	.text.SoftwareSerialInit,"ax",%progbits
   54              		.align	1
   55              		.global	SoftwareSerialInit
-ARM GAS  /tmp/cc8pDC1F.s 			page 3
+ARM GAS  /tmp/ccFbbbSG.s 			page 3
 
 
   56              		.syntax unified
@@ -130,7 +130,7 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   63:src/softwareserial.c **** void SoftwareSerialInit(void){
   62              		.loc 1 63 30 is_stmt 1 view -0
   63              		.cfi_startproc
-  64              		@ args = 0, pretend = 0, frame = 32
+  64              		@ args = 0, pretend = 0, frame = 24
   65              		@ frame_needed = 0, uses_anonymous_args = 0
   66 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
   67              	.LCFI0:
@@ -141,12 +141,12 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   72              		.cfi_offset 7, -12
   73              		.cfi_offset 8, -8
   74              		.cfi_offset 14, -4
-  75 0004 88B0     		sub	sp, sp, #32
+  75 0004 86B0     		sub	sp, sp, #24
   76              	.LCFI1:
-  77              		.cfi_def_cfa_offset 56
+  77              		.cfi_def_cfa_offset 48
   64:src/softwareserial.c ****   memset((void *)&softwareserialRXbuffer, 0, sizeof(softwareserialRXbuffer));
   78              		.loc 1 64 3 view .LVU8
-  79 0006 464D     		ldr	r5, .L6
+  79 0006 3E4D     		ldr	r5, .L6
   80 0008 4FF48366 		mov	r6, #1048
   81 000c 3246     		mov	r2, r6
   82 000e 0021     		movs	r1, #0
@@ -155,7 +155,7 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   85              	.LVL1:
   65:src/softwareserial.c ****   memset((void *)&softwareserialTXbuffer, 0, sizeof(softwareserialTXbuffer));
   86              		.loc 1 65 3 view .LVU9
-  87 0016 434C     		ldr	r4, .L6+4
+  87 0016 3B4C     		ldr	r4, .L6+4
   88 0018 3246     		mov	r2, r6
   89 001a 0021     		movs	r1, #0
   90 001c 2046     		mov	r0, r4
@@ -178,36 +178,36 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   72:src/softwareserial.c ****   GPIO_InitStruct.Mode  = GPIO_MODE_INPUT;
  101              		.loc 1 72 3 view .LVU15
  102              		.loc 1 72 25 is_stmt 0 view .LVU16
-ARM GAS  /tmp/cc8pDC1F.s 			page 4
+ARM GAS  /tmp/ccFbbbSG.s 			page 4
 
 
  103 002e 0024     		movs	r4, #0
- 104 0030 0594     		str	r4, [sp, #20]
+ 104 0030 0394     		str	r4, [sp, #12]
   73:src/softwareserial.c ****   GPIO_InitStruct.Pull  = GPIO_PULLUP;
  105              		.loc 1 73 3 is_stmt 1 view .LVU17
  106              		.loc 1 73 25 is_stmt 0 view .LVU18
  107 0032 0127     		movs	r7, #1
- 108 0034 0697     		str	r7, [sp, #24]
+ 108 0034 0497     		str	r7, [sp, #16]
   74:src/softwareserial.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
  109              		.loc 1 74 3 is_stmt 1 view .LVU19
  110              		.loc 1 74 25 is_stmt 0 view .LVU20
  111 0036 0323     		movs	r3, #3
- 112 0038 0793     		str	r3, [sp, #28]
+ 112 0038 0593     		str	r3, [sp, #20]
   75:src/softwareserial.c **** 
   76:src/softwareserial.c ****   GPIO_InitStruct.Pin = SOFTWARE_SERIAL_RX_PIN;
  113              		.loc 1 76 3 is_stmt 1 view .LVU21
  114              		.loc 1 76 23 is_stmt 0 view .LVU22
  115 003a 4FF48043 		mov	r3, #16384
- 116 003e 0493     		str	r3, [sp, #16]
+ 116 003e 0293     		str	r3, [sp, #8]
   77:src/softwareserial.c ****   GPIO_InitStruct.Mode  = GPIO_MODE_IT_RISING_FALLING;
  117              		.loc 1 77 3 is_stmt 1 view .LVU23
  118              		.loc 1 77 25 is_stmt 0 view .LVU24
- 119 0040 394B     		ldr	r3, .L6+8
- 120 0042 0593     		str	r3, [sp, #20]
+ 119 0040 314B     		ldr	r3, .L6+8
+ 120 0042 0393     		str	r3, [sp, #12]
   78:src/softwareserial.c ****   HAL_GPIO_Init(SOFTWARE_SERIAL_RX_PORT, &GPIO_InitStruct);
  121              		.loc 1 78 3 is_stmt 1 view .LVU25
- 122 0044 DFF8E480 		ldr	r8, .L6+12
- 123 0048 04A9     		add	r1, sp, #16
+ 122 0044 DFF8C480 		ldr	r8, .L6+12
+ 123 0048 02A9     		add	r1, sp, #8
  124 004a 4046     		mov	r0, r8
  125 004c FFF7FEFF 		bl	HAL_GPIO_Init
  126              	.LVL3:
@@ -219,26 +219,26 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  128              	.LBB10:
  129              		.loc 1 82 3 view .LVU27
  130              		.loc 1 82 3 view .LVU28
- 131 0050 374E     		ldr	r6, .L6+16
+ 131 0050 2F4E     		ldr	r6, .L6+16
  132 0052 F369     		ldr	r3, [r6, #28]
  133 0054 43F00803 		orr	r3, r3, #8
  134 0058 F361     		str	r3, [r6, #28]
  135              		.loc 1 82 3 view .LVU29
  136 005a F369     		ldr	r3, [r6, #28]
  137 005c 03F00803 		and	r3, r3, #8
- 138 0060 0193     		str	r3, [sp, #4]
+ 138 0060 0093     		str	r3, [sp]
  139              		.loc 1 82 3 view .LVU30
- 140 0062 019B     		ldr	r3, [sp, #4]
+ 140 0062 009B     		ldr	r3, [sp]
  141              	.LBE10:
  142              		.loc 1 82 3 view .LVU31
   83:src/softwareserial.c ****   softwareserialtimer.Instance = TIM5;
  143              		.loc 1 83 3 view .LVU32
  144              		.loc 1 83 32 is_stmt 0 view .LVU33
- 145 0064 334D     		ldr	r5, .L6+20
- 146 0066 344B     		ldr	r3, .L6+24
+ 145 0064 2B4D     		ldr	r5, .L6+20
+ 146 0066 2C4B     		ldr	r3, .L6+24
  147 0068 2B60     		str	r3, [r5]
   84:src/softwareserial.c ****   softwareserialtimer.Init.Prescaler         = 64000000 / 2 / SOFTWARE_SERIAL_RX_TIMER_FREQ;
-ARM GAS  /tmp/cc8pDC1F.s 			page 5
+ARM GAS  /tmp/ccFbbbSG.s 			page 5
 
 
  148              		.loc 1 84 3 is_stmt 1 view .LVU34
@@ -281,28 +281,28 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   94:src/softwareserial.c ****   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
  176              		.loc 1 94 3 view .LVU48
  177              		.loc 1 94 25 is_stmt 0 view .LVU49
- 178 0088 0597     		str	r7, [sp, #20]
+ 178 0088 0397     		str	r7, [sp, #12]
   95:src/softwareserial.c ****   GPIO_InitStruct.Pull  = GPIO_NOPULL;
  179              		.loc 1 95 3 is_stmt 1 view .LVU50
  180              		.loc 1 95 25 is_stmt 0 view .LVU51
- 181 008a 0694     		str	r4, [sp, #24]
+ 181 008a 0494     		str	r4, [sp, #16]
   96:src/softwareserial.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  182              		.loc 1 96 3 is_stmt 1 view .LVU52
  183              		.loc 1 96 25 is_stmt 0 view .LVU53
  184 008c 0223     		movs	r3, #2
- 185 008e 0793     		str	r3, [sp, #28]
+ 185 008e 0593     		str	r3, [sp, #20]
   97:src/softwareserial.c **** 
   98:src/softwareserial.c ****   GPIO_InitStruct.Pin = SOFTWARE_SERIAL_TX_PIN;
  186              		.loc 1 98 3 is_stmt 1 view .LVU54
  187              		.loc 1 98 23 is_stmt 0 view .LVU55
  188 0090 4FF40053 		mov	r3, #8192
- 189 0094 0493     		str	r3, [sp, #16]
+ 189 0094 0293     		str	r3, [sp, #8]
   99:src/softwareserial.c ****   HAL_GPIO_Init(SOFTWARE_SERIAL_TX_PORT, &GPIO_InitStruct);
-ARM GAS  /tmp/cc8pDC1F.s 			page 6
+ARM GAS  /tmp/ccFbbbSG.s 			page 6
 
 
  190              		.loc 1 99 3 is_stmt 1 view .LVU56
- 191 0096 04A9     		add	r1, sp, #16
+ 191 0096 02A9     		add	r1, sp, #8
  192 0098 4046     		mov	r0, r8
  193 009a FFF7FEFF 		bl	HAL_GPIO_Init
  194              	.LVL6:
@@ -319,16 +319,16 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  202              		.loc 1 102 3 view .LVU60
  203 00a6 F369     		ldr	r3, [r6, #28]
  204 00a8 03F00203 		and	r3, r3, #2
- 205 00ac 0293     		str	r3, [sp, #8]
+ 205 00ac 0193     		str	r3, [sp, #4]
  206              		.loc 1 102 3 view .LVU61
- 207 00ae 029B     		ldr	r3, [sp, #8]
+ 207 00ae 019B     		ldr	r3, [sp, #4]
  208              	.LBE11:
  209              		.loc 1 102 3 view .LVU62
  103:src/softwareserial.c ****   softwareserialtimerTX.Instance = TIM3;
  210              		.loc 1 103 3 view .LVU63
  211              		.loc 1 103 34 is_stmt 0 view .LVU64
- 212 00b0 224D     		ldr	r5, .L6+28
- 213 00b2 234B     		ldr	r3, .L6+32
+ 212 00b0 1A4D     		ldr	r5, .L6+28
+ 213 00b2 1B4B     		ldr	r3, .L6+32
  214 00b4 2B60     		str	r3, [r5]
  104:src/softwareserial.c ****   softwareserialtimerTX.Init.Prescaler         = 64000000 / 2 / SOFTWARE_SERIAL_TX_TIMER_FREQ;
  215              		.loc 1 104 3 is_stmt 1 view .LVU65
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  110:src/softwareserial.c ****   HAL_TIM_Base_Init(&softwareserialtimerTX);
  234              		.loc 1 110 3 is_stmt 1 view .LVU77
  235 00c6 2846     		mov	r0, r5
-ARM GAS  /tmp/cc8pDC1F.s 			page 7
+ARM GAS  /tmp/ccFbbbSG.s 			page 7
 
 
  236 00c8 FFF7FEFF 		bl	HAL_TIM_Base_Init
@@ -390,347 +390,316 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  116:src/softwareserial.c ****   // Disable SWD/JTAG if using PA13/PA14 pins
  117:src/softwareserial.c ****   #ifdef SOFTWARE_SERIAL_USE_SWD_PINS
  118:src/softwareserial.c ****     __HAL_RCC_AFIO_CLK_ENABLE();
- 257              		.loc 1 118 5 view .LVU82
- 258              	.LBB12:
- 259              		.loc 1 118 5 view .LVU83
- 260              		.loc 1 118 5 view .LVU84
- 261 00ea B369     		ldr	r3, [r6, #24]
- 262 00ec 3B43     		orrs	r3, r3, r7
- 263 00ee B361     		str	r3, [r6, #24]
- 264              		.loc 1 118 5 view .LVU85
- 265 00f0 B369     		ldr	r3, [r6, #24]
- 266 00f2 3B40     		ands	r3, r3, r7
- 267 00f4 0393     		str	r3, [sp, #12]
- 268              		.loc 1 118 5 view .LVU86
- 269 00f6 039B     		ldr	r3, [sp, #12]
- 270              	.LBE12:
- 271              		.loc 1 118 5 view .LVU87
  119:src/softwareserial.c ****     __HAL_AFIO_REMAP_SWJ_DISABLE();  // Disable JTAG and SWD to release PA13/PA14/PA15/PB3/PB4
- 272              		.loc 1 119 5 view .LVU88
- 273              		.loc 1 119 5 view .LVU89
- 274 00f8 124B     		ldr	r3, .L6+36
- 275 00fa 5A68     		ldr	r2, [r3, #4]
- 276 00fc 22F0E062 		bic	r2, r2, #117440512
- 277 0100 5A60     		str	r2, [r3, #4]
- 278              		.loc 1 119 5 view .LVU90
- 279 0102 5A68     		ldr	r2, [r3, #4]
- 280 0104 42F08062 		orr	r2, r2, #67108864
- 281 0108 5A60     		str	r2, [r3, #4]
- 282              		.loc 1 119 5 view .LVU91
  120:src/softwareserial.c ****   #endif
-ARM GAS  /tmp/cc8pDC1F.s 			page 8
-
-
  121:src/softwareserial.c **** 
  122:src/softwareserial.c ****   // Enable the appropriate EXTI interrupt based on pin number
  123:src/softwareserial.c ****   // The interrupt handler is determined at runtime in stm32f1xx_it.c
  124:src/softwareserial.c ****   uint16_t pin = SOFTWARE_SERIAL_RX_PIN;
- 283              		.loc 1 124 3 view .LVU92
- 284              	.LVL11:
+ 257              		.loc 1 124 3 view .LVU82
  125:src/softwareserial.c ****   if (pin == GPIO_PIN_0) {
- 285              		.loc 1 125 3 view .LVU93
+ 258              		.loc 1 125 3 view .LVU83
  126:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
  127:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI0_IRQn);
  128:src/softwareserial.c ****   } else if (pin == GPIO_PIN_1) {
- 286              		.loc 1 128 10 view .LVU94
+ 259              		.loc 1 128 10 view .LVU84
  129:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
  130:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
  131:src/softwareserial.c ****   } else if (pin == GPIO_PIN_2) {
- 287              		.loc 1 131 10 view .LVU95
+ 260              		.loc 1 131 10 view .LVU85
  132:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
  133:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI2_IRQn);
  134:src/softwareserial.c ****   } else if (pin == GPIO_PIN_3) {
- 288              		.loc 1 134 10 view .LVU96
+ 261              		.loc 1 134 10 view .LVU86
  135:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
  136:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI3_IRQn);
  137:src/softwareserial.c ****   } else if (pin == GPIO_PIN_4) {
- 289              		.loc 1 137 10 view .LVU97
+ 262              		.loc 1 137 10 view .LVU87
  138:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
  139:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI4_IRQn);
  140:src/softwareserial.c ****   } else if (pin >= GPIO_PIN_5 && pin <= GPIO_PIN_9) {
- 290              		.loc 1 140 10 view .LVU98
+ARM GAS  /tmp/ccFbbbSG.s 			page 8
+
+
+ 263              		.loc 1 140 10 view .LVU88
  141:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
  142:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
  143:src/softwareserial.c ****   } else if (pin >= GPIO_PIN_10 && pin <= GPIO_PIN_15) {
- 291              		.loc 1 143 10 view .LVU99
+ 264              		.loc 1 143 10 view .LVU89
  144:src/softwareserial.c ****     HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
- 292              		.loc 1 144 5 view .LVU100
- 293 010a 2246     		mov	r2, r4
- 294 010c 2146     		mov	r1, r4
- 295 010e 2820     		movs	r0, #40
- 296 0110 FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 297              	.LVL12:
+ 265              		.loc 1 144 5 view .LVU90
+ 266 00ea 2246     		mov	r2, r4
+ 267 00ec 2146     		mov	r1, r4
+ 268 00ee 2820     		movs	r0, #40
+ 269 00f0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 270              	.LVL11:
  145:src/softwareserial.c ****     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
- 298              		.loc 1 145 5 view .LVU101
- 299 0114 2820     		movs	r0, #40
- 300 0116 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
- 301              	.LVL13:
+ 271              		.loc 1 145 5 view .LVU91
+ 272 00f4 2820     		movs	r0, #40
+ 273 00f6 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 274              	.LVL12:
  146:src/softwareserial.c ****   }
  147:src/softwareserial.c **** 
  148:src/softwareserial.c **** }
- 302              		.loc 1 148 1 is_stmt 0 view .LVU102
- 303 011a 08B0     		add	sp, sp, #32
- 304              	.LCFI2:
- 305              		.cfi_def_cfa_offset 24
- 306              		@ sp needed
- 307 011c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 308              	.L7:
- 309              		.align	2
- 310              	.L6:
- 311 0120 00000000 		.word	softwareserialRXbuffer
-ARM GAS  /tmp/cc8pDC1F.s 			page 9
-
-
- 312 0124 00000000 		.word	softwareserialTXbuffer
- 313 0128 00003110 		.word	271646720
- 314 012c 00080140 		.word	1073809408
- 315 0130 00100240 		.word	1073876992
- 316 0134 00000000 		.word	softwareserialtimer
- 317 0138 000C0040 		.word	1073744896
- 318 013c 00000000 		.word	softwareserialtimerTX
- 319 0140 00040040 		.word	1073742848
- 320 0144 00000140 		.word	1073807360
- 321              		.cfi_endproc
- 322              	.LFE67:
- 324              		.section	.text.softwareserial_getrx,"ax",%progbits
- 325              		.align	1
- 326              		.global	softwareserial_getrx
- 327              		.syntax unified
- 328              		.thumb
- 329              		.thumb_func
- 331              	softwareserial_getrx:
- 332              	.LFB68:
+ 275              		.loc 1 148 1 is_stmt 0 view .LVU92
+ 276 00fa 06B0     		add	sp, sp, #24
+ 277              	.LCFI2:
+ 278              		.cfi_def_cfa_offset 24
+ 279              		@ sp needed
+ 280 00fc BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 281              	.L7:
+ 282              		.align	2
+ 283              	.L6:
+ 284 0100 00000000 		.word	softwareserialRXbuffer
+ 285 0104 00000000 		.word	softwareserialTXbuffer
+ 286 0108 00003110 		.word	271646720
+ 287 010c 00080140 		.word	1073809408
+ 288 0110 00100240 		.word	1073876992
+ 289 0114 00000000 		.word	softwareserialtimer
+ 290 0118 000C0040 		.word	1073744896
+ 291 011c 00000000 		.word	softwareserialtimerTX
+ 292 0120 00040040 		.word	1073742848
+ 293              		.cfi_endproc
+ 294              	.LFE67:
+ 296              		.section	.text.softwareserial_getrx,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	softwareserial_getrx
+ 299              		.syntax unified
+ 300              		.thumb
+ 301              		.thumb_func
+ 303              	softwareserial_getrx:
+ 304              	.LFB68:
  149:src/softwareserial.c **** 
  150:src/softwareserial.c **** 
  151:src/softwareserial.c **** //////////////////////////////////////////////////////////
  152:src/softwareserial.c **** // get a single character if available.
  153:src/softwareserial.c **** // return -1 if none.
  154:src/softwareserial.c **** short softwareserial_getrx(){
- 333              		.loc 1 154 29 is_stmt 1 view -0
- 334              		.cfi_startproc
- 335              		@ args = 0, pretend = 0, frame = 0
- 336              		@ frame_needed = 0, uses_anonymous_args = 0
- 337              		@ link register save eliminated.
+ 305              		.loc 1 154 29 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccFbbbSG.s 			page 9
+
+
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309              		@ link register save eliminated.
  155:src/softwareserial.c ****     short t = -1;
- 338              		.loc 1 155 5 view .LVU104
- 339              	.LVL14:
+ 310              		.loc 1 155 5 view .LVU94
+ 311              	.LVL13:
  156:src/softwareserial.c ****     if (softwareserialRXbuffer.head != softwareserialRXbuffer.tail){
- 340              		.loc 1 156 5 view .LVU105
- 341              		.loc 1 156 31 is_stmt 0 view .LVU106
- 342 0000 0D4B     		ldr	r3, .L11
- 343 0002 D3F80024 		ldr	r2, [r3, #1024]
- 344              		.loc 1 156 62 view .LVU107
- 345 0006 D3F80434 		ldr	r3, [r3, #1028]
- 346              		.loc 1 156 8 view .LVU108
- 347 000a 9A42     		cmp	r2, r3
- 348 000c 10D0     		beq	.L10
+ 312              		.loc 1 156 5 view .LVU95
+ 313              		.loc 1 156 31 is_stmt 0 view .LVU96
+ 314 0000 0D4B     		ldr	r3, .L11
+ 315 0002 D3F80024 		ldr	r2, [r3, #1024]
+ 316              		.loc 1 156 62 view .LVU97
+ 317 0006 D3F80434 		ldr	r3, [r3, #1028]
+ 318              		.loc 1 156 8 view .LVU98
+ 319 000a 9A42     		cmp	r2, r3
+ 320 000c 10D0     		beq	.L10
  157:src/softwareserial.c ****         t = softwareserialRXbuffer.buff[softwareserialRXbuffer.tail];
- 349              		.loc 1 157 9 is_stmt 1 view .LVU109
- 350              		.loc 1 157 63 is_stmt 0 view .LVU110
- 351 000e 0A4A     		ldr	r2, .L11
- 352 0010 D2F80434 		ldr	r3, [r2, #1028]
- 353              		.loc 1 157 40 view .LVU111
- 354 0014 D05C     		ldrb	r0, [r2, r3]	@ zero_extendqisi2
- 355              	.LVL15:
+ 321              		.loc 1 157 9 is_stmt 1 view .LVU99
+ 322              		.loc 1 157 63 is_stmt 0 view .LVU100
+ 323 000e 0A4A     		ldr	r2, .L11
+ 324 0010 D2F80434 		ldr	r3, [r2, #1028]
+ 325              		.loc 1 157 40 view .LVU101
+ 326 0014 D05C     		ldrb	r0, [r2, r3]	@ zero_extendqisi2
+ 327              	.LVL14:
  158:src/softwareserial.c ****         softwareserialRXbuffer.tail = ((softwareserialRXbuffer.tail + 1 ) % SOFTWARE_SERIAL_BUFFER_
- 356              		.loc 1 158 9 is_stmt 1 view .LVU112
- 357              		.loc 1 158 63 is_stmt 0 view .LVU113
- 358 0016 D2F80434 		ldr	r3, [r2, #1028]
- 359              		.loc 1 158 69 view .LVU114
- 360 001a 0133     		adds	r3, r3, #1
-ARM GAS  /tmp/cc8pDC1F.s 			page 10
-
-
- 361              		.loc 1 158 75 view .LVU115
- 362 001c 5942     		rsbs	r1, r3, #0
- 363 001e C3F30903 		ubfx	r3, r3, #0, #10
- 364 0022 C1F30901 		ubfx	r1, r1, #0, #10
- 365 0026 58BF     		it	pl
- 366 0028 4B42     		rsbpl	r3, r1, #0
- 367              		.loc 1 158 37 view .LVU116
- 368 002a C2F80434 		str	r3, [r2, #1028]
- 369 002e 7047     		bx	lr
- 370              	.LVL16:
- 371              	.L10:
+ 328              		.loc 1 158 9 is_stmt 1 view .LVU102
+ 329              		.loc 1 158 63 is_stmt 0 view .LVU103
+ 330 0016 D2F80434 		ldr	r3, [r2, #1028]
+ 331              		.loc 1 158 69 view .LVU104
+ 332 001a 0133     		adds	r3, r3, #1
+ 333              		.loc 1 158 75 view .LVU105
+ 334 001c 5942     		rsbs	r1, r3, #0
+ 335 001e C3F30903 		ubfx	r3, r3, #0, #10
+ 336 0022 C1F30901 		ubfx	r1, r1, #0, #10
+ 337 0026 58BF     		it	pl
+ 338 0028 4B42     		rsbpl	r3, r1, #0
+ 339              		.loc 1 158 37 view .LVU106
+ 340 002a C2F80434 		str	r3, [r2, #1028]
+ 341 002e 7047     		bx	lr
+ 342              	.LVL15:
+ 343              	.L10:
  155:src/softwareserial.c ****     if (softwareserialRXbuffer.head != softwareserialRXbuffer.tail){
- 372              		.loc 1 155 11 view .LVU117
- 373 0030 4FF0FF30 		mov	r0, #-1
- 374              	.LVL17:
+ 344              		.loc 1 155 11 view .LVU107
+ 345 0030 4FF0FF30 		mov	r0, #-1
+ 346              	.LVL16:
  159:src/softwareserial.c ****     }
  160:src/softwareserial.c ****     return t;
- 375              		.loc 1 160 5 is_stmt 1 view .LVU118
+ 347              		.loc 1 160 5 is_stmt 1 view .LVU108
  161:src/softwareserial.c **** }
- 376              		.loc 1 161 1 is_stmt 0 view .LVU119
- 377 0034 7047     		bx	lr
- 378              	.L12:
- 379 0036 00BF     		.align	2
- 380              	.L11:
- 381 0038 00000000 		.word	softwareserialRXbuffer
- 382              		.cfi_endproc
- 383              	.LFE68:
- 385              		.section	.text.softwareserial_peekrx,"ax",%progbits
- 386              		.align	1
- 387              		.global	softwareserial_peekrx
- 388              		.syntax unified
- 389              		.thumb
- 390              		.thumb_func
- 392              	softwareserial_peekrx:
- 393              	.LFB69:
+ 348              		.loc 1 161 1 is_stmt 0 view .LVU109
+ 349 0034 7047     		bx	lr
+ 350              	.L12:
+ 351 0036 00BF     		.align	2
+ 352              	.L11:
+ 353 0038 00000000 		.word	softwareserialRXbuffer
+ 354              		.cfi_endproc
+ 355              	.LFE68:
+ 357              		.section	.text.softwareserial_peekrx,"ax",%progbits
+ARM GAS  /tmp/ccFbbbSG.s 			page 10
+
+
+ 358              		.align	1
+ 359              		.global	softwareserial_peekrx
+ 360              		.syntax unified
+ 361              		.thumb
+ 362              		.thumb_func
+ 364              	softwareserial_peekrx:
+ 365              	.LFB69:
  162:src/softwareserial.c **** 
  163:src/softwareserial.c **** //////////////////////////////////////////////////////////
  164:src/softwareserial.c **** // get a single character if available.
  165:src/softwareserial.c **** // return -1 if none.
  166:src/softwareserial.c **** short softwareserial_peekrx(){
- 394              		.loc 1 166 30 is_stmt 1 view -0
- 395              		.cfi_startproc
- 396              		@ args = 0, pretend = 0, frame = 0
- 397              		@ frame_needed = 0, uses_anonymous_args = 0
- 398              		@ link register save eliminated.
+ 366              		.loc 1 166 30 is_stmt 1 view -0
+ 367              		.cfi_startproc
+ 368              		@ args = 0, pretend = 0, frame = 0
+ 369              		@ frame_needed = 0, uses_anonymous_args = 0
+ 370              		@ link register save eliminated.
  167:src/softwareserial.c ****     short t = -1;
- 399              		.loc 1 167 5 view .LVU121
- 400              	.LVL18:
+ 371              		.loc 1 167 5 view .LVU111
+ 372              	.LVL17:
  168:src/softwareserial.c ****     if (softwareserialRXbuffer.head != softwareserialRXbuffer.tail){
- 401              		.loc 1 168 5 view .LVU122
- 402              		.loc 1 168 31 is_stmt 0 view .LVU123
- 403 0000 074B     		ldr	r3, .L16
- 404 0002 D3F80024 		ldr	r2, [r3, #1024]
- 405              		.loc 1 168 62 view .LVU124
- 406 0006 D3F80434 		ldr	r3, [r3, #1028]
- 407              		.loc 1 168 8 view .LVU125
- 408 000a 9A42     		cmp	r2, r3
-ARM GAS  /tmp/cc8pDC1F.s 			page 11
-
-
- 409 000c 04D0     		beq	.L15
+ 373              		.loc 1 168 5 view .LVU112
+ 374              		.loc 1 168 31 is_stmt 0 view .LVU113
+ 375 0000 074B     		ldr	r3, .L16
+ 376 0002 D3F80024 		ldr	r2, [r3, #1024]
+ 377              		.loc 1 168 62 view .LVU114
+ 378 0006 D3F80434 		ldr	r3, [r3, #1028]
+ 379              		.loc 1 168 8 view .LVU115
+ 380 000a 9A42     		cmp	r2, r3
+ 381 000c 04D0     		beq	.L15
  169:src/softwareserial.c ****         t = softwareserialRXbuffer.buff[softwareserialRXbuffer.tail];
- 410              		.loc 1 169 9 is_stmt 1 view .LVU126
- 411              		.loc 1 169 63 is_stmt 0 view .LVU127
- 412 000e 044B     		ldr	r3, .L16
- 413 0010 D3F80424 		ldr	r2, [r3, #1028]
- 414              		.loc 1 169 40 view .LVU128
- 415 0014 985C     		ldrb	r0, [r3, r2]	@ zero_extendqisi2
- 416              	.LVL19:
- 417              		.loc 1 169 40 view .LVU129
- 418 0016 7047     		bx	lr
- 419              	.LVL20:
- 420              	.L15:
+ 382              		.loc 1 169 9 is_stmt 1 view .LVU116
+ 383              		.loc 1 169 63 is_stmt 0 view .LVU117
+ 384 000e 044B     		ldr	r3, .L16
+ 385 0010 D3F80424 		ldr	r2, [r3, #1028]
+ 386              		.loc 1 169 40 view .LVU118
+ 387 0014 985C     		ldrb	r0, [r3, r2]	@ zero_extendqisi2
+ 388              	.LVL18:
+ 389              		.loc 1 169 40 view .LVU119
+ 390 0016 7047     		bx	lr
+ 391              	.LVL19:
+ 392              	.L15:
  167:src/softwareserial.c ****     short t = -1;
- 421              		.loc 1 167 11 view .LVU130
- 422 0018 4FF0FF30 		mov	r0, #-1
- 423              	.LVL21:
+ 393              		.loc 1 167 11 view .LVU120
+ 394 0018 4FF0FF30 		mov	r0, #-1
+ 395              	.LVL20:
  170:src/softwareserial.c ****     }
  171:src/softwareserial.c ****     return t;
- 424              		.loc 1 171 5 is_stmt 1 view .LVU131
+ 396              		.loc 1 171 5 is_stmt 1 view .LVU121
  172:src/softwareserial.c **** }
- 425              		.loc 1 172 1 is_stmt 0 view .LVU132
- 426 001c 7047     		bx	lr
- 427              	.L17:
- 428 001e 00BF     		.align	2
- 429              	.L16:
- 430 0020 00000000 		.word	softwareserialRXbuffer
- 431              		.cfi_endproc
- 432              	.LFE69:
- 434              		.section	.text.softwareserial_available,"ax",%progbits
- 435              		.align	1
- 436              		.global	softwareserial_available
- 437              		.syntax unified
- 438              		.thumb
- 439              		.thumb_func
- 441              	softwareserial_available:
- 442              	.LFB70:
+ 397              		.loc 1 172 1 is_stmt 0 view .LVU122
+ 398 001c 7047     		bx	lr
+ 399              	.L17:
+ 400 001e 00BF     		.align	2
+ 401              	.L16:
+ 402 0020 00000000 		.word	softwareserialRXbuffer
+ 403              		.cfi_endproc
+ARM GAS  /tmp/ccFbbbSG.s 			page 11
+
+
+ 404              	.LFE69:
+ 406              		.section	.text.softwareserial_available,"ax",%progbits
+ 407              		.align	1
+ 408              		.global	softwareserial_available
+ 409              		.syntax unified
+ 410              		.thumb
+ 411              		.thumb_func
+ 413              	softwareserial_available:
+ 414              	.LFB70:
  173:src/softwareserial.c **** 
  174:src/softwareserial.c **** 
  175:src/softwareserial.c **** //////////////////////////////////////////////////////////
  176:src/softwareserial.c **** // return chars available
  177:src/softwareserial.c **** int softwareserial_available(){
- 443              		.loc 1 177 31 is_stmt 1 view -0
- 444              		.cfi_startproc
- 445              		@ args = 0, pretend = 0, frame = 0
- 446              		@ frame_needed = 0, uses_anonymous_args = 0
- 447              		@ link register save eliminated.
+ 415              		.loc 1 177 31 is_stmt 1 view -0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419              		@ link register save eliminated.
  178:src/softwareserial.c ****     if (softwareserialRXbuffer.head != softwareserialRXbuffer.tail){
- 448              		.loc 1 178 5 view .LVU134
- 449              		.loc 1 178 31 is_stmt 0 view .LVU135
- 450 0000 094B     		ldr	r3, .L22
- 451 0002 D3F80024 		ldr	r2, [r3, #1024]
- 452              		.loc 1 178 62 view .LVU136
- 453 0006 D3F80434 		ldr	r3, [r3, #1028]
- 454              		.loc 1 178 8 view .LVU137
- 455 000a 9A42     		cmp	r2, r3
- 456 000c 09D0     		beq	.L21
-ARM GAS  /tmp/cc8pDC1F.s 			page 12
-
-
- 457              	.LBB13:
+ 420              		.loc 1 178 5 view .LVU124
+ 421              		.loc 1 178 31 is_stmt 0 view .LVU125
+ 422 0000 094B     		ldr	r3, .L22
+ 423 0002 D3F80024 		ldr	r2, [r3, #1024]
+ 424              		.loc 1 178 62 view .LVU126
+ 425 0006 D3F80434 		ldr	r3, [r3, #1028]
+ 426              		.loc 1 178 8 view .LVU127
+ 427 000a 9A42     		cmp	r2, r3
+ 428 000c 09D0     		beq	.L21
+ 429              	.LBB12:
  179:src/softwareserial.c ****         int count = softwareserialRXbuffer.head - softwareserialRXbuffer.tail;
- 458              		.loc 1 179 9 is_stmt 1 view .LVU138
- 459              		.loc 1 179 43 is_stmt 0 view .LVU139
- 460 000e 064B     		ldr	r3, .L22
- 461 0010 D3F80004 		ldr	r0, [r3, #1024]
- 462              		.loc 1 179 73 view .LVU140
- 463 0014 D3F80434 		ldr	r3, [r3, #1028]
- 464              	.LVL22:
+ 430              		.loc 1 179 9 is_stmt 1 view .LVU128
+ 431              		.loc 1 179 43 is_stmt 0 view .LVU129
+ 432 000e 064B     		ldr	r3, .L22
+ 433 0010 D3F80004 		ldr	r0, [r3, #1024]
+ 434              		.loc 1 179 73 view .LVU130
+ 435 0014 D3F80434 		ldr	r3, [r3, #1028]
+ 436              	.LVL21:
  180:src/softwareserial.c ****         if (count < 0){
- 465              		.loc 1 180 9 is_stmt 1 view .LVU141
- 466              		.loc 1 180 12 is_stmt 0 view .LVU142
- 467 0018 C01A     		subs	r0, r0, r3
- 468              	.LVL23:
- 469              		.loc 1 180 12 view .LVU143
- 470 001a 03D5     		bpl	.L18
+ 437              		.loc 1 180 9 is_stmt 1 view .LVU131
+ 438              		.loc 1 180 12 is_stmt 0 view .LVU132
+ 439 0018 C01A     		subs	r0, r0, r3
+ 440              	.LVL22:
+ 441              		.loc 1 180 12 view .LVU133
+ 442 001a 03D5     		bpl	.L18
  181:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 471              		.loc 1 181 13 is_stmt 1 view .LVU144
- 472              		.loc 1 181 19 is_stmt 0 view .LVU145
- 473 001c 00F58060 		add	r0, r0, #1024
- 474              	.LVL24:
+ 443              		.loc 1 181 13 is_stmt 1 view .LVU134
+ 444              		.loc 1 181 19 is_stmt 0 view .LVU135
+ 445 001c 00F58060 		add	r0, r0, #1024
+ 446              	.LVL23:
  182:src/softwareserial.c ****         }
  183:src/softwareserial.c ****         return count;
- 475              		.loc 1 183 9 is_stmt 1 view .LVU146
- 476              		.loc 1 183 16 is_stmt 0 view .LVU147
- 477 0020 7047     		bx	lr
- 478              	.LVL25:
- 479              	.L21:
- 480              		.loc 1 183 16 view .LVU148
- 481              	.LBE13:
+ 447              		.loc 1 183 9 is_stmt 1 view .LVU136
+ 448              		.loc 1 183 16 is_stmt 0 view .LVU137
+ 449 0020 7047     		bx	lr
+ 450              	.LVL24:
+ 451              	.L21:
+ARM GAS  /tmp/ccFbbbSG.s 			page 12
+
+
+ 452              		.loc 1 183 16 view .LVU138
+ 453              	.LBE12:
  184:src/softwareserial.c ****     }
  185:src/softwareserial.c ****     return 0;
- 482              		.loc 1 185 12 view .LVU149
- 483 0022 0020     		movs	r0, #0
- 484              	.L18:
+ 454              		.loc 1 185 12 view .LVU139
+ 455 0022 0020     		movs	r0, #0
+ 456              	.L18:
  186:src/softwareserial.c **** }
- 485              		.loc 1 186 1 view .LVU150
- 486 0024 7047     		bx	lr
- 487              	.L23:
- 488 0026 00BF     		.align	2
- 489              	.L22:
- 490 0028 00000000 		.word	softwareserialRXbuffer
- 491              		.cfi_endproc
- 492              	.LFE70:
- 494              		.section	.text.softwareserial_flushRX,"ax",%progbits
- 495              		.align	1
- 496              		.global	softwareserial_flushRX
- 497              		.syntax unified
- 498              		.thumb
- 499              		.thumb_func
- 501              	softwareserial_flushRX:
- 502              	.LFB71:
+ 457              		.loc 1 186 1 view .LVU140
+ 458 0024 7047     		bx	lr
+ 459              	.L23:
+ 460 0026 00BF     		.align	2
+ 461              	.L22:
+ 462 0028 00000000 		.word	softwareserialRXbuffer
+ 463              		.cfi_endproc
+ 464              	.LFE70:
+ 466              		.section	.text.softwareserial_flushRX,"ax",%progbits
+ 467              		.align	1
+ 468              		.global	softwareserial_flushRX
+ 469              		.syntax unified
+ 470              		.thumb
+ 471              		.thumb_func
+ 473              	softwareserial_flushRX:
+ 474              	.LFB71:
  187:src/softwareserial.c **** 
  188:src/softwareserial.c **** 
  189:src/softwareserial.c **** //////////////////////////////////////////////////////////
  190:src/softwareserial.c **** // flush receive
  191:src/softwareserial.c **** void softwareserial_flushRX(){
-ARM GAS  /tmp/cc8pDC1F.s 			page 13
-
-
- 503              		.loc 1 191 30 is_stmt 1 view -0
- 504              		.cfi_startproc
- 505              		@ args = 0, pretend = 0, frame = 0
- 506              		@ frame_needed = 0, uses_anonymous_args = 0
- 507              		@ link register save eliminated.
+ 475              		.loc 1 191 30 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
  192:src/softwareserial.c ****     __disable_irq();
- 508              		.loc 1 192 5 view .LVU152
- 509              	.LBB14:
- 510              	.LBI14:
- 511              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+ 480              		.loc 1 192 5 view .LVU142
+ 481              	.LBB13:
+ 482              	.LBI13:
+ 483              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
    1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
    2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
@@ -749,6 +718,9 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
   17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
   18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+ARM GAS  /tmp/ccFbbbSG.s 			page 13
+
+
   19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
   20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
   21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
@@ -778,9 +750,6 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
   46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
   47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
-ARM GAS  /tmp/cc8pDC1F.s 			page 14
-
-
   48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
   49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
   50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
@@ -803,385 +772,388 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
   67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
   68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
   69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
- 512              		.loc 2 69 57 view .LVU153
- 513              	.LBB15:
+ 484              		.loc 2 69 57 view .LVU143
+ 485              	.LBB14:
   70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
   71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
- 514              		.loc 2 71 3 view .LVU154
- 515              		.syntax unified
- 516              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
- 517 0000 72B6     		cpsid i
- 518              	@ 0 "" 2
- 519              		.thumb
- 520              		.syntax unified
- 521              	.LBE15:
- 522              	.LBE14:
+ 486              		.loc 2 71 3 view .LVU144
+ 487              		.syntax unified
+ARM GAS  /tmp/ccFbbbSG.s 			page 14
+
+
+ 488              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 489 0000 72B6     		cpsid i
+ 490              	@ 0 "" 2
+ 491              		.thumb
+ 492              		.syntax unified
+ 493              	.LBE14:
+ 494              	.LBE13:
  193:src/softwareserial.c ****     softwareserialRXbuffer.head = softwareserialRXbuffer.tail;
- 523              		.loc 1 193 5 view .LVU155
- 524              		.loc 1 193 57 is_stmt 0 view .LVU156
- 525 0002 034B     		ldr	r3, .L25
- 526 0004 D3F80424 		ldr	r2, [r3, #1028]
- 527              		.loc 1 193 33 view .LVU157
- 528 0008 C3F80024 		str	r2, [r3, #1024]
+ 495              		.loc 1 193 5 view .LVU145
+ 496              		.loc 1 193 57 is_stmt 0 view .LVU146
+ 497 0002 034B     		ldr	r3, .L25
+ 498 0004 D3F80424 		ldr	r2, [r3, #1028]
+ 499              		.loc 1 193 33 view .LVU147
+ 500 0008 C3F80024 		str	r2, [r3, #1024]
  194:src/softwareserial.c ****     __enable_irq();
- 529              		.loc 1 194 5 is_stmt 1 view .LVU158
- 530              	.LBB16:
- 531              	.LBI16:
+ 501              		.loc 1 194 5 is_stmt 1 view .LVU148
+ 502              	.LBB15:
+ 503              	.LBI15:
   58:Drivers/CMSIS/Include/cmsis_gcc.h **** {
- 532              		.loc 2 58 57 view .LVU159
- 533              	.LBB17:
+ 504              		.loc 2 58 57 view .LVU149
+ 505              	.LBB16:
   60:Drivers/CMSIS/Include/cmsis_gcc.h **** }
- 534              		.loc 2 60 3 view .LVU160
- 535              		.syntax unified
- 536              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
- 537 000c 62B6     		cpsie i
- 538              	@ 0 "" 2
- 539              		.thumb
- 540              		.syntax unified
-ARM GAS  /tmp/cc8pDC1F.s 			page 15
-
-
- 541              	.LBE17:
- 542              	.LBE16:
+ 506              		.loc 2 60 3 view .LVU150
+ 507              		.syntax unified
+ 508              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 509 000c 62B6     		cpsie i
+ 510              	@ 0 "" 2
+ 511              		.thumb
+ 512              		.syntax unified
+ 513              	.LBE16:
+ 514              	.LBE15:
  195:src/softwareserial.c **** }
- 543              		.loc 1 195 1 is_stmt 0 view .LVU161
- 544 000e 7047     		bx	lr
- 545              	.L26:
- 546              		.align	2
- 547              	.L25:
- 548 0010 00000000 		.word	softwareserialRXbuffer
- 549              		.cfi_endproc
- 550              	.LFE71:
- 552              		.section	.text.softwareserial_flushTX,"ax",%progbits
- 553              		.align	1
- 554              		.global	softwareserial_flushTX
- 555              		.syntax unified
- 556              		.thumb
- 557              		.thumb_func
- 559              	softwareserial_flushTX:
- 560              	.LFB72:
+ 515              		.loc 1 195 1 is_stmt 0 view .LVU151
+ 516 000e 7047     		bx	lr
+ 517              	.L26:
+ 518              		.align	2
+ 519              	.L25:
+ 520 0010 00000000 		.word	softwareserialRXbuffer
+ 521              		.cfi_endproc
+ 522              	.LFE71:
+ 524              		.section	.text.softwareserial_flushTX,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	softwareserial_flushTX
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	softwareserial_flushTX:
+ 532              	.LFB72:
  196:src/softwareserial.c **** 
  197:src/softwareserial.c **** //////////////////////////////////////////////////////////
  198:src/softwareserial.c **** // flush receive
  199:src/softwareserial.c **** void softwareserial_flushTX(){
- 561              		.loc 1 199 30 is_stmt 1 view -0
- 562              		.cfi_startproc
- 563              		@ args = 0, pretend = 0, frame = 0
- 564              		@ frame_needed = 0, uses_anonymous_args = 0
- 565              		@ link register save eliminated.
+ 533              		.loc 1 199 30 is_stmt 1 view -0
+ 534              		.cfi_startproc
+ 535              		@ args = 0, pretend = 0, frame = 0
+ 536              		@ frame_needed = 0, uses_anonymous_args = 0
+ 537              		@ link register save eliminated.
+ARM GAS  /tmp/ccFbbbSG.s 			page 15
+
+
  200:src/softwareserial.c ****     __disable_irq();
- 566              		.loc 1 200 5 view .LVU163
- 567              	.LBB18:
- 568              	.LBI18:
+ 538              		.loc 1 200 5 view .LVU153
+ 539              	.LBB17:
+ 540              	.LBI17:
   69:Drivers/CMSIS/Include/cmsis_gcc.h **** {
- 569              		.loc 2 69 57 view .LVU164
- 570              	.LBB19:
- 571              		.loc 2 71 3 view .LVU165
- 572              		.syntax unified
- 573              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
- 574 0000 72B6     		cpsid i
- 575              	@ 0 "" 2
- 576              		.thumb
- 577              		.syntax unified
- 578              	.LBE19:
- 579              	.LBE18:
+ 541              		.loc 2 69 57 view .LVU154
+ 542              	.LBB18:
+ 543              		.loc 2 71 3 view .LVU155
+ 544              		.syntax unified
+ 545              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 546 0000 72B6     		cpsid i
+ 547              	@ 0 "" 2
+ 548              		.thumb
+ 549              		.syntax unified
+ 550              	.LBE18:
+ 551              	.LBE17:
  201:src/softwareserial.c ****     softwareserialTXbuffer.head = softwareserialTXbuffer.tail;
- 580              		.loc 1 201 5 view .LVU166
- 581              		.loc 1 201 57 is_stmt 0 view .LVU167
- 582 0002 034B     		ldr	r3, .L28
- 583 0004 D3F80424 		ldr	r2, [r3, #1028]
- 584              		.loc 1 201 33 view .LVU168
- 585 0008 C3F80024 		str	r2, [r3, #1024]
+ 552              		.loc 1 201 5 view .LVU156
+ 553              		.loc 1 201 57 is_stmt 0 view .LVU157
+ 554 0002 034B     		ldr	r3, .L28
+ 555 0004 D3F80424 		ldr	r2, [r3, #1028]
+ 556              		.loc 1 201 33 view .LVU158
+ 557 0008 C3F80024 		str	r2, [r3, #1024]
  202:src/softwareserial.c ****     __enable_irq();
- 586              		.loc 1 202 5 is_stmt 1 view .LVU169
- 587              	.LBB20:
- 588              	.LBI20:
+ 558              		.loc 1 202 5 is_stmt 1 view .LVU159
+ 559              	.LBB19:
+ 560              	.LBI19:
   58:Drivers/CMSIS/Include/cmsis_gcc.h **** {
- 589              		.loc 2 58 57 view .LVU170
-ARM GAS  /tmp/cc8pDC1F.s 			page 16
-
-
- 590              	.LBB21:
+ 561              		.loc 2 58 57 view .LVU160
+ 562              	.LBB20:
   60:Drivers/CMSIS/Include/cmsis_gcc.h **** }
- 591              		.loc 2 60 3 view .LVU171
- 592              		.syntax unified
- 593              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
- 594 000c 62B6     		cpsie i
- 595              	@ 0 "" 2
- 596              		.thumb
- 597              		.syntax unified
- 598              	.LBE21:
- 599              	.LBE20:
+ 563              		.loc 2 60 3 view .LVU161
+ 564              		.syntax unified
+ 565              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 566 000c 62B6     		cpsie i
+ 567              	@ 0 "" 2
+ 568              		.thumb
+ 569              		.syntax unified
+ 570              	.LBE20:
+ 571              	.LBE19:
  203:src/softwareserial.c **** }
- 600              		.loc 1 203 1 is_stmt 0 view .LVU172
- 601 000e 7047     		bx	lr
- 602              	.L29:
- 603              		.align	2
- 604              	.L28:
- 605 0010 00000000 		.word	softwareserialTXbuffer
- 606              		.cfi_endproc
- 607              	.LFE72:
- 609              		.section	.text.softwareserial_puttx,"ax",%progbits
- 610              		.align	1
- 611              		.global	softwareserial_puttx
- 612              		.syntax unified
- 613              		.thumb
- 614              		.thumb_func
- 616              	softwareserial_puttx:
- 617              	.LVL26:
- 618              	.LFB73:
+ 572              		.loc 1 203 1 is_stmt 0 view .LVU162
+ 573 000e 7047     		bx	lr
+ 574              	.L29:
+ 575              		.align	2
+ 576              	.L28:
+ 577 0010 00000000 		.word	softwareserialTXbuffer
+ 578              		.cfi_endproc
+ 579              	.LFE72:
+ 581              		.section	.text.softwareserial_puttx,"ax",%progbits
+ 582              		.align	1
+ 583              		.global	softwareserial_puttx
+ 584              		.syntax unified
+ 585              		.thumb
+ 586              		.thumb_func
+ 588              	softwareserial_puttx:
+ 589              	.LVL25:
+ARM GAS  /tmp/ccFbbbSG.s 			page 16
+
+
+ 590              	.LFB73:
  204:src/softwareserial.c **** 
  205:src/softwareserial.c **** //////////////////////////////////////////////////////////
  206:src/softwareserial.c **** // put a single character if room in output buffer
  207:src/softwareserial.c **** void softwareserial_puttx(unsigned char value){
- 619              		.loc 1 207 47 is_stmt 1 view -0
- 620              		.cfi_startproc
- 621              		@ args = 0, pretend = 0, frame = 0
- 622              		@ frame_needed = 0, uses_anonymous_args = 0
- 623              		@ link register save eliminated.
+ 591              		.loc 1 207 47 is_stmt 1 view -0
+ 592              		.cfi_startproc
+ 593              		@ args = 0, pretend = 0, frame = 0
+ 594              		@ frame_needed = 0, uses_anonymous_args = 0
+ 595              		@ link register save eliminated.
  208:src/softwareserial.c ****     int count = softwareserialTXbuffer.head - softwareserialTXbuffer.tail;
- 624              		.loc 1 208 5 view .LVU174
- 625              		.loc 1 208 39 is_stmt 0 view .LVU175
- 626 0000 124A     		ldr	r2, .L36
- 627 0002 D2F80034 		ldr	r3, [r2, #1024]
- 628              		.loc 1 208 69 view .LVU176
- 629 0006 D2F80424 		ldr	r2, [r2, #1028]
- 630              	.LVL27:
+ 596              		.loc 1 208 5 view .LVU164
+ 597              		.loc 1 208 39 is_stmt 0 view .LVU165
+ 598 0000 124A     		ldr	r2, .L36
+ 599 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 600              		.loc 1 208 69 view .LVU166
+ 601 0006 D2F80424 		ldr	r2, [r2, #1028]
+ 602              	.LVL26:
  209:src/softwareserial.c ****     if (count < 0)
- 631              		.loc 1 209 5 is_stmt 1 view .LVU177
- 632              		.loc 1 209 8 is_stmt 0 view .LVU178
- 633 000a 9B1A     		subs	r3, r3, r2
- 634              	.LVL28:
- 635              		.loc 1 209 8 view .LVU179
- 636 000c 14D4     		bmi	.L34
- 637              	.LVL29:
- 638              	.L31:
+ 603              		.loc 1 209 5 is_stmt 1 view .LVU167
+ 604              		.loc 1 209 8 is_stmt 0 view .LVU168
+ 605 000a 9B1A     		subs	r3, r3, r2
+ 606              	.LVL27:
+ 607              		.loc 1 209 8 view .LVU169
+ 608 000c 14D4     		bmi	.L34
+ 609              	.LVL28:
+ 610              	.L31:
  210:src/softwareserial.c ****         count += SOFTWARE_SERIAL_BUFFER_SIZE;
  211:src/softwareserial.c **** 
-ARM GAS  /tmp/cc8pDC1F.s 			page 17
-
-
  212:src/softwareserial.c ****     if (count >= SOFTWARE_SERIAL_BUFFER_SIZE-2){
- 639              		.loc 1 212 5 is_stmt 1 view .LVU180
- 640              		.loc 1 212 8 is_stmt 0 view .LVU181
- 641 000e 40F2FD32 		movw	r2, #1021
- 642 0012 9342     		cmp	r3, r2
- 643 0014 13DC     		bgt	.L35
+ 611              		.loc 1 212 5 is_stmt 1 view .LVU170
+ 612              		.loc 1 212 8 is_stmt 0 view .LVU171
+ 613 000e 40F2FD32 		movw	r2, #1021
+ 614 0012 9342     		cmp	r3, r2
+ 615 0014 13DC     		bgt	.L35
  213:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
  214:src/softwareserial.c ****         return;
  215:src/softwareserial.c ****     }
  216:src/softwareserial.c ****     softwareserialTXbuffer.buff[softwareserialTXbuffer.head] = value;
- 644              		.loc 1 216 5 is_stmt 1 view .LVU182
- 645              		.loc 1 216 55 is_stmt 0 view .LVU183
- 646 0016 0D4A     		ldr	r2, .L36
- 647 0018 D2F80034 		ldr	r3, [r2, #1024]
- 648              	.LVL30:
- 649              		.loc 1 216 62 view .LVU184
- 650 001c D054     		strb	r0, [r2, r3]
+ 616              		.loc 1 216 5 is_stmt 1 view .LVU172
+ 617              		.loc 1 216 55 is_stmt 0 view .LVU173
+ 618 0016 0D4A     		ldr	r2, .L36
+ 619 0018 D2F80034 		ldr	r3, [r2, #1024]
+ 620              	.LVL29:
+ 621              		.loc 1 216 62 view .LVU174
+ 622 001c D054     		strb	r0, [r2, r3]
  217:src/softwareserial.c ****     softwareserialTXbuffer.head = ((softwareserialTXbuffer.head + 1 ) % SOFTWARE_SERIAL_BUFFER_SIZE
- 651              		.loc 1 217 5 is_stmt 1 view .LVU185
- 652              		.loc 1 217 59 is_stmt 0 view .LVU186
- 653 001e D2F80034 		ldr	r3, [r2, #1024]
- 654              		.loc 1 217 65 view .LVU187
- 655 0022 0133     		adds	r3, r3, #1
- 656              		.loc 1 217 71 view .LVU188
- 657 0024 5942     		rsbs	r1, r3, #0
- 658 0026 C3F30903 		ubfx	r3, r3, #0, #10
- 659 002a C1F30901 		ubfx	r1, r1, #0, #10
- 660 002e 58BF     		it	pl
- 661 0030 4B42     		rsbpl	r3, r1, #0
- 662              		.loc 1 217 33 view .LVU189
- 663 0032 C2F80034 		str	r3, [r2, #1024]
+ 623              		.loc 1 217 5 is_stmt 1 view .LVU175
+ 624              		.loc 1 217 59 is_stmt 0 view .LVU176
+ 625 001e D2F80034 		ldr	r3, [r2, #1024]
+ 626              		.loc 1 217 65 view .LVU177
+ 627 0022 0133     		adds	r3, r3, #1
+ 628              		.loc 1 217 71 view .LVU178
+ 629 0024 5942     		rsbs	r1, r3, #0
+ 630 0026 C3F30903 		ubfx	r3, r3, #0, #10
+ 631 002a C1F30901 		ubfx	r1, r1, #0, #10
+ 632 002e 58BF     		it	pl
+ARM GAS  /tmp/ccFbbbSG.s 			page 17
+
+
+ 633 0030 4B42     		rsbpl	r3, r1, #0
+ 634              		.loc 1 217 33 view .LVU179
+ 635 0032 C2F80034 		str	r3, [r2, #1024]
  218:src/softwareserial.c **** }
- 664              		.loc 1 218 1 view .LVU190
- 665 0036 7047     		bx	lr
- 666              	.LVL31:
- 667              	.L34:
+ 636              		.loc 1 218 1 view .LVU180
+ 637 0036 7047     		bx	lr
+ 638              	.LVL30:
+ 639              	.L34:
  210:src/softwareserial.c **** 
- 668              		.loc 1 210 9 is_stmt 1 view .LVU191
+ 640              		.loc 1 210 9 is_stmt 1 view .LVU181
  210:src/softwareserial.c **** 
- 669              		.loc 1 210 15 is_stmt 0 view .LVU192
- 670 0038 03F58063 		add	r3, r3, #1024
- 671              	.LVL32:
+ 641              		.loc 1 210 15 is_stmt 0 view .LVU182
+ 642 0038 03F58063 		add	r3, r3, #1024
+ 643              	.LVL31:
  210:src/softwareserial.c **** 
- 672              		.loc 1 210 15 view .LVU193
- 673 003c E7E7     		b	.L31
- 674              	.L35:
+ 644              		.loc 1 210 15 view .LVU183
+ 645 003c E7E7     		b	.L31
+ 646              	.L35:
  213:src/softwareserial.c ****         return;
- 675              		.loc 1 213 9 is_stmt 1 view .LVU194
+ 647              		.loc 1 213 9 is_stmt 1 view .LVU184
  213:src/softwareserial.c ****         return;
- 676              		.loc 1 213 31 is_stmt 0 view .LVU195
- 677 003e 034A     		ldr	r2, .L36
- 678 0040 D2F81434 		ldr	r3, [r2, #1044]
- 679              	.LVL33:
+ 648              		.loc 1 213 31 is_stmt 0 view .LVU185
+ 649 003e 034A     		ldr	r2, .L36
+ 650 0040 D2F81434 		ldr	r3, [r2, #1044]
+ 651              	.LVL32:
  213:src/softwareserial.c ****         return;
- 680              		.loc 1 213 40 view .LVU196
- 681 0044 0133     		adds	r3, r3, #1
- 682 0046 C2F81434 		str	r3, [r2, #1044]
-ARM GAS  /tmp/cc8pDC1F.s 			page 18
-
-
+ 652              		.loc 1 213 40 view .LVU186
+ 653 0044 0133     		adds	r3, r3, #1
+ 654 0046 C2F81434 		str	r3, [r2, #1044]
  214:src/softwareserial.c ****     }
- 683              		.loc 1 214 9 is_stmt 1 view .LVU197
- 684 004a 7047     		bx	lr
- 685              	.L37:
- 686              		.align	2
- 687              	.L36:
- 688 004c 00000000 		.word	softwareserialTXbuffer
- 689              		.cfi_endproc
- 690              	.LFE73:
- 692              		.section	.text.softwareserial_Send,"ax",%progbits
- 693              		.align	1
- 694              		.global	softwareserial_Send
- 695              		.syntax unified
- 696              		.thumb
- 697              		.thumb_func
- 699              	softwareserial_Send:
- 700              	.LVL34:
- 701              	.LFB74:
+ 655              		.loc 1 214 9 is_stmt 1 view .LVU187
+ 656 004a 7047     		bx	lr
+ 657              	.L37:
+ 658              		.align	2
+ 659              	.L36:
+ 660 004c 00000000 		.word	softwareserialTXbuffer
+ 661              		.cfi_endproc
+ 662              	.LFE73:
+ 664              		.section	.text.softwareserial_Send,"ax",%progbits
+ 665              		.align	1
+ 666              		.global	softwareserial_Send
+ 667              		.syntax unified
+ 668              		.thumb
+ 669              		.thumb_func
+ 671              	softwareserial_Send:
+ 672              	.LVL33:
+ 673              	.LFB74:
  219:src/softwareserial.c **** 
  220:src/softwareserial.c **** //////////////////////////////////////////////////////////
  221:src/softwareserial.c **** // copy a buffer of data to the output buffer
  222:src/softwareserial.c **** // return length, or 0 if it won't fit
  223:src/softwareserial.c **** int softwareserial_Send(unsigned char *data, int len){
- 702              		.loc 1 223 54 view -0
- 703              		.cfi_startproc
- 704              		@ args = 0, pretend = 0, frame = 0
- 705              		@ frame_needed = 0, uses_anonymous_args = 0
- 706              		.loc 1 223 54 is_stmt 0 view .LVU199
- 707 0000 70B5     		push	{r4, r5, r6, lr}
- 708              	.LCFI3:
- 709              		.cfi_def_cfa_offset 16
- 710              		.cfi_offset 4, -16
- 711              		.cfi_offset 5, -12
- 712              		.cfi_offset 6, -8
- 713              		.cfi_offset 14, -4
- 714 0002 0646     		mov	r6, r0
- 715 0004 0D46     		mov	r5, r1
+ 674              		.loc 1 223 54 view -0
+ 675              		.cfi_startproc
+ 676              		@ args = 0, pretend = 0, frame = 0
+ 677              		@ frame_needed = 0, uses_anonymous_args = 0
+ 678              		.loc 1 223 54 is_stmt 0 view .LVU189
+ARM GAS  /tmp/ccFbbbSG.s 			page 18
+
+
+ 679 0000 70B5     		push	{r4, r5, r6, lr}
+ 680              	.LCFI3:
+ 681              		.cfi_def_cfa_offset 16
+ 682              		.cfi_offset 4, -16
+ 683              		.cfi_offset 5, -12
+ 684              		.cfi_offset 6, -8
+ 685              		.cfi_offset 14, -4
+ 686 0002 0646     		mov	r6, r0
+ 687 0004 0D46     		mov	r5, r1
  224:src/softwareserial.c ****     int count = softwareserialTXbuffer.head - softwareserialTXbuffer.tail;
- 716              		.loc 1 224 5 is_stmt 1 view .LVU200
- 717              		.loc 1 224 39 is_stmt 0 view .LVU201
- 718 0006 104A     		ldr	r2, .L47
- 719 0008 D2F80034 		ldr	r3, [r2, #1024]
- 720              		.loc 1 224 69 view .LVU202
- 721 000c D2F80424 		ldr	r2, [r2, #1028]
- 722              	.LVL35:
+ 688              		.loc 1 224 5 is_stmt 1 view .LVU190
+ 689              		.loc 1 224 39 is_stmt 0 view .LVU191
+ 690 0006 104A     		ldr	r2, .L47
+ 691 0008 D2F80034 		ldr	r3, [r2, #1024]
+ 692              		.loc 1 224 69 view .LVU192
+ 693 000c D2F80424 		ldr	r2, [r2, #1028]
+ 694              	.LVL34:
  225:src/softwareserial.c ****     if (count < 0)
- 723              		.loc 1 225 5 is_stmt 1 view .LVU203
- 724              		.loc 1 225 8 is_stmt 0 view .LVU204
- 725 0010 9B1A     		subs	r3, r3, r2
- 726              	.LVL36:
- 727              		.loc 1 225 8 view .LVU205
- 728 0012 06D4     		bmi	.L45
- 729              	.LVL37:
- 730              	.L39:
+ 695              		.loc 1 225 5 is_stmt 1 view .LVU193
+ 696              		.loc 1 225 8 is_stmt 0 view .LVU194
+ 697 0010 9B1A     		subs	r3, r3, r2
+ 698              	.LVL35:
+ 699              		.loc 1 225 8 view .LVU195
+ 700 0012 06D4     		bmi	.L45
+ 701              	.LVL36:
+ 702              	.L39:
  226:src/softwareserial.c ****         count += SOFTWARE_SERIAL_BUFFER_SIZE;
  227:src/softwareserial.c **** 
  228:src/softwareserial.c ****     if (count + len >= SOFTWARE_SERIAL_BUFFER_SIZE-2){
-ARM GAS  /tmp/cc8pDC1F.s 			page 19
-
-
- 731              		.loc 1 228 5 is_stmt 1 view .LVU206
- 732              		.loc 1 228 15 is_stmt 0 view .LVU207
- 733 0014 2B44     		add	r3, r3, r5
- 734              	.LVL38:
- 735              		.loc 1 228 8 view .LVU208
- 736 0016 40F2FD32 		movw	r2, #1021
- 737 001a 9342     		cmp	r3, r2
- 738 001c 04DC     		bgt	.L46
- 739              	.LBB22:
+ 703              		.loc 1 228 5 is_stmt 1 view .LVU196
+ 704              		.loc 1 228 15 is_stmt 0 view .LVU197
+ 705 0014 2B44     		add	r3, r3, r5
+ 706              	.LVL37:
+ 707              		.loc 1 228 8 view .LVU198
+ 708 0016 40F2FD32 		movw	r2, #1021
+ 709 001a 9342     		cmp	r3, r2
+ 710 001c 04DC     		bgt	.L46
+ 711              	.LBB21:
  229:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
  230:src/softwareserial.c ****         return 0;
  231:src/softwareserial.c ****     }
  232:src/softwareserial.c **** 
  233:src/softwareserial.c ****     for (int i = 0; i < len; i++){
- 740              		.loc 1 233 14 view .LVU209
- 741 001e 0024     		movs	r4, #0
- 742 0020 0EE0     		b	.L40
- 743              	.LVL39:
- 744              	.L45:
- 745              		.loc 1 233 14 view .LVU210
- 746              	.LBE22:
+ 712              		.loc 1 233 14 view .LVU199
+ 713 001e 0024     		movs	r4, #0
+ 714 0020 0EE0     		b	.L40
+ 715              	.LVL38:
+ 716              	.L45:
+ 717              		.loc 1 233 14 view .LVU200
+ 718              	.LBE21:
  226:src/softwareserial.c ****         count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 747              		.loc 1 226 9 is_stmt 1 view .LVU211
+ 719              		.loc 1 226 9 is_stmt 1 view .LVU201
  226:src/softwareserial.c ****         count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 748              		.loc 1 226 15 is_stmt 0 view .LVU212
- 749 0022 03F58063 		add	r3, r3, #1024
- 750              	.LVL40:
+ 720              		.loc 1 226 15 is_stmt 0 view .LVU202
+ 721 0022 03F58063 		add	r3, r3, #1024
+ 722              	.LVL39:
  226:src/softwareserial.c ****         count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 751              		.loc 1 226 15 view .LVU213
- 752 0026 F5E7     		b	.L39
- 753              	.LVL41:
- 754              	.L46:
+ARM GAS  /tmp/ccFbbbSG.s 			page 19
+
+
+ 723              		.loc 1 226 15 view .LVU203
+ 724 0026 F5E7     		b	.L39
+ 725              	.LVL40:
+ 726              	.L46:
  229:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
- 755              		.loc 1 229 9 is_stmt 1 view .LVU214
+ 727              		.loc 1 229 9 is_stmt 1 view .LVU204
  229:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
- 756              		.loc 1 229 31 is_stmt 0 view .LVU215
- 757 0028 074A     		ldr	r2, .L47
- 758 002a D2F81434 		ldr	r3, [r2, #1044]
+ 728              		.loc 1 229 31 is_stmt 0 view .LVU205
+ 729 0028 074A     		ldr	r2, .L47
+ 730 002a D2F81434 		ldr	r3, [r2, #1044]
  229:src/softwareserial.c ****         softwareserialTXbuffer.overflow++;
- 759              		.loc 1 229 40 view .LVU216
- 760 002e 0133     		adds	r3, r3, #1
- 761 0030 C2F81434 		str	r3, [r2, #1044]
+ 731              		.loc 1 229 40 view .LVU206
+ 732 002e 0133     		adds	r3, r3, #1
+ 733 0030 C2F81434 		str	r3, [r2, #1044]
  230:src/softwareserial.c ****     }
- 762              		.loc 1 230 9 is_stmt 1 view .LVU217
+ 734              		.loc 1 230 9 is_stmt 1 view .LVU207
  230:src/softwareserial.c ****     }
- 763              		.loc 1 230 16 is_stmt 0 view .LVU218
- 764 0034 0025     		movs	r5, #0
- 765 0036 05E0     		b	.L41
- 766              	.LVL42:
- 767              	.L42:
- 768              	.LBB23:
+ 735              		.loc 1 230 16 is_stmt 0 view .LVU208
+ 736 0034 0025     		movs	r5, #0
+ 737 0036 05E0     		b	.L41
+ 738              	.LVL41:
+ 739              	.L42:
+ 740              	.LBB22:
  234:src/softwareserial.c ****         softwareserial_puttx( data[i] );
- 769              		.loc 1 234 9 is_stmt 1 view .LVU219
- 770 0038 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
- 771 003a FFF7FEFF 		bl	softwareserial_puttx
- 772              	.LVL43:
+ 741              		.loc 1 234 9 is_stmt 1 view .LVU209
+ 742 0038 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 743 003a FFF7FEFF 		bl	softwareserial_puttx
+ 744              	.LVL42:
  233:src/softwareserial.c ****         softwareserial_puttx( data[i] );
-ARM GAS  /tmp/cc8pDC1F.s 			page 20
-
-
- 773              		.loc 1 233 31 discriminator 3 view .LVU220
- 774 003e 0134     		adds	r4, r4, #1
- 775              	.LVL44:
- 776              	.L40:
+ 745              		.loc 1 233 31 discriminator 3 view .LVU210
+ 746 003e 0134     		adds	r4, r4, #1
+ 747              	.LVL43:
+ 748              	.L40:
  233:src/softwareserial.c ****         softwareserial_puttx( data[i] );
- 777              		.loc 1 233 23 discriminator 1 view .LVU221
- 778 0040 AC42     		cmp	r4, r5
- 779 0042 F9DB     		blt	.L42
- 780              	.LVL45:
- 781              	.L41:
+ 749              		.loc 1 233 23 discriminator 1 view .LVU211
+ 750 0040 AC42     		cmp	r4, r5
+ 751 0042 F9DB     		blt	.L42
+ 752              	.LVL44:
+ 753              	.L41:
  233:src/softwareserial.c ****         softwareserial_puttx( data[i] );
- 782              		.loc 1 233 23 is_stmt 0 discriminator 1 view .LVU222
- 783              	.LBE23:
+ 754              		.loc 1 233 23 is_stmt 0 discriminator 1 view .LVU212
+ 755              	.LBE22:
  235:src/softwareserial.c ****     }
  236:src/softwareserial.c ****     return len;
  237:src/softwareserial.c **** }
- 784              		.loc 1 237 1 view .LVU223
- 785 0044 2846     		mov	r0, r5
- 786 0046 70BD     		pop	{r4, r5, r6, pc}
- 787              	.LVL46:
- 788              	.L48:
- 789              		.loc 1 237 1 view .LVU224
- 790              		.align	2
- 791              	.L47:
- 792 0048 00000000 		.word	softwareserialTXbuffer
- 793              		.cfi_endproc
- 794              	.LFE74:
- 796              		.global	__aeabi_i2f
- 797              		.global	__aeabi_f2d
- 798              		.global	__aeabi_dmul
- 799              		.global	__aeabi_d2f
- 800              		.global	__aeabi_f2iz
- 801              		.section	.text.softwareserial_Send_Wait,"ax",%progbits
- 802              		.align	1
- 803              		.global	softwareserial_Send_Wait
- 804              		.syntax unified
- 805              		.thumb
- 806              		.thumb_func
- 808              	softwareserial_Send_Wait:
- 809              	.LVL47:
- 810              	.LFB75:
+ 756              		.loc 1 237 1 view .LVU213
+ 757 0044 2846     		mov	r0, r5
+ 758 0046 70BD     		pop	{r4, r5, r6, pc}
+ 759              	.LVL45:
+ 760              	.L48:
+ 761              		.loc 1 237 1 view .LVU214
+ 762              		.align	2
+ 763              	.L47:
+ 764 0048 00000000 		.word	softwareserialTXbuffer
+ 765              		.cfi_endproc
+ 766              	.LFE74:
+ 768              		.global	__aeabi_i2f
+ARM GAS  /tmp/ccFbbbSG.s 			page 20
+
+
+ 769              		.global	__aeabi_f2d
+ 770              		.global	__aeabi_dmul
+ 771              		.global	__aeabi_d2f
+ 772              		.global	__aeabi_f2iz
+ 773              		.section	.text.softwareserial_Send_Wait,"ax",%progbits
+ 774              		.align	1
+ 775              		.global	softwareserial_Send_Wait
+ 776              		.syntax unified
+ 777              		.thumb
+ 778              		.thumb_func
+ 780              	softwareserial_Send_Wait:
+ 781              	.LVL46:
+ 782              	.LFB75:
  238:src/softwareserial.c **** 
  239:src/softwareserial.c **** //////////////////////////////////////////////////////////
  240:src/softwareserial.c **** // copy a buffer of data to the output buffer in chunks
@@ -1189,54 +1161,54 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  242:src/softwareserial.c **** // use sparingly as this will pause main loop!!!
  243:src/softwareserial.c **** // used in 'protocol' for long strings, like '?' response
  244:src/softwareserial.c **** int softwareserial_Send_Wait(unsigned char *data, int len){
- 811              		.loc 1 244 59 is_stmt 1 view -0
- 812              		.cfi_startproc
- 813              		@ args = 0, pretend = 0, frame = 0
- 814              		@ frame_needed = 0, uses_anonymous_args = 0
- 815              		.loc 1 244 59 is_stmt 0 view .LVU226
- 816 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 817              	.LCFI4:
- 818              		.cfi_def_cfa_offset 24
- 819              		.cfi_offset 4, -24
-ARM GAS  /tmp/cc8pDC1F.s 			page 21
-
-
- 820              		.cfi_offset 5, -20
- 821              		.cfi_offset 6, -16
- 822              		.cfi_offset 7, -12
- 823              		.cfi_offset 8, -8
- 824              		.cfi_offset 14, -4
- 825 0004 0646     		mov	r6, r0
- 826 0006 8846     		mov	r8, r1
+ 783              		.loc 1 244 59 is_stmt 1 view -0
+ 784              		.cfi_startproc
+ 785              		@ args = 0, pretend = 0, frame = 0
+ 786              		@ frame_needed = 0, uses_anonymous_args = 0
+ 787              		.loc 1 244 59 is_stmt 0 view .LVU216
+ 788 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 789              	.LCFI4:
+ 790              		.cfi_def_cfa_offset 24
+ 791              		.cfi_offset 4, -24
+ 792              		.cfi_offset 5, -20
+ 793              		.cfi_offset 6, -16
+ 794              		.cfi_offset 7, -12
+ 795              		.cfi_offset 8, -8
+ 796              		.cfi_offset 14, -4
+ 797 0004 0646     		mov	r6, r0
+ 798 0006 8846     		mov	r8, r1
  245:src/softwareserial.c ****     int orglen = len;
- 827              		.loc 1 245 5 is_stmt 1 view .LVU227
- 828              	.LVL48:
+ 799              		.loc 1 245 5 is_stmt 1 view .LVU217
+ 800              	.LVL47:
  246:src/softwareserial.c ****     int maxloops = 1000;
- 829              		.loc 1 246 5 view .LVU228
+ 801              		.loc 1 246 5 view .LVU218
  247:src/softwareserial.c ****     while (len && maxloops){
- 830              		.loc 1 247 5 view .LVU229
- 831              		.loc 1 247 11 is_stmt 0 view .LVU230
- 832 0008 0D46     		mov	r5, r1
+ 802              		.loc 1 247 5 view .LVU219
+ 803              		.loc 1 247 11 is_stmt 0 view .LVU220
+ 804 0008 0D46     		mov	r5, r1
  246:src/softwareserial.c ****     int maxloops = 1000;
- 833              		.loc 1 246 9 view .LVU231
- 834 000a 4FF47A77 		mov	r7, #1000
- 835              		.loc 1 247 11 view .LVU232
- 836 000e 0AE0     		b	.L50
- 837              	.LVL49:
- 838              	.L58:
- 839              	.LBB24:
+ 805              		.loc 1 246 9 view .LVU221
+ 806 000a 4FF47A77 		mov	r7, #1000
+ 807              		.loc 1 247 11 view .LVU222
+ 808 000e 0AE0     		b	.L50
+ 809              	.LVL48:
+ 810              	.L58:
+ 811              	.LBB23:
  248:src/softwareserial.c ****         maxloops--;
  249:src/softwareserial.c ****         int count = softwareserialTXbuffer.head - softwareserialTXbuffer.tail;
  250:src/softwareserial.c ****         if (count < 0)
  251:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 840              		.loc 1 251 13 is_stmt 1 view .LVU233
- 841              		.loc 1 251 19 is_stmt 0 view .LVU234
- 842 0010 04F58064 		add	r4, r4, #1024
- 843              	.LVL50:
- 844              		.loc 1 251 19 view .LVU235
- 845 0014 11E0     		b	.L51
- 846              	.LVL51:
- 847              	.L52:
+ARM GAS  /tmp/ccFbbbSG.s 			page 21
+
+
+ 812              		.loc 1 251 13 is_stmt 1 view .LVU223
+ 813              		.loc 1 251 19 is_stmt 0 view .LVU224
+ 814 0010 04F58064 		add	r4, r4, #1024
+ 815              	.LVL49:
+ 816              		.loc 1 251 19 view .LVU225
+ 817 0014 11E0     		b	.L51
+ 818              	.LVL50:
+ 819              	.L52:
  252:src/softwareserial.c **** 
  253:src/softwareserial.c ****         int avail = (SOFTWARE_SERIAL_BUFFER_SIZE-3) - count;
  254:src/softwareserial.c **** 
@@ -1245,460 +1217,457 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  257:src/softwareserial.c ****             sendlen = avail;
  258:src/softwareserial.c ****         }
  259:src/softwareserial.c ****         softwareserial_Send(data, sendlen);
- 848              		.loc 1 259 9 is_stmt 1 view .LVU236
- 849 0016 2146     		mov	r1, r4
- 850 0018 3046     		mov	r0, r6
- 851 001a FFF7FEFF 		bl	softwareserial_Send
- 852              	.LVL52:
+ 820              		.loc 1 259 9 is_stmt 1 view .LVU226
+ 821 0016 2146     		mov	r1, r4
+ 822 0018 3046     		mov	r0, r6
+ 823 001a FFF7FEFF 		bl	softwareserial_Send
+ 824              	.LVL51:
  260:src/softwareserial.c ****         len -= sendlen;
- 853              		.loc 1 260 9 view .LVU237
- 854              		.loc 1 260 13 is_stmt 0 view .LVU238
- 855 001e 2D1B     		subs	r5, r5, r4
- 856              	.LVL53:
+ 825              		.loc 1 260 9 view .LVU227
+ 826              		.loc 1 260 13 is_stmt 0 view .LVU228
+ 827 001e 2D1B     		subs	r5, r5, r4
+ 828              	.LVL52:
  261:src/softwareserial.c ****         data += sendlen;
- 857              		.loc 1 261 9 is_stmt 1 view .LVU239
- 858              		.loc 1 261 14 is_stmt 0 view .LVU240
-ARM GAS  /tmp/cc8pDC1F.s 			page 22
-
-
- 859 0020 2644     		add	r6, r6, r4
- 860              	.LVL54:
+ 829              		.loc 1 261 9 is_stmt 1 view .LVU229
+ 830              		.loc 1 261 14 is_stmt 0 view .LVU230
+ 831 0020 2644     		add	r6, r6, r4
+ 832              	.LVL53:
  262:src/softwareserial.c **** 
  263:src/softwareserial.c ****         if (len > 0){
- 861              		.loc 1 263 9 is_stmt 1 view .LVU241
- 862              		.loc 1 263 12 is_stmt 0 view .LVU242
- 863 0022 002D     		cmp	r5, #0
- 864 0024 10DC     		bgt	.L57
- 865              	.LVL55:
- 866              	.L50:
- 867              		.loc 1 263 12 view .LVU243
- 868              	.LBE24:
+ 833              		.loc 1 263 9 is_stmt 1 view .LVU231
+ 834              		.loc 1 263 12 is_stmt 0 view .LVU232
+ 835 0022 002D     		cmp	r5, #0
+ 836 0024 10DC     		bgt	.L57
+ 837              	.LVL54:
+ 838              	.L50:
+ 839              		.loc 1 263 12 view .LVU233
+ 840              	.LBE23:
  247:src/softwareserial.c ****         maxloops--;
- 869              		.loc 1 247 16 is_stmt 1 view .LVU244
- 870 0026 25B3     		cbz	r5, .L54
+ 841              		.loc 1 247 16 is_stmt 1 view .LVU234
+ 842 0026 25B3     		cbz	r5, .L54
  247:src/softwareserial.c ****         maxloops--;
- 871              		.loc 1 247 16 is_stmt 0 discriminator 1 view .LVU245
- 872 0028 1FB3     		cbz	r7, .L54
- 873              	.LBB26:
+ 843              		.loc 1 247 16 is_stmt 0 discriminator 1 view .LVU235
+ 844 0028 1FB3     		cbz	r7, .L54
+ 845              	.LBB25:
  248:src/softwareserial.c ****         int count = softwareserialTXbuffer.head - softwareserialTXbuffer.tail;
- 874              		.loc 1 248 9 is_stmt 1 view .LVU246
+ 846              		.loc 1 248 9 is_stmt 1 view .LVU236
  248:src/softwareserial.c ****         int count = softwareserialTXbuffer.head - softwareserialTXbuffer.tail;
- 875              		.loc 1 248 17 is_stmt 0 view .LVU247
- 876 002a 013F     		subs	r7, r7, #1
- 877              	.LVL56:
+ 847              		.loc 1 248 17 is_stmt 0 view .LVU237
+ 848 002a 013F     		subs	r7, r7, #1
+ 849              	.LVL55:
  249:src/softwareserial.c ****         if (count < 0)
- 878              		.loc 1 249 9 is_stmt 1 view .LVU248
+ 850              		.loc 1 249 9 is_stmt 1 view .LVU238
  249:src/softwareserial.c ****         if (count < 0)
- 879              		.loc 1 249 43 is_stmt 0 view .LVU249
- 880 002c 144B     		ldr	r3, .L59+8
- 881 002e D3F80044 		ldr	r4, [r3, #1024]
- 249:src/softwareserial.c ****         if (count < 0)
- 882              		.loc 1 249 73 view .LVU250
- 883 0032 D3F80434 		ldr	r3, [r3, #1028]
- 884              	.LVL57:
- 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 885              		.loc 1 250 9 is_stmt 1 view .LVU251
- 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 886              		.loc 1 250 12 is_stmt 0 view .LVU252
- 887 0036 E41A     		subs	r4, r4, r3
- 888              	.LVL58:
- 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 889              		.loc 1 250 12 view .LVU253
- 890 0038 EAD4     		bmi	.L58
- 891              	.LVL59:
- 892              	.L51:
- 253:src/softwareserial.c **** 
- 893              		.loc 1 253 9 is_stmt 1 view .LVU254
- 253:src/softwareserial.c **** 
- 894              		.loc 1 253 13 is_stmt 0 view .LVU255
- 895 003a C4F57F74 		rsb	r4, r4, #1020
- 896              	.LVL60:
- 253:src/softwareserial.c **** 
- 897              		.loc 1 253 13 view .LVU256
- 898 003e 0134     		adds	r4, r4, #1
- 899              	.LVL61:
- 255:src/softwareserial.c ****         if (sendlen > avail){
-ARM GAS  /tmp/cc8pDC1F.s 			page 23
+ARM GAS  /tmp/ccFbbbSG.s 			page 22
 
 
- 900              		.loc 1 255 9 is_stmt 1 view .LVU257
- 256:src/softwareserial.c ****             sendlen = avail;
- 901              		.loc 1 256 9 view .LVU258
- 256:src/softwareserial.c ****             sendlen = avail;
- 902              		.loc 1 256 12 is_stmt 0 view .LVU259
- 903 0040 A542     		cmp	r5, r4
- 904 0042 E8DC     		bgt	.L52
+ 851              		.loc 1 249 43 is_stmt 0 view .LVU239
+ 852 002c 144B     		ldr	r3, .L59+8
+ 853 002e D3F80044 		ldr	r4, [r3, #1024]
+ 249:src/softwareserial.c ****         if (count < 0)
+ 854              		.loc 1 249 73 view .LVU240
+ 855 0032 D3F80434 		ldr	r3, [r3, #1028]
+ 856              	.LVL56:
+ 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
+ 857              		.loc 1 250 9 is_stmt 1 view .LVU241
+ 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
+ 858              		.loc 1 250 12 is_stmt 0 view .LVU242
+ 859 0036 E41A     		subs	r4, r4, r3
+ 860              	.LVL57:
+ 250:src/softwareserial.c ****             count += SOFTWARE_SERIAL_BUFFER_SIZE;
+ 861              		.loc 1 250 12 view .LVU243
+ 862 0038 EAD4     		bmi	.L58
+ 863              	.LVL58:
+ 864              	.L51:
+ 253:src/softwareserial.c **** 
+ 865              		.loc 1 253 9 is_stmt 1 view .LVU244
+ 253:src/softwareserial.c **** 
+ 866              		.loc 1 253 13 is_stmt 0 view .LVU245
+ 867 003a C4F57F74 		rsb	r4, r4, #1020
+ 868              	.LVL59:
+ 253:src/softwareserial.c **** 
+ 869              		.loc 1 253 13 view .LVU246
+ 870 003e 0134     		adds	r4, r4, #1
+ 871              	.LVL60:
  255:src/softwareserial.c ****         if (sendlen > avail){
- 905              		.loc 1 255 13 view .LVU260
- 906 0044 2C46     		mov	r4, r5
- 907              	.LVL62:
+ 872              		.loc 1 255 9 is_stmt 1 view .LVU247
+ 256:src/softwareserial.c ****             sendlen = avail;
+ 873              		.loc 1 256 9 view .LVU248
+ 256:src/softwareserial.c ****             sendlen = avail;
+ 874              		.loc 1 256 12 is_stmt 0 view .LVU249
+ 875 0040 A542     		cmp	r5, r4
+ 876 0042 E8DC     		bgt	.L52
  255:src/softwareserial.c ****         if (sendlen > avail){
- 908              		.loc 1 255 13 view .LVU261
- 909 0046 E6E7     		b	.L52
- 910              	.LVL63:
- 911              	.L57:
- 912              	.LBB25:
+ 877              		.loc 1 255 13 view .LVU250
+ 878 0044 2C46     		mov	r4, r5
+ 879              	.LVL61:
+ 255:src/softwareserial.c ****         if (sendlen > avail){
+ 880              		.loc 1 255 13 view .LVU251
+ 881 0046 E6E7     		b	.L52
+ 882              	.LVL62:
+ 883              	.L57:
+ 884              	.LBB24:
  264:src/softwareserial.c ****             // wait for an appropriate period
  265:src/softwareserial.c ****             float delay_ms = (len > sendlen)? sendlen:len;
- 913              		.loc 1 265 13 is_stmt 1 view .LVU262
- 914              		.loc 1 265 19 is_stmt 0 view .LVU263
- 915 0048 2046     		mov	r0, r4
- 916 004a AC42     		cmp	r4, r5
- 917 004c A8BF     		it	ge
- 918 004e 2846     		movge	r0, r5
- 919 0050 FFF7FEFF 		bl	__aeabi_i2f
- 920              	.LVL64:
+ 885              		.loc 1 265 13 is_stmt 1 view .LVU252
+ 886              		.loc 1 265 19 is_stmt 0 view .LVU253
+ 887 0048 2046     		mov	r0, r4
+ 888 004a AC42     		cmp	r4, r5
+ 889 004c A8BF     		it	ge
+ 890 004e 2846     		movge	r0, r5
+ 891 0050 FFF7FEFF 		bl	__aeabi_i2f
+ 892              	.LVL63:
  266:src/softwareserial.c ****             delay_ms *= SOFTWARE_SERIAL_MS_PER_BYTE;
- 921              		.loc 1 266 13 is_stmt 1 view .LVU264
- 922              		.loc 1 266 22 is_stmt 0 view .LVU265
- 923 0054 FFF7FEFF 		bl	__aeabi_f2d
- 924              	.LVL65:
- 925              		.loc 1 266 22 view .LVU266
- 926 0058 07A3     		adr	r3, .L59
- 927 005a D3E90023 		ldrd	r2, [r3]
- 928 005e FFF7FEFF 		bl	__aeabi_dmul
- 929              	.LVL66:
- 930 0062 FFF7FEFF 		bl	__aeabi_d2f
- 931              	.LVL67:
+ARM GAS  /tmp/ccFbbbSG.s 			page 23
+
+
+ 893              		.loc 1 266 13 is_stmt 1 view .LVU254
+ 894              		.loc 1 266 22 is_stmt 0 view .LVU255
+ 895 0054 FFF7FEFF 		bl	__aeabi_f2d
+ 896              	.LVL64:
+ 897              		.loc 1 266 22 view .LVU256
+ 898 0058 07A3     		adr	r3, .L59
+ 899 005a D3E90023 		ldrd	r2, [r3]
+ 900 005e FFF7FEFF 		bl	__aeabi_dmul
+ 901              	.LVL65:
+ 902 0062 FFF7FEFF 		bl	__aeabi_d2f
+ 903              	.LVL66:
  267:src/softwareserial.c ****             HAL_Delay((int)delay_ms + 2); //delay in ms, plus 2
- 932              		.loc 1 267 13 is_stmt 1 view .LVU267
- 933              		.loc 1 267 23 is_stmt 0 view .LVU268
- 934 0066 FFF7FEFF 		bl	__aeabi_f2iz
- 935              	.LVL68:
- 936              		.loc 1 267 13 view .LVU269
- 937 006a 0230     		adds	r0, r0, #2
- 938 006c FFF7FEFF 		bl	HAL_Delay
- 939              	.LVL69:
- 940 0070 D9E7     		b	.L50
- 941              	.LVL70:
- 942              	.L54:
- 943              		.loc 1 267 13 view .LVU270
- 944              	.LBE25:
- 945              	.LBE26:
+ 904              		.loc 1 267 13 is_stmt 1 view .LVU257
+ 905              		.loc 1 267 23 is_stmt 0 view .LVU258
+ 906 0066 FFF7FEFF 		bl	__aeabi_f2iz
+ 907              	.LVL67:
+ 908              		.loc 1 267 13 view .LVU259
+ 909 006a 0230     		adds	r0, r0, #2
+ 910 006c FFF7FEFF 		bl	HAL_Delay
+ 911              	.LVL68:
+ 912 0070 D9E7     		b	.L50
+ 913              	.LVL69:
+ 914              	.L54:
+ 915              		.loc 1 267 13 view .LVU260
+ 916              	.LBE24:
+ 917              	.LBE25:
  268:src/softwareserial.c ****         }
  269:src/softwareserial.c ****     }
  270:src/softwareserial.c **** 
-ARM GAS  /tmp/cc8pDC1F.s 			page 24
-
-
  271:src/softwareserial.c ****     return orglen;
- 946              		.loc 1 271 5 is_stmt 1 view .LVU271
+ 918              		.loc 1 271 5 is_stmt 1 view .LVU261
  272:src/softwareserial.c **** }
- 947              		.loc 1 272 1 is_stmt 0 view .LVU272
- 948 0072 4046     		mov	r0, r8
- 949 0074 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 950              	.LVL71:
- 951              	.L60:
- 952              		.loc 1 272 1 view .LVU273
- 953              		.align	3
- 954              	.L59:
- 955 0078 8EE3388E 		.word	-1908874354
- 956 007c E338B63F 		.word	1068906723
- 957 0080 00000000 		.word	softwareserialTXbuffer
- 958              		.cfi_endproc
- 959              	.LFE75:
- 961              		.section	.text.softwareserialRXInterrupt,"ax",%progbits
- 962              		.align	1
- 963              		.global	softwareserialRXInterrupt
- 964              		.syntax unified
- 965              		.thumb
- 966              		.thumb_func
- 968              	softwareserialRXInterrupt:
- 969              	.LFB76:
+ 919              		.loc 1 272 1 is_stmt 0 view .LVU262
+ 920 0072 4046     		mov	r0, r8
+ 921 0074 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 922              	.LVL70:
+ 923              	.L60:
+ 924              		.loc 1 272 1 view .LVU263
+ 925              		.align	3
+ 926              	.L59:
+ 927 0078 8EE3388E 		.word	-1908874354
+ 928 007c E338B63F 		.word	1068906723
+ 929 0080 00000000 		.word	softwareserialTXbuffer
+ 930              		.cfi_endproc
+ 931              	.LFE75:
+ 933              		.section	.text.softwareserialRXInterrupt,"ax",%progbits
+ 934              		.align	1
+ 935              		.global	softwareserialRXInterrupt
+ 936              		.syntax unified
+ 937              		.thumb
+ 938              		.thumb_func
+ 940              	softwareserialRXInterrupt:
+ 941              	.LFB76:
  273:src/softwareserial.c **** 
  274:src/softwareserial.c **** 
  275:src/softwareserial.c **** 
  276:src/softwareserial.c **** // interrupt on rising or falling edge of serial....
+ARM GAS  /tmp/ccFbbbSG.s 			page 24
+
+
  277:src/softwareserial.c **** void softwareserialRXInterrupt(void){
- 970              		.loc 1 277 37 is_stmt 1 view -0
- 971              		.cfi_startproc
- 972              		@ args = 0, pretend = 0, frame = 0
- 973              		@ frame_needed = 0, uses_anonymous_args = 0
- 974 0000 30B5     		push	{r4, r5, lr}
- 975              	.LCFI5:
- 976              		.cfi_def_cfa_offset 12
- 977              		.cfi_offset 4, -12
- 978              		.cfi_offset 5, -8
- 979              		.cfi_offset 14, -4
+ 942              		.loc 1 277 37 is_stmt 1 view -0
+ 943              		.cfi_startproc
+ 944              		@ args = 0, pretend = 0, frame = 0
+ 945              		@ frame_needed = 0, uses_anonymous_args = 0
+ 946 0000 30B5     		push	{r4, r5, lr}
+ 947              	.LCFI5:
+ 948              		.cfi_def_cfa_offset 12
+ 949              		.cfi_offset 4, -12
+ 950              		.cfi_offset 5, -8
+ 951              		.cfi_offset 14, -4
  278:src/softwareserial.c ****     char value = (SOFTWARE_SERIAL_RX_PORT->IDR & SOFTWARE_SERIAL_RX_PIN)?1:0;
- 980              		.loc 1 278 5 view .LVU275
- 981              		.loc 1 278 42 is_stmt 0 view .LVU276
- 982 0002 474B     		ldr	r3, .L82
- 983 0004 9B68     		ldr	r3, [r3, #8]
- 984              		.loc 1 278 75 view .LVU277
- 985 0006 C3F3803C 		ubfx	ip, r3, #14, #1
- 986              	.LVL72:
+ 952              		.loc 1 278 5 view .LVU265
+ 953              		.loc 1 278 42 is_stmt 0 view .LVU266
+ 954 0002 474B     		ldr	r3, .L82
+ 955 0004 9B68     		ldr	r3, [r3, #8]
+ 956              		.loc 1 278 75 view .LVU267
+ 957 0006 C3F3803C 		ubfx	ip, r3, #14, #1
+ 958              	.LVL71:
  279:src/softwareserial.c ****     unsigned int time = softwareserialtimer.Instance->CNT;
- 987              		.loc 1 279 5 is_stmt 1 view .LVU278
- 988              		.loc 1 279 44 is_stmt 0 view .LVU279
- 989 000a 464B     		ldr	r3, .L82+4
- 990 000c 1B68     		ldr	r3, [r3]
- 991              		.loc 1 279 18 view .LVU280
- 992 000e 5C6A     		ldr	r4, [r3, #36]
- 993              	.LVL73:
+ 959              		.loc 1 279 5 is_stmt 1 view .LVU268
+ 960              		.loc 1 279 44 is_stmt 0 view .LVU269
+ 961 000a 464B     		ldr	r3, .L82+4
+ 962 000c 1B68     		ldr	r3, [r3]
+ 963              		.loc 1 279 18 view .LVU270
+ 964 000e 5C6A     		ldr	r4, [r3, #36]
+ 965              	.LVL72:
  280:src/softwareserial.c **** 
  281:src/softwareserial.c **** 
-ARM GAS  /tmp/cc8pDC1F.s 			page 25
-
-
  282:src/softwareserial.c ****     timerval = time;
- 994              		.loc 1 282 5 is_stmt 1 view .LVU281
- 995              		.loc 1 282 14 is_stmt 0 view .LVU282
- 996 0010 454B     		ldr	r3, .L82+8
- 997 0012 1C60     		str	r4, [r3]
+ 966              		.loc 1 282 5 is_stmt 1 view .LVU271
+ 967              		.loc 1 282 14 is_stmt 0 view .LVU272
+ 968 0010 454B     		ldr	r3, .L82+8
+ 969 0012 1C60     		str	r4, [r3]
  283:src/softwareserial.c **** 
  284:src/softwareserial.c ****     // time is in terms of baud *8
  285:src/softwareserial.c ****     int tdiff = time - softwareserialRXbuffer.lasttime;
- 998              		.loc 1 285 5 is_stmt 1 view .LVU283
- 999              		.loc 1 285 46 is_stmt 0 view .LVU284
- 1000 0014 454B     		ldr	r3, .L82+12
- 1001 0016 D3F80C34 		ldr	r3, [r3, #1036]
- 1002              	.LVL74:
+ 970              		.loc 1 285 5 is_stmt 1 view .LVU273
+ 971              		.loc 1 285 46 is_stmt 0 view .LVU274
+ 972 0014 454B     		ldr	r3, .L82+12
+ 973 0016 D3F80C34 		ldr	r3, [r3, #1036]
+ 974              	.LVL73:
  286:src/softwareserial.c ****     if (tdiff < 0) tdiff += 0x10000;
- 1003              		.loc 1 286 5 is_stmt 1 view .LVU285
- 1004              		.loc 1 286 8 is_stmt 0 view .LVU286
- 1005 001a E31A     		subs	r3, r4, r3
- 1006              	.LVL75:
- 1007              		.loc 1 286 8 view .LVU287
- 1008 001c 18D4     		bmi	.L77
- 1009              	.LVL76:
- 1010              	.L62:
+ 975              		.loc 1 286 5 is_stmt 1 view .LVU275
+ 976              		.loc 1 286 8 is_stmt 0 view .LVU276
+ 977 001a E31A     		subs	r3, r4, r3
+ 978              	.LVL74:
+ 979              		.loc 1 286 8 view .LVU277
+ 980 001c 18D4     		bmi	.L77
+ 981              	.LVL75:
+ 982              	.L62:
  287:src/softwareserial.c **** 
  288:src/softwareserial.c ****     int bits = (tdiff+2)/8;
- 1011              		.loc 1 288 5 is_stmt 1 view .LVU288
- 1012              		.loc 1 288 9 is_stmt 0 view .LVU289
- 1013 001e 981C     		adds	r0, r3, #2
- 1014 0020 19D4     		bmi	.L78
- 1015              	.L63:
- 1016 0022 C010     		asrs	r0, r0, #3
- 1017              	.LVL77:
+ 983              		.loc 1 288 5 is_stmt 1 view .LVU278
+ 984              		.loc 1 288 9 is_stmt 0 view .LVU279
+ 985 001e 981C     		adds	r0, r3, #2
+ 986 0020 19D4     		bmi	.L78
+ARM GAS  /tmp/ccFbbbSG.s 			page 25
+
+
+ 987              	.L63:
+ 988 0022 C010     		asrs	r0, r0, #3
+ 989              	.LVL76:
  289:src/softwareserial.c **** 
  290:src/softwareserial.c ****     if (bits > 10) {
- 1018              		.loc 1 290 5 is_stmt 1 view .LVU290
- 1019              		.loc 1 290 8 is_stmt 0 view .LVU291
- 1020 0024 552B     		cmp	r3, #85
- 1021 0026 05DD     		ble	.L64
+ 990              		.loc 1 290 5 is_stmt 1 view .LVU280
+ 991              		.loc 1 290 8 is_stmt 0 view .LVU281
+ 992 0024 552B     		cmp	r3, #85
+ 993 0026 05DD     		ble	.L64
  291:src/softwareserial.c ****         bits = 10;
- 1022              		.loc 1 291 9 is_stmt 1 view .LVU292
- 1023              	.LVL78:
+ 994              		.loc 1 291 9 is_stmt 1 view .LVU282
+ 995              	.LVL77:
  292:src/softwareserial.c ****         softwareserialRXbuffer.bit = -2;
- 1024              		.loc 1 292 9 view .LVU293
- 1025              		.loc 1 292 36 is_stmt 0 view .LVU294
- 1026 0028 404B     		ldr	r3, .L82+12
- 1027              	.LVL79:
- 1028              		.loc 1 292 36 view .LVU295
- 1029 002a 6FF00102 		mvn	r2, #1
- 1030 002e C3F80824 		str	r2, [r3, #1032]
+ 996              		.loc 1 292 9 view .LVU283
+ 997              		.loc 1 292 36 is_stmt 0 view .LVU284
+ 998 0028 404B     		ldr	r3, .L82+12
+ 999              	.LVL78:
+ 1000              		.loc 1 292 36 view .LVU285
+ 1001 002a 6FF00102 		mvn	r2, #1
+ 1002 002e C3F80824 		str	r2, [r3, #1032]
  291:src/softwareserial.c ****         bits = 10;
- 1031              		.loc 1 291 14 view .LVU296
- 1032 0032 0A20     		movs	r0, #10
- 1033              	.LVL80:
- 1034              	.L64:
+ 1003              		.loc 1 291 14 view .LVU286
+ 1004 0032 0A20     		movs	r0, #10
+ 1005              	.LVL79:
+ 1006              	.L64:
  293:src/softwareserial.c ****     }
  294:src/softwareserial.c **** 
  295:src/softwareserial.c ****     if ((softwareserialRXbuffer.bit == -2) && (softwareserialRXbuffer.lastvalue == 0)) {
- 1035              		.loc 1 295 5 is_stmt 1 view .LVU297
-ARM GAS  /tmp/cc8pDC1F.s 			page 26
-
-
- 1036              		.loc 1 295 32 is_stmt 0 view .LVU298
- 1037 0034 3D4B     		ldr	r3, .L82+12
- 1038 0036 D3F80834 		ldr	r3, [r3, #1032]
- 1039              		.loc 1 295 8 view .LVU299
- 1040 003a 13F1020F 		cmn	r3, #2
- 1041 003e 0CD0     		beq	.L79
- 1042              	.L65:
+ 1007              		.loc 1 295 5 is_stmt 1 view .LVU287
+ 1008              		.loc 1 295 32 is_stmt 0 view .LVU288
+ 1009 0034 3D4B     		ldr	r3, .L82+12
+ 1010 0036 D3F80834 		ldr	r3, [r3, #1032]
+ 1011              		.loc 1 295 8 view .LVU289
+ 1012 003a 13F1020F 		cmn	r3, #2
+ 1013 003e 0CD0     		beq	.L79
+ 1014              	.L65:
  296:src/softwareserial.c ****         softwareserialRXbuffer.bit = -1;
  297:src/softwareserial.c ****         softwareserialRXbuffer.buff[softwareserialRXbuffer.head] = 0;
  298:src/softwareserial.c ****     }
  299:src/softwareserial.c **** 
  300:src/softwareserial.c ****     if (softwareserialRXbuffer.bit > -2){
- 1043              		.loc 1 300 5 is_stmt 1 view .LVU300
- 1044              		.loc 1 300 31 is_stmt 0 view .LVU301
- 1045 0040 3A4B     		ldr	r3, .L82+12
- 1046 0042 D3F80834 		ldr	r3, [r3, #1032]
- 1047              		.loc 1 300 8 view .LVU302
- 1048 0046 B3F1FF3F 		cmp	r3, #-1
- 1049 004a 4EDB     		blt	.L67
- 1050              	.LBB27:
+ 1015              		.loc 1 300 5 is_stmt 1 view .LVU290
+ 1016              		.loc 1 300 31 is_stmt 0 view .LVU291
+ 1017 0040 3A4B     		ldr	r3, .L82+12
+ 1018 0042 D3F80834 		ldr	r3, [r3, #1032]
+ 1019              		.loc 1 300 8 view .LVU292
+ 1020 0046 B3F1FF3F 		cmp	r3, #-1
+ 1021 004a 4EDB     		blt	.L67
+ 1022              	.LBB26:
  301:src/softwareserial.c ****         for (int i = 0; i < bits; i++){
- 1051              		.loc 1 301 18 view .LVU303
- 1052 004c 0021     		movs	r1, #0
- 1053 004e 27E0     		b	.L66
- 1054              	.LVL81:
- 1055              	.L77:
- 1056              		.loc 1 301 18 view .LVU304
- 1057              	.LBE27:
+ 1023              		.loc 1 301 18 view .LVU293
+ 1024 004c 0021     		movs	r1, #0
+ 1025 004e 27E0     		b	.L66
+ 1026              	.LVL80:
+ 1027              	.L77:
+ 1028              		.loc 1 301 18 view .LVU294
+ 1029              	.LBE26:
+ARM GAS  /tmp/ccFbbbSG.s 			page 26
+
+
  286:src/softwareserial.c **** 
- 1058              		.loc 1 286 20 is_stmt 1 discriminator 1 view .LVU305
+ 1030              		.loc 1 286 20 is_stmt 1 discriminator 1 view .LVU295
  286:src/softwareserial.c **** 
- 1059              		.loc 1 286 26 is_stmt 0 discriminator 1 view .LVU306
- 1060 0050 03F58033 		add	r3, r3, #65536
- 1061              	.LVL82:
+ 1031              		.loc 1 286 26 is_stmt 0 discriminator 1 view .LVU296
+ 1032 0050 03F58033 		add	r3, r3, #65536
+ 1033              	.LVL81:
  286:src/softwareserial.c **** 
- 1062              		.loc 1 286 26 discriminator 1 view .LVU307
- 1063 0054 E3E7     		b	.L62
- 1064              	.L78:
+ 1034              		.loc 1 286 26 discriminator 1 view .LVU297
+ 1035 0054 E3E7     		b	.L62
+ 1036              	.L78:
  288:src/softwareserial.c **** 
- 1065              		.loc 1 288 9 view .LVU308
- 1066 0056 0730     		adds	r0, r0, #7
- 1067 0058 E3E7     		b	.L63
- 1068              	.LVL83:
- 1069              	.L79:
+ 1037              		.loc 1 288 9 view .LVU298
+ 1038 0056 0730     		adds	r0, r0, #7
+ 1039 0058 E3E7     		b	.L63
+ 1040              	.LVL82:
+ 1041              	.L79:
  295:src/softwareserial.c ****         softwareserialRXbuffer.bit = -1;
- 1070              		.loc 1 295 70 discriminator 1 view .LVU309
- 1071 005a 344B     		ldr	r3, .L82+12
- 1072 005c 93F81034 		ldrb	r3, [r3, #1040]	@ zero_extendqisi2
+ 1042              		.loc 1 295 70 discriminator 1 view .LVU299
+ 1043 005a 344B     		ldr	r3, .L82+12
+ 1044 005c 93F81034 		ldrb	r3, [r3, #1040]	@ zero_extendqisi2
  295:src/softwareserial.c ****         softwareserialRXbuffer.bit = -1;
- 1073              		.loc 1 295 44 discriminator 1 view .LVU310
- 1074 0060 002B     		cmp	r3, #0
- 1075 0062 EDD1     		bne	.L65
+ 1045              		.loc 1 295 44 discriminator 1 view .LVU300
+ 1046 0060 002B     		cmp	r3, #0
+ 1047 0062 EDD1     		bne	.L65
  296:src/softwareserial.c ****         softwareserialRXbuffer.buff[softwareserialRXbuffer.head] = 0;
- 1076              		.loc 1 296 9 is_stmt 1 view .LVU311
+ 1048              		.loc 1 296 9 is_stmt 1 view .LVU301
  296:src/softwareserial.c ****         softwareserialRXbuffer.buff[softwareserialRXbuffer.head] = 0;
- 1077              		.loc 1 296 36 is_stmt 0 view .LVU312
- 1078 0064 314B     		ldr	r3, .L82+12
-ARM GAS  /tmp/cc8pDC1F.s 			page 27
-
-
- 1079 0066 4FF0FF32 		mov	r2, #-1
- 1080 006a C3F80824 		str	r2, [r3, #1032]
+ 1049              		.loc 1 296 36 is_stmt 0 view .LVU302
+ 1050 0064 314B     		ldr	r3, .L82+12
+ 1051 0066 4FF0FF32 		mov	r2, #-1
+ 1052 006a C3F80824 		str	r2, [r3, #1032]
  297:src/softwareserial.c ****     }
- 1081              		.loc 1 297 9 is_stmt 1 view .LVU313
+ 1053              		.loc 1 297 9 is_stmt 1 view .LVU303
  297:src/softwareserial.c ****     }
- 1082              		.loc 1 297 59 is_stmt 0 view .LVU314
- 1083 006e D3F80024 		ldr	r2, [r3, #1024]
+ 1054              		.loc 1 297 59 is_stmt 0 view .LVU304
+ 1055 006e D3F80024 		ldr	r2, [r3, #1024]
  297:src/softwareserial.c ****     }
- 1084              		.loc 1 297 66 view .LVU315
- 1085 0072 0021     		movs	r1, #0
- 1086 0074 9954     		strb	r1, [r3, r2]
- 1087 0076 E3E7     		b	.L65
- 1088              	.LVL84:
- 1089              	.L75:
- 1090              	.LBB30:
+ 1056              		.loc 1 297 66 view .LVU305
+ 1057 0072 0021     		movs	r1, #0
+ 1058 0074 9954     		strb	r1, [r3, r2]
+ 1059 0076 E3E7     		b	.L65
+ 1060              	.LVL83:
+ 1061              	.L75:
+ 1062              	.LBB29:
  302:src/softwareserial.c ****             if (softwareserialRXbuffer.bit >= 0){
  303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
  304:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
- 1091              		.loc 1 304 115 discriminator 2 view .LVU316
- 1092 0078 4FF0000E 		mov	lr, #0
- 1093              	.L69:
- 1094              		.loc 1 304 67 discriminator 4 view .LVU317
- 1095 007c 2B4B     		ldr	r3, .L82+12
- 1096 007e D3F80054 		ldr	r5, [r3, #1024]
- 1097              		.loc 1 304 44 discriminator 4 view .LVU318
- 1098 0082 5A5D     		ldrb	r2, [r3, r5]	@ zero_extendqisi2
- 1099              		.loc 1 304 74 discriminator 4 view .LVU319
- 1100 0084 42EA0E02 		orr	r2, r2, lr
- 1101 0088 5A55     		strb	r2, [r3, r5]
- 1102              	.L68:
+ 1063              		.loc 1 304 115 discriminator 2 view .LVU306
+ 1064 0078 4FF0000E 		mov	lr, #0
+ 1065              	.L69:
+ 1066              		.loc 1 304 67 discriminator 4 view .LVU307
+ 1067 007c 2B4B     		ldr	r3, .L82+12
+ 1068 007e D3F80054 		ldr	r5, [r3, #1024]
+ 1069              		.loc 1 304 44 discriminator 4 view .LVU308
+ 1070 0082 5A5D     		ldrb	r2, [r3, r5]	@ zero_extendqisi2
+ 1071              		.loc 1 304 74 discriminator 4 view .LVU309
+ 1072 0084 42EA0E02 		orr	r2, r2, lr
+ARM GAS  /tmp/ccFbbbSG.s 			page 27
+
+
+ 1073 0088 5A55     		strb	r2, [r3, r5]
+ 1074              	.L68:
  305:src/softwareserial.c ****             }
  306:src/softwareserial.c ****             softwareserialRXbuffer.bit++;
- 1103              		.loc 1 306 13 is_stmt 1 view .LVU320
- 1104              		.loc 1 306 35 is_stmt 0 view .LVU321
- 1105 008a 284B     		ldr	r3, .L82+12
- 1106 008c D3F80824 		ldr	r2, [r3, #1032]
- 1107              		.loc 1 306 39 view .LVU322
- 1108 0090 0132     		adds	r2, r2, #1
- 1109 0092 C3F80824 		str	r2, [r3, #1032]
+ 1075              		.loc 1 306 13 is_stmt 1 view .LVU310
+ 1076              		.loc 1 306 35 is_stmt 0 view .LVU311
+ 1077 008a 284B     		ldr	r3, .L82+12
+ 1078 008c D3F80824 		ldr	r2, [r3, #1032]
+ 1079              		.loc 1 306 39 view .LVU312
+ 1080 0090 0132     		adds	r2, r2, #1
+ 1081 0092 C3F80824 		str	r2, [r3, #1032]
  307:src/softwareserial.c ****             if (softwareserialRXbuffer.bit >= 8){
- 1110              		.loc 1 307 13 is_stmt 1 view .LVU323
- 1111              		.loc 1 307 39 is_stmt 0 view .LVU324
- 1112 0096 D3F80834 		ldr	r3, [r3, #1032]
- 1113              		.loc 1 307 16 view .LVU325
- 1114 009a 072B     		cmp	r3, #7
- 1115 009c 14DC     		bgt	.L80
+ 1082              		.loc 1 307 13 is_stmt 1 view .LVU313
+ 1083              		.loc 1 307 39 is_stmt 0 view .LVU314
+ 1084 0096 D3F80834 		ldr	r3, [r3, #1032]
+ 1085              		.loc 1 307 16 view .LVU315
+ 1086 009a 072B     		cmp	r3, #7
+ 1087 009c 14DC     		bgt	.L80
  301:src/softwareserial.c ****             if (softwareserialRXbuffer.bit >= 0){
- 1116              		.loc 1 301 36 is_stmt 1 discriminator 2 view .LVU326
- 1117 009e 0131     		adds	r1, r1, #1
- 1118              	.LVL85:
- 1119              	.L66:
+ 1088              		.loc 1 301 36 is_stmt 1 discriminator 2 view .LVU316
+ 1089 009e 0131     		adds	r1, r1, #1
+ 1090              	.LVL84:
+ 1091              	.L66:
  301:src/softwareserial.c ****             if (softwareserialRXbuffer.bit >= 0){
- 1120              		.loc 1 301 27 discriminator 1 view .LVU327
- 1121 00a0 8842     		cmp	r0, r1
- 1122 00a2 22DD     		ble	.L67
+ 1092              		.loc 1 301 27 discriminator 1 view .LVU317
+ 1093 00a0 8842     		cmp	r0, r1
+ 1094 00a2 22DD     		ble	.L67
  302:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
- 1123              		.loc 1 302 13 view .LVU328
-ARM GAS  /tmp/cc8pDC1F.s 			page 28
+ 1095              		.loc 1 302 13 view .LVU318
+ 302:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
+ 1096              		.loc 1 302 39 is_stmt 0 view .LVU319
+ 1097 00a4 214B     		ldr	r3, .L82+12
+ 1098 00a6 D3F80834 		ldr	r3, [r3, #1032]
+ 302:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
+ 1099              		.loc 1 302 16 view .LVU320
+ 1100 00aa 002B     		cmp	r3, #0
+ 1101 00ac EDDB     		blt	.L68
+ 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
+ 1102              		.loc 1 303 17 is_stmt 1 view .LVU321
+ 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
+ 1103              		.loc 1 303 67 is_stmt 0 view .LVU322
+ 1104 00ae 1F4B     		ldr	r3, .L82+12
+ 1105 00b0 D3F80054 		ldr	r5, [r3, #1024]
+ 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
+ 1106              		.loc 1 303 44 view .LVU323
+ 1107 00b4 5A5D     		ldrb	r2, [r3, r5]	@ zero_extendqisi2
+ 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
+ 1108              		.loc 1 303 74 view .LVU324
+ 1109 00b6 5208     		lsrs	r2, r2, #1
+ 1110 00b8 5A55     		strb	r2, [r3, r5]
+ 304:src/softwareserial.c ****             }
+ 1111              		.loc 1 304 17 is_stmt 1 view .LVU325
+ 304:src/softwareserial.c ****             }
+ 1112              		.loc 1 304 100 is_stmt 0 view .LVU326
+ 1113 00ba 93F81034 		ldrb	r3, [r3, #1040]	@ zero_extendqisi2
+ 304:src/softwareserial.c ****             }
+ 1114              		.loc 1 304 115 view .LVU327
+ARM GAS  /tmp/ccFbbbSG.s 			page 28
 
 
- 302:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
- 1124              		.loc 1 302 39 is_stmt 0 view .LVU329
- 1125 00a4 214B     		ldr	r3, .L82+12
- 1126 00a6 D3F80834 		ldr	r3, [r3, #1032]
- 302:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] >>= 1;
- 1127              		.loc 1 302 16 view .LVU330
- 1128 00aa 002B     		cmp	r3, #0
- 1129 00ac EDDB     		blt	.L68
- 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
- 1130              		.loc 1 303 17 is_stmt 1 view .LVU331
- 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
- 1131              		.loc 1 303 67 is_stmt 0 view .LVU332
- 1132 00ae 1F4B     		ldr	r3, .L82+12
- 1133 00b0 D3F80054 		ldr	r5, [r3, #1024]
- 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
- 1134              		.loc 1 303 44 view .LVU333
- 1135 00b4 5A5D     		ldrb	r2, [r3, r5]	@ zero_extendqisi2
- 303:src/softwareserial.c ****                 softwareserialRXbuffer.buff[softwareserialRXbuffer.head] |= (softwareserialRXbuffer
- 1136              		.loc 1 303 74 view .LVU334
- 1137 00b6 5208     		lsrs	r2, r2, #1
- 1138 00b8 5A55     		strb	r2, [r3, r5]
+ 1115 00be 002B     		cmp	r3, #0
+ 1116 00c0 DAD0     		beq	.L75
  304:src/softwareserial.c ****             }
- 1139              		.loc 1 304 17 is_stmt 1 view .LVU335
- 304:src/softwareserial.c ****             }
- 1140              		.loc 1 304 100 is_stmt 0 view .LVU336
- 1141 00ba 93F81034 		ldrb	r3, [r3, #1040]	@ zero_extendqisi2
- 304:src/softwareserial.c ****             }
- 1142              		.loc 1 304 115 view .LVU337
- 1143 00be 002B     		cmp	r3, #0
- 1144 00c0 DAD0     		beq	.L75
- 304:src/softwareserial.c ****             }
- 1145              		.loc 1 304 115 discriminator 1 view .LVU338
- 1146 00c2 4FF0800E 		mov	lr, #128
- 1147 00c6 D9E7     		b	.L69
- 1148              	.L80:
- 1149              	.LBB28:
+ 1117              		.loc 1 304 115 discriminator 1 view .LVU328
+ 1118 00c2 4FF0800E 		mov	lr, #128
+ 1119 00c6 D9E7     		b	.L69
+ 1120              	.L80:
+ 1121              	.LBB27:
  308:src/softwareserial.c ****                 int count = softwareserialRXbuffer.head - softwareserialRXbuffer.tail;
- 1150              		.loc 1 308 17 is_stmt 1 view .LVU339
- 1151              		.loc 1 308 51 is_stmt 0 view .LVU340
- 1152 00c8 184A     		ldr	r2, .L82+12
- 1153 00ca D2F80034 		ldr	r3, [r2, #1024]
- 1154              		.loc 1 308 81 view .LVU341
- 1155 00ce D2F80424 		ldr	r2, [r2, #1028]
- 1156              	.LVL86:
+ 1122              		.loc 1 308 17 is_stmt 1 view .LVU329
+ 1123              		.loc 1 308 51 is_stmt 0 view .LVU330
+ 1124 00c8 184A     		ldr	r2, .L82+12
+ 1125 00ca D2F80034 		ldr	r3, [r2, #1024]
+ 1126              		.loc 1 308 81 view .LVU331
+ 1127 00ce D2F80424 		ldr	r2, [r2, #1028]
+ 1128              	.LVL85:
  309:src/softwareserial.c ****                 if (count < 0) count += SOFTWARE_SERIAL_BUFFER_SIZE;
- 1157              		.loc 1 309 17 is_stmt 1 view .LVU342
- 1158              		.loc 1 309 20 is_stmt 0 view .LVU343
- 1159 00d2 9B1A     		subs	r3, r3, r2
- 1160              	.LVL87:
- 1161              		.loc 1 309 20 view .LVU344
- 1162 00d4 0FD4     		bmi	.L81
- 1163              	.LVL88:
- 1164              	.L71:
+ 1129              		.loc 1 309 17 is_stmt 1 view .LVU332
+ 1130              		.loc 1 309 20 is_stmt 0 view .LVU333
+ 1131 00d2 9B1A     		subs	r3, r3, r2
+ 1132              	.LVL86:
+ 1133              		.loc 1 309 20 view .LVU334
+ 1134 00d4 0FD4     		bmi	.L81
+ 1135              	.LVL87:
+ 1136              	.L71:
  310:src/softwareserial.c ****                 if (count >=  SOFTWARE_SERIAL_BUFFER_SIZE-2){
- 1165              		.loc 1 310 17 is_stmt 1 view .LVU345
- 1166              		.loc 1 310 20 is_stmt 0 view .LVU346
- 1167 00d6 40F2FD32 		movw	r2, #1021
-ARM GAS  /tmp/cc8pDC1F.s 			page 29
-
-
- 1168 00da 9342     		cmp	r3, r2
- 1169 00dc 0EDD     		ble	.L72
+ 1137              		.loc 1 310 17 is_stmt 1 view .LVU335
+ 1138              		.loc 1 310 20 is_stmt 0 view .LVU336
+ 1139 00d6 40F2FD32 		movw	r2, #1021
+ 1140 00da 9342     		cmp	r3, r2
+ 1141 00dc 0EDD     		ble	.L72
  311:src/softwareserial.c ****                     softwareserialRXbuffer.overflow++;
- 1170              		.loc 1 311 21 is_stmt 1 view .LVU347
- 1171              		.loc 1 311 43 is_stmt 0 view .LVU348
- 1172 00de 134A     		ldr	r2, .L82+12
- 1173 00e0 D2F81434 		ldr	r3, [r2, #1044]
- 1174              	.LVL89:
- 1175              		.loc 1 311 52 view .LVU349
- 1176 00e4 0133     		adds	r3, r3, #1
- 1177 00e6 C2F81434 		str	r3, [r2, #1044]
+ 1142              		.loc 1 311 21 is_stmt 1 view .LVU337
+ 1143              		.loc 1 311 43 is_stmt 0 view .LVU338
+ 1144 00de 134A     		ldr	r2, .L82+12
+ 1145 00e0 D2F81434 		ldr	r3, [r2, #1044]
+ 1146              	.LVL88:
+ 1147              		.loc 1 311 52 view .LVU339
+ 1148 00e4 0133     		adds	r3, r3, #1
+ 1149 00e6 C2F81434 		str	r3, [r2, #1044]
  312:src/softwareserial.c ****                     break;
- 1178              		.loc 1 312 21 is_stmt 1 view .LVU350
- 1179              	.LVL90:
- 1180              	.L67:
- 1181              		.loc 1 312 21 is_stmt 0 view .LVU351
- 1182              	.LBE28:
- 1183              	.LBE30:
+ 1150              		.loc 1 312 21 is_stmt 1 view .LVU340
+ 1151              	.LVL89:
+ 1152              	.L67:
+ 1153              		.loc 1 312 21 is_stmt 0 view .LVU341
+ 1154              	.LBE27:
+ 1155              	.LBE29:
  313:src/softwareserial.c ****                 } else {
  314:src/softwareserial.c ****                     softwareserialRXbuffer.head = (softwareserialRXbuffer.head + 1) % SOFTWARE_SERI
  315:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
@@ -1709,186 +1678,189 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  320:src/softwareserial.c ****     }
  321:src/softwareserial.c **** 
  322:src/softwareserial.c ****     softwareserialRXbuffer.lastvalue = value;
- 1184              		.loc 1 322 5 is_stmt 1 view .LVU352
- 1185              		.loc 1 322 38 is_stmt 0 view .LVU353
- 1186 00ea 104B     		ldr	r3, .L82+12
- 1187 00ec 83F810C4 		strb	ip, [r3, #1040]
+ARM GAS  /tmp/ccFbbbSG.s 			page 29
+
+
+ 1156              		.loc 1 322 5 is_stmt 1 view .LVU342
+ 1157              		.loc 1 322 38 is_stmt 0 view .LVU343
+ 1158 00ea 104B     		ldr	r3, .L82+12
+ 1159 00ec 83F810C4 		strb	ip, [r3, #1040]
  323:src/softwareserial.c ****     softwareserialRXbuffer.lasttime = time;
- 1188              		.loc 1 323 5 is_stmt 1 view .LVU354
- 1189              		.loc 1 323 37 is_stmt 0 view .LVU355
- 1190 00f0 C3F80C44 		str	r4, [r3, #1036]
+ 1160              		.loc 1 323 5 is_stmt 1 view .LVU344
+ 1161              		.loc 1 323 37 is_stmt 0 view .LVU345
+ 1162 00f0 C3F80C44 		str	r4, [r3, #1036]
  324:src/softwareserial.c **** }
- 1191              		.loc 1 324 1 view .LVU356
- 1192 00f4 30BD     		pop	{r4, r5, pc}
- 1193              	.LVL91:
- 1194              	.L81:
- 1195              	.LBB31:
- 1196              	.LBB29:
+ 1163              		.loc 1 324 1 view .LVU346
+ 1164 00f4 30BD     		pop	{r4, r5, pc}
+ 1165              	.LVL90:
+ 1166              	.L81:
+ 1167              	.LBB30:
+ 1168              	.LBB28:
  309:src/softwareserial.c ****                 if (count >=  SOFTWARE_SERIAL_BUFFER_SIZE-2){
- 1197              		.loc 1 309 32 is_stmt 1 discriminator 1 view .LVU357
+ 1169              		.loc 1 309 32 is_stmt 1 discriminator 1 view .LVU347
  309:src/softwareserial.c ****                 if (count >=  SOFTWARE_SERIAL_BUFFER_SIZE-2){
- 1198              		.loc 1 309 38 is_stmt 0 discriminator 1 view .LVU358
- 1199 00f6 03F58063 		add	r3, r3, #1024
- 1200              	.LVL92:
+ 1170              		.loc 1 309 38 is_stmt 0 discriminator 1 view .LVU348
+ 1171 00f6 03F58063 		add	r3, r3, #1024
+ 1172              	.LVL91:
  309:src/softwareserial.c ****                 if (count >=  SOFTWARE_SERIAL_BUFFER_SIZE-2){
- 1201              		.loc 1 309 38 discriminator 1 view .LVU359
- 1202 00fa ECE7     		b	.L71
- 1203              	.L72:
+ 1173              		.loc 1 309 38 discriminator 1 view .LVU349
+ 1174 00fa ECE7     		b	.L71
+ 1175              	.L72:
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1204              		.loc 1 314 21 is_stmt 1 view .LVU360
+ 1176              		.loc 1 314 21 is_stmt 1 view .LVU350
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1205              		.loc 1 314 74 is_stmt 0 view .LVU361
-ARM GAS  /tmp/cc8pDC1F.s 			page 30
-
-
- 1206 00fc 0B4A     		ldr	r2, .L82+12
- 1207 00fe D2F80034 		ldr	r3, [r2, #1024]
- 1208              	.LVL93:
+ 1177              		.loc 1 314 74 is_stmt 0 view .LVU351
+ 1178 00fc 0B4A     		ldr	r2, .L82+12
+ 1179 00fe D2F80034 		ldr	r3, [r2, #1024]
+ 1180              	.LVL92:
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1209              		.loc 1 314 80 view .LVU362
- 1210 0102 0133     		adds	r3, r3, #1
+ 1181              		.loc 1 314 80 view .LVU352
+ 1182 0102 0133     		adds	r3, r3, #1
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1211              		.loc 1 314 85 view .LVU363
- 1212 0104 5942     		rsbs	r1, r3, #0
- 1213              	.LVL94:
+ 1183              		.loc 1 314 85 view .LVU353
+ 1184 0104 5942     		rsbs	r1, r3, #0
+ 1185              	.LVL93:
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1214              		.loc 1 314 85 view .LVU364
- 1215 0106 C3F30903 		ubfx	r3, r3, #0, #10
- 1216 010a C1F30901 		ubfx	r1, r1, #0, #10
- 1217 010e 58BF     		it	pl
- 1218 0110 4B42     		rsbpl	r3, r1, #0
+ 1186              		.loc 1 314 85 view .LVU354
+ 1187 0106 C3F30903 		ubfx	r3, r3, #0, #10
+ 1188 010a C1F30901 		ubfx	r1, r1, #0, #10
+ 1189 010e 58BF     		it	pl
+ 1190 0110 4B42     		rsbpl	r3, r1, #0
  314:src/softwareserial.c ****                     softwareserialRXbuffer.bit = -2;
- 1219              		.loc 1 314 49 view .LVU365
- 1220 0112 C2F80034 		str	r3, [r2, #1024]
+ 1191              		.loc 1 314 49 view .LVU355
+ 1192 0112 C2F80034 		str	r3, [r2, #1024]
  315:src/softwareserial.c ****                     break;
- 1221              		.loc 1 315 21 is_stmt 1 view .LVU366
+ 1193              		.loc 1 315 21 is_stmt 1 view .LVU356
  315:src/softwareserial.c ****                     break;
- 1222              		.loc 1 315 48 is_stmt 0 view .LVU367
- 1223 0116 6FF00103 		mvn	r3, #1
- 1224 011a C2F80834 		str	r3, [r2, #1032]
+ 1194              		.loc 1 315 48 is_stmt 0 view .LVU357
+ 1195 0116 6FF00103 		mvn	r3, #1
+ 1196 011a C2F80834 		str	r3, [r2, #1032]
  316:src/softwareserial.c ****                 }
- 1225              		.loc 1 316 21 is_stmt 1 view .LVU368
- 1226 011e E4E7     		b	.L67
- 1227              	.L83:
- 1228              		.align	2
- 1229              	.L82:
- 1230 0120 00080140 		.word	1073809408
- 1231 0124 00000000 		.word	softwareserialtimer
- 1232 0128 00000000 		.word	timerval
- 1233 012c 00000000 		.word	softwareserialRXbuffer
- 1234              	.LBE29:
- 1235              	.LBE31:
- 1236              		.cfi_endproc
- 1237              	.LFE76:
- 1239              		.section	.text.TIM3_IRQHandler,"ax",%progbits
- 1240              		.align	1
- 1241              		.global	TIM3_IRQHandler
- 1242              		.syntax unified
- 1243              		.thumb
- 1244              		.thumb_func
- 1246              	TIM3_IRQHandler:
- 1247              	.LFB77:
+ 1197              		.loc 1 316 21 is_stmt 1 view .LVU358
+ 1198 011e E4E7     		b	.L67
+ARM GAS  /tmp/ccFbbbSG.s 			page 30
+
+
+ 1199              	.L83:
+ 1200              		.align	2
+ 1201              	.L82:
+ 1202 0120 00080140 		.word	1073809408
+ 1203 0124 00000000 		.word	softwareserialtimer
+ 1204 0128 00000000 		.word	timerval
+ 1205 012c 00000000 		.word	softwareserialRXbuffer
+ 1206              	.LBE28:
+ 1207              	.LBE30:
+ 1208              		.cfi_endproc
+ 1209              	.LFE76:
+ 1211              		.section	.text.TIM3_IRQHandler,"ax",%progbits
+ 1212              		.align	1
+ 1213              		.global	TIM3_IRQHandler
+ 1214              		.syntax unified
+ 1215              		.thumb
+ 1216              		.thumb_func
+ 1218              	TIM3_IRQHandler:
+ 1219              	.LFB77:
  325:src/softwareserial.c **** 
  326:src/softwareserial.c **** 
  327:src/softwareserial.c **** // transmit interrupt
  328:src/softwareserial.c **** void TIM3_IRQHandler(void){
- 1248              		.loc 1 328 27 view -0
- 1249              		.cfi_startproc
- 1250              		@ args = 0, pretend = 0, frame = 0
- 1251              		@ frame_needed = 0, uses_anonymous_args = 0
- 1252 0000 08B5     		push	{r3, lr}
- 1253              	.LCFI6:
-ARM GAS  /tmp/cc8pDC1F.s 			page 31
-
-
- 1254              		.cfi_def_cfa_offset 8
- 1255              		.cfi_offset 3, -8
- 1256              		.cfi_offset 14, -4
+ 1220              		.loc 1 328 27 view -0
+ 1221              		.cfi_startproc
+ 1222              		@ args = 0, pretend = 0, frame = 0
+ 1223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1224 0000 08B5     		push	{r3, lr}
+ 1225              	.LCFI6:
+ 1226              		.cfi_def_cfa_offset 8
+ 1227              		.cfi_offset 3, -8
+ 1228              		.cfi_offset 14, -4
  329:src/softwareserial.c ****     short t = -1;
- 1257              		.loc 1 329 5 view .LVU370
- 1258              	.LVL95:
+ 1229              		.loc 1 329 5 view .LVU360
+ 1230              	.LVL94:
  330:src/softwareserial.c **** 
  331:src/softwareserial.c ****     if (__HAL_TIM_GET_FLAG(&softwareserialtimerTX, TIM_IT_UPDATE) != RESET){
- 1259              		.loc 1 331 5 view .LVU371
- 1260              		.loc 1 331 9 is_stmt 0 view .LVU372
- 1261 0002 414B     		ldr	r3, .L99
- 1262 0004 1B68     		ldr	r3, [r3]
- 1263 0006 1A69     		ldr	r2, [r3, #16]
- 1264              		.loc 1 331 8 view .LVU373
- 1265 0008 12F0010F 		tst	r2, #1
- 1266 000c 02D0     		beq	.L85
+ 1231              		.loc 1 331 5 view .LVU361
+ 1232              		.loc 1 331 9 is_stmt 0 view .LVU362
+ 1233 0002 414B     		ldr	r3, .L99
+ 1234 0004 1B68     		ldr	r3, [r3]
+ 1235 0006 1A69     		ldr	r2, [r3, #16]
+ 1236              		.loc 1 331 8 view .LVU363
+ 1237 0008 12F0010F 		tst	r2, #1
+ 1238 000c 02D0     		beq	.L85
  332:src/softwareserial.c ****         __HAL_TIM_CLEAR_FLAG(&softwareserialtimerTX, TIM_IT_UPDATE);
- 1267              		.loc 1 332 9 is_stmt 1 view .LVU374
- 1268 000e 6FF00102 		mvn	r2, #1
- 1269 0012 1A61     		str	r2, [r3, #16]
- 1270              	.L85:
+ 1239              		.loc 1 332 9 is_stmt 1 view .LVU364
+ 1240 000e 6FF00102 		mvn	r2, #1
+ 1241 0012 1A61     		str	r2, [r3, #16]
+ 1242              	.L85:
  333:src/softwareserial.c ****     }
  334:src/softwareserial.c **** 
  335:src/softwareserial.c ****     if (softwareserialTXbuffer.head != softwareserialTXbuffer.tail){
- 1271              		.loc 1 335 5 view .LVU375
- 1272              		.loc 1 335 31 is_stmt 0 view .LVU376
- 1273 0014 3D4B     		ldr	r3, .L99+4
- 1274 0016 D3F80024 		ldr	r2, [r3, #1024]
- 1275              		.loc 1 335 62 view .LVU377
- 1276 001a D3F80434 		ldr	r3, [r3, #1028]
- 1277              		.loc 1 335 8 view .LVU378
- 1278 001e 9A42     		cmp	r2, r3
- 1279 0020 64D0     		beq	.L86
+ 1243              		.loc 1 335 5 view .LVU365
+ 1244              		.loc 1 335 31 is_stmt 0 view .LVU366
+ 1245 0014 3D4B     		ldr	r3, .L99+4
+ 1246 0016 D3F80024 		ldr	r2, [r3, #1024]
+ARM GAS  /tmp/ccFbbbSG.s 			page 31
+
+
+ 1247              		.loc 1 335 62 view .LVU367
+ 1248 001a D3F80434 		ldr	r3, [r3, #1028]
+ 1249              		.loc 1 335 8 view .LVU368
+ 1250 001e 9A42     		cmp	r2, r3
+ 1251 0020 64D0     		beq	.L86
  336:src/softwareserial.c ****         t = softwareserialTXbuffer.buff[softwareserialTXbuffer.tail];
- 1280              		.loc 1 336 9 is_stmt 1 view .LVU379
- 1281              		.loc 1 336 63 is_stmt 0 view .LVU380
- 1282 0022 3A4A     		ldr	r2, .L99+4
- 1283 0024 D2F80434 		ldr	r3, [r2, #1028]
- 1284              		.loc 1 336 40 view .LVU381
- 1285 0028 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
- 1286 002a DBB2     		uxtb	r3, r3
- 1287              	.LVL96:
+ 1252              		.loc 1 336 9 is_stmt 1 view .LVU369
+ 1253              		.loc 1 336 63 is_stmt 0 view .LVU370
+ 1254 0022 3A4A     		ldr	r2, .L99+4
+ 1255 0024 D2F80434 		ldr	r3, [r2, #1028]
+ 1256              		.loc 1 336 40 view .LVU371
+ 1257 0028 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 1258 002a DBB2     		uxtb	r3, r3
+ 1259              	.LVL95:
  337:src/softwareserial.c ****         switch (softwareserialTXbuffer.bit){
- 1288              		.loc 1 337 9 is_stmt 1 view .LVU382
- 1289              		.loc 1 337 39 is_stmt 0 view .LVU383
- 1290 002c D2F80824 		ldr	r2, [r2, #1032]
- 1291              		.loc 1 337 9 view .LVU384
- 1292 0030 B2F1FF3F 		cmp	r2, #-1
- 1293 0034 22D0     		beq	.L96
+ 1260              		.loc 1 337 9 is_stmt 1 view .LVU372
+ 1261              		.loc 1 337 39 is_stmt 0 view .LVU373
+ 1262 002c D2F80824 		ldr	r2, [r2, #1032]
+ 1263              		.loc 1 337 9 view .LVU374
+ 1264 0030 B2F1FF3F 		cmp	r2, #-1
+ 1265 0034 22D0     		beq	.L96
  338:src/softwareserial.c ****             case -1: // send start bit
  339:src/softwareserial.c ****                 HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN_RESET);
  340:src/softwareserial.c ****                 softwareserialTXbuffer.bit++;
  341:src/softwareserial.c ****                 break;
  342:src/softwareserial.c ****             default:
  343:src/softwareserial.c ****                 if (softwareserialTXbuffer.bit < 8){
- 1294              		.loc 1 343 17 is_stmt 1 view .LVU385
- 1295              		.loc 1 343 43 is_stmt 0 view .LVU386
-ARM GAS  /tmp/cc8pDC1F.s 			page 32
-
-
- 1296 0036 354A     		ldr	r2, .L99+4
- 1297 0038 D2F80824 		ldr	r2, [r2, #1032]
- 1298              		.loc 1 343 20 view .LVU387
- 1299 003c 072A     		cmp	r2, #7
- 1300 003e 31DC     		bgt	.L89
+ 1266              		.loc 1 343 17 is_stmt 1 view .LVU375
+ 1267              		.loc 1 343 43 is_stmt 0 view .LVU376
+ 1268 0036 354A     		ldr	r2, .L99+4
+ 1269 0038 D2F80824 		ldr	r2, [r2, #1032]
+ 1270              		.loc 1 343 20 view .LVU377
+ 1271 003c 072A     		cmp	r2, #7
+ 1272 003e 31DC     		bgt	.L89
  344:src/softwareserial.c ****                     if (t & (0x1 << softwareserialTXbuffer.bit)){
- 1301              		.loc 1 344 21 is_stmt 1 view .LVU388
- 1302              		.loc 1 344 59 is_stmt 0 view .LVU389
- 1303 0040 324A     		ldr	r2, .L99+4
- 1304 0042 D2F80824 		ldr	r2, [r2, #1032]
- 1305              		.loc 1 344 25 view .LVU390
- 1306 0046 1341     		asrs	r3, r3, r2
- 1307              	.LVL97:
- 1308              		.loc 1 344 24 view .LVU391
- 1309 0048 13F0010F 		tst	r3, #1
- 1310 004c 23D0     		beq	.L90
+ 1273              		.loc 1 344 21 is_stmt 1 view .LVU378
+ 1274              		.loc 1 344 59 is_stmt 0 view .LVU379
+ 1275 0040 324A     		ldr	r2, .L99+4
+ 1276 0042 D2F80824 		ldr	r2, [r2, #1032]
+ 1277              		.loc 1 344 25 view .LVU380
+ 1278 0046 1341     		asrs	r3, r3, r2
+ 1279              	.LVL96:
+ 1280              		.loc 1 344 24 view .LVU381
+ 1281 0048 13F0010F 		tst	r3, #1
+ 1282 004c 23D0     		beq	.L90
  345:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
- 1311              		.loc 1 345 25 is_stmt 1 view .LVU392
- 1312 004e 0122     		movs	r2, #1
- 1313 0050 4FF40051 		mov	r1, #8192
- 1314 0054 2E48     		ldr	r0, .L99+8
- 1315 0056 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1316              	.LVL98:
- 1317              	.L91:
+ 1283              		.loc 1 345 25 is_stmt 1 view .LVU382
+ 1284 004e 0122     		movs	r2, #1
+ 1285 0050 4FF40051 		mov	r1, #8192
+ 1286 0054 2E48     		ldr	r0, .L99+8
+ 1287 0056 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1288              	.LVL97:
+ 1289              	.L91:
  346:src/softwareserial.c ****                     } else {
  347:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
  348:src/softwareserial.c ****                     }
  349:src/softwareserial.c ****                 } else {
+ARM GAS  /tmp/ccFbbbSG.s 			page 32
+
+
  350:src/softwareserial.c ****                     if (softwareserialTXbuffer.bit < 9){
  351:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
  352:src/softwareserial.c ****                     } else {
@@ -1898,17 +1870,17 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  356:src/softwareserial.c ****                     }
  357:src/softwareserial.c ****                 }
  358:src/softwareserial.c ****                 softwareserialTXbuffer.bit++;
- 1318              		.loc 1 358 17 view .LVU393
- 1319              		.loc 1 358 39 is_stmt 0 view .LVU394
- 1320 005a 2C4A     		ldr	r2, .L99+4
- 1321 005c D2F80834 		ldr	r3, [r2, #1032]
- 1322              		.loc 1 358 43 view .LVU395
- 1323 0060 0133     		adds	r3, r3, #1
- 1324 0062 C2F80834 		str	r3, [r2, #1032]
+ 1290              		.loc 1 358 17 view .LVU383
+ 1291              		.loc 1 358 39 is_stmt 0 view .LVU384
+ 1292 005a 2C4A     		ldr	r2, .L99+4
+ 1293 005c D2F80834 		ldr	r3, [r2, #1032]
+ 1294              		.loc 1 358 43 view .LVU385
+ 1295 0060 0133     		adds	r3, r3, #1
+ 1296 0062 C2F80834 		str	r3, [r2, #1032]
  359:src/softwareserial.c ****                 break;
- 1325              		.loc 1 359 17 is_stmt 1 view .LVU396
- 1326              	.LVL99:
- 1327              	.L88:
+ 1297              		.loc 1 359 17 is_stmt 1 view .LVU386
+ 1298              	.LVL98:
+ 1299              	.L88:
  360:src/softwareserial.c ****         }
  361:src/softwareserial.c ****     } else {
  362:src/softwareserial.c ****         // send high
@@ -1916,262 +1888,259 @@ ARM GAS  /tmp/cc8pDC1F.s 			page 1
  364:src/softwareserial.c ****     }
  365:src/softwareserial.c **** 
  366:src/softwareserial.c ****     unsigned int time = softwareserialtimer.Instance->CNT;
- 1328              		.loc 1 366 5 view .LVU397
- 1329              		.loc 1 366 44 is_stmt 0 view .LVU398
-ARM GAS  /tmp/cc8pDC1F.s 			page 33
-
-
- 1330 0066 2B4B     		ldr	r3, .L99+12
- 1331 0068 1B68     		ldr	r3, [r3]
- 1332              		.loc 1 366 18 view .LVU399
- 1333 006a 5B6A     		ldr	r3, [r3, #36]
- 1334              	.LVL100:
+ 1300              		.loc 1 366 5 view .LVU387
+ 1301              		.loc 1 366 44 is_stmt 0 view .LVU388
+ 1302 0066 2B4B     		ldr	r3, .L99+12
+ 1303 0068 1B68     		ldr	r3, [r3]
+ 1304              		.loc 1 366 18 view .LVU389
+ 1305 006a 5B6A     		ldr	r3, [r3, #36]
+ 1306              	.LVL99:
  367:src/softwareserial.c ****     int tdiff = time - softwareserialRXbuffer.lasttime;
- 1335              		.loc 1 367 5 is_stmt 1 view .LVU400
- 1336              		.loc 1 367 46 is_stmt 0 view .LVU401
- 1337 006c 2A4A     		ldr	r2, .L99+16
- 1338 006e D2F80C24 		ldr	r2, [r2, #1036]
- 1339              	.LVL101:
+ 1307              		.loc 1 367 5 is_stmt 1 view .LVU390
+ 1308              		.loc 1 367 46 is_stmt 0 view .LVU391
+ 1309 006c 2A4A     		ldr	r2, .L99+16
+ 1310 006e D2F80C24 		ldr	r2, [r2, #1036]
+ 1311              	.LVL100:
  368:src/softwareserial.c ****     if (tdiff < 0) tdiff += 0x10000;
- 1340              		.loc 1 368 5 is_stmt 1 view .LVU402
- 1341              		.loc 1 368 8 is_stmt 0 view .LVU403
- 1342 0072 9B1A     		subs	r3, r3, r2
- 1343              	.LVL102:
- 1344              		.loc 1 368 8 view .LVU404
- 1345 0074 41D4     		bmi	.L97
- 1346              	.LVL103:
- 1347              	.L93:
+ 1312              		.loc 1 368 5 is_stmt 1 view .LVU392
+ 1313              		.loc 1 368 8 is_stmt 0 view .LVU393
+ 1314 0072 9B1A     		subs	r3, r3, r2
+ 1315              	.LVL101:
+ 1316              		.loc 1 368 8 view .LVU394
+ 1317 0074 41D4     		bmi	.L97
+ 1318              	.LVL102:
+ 1319              	.L93:
  369:src/softwareserial.c ****     int bits = (tdiff+2)/8;
- 1348              		.loc 1 369 5 is_stmt 1 view .LVU405
+ 1320              		.loc 1 369 5 is_stmt 1 view .LVU395
  370:src/softwareserial.c **** 
  371:src/softwareserial.c ****     // if more than 10 bits time on rx, then eat last bit
  372:src/softwareserial.c ****     if (bits > 9) {
- 1349              		.loc 1 372 5 view .LVU406
- 1350              		.loc 1 372 8 is_stmt 0 view .LVU407
- 1351 0076 4D2B     		cmp	r3, #77
- 1352 0078 42DC     		bgt	.L98
- 1353              	.LVL104:
- 1354              	.L84:
+ 1321              		.loc 1 372 5 view .LVU396
+ 1322              		.loc 1 372 8 is_stmt 0 view .LVU397
+ 1323 0076 4D2B     		cmp	r3, #77
+ARM GAS  /tmp/ccFbbbSG.s 			page 33
+
+
+ 1324 0078 42DC     		bgt	.L98
+ 1325              	.LVL103:
+ 1326              	.L84:
  373:src/softwareserial.c ****         softwareserialRXInterrupt();
  374:src/softwareserial.c ****     }
  375:src/softwareserial.c **** 
  376:src/softwareserial.c **** 
  377:src/softwareserial.c **** }
- 1355              		.loc 1 377 1 view .LVU408
- 1356 007a 08BD     		pop	{r3, pc}
- 1357              	.LVL105:
- 1358              	.L96:
+ 1327              		.loc 1 377 1 view .LVU398
+ 1328 007a 08BD     		pop	{r3, pc}
+ 1329              	.LVL104:
+ 1330              	.L96:
  339:src/softwareserial.c ****                 softwareserialTXbuffer.bit++;
- 1359              		.loc 1 339 17 is_stmt 1 view .LVU409
- 1360 007c 0022     		movs	r2, #0
- 1361 007e 4FF40051 		mov	r1, #8192
- 1362 0082 2348     		ldr	r0, .L99+8
- 1363 0084 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1364              	.LVL106:
+ 1331              		.loc 1 339 17 is_stmt 1 view .LVU399
+ 1332 007c 0022     		movs	r2, #0
+ 1333 007e 4FF40051 		mov	r1, #8192
+ 1334 0082 2348     		ldr	r0, .L99+8
+ 1335 0084 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1336              	.LVL105:
  340:src/softwareserial.c ****                 break;
- 1365              		.loc 1 340 17 view .LVU410
+ 1337              		.loc 1 340 17 view .LVU400
  340:src/softwareserial.c ****                 break;
- 1366              		.loc 1 340 39 is_stmt 0 view .LVU411
- 1367 0088 204A     		ldr	r2, .L99+4
- 1368 008a D2F80834 		ldr	r3, [r2, #1032]
+ 1338              		.loc 1 340 39 is_stmt 0 view .LVU401
+ 1339 0088 204A     		ldr	r2, .L99+4
+ 1340 008a D2F80834 		ldr	r3, [r2, #1032]
  340:src/softwareserial.c ****                 break;
- 1369              		.loc 1 340 43 view .LVU412
- 1370 008e 0133     		adds	r3, r3, #1
- 1371 0090 C2F80834 		str	r3, [r2, #1032]
-ARM GAS  /tmp/cc8pDC1F.s 			page 34
-
-
+ 1341              		.loc 1 340 43 view .LVU402
+ 1342 008e 0133     		adds	r3, r3, #1
+ 1343 0090 C2F80834 		str	r3, [r2, #1032]
  341:src/softwareserial.c ****             default:
- 1372              		.loc 1 341 17 is_stmt 1 view .LVU413
- 1373 0094 E7E7     		b	.L88
- 1374              	.L90:
+ 1344              		.loc 1 341 17 is_stmt 1 view .LVU403
+ 1345 0094 E7E7     		b	.L88
+ 1346              	.L90:
  347:src/softwareserial.c ****                     }
- 1375              		.loc 1 347 25 view .LVU414
- 1376 0096 0022     		movs	r2, #0
- 1377 0098 4FF40051 		mov	r1, #8192
- 1378 009c 1C48     		ldr	r0, .L99+8
- 1379 009e FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1380              	.LVL107:
- 1381 00a2 DAE7     		b	.L91
- 1382              	.LVL108:
- 1383              	.L89:
+ 1347              		.loc 1 347 25 view .LVU404
+ 1348 0096 0022     		movs	r2, #0
+ 1349 0098 4FF40051 		mov	r1, #8192
+ 1350 009c 1C48     		ldr	r0, .L99+8
+ 1351 009e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1352              	.LVL106:
+ 1353 00a2 DAE7     		b	.L91
+ 1354              	.LVL107:
+ 1355              	.L89:
  350:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
- 1384              		.loc 1 350 21 view .LVU415
+ 1356              		.loc 1 350 21 view .LVU405
  350:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
- 1385              		.loc 1 350 47 is_stmt 0 view .LVU416
- 1386 00a4 194B     		ldr	r3, .L99+4
- 1387              	.LVL109:
+ 1357              		.loc 1 350 47 is_stmt 0 view .LVU406
+ 1358 00a4 194B     		ldr	r3, .L99+4
+ 1359              	.LVL108:
  350:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
- 1388              		.loc 1 350 47 view .LVU417
- 1389 00a6 D3F80834 		ldr	r3, [r3, #1032]
+ 1360              		.loc 1 350 47 view .LVU407
+ 1361 00a6 D3F80834 		ldr	r3, [r3, #1032]
  350:src/softwareserial.c ****                         HAL_GPIO_WritePin(SOFTWARE_SERIAL_TX_PORT, SOFTWARE_SERIAL_TX_PIN, GPIO_PIN
- 1390              		.loc 1 350 24 view .LVU418
- 1391 00aa 082B     		cmp	r3, #8
- 1392 00ac 06DC     		bgt	.L92
+ 1362              		.loc 1 350 24 view .LVU408
+ 1363 00aa 082B     		cmp	r3, #8
+ 1364 00ac 06DC     		bgt	.L92
  351:src/softwareserial.c ****                     } else {
- 1393              		.loc 1 351 25 is_stmt 1 view .LVU419
- 1394 00ae 0122     		movs	r2, #1
- 1395 00b0 4FF40051 		mov	r1, #8192
- 1396 00b4 1648     		ldr	r0, .L99+8
- 1397 00b6 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1398              	.LVL110:
- 1399 00ba CEE7     		b	.L91
- 1400              	.L92:
+ARM GAS  /tmp/ccFbbbSG.s 			page 34
+
+
+ 1365              		.loc 1 351 25 is_stmt 1 view .LVU409
+ 1366 00ae 0122     		movs	r2, #1
+ 1367 00b0 4FF40051 		mov	r1, #8192
+ 1368 00b4 1648     		ldr	r0, .L99+8
+ 1369 00b6 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1370              	.LVL109:
+ 1371 00ba CEE7     		b	.L91
+ 1372              	.L92:
  353:src/softwareserial.c ****                         softwareserialTXbuffer.tail = ((softwareserialTXbuffer.tail + 1 ) % SOFTWAR
- 1401              		.loc 1 353 25 view .LVU420
- 1402 00bc 0122     		movs	r2, #1
- 1403 00be 4FF40051 		mov	r1, #8192
- 1404 00c2 1348     		ldr	r0, .L99+8
- 1405 00c4 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1406              	.LVL111:
+ 1373              		.loc 1 353 25 view .LVU410
+ 1374 00bc 0122     		movs	r2, #1
+ 1375 00be 4FF40051 		mov	r1, #8192
+ 1376 00c2 1348     		ldr	r0, .L99+8
+ 1377 00c4 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1378              	.LVL110:
  354:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
- 1407              		.loc 1 354 25 view .LVU421
+ 1379              		.loc 1 354 25 view .LVU411
  354:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
- 1408              		.loc 1 354 79 is_stmt 0 view .LVU422
- 1409 00c8 104A     		ldr	r2, .L99+4
- 1410 00ca D2F80434 		ldr	r3, [r2, #1028]
+ 1380              		.loc 1 354 79 is_stmt 0 view .LVU412
+ 1381 00c8 104A     		ldr	r2, .L99+4
+ 1382 00ca D2F80434 		ldr	r3, [r2, #1028]
  354:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
- 1411              		.loc 1 354 85 view .LVU423
- 1412 00ce 0133     		adds	r3, r3, #1
+ 1383              		.loc 1 354 85 view .LVU413
+ 1384 00ce 0133     		adds	r3, r3, #1
  354:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
- 1413              		.loc 1 354 91 view .LVU424
- 1414 00d0 5942     		rsbs	r1, r3, #0
- 1415 00d2 C3F30903 		ubfx	r3, r3, #0, #10
- 1416 00d6 C1F30901 		ubfx	r1, r1, #0, #10
-ARM GAS  /tmp/cc8pDC1F.s 			page 35
-
-
- 1417 00da 58BF     		it	pl
- 1418 00dc 4B42     		rsbpl	r3, r1, #0
+ 1385              		.loc 1 354 91 view .LVU414
+ 1386 00d0 5942     		rsbs	r1, r3, #0
+ 1387 00d2 C3F30903 		ubfx	r3, r3, #0, #10
+ 1388 00d6 C1F30901 		ubfx	r1, r1, #0, #10
+ 1389 00da 58BF     		it	pl
+ 1390 00dc 4B42     		rsbpl	r3, r1, #0
  354:src/softwareserial.c ****                         softwareserialTXbuffer.bit = -2; // will become -1 with ++ below
- 1419              		.loc 1 354 53 view .LVU425
- 1420 00de C2F80434 		str	r3, [r2, #1028]
+ 1391              		.loc 1 354 53 view .LVU415
+ 1392 00de C2F80434 		str	r3, [r2, #1028]
  355:src/softwareserial.c ****                     }
- 1421              		.loc 1 355 25 is_stmt 1 view .LVU426
+ 1393              		.loc 1 355 25 is_stmt 1 view .LVU416
  355:src/softwareserial.c ****                     }
- 1422              		.loc 1 355 52 is_stmt 0 view .LVU427
- 1423 00e2 6FF00103 		mvn	r3, #1
- 1424 00e6 C2F80834 		str	r3, [r2, #1032]
- 1425 00ea B6E7     		b	.L91
- 1426              	.LVL112:
- 1427              	.L86:
+ 1394              		.loc 1 355 52 is_stmt 0 view .LVU417
+ 1395 00e2 6FF00103 		mvn	r3, #1
+ 1396 00e6 C2F80834 		str	r3, [r2, #1032]
+ 1397 00ea B6E7     		b	.L91
+ 1398              	.LVL111:
+ 1399              	.L86:
  363:src/softwareserial.c ****     }
- 1428              		.loc 1 363 9 is_stmt 1 view .LVU428
- 1429 00ec 0122     		movs	r2, #1
- 1430 00ee 4FF40051 		mov	r1, #8192
- 1431 00f2 0748     		ldr	r0, .L99+8
- 1432 00f4 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 1433              	.LVL113:
- 1434 00f8 B5E7     		b	.L88
- 1435              	.LVL114:
- 1436              	.L97:
+ 1400              		.loc 1 363 9 is_stmt 1 view .LVU418
+ 1401 00ec 0122     		movs	r2, #1
+ 1402 00ee 4FF40051 		mov	r1, #8192
+ 1403 00f2 0748     		ldr	r0, .L99+8
+ 1404 00f4 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1405              	.LVL112:
+ 1406 00f8 B5E7     		b	.L88
+ 1407              	.LVL113:
+ 1408              	.L97:
  368:src/softwareserial.c ****     int bits = (tdiff+2)/8;
- 1437              		.loc 1 368 20 discriminator 1 view .LVU429
+ 1409              		.loc 1 368 20 discriminator 1 view .LVU419
  368:src/softwareserial.c ****     int bits = (tdiff+2)/8;
- 1438              		.loc 1 368 26 is_stmt 0 discriminator 1 view .LVU430
- 1439 00fa 03F58033 		add	r3, r3, #65536
- 1440              	.LVL115:
+ 1410              		.loc 1 368 26 is_stmt 0 discriminator 1 view .LVU420
+ARM GAS  /tmp/ccFbbbSG.s 			page 35
+
+
+ 1411 00fa 03F58033 		add	r3, r3, #65536
+ 1412              	.LVL114:
  368:src/softwareserial.c ****     int bits = (tdiff+2)/8;
- 1441              		.loc 1 368 26 discriminator 1 view .LVU431
- 1442 00fe BAE7     		b	.L93
- 1443              	.LVL116:
- 1444              	.L98:
+ 1413              		.loc 1 368 26 discriminator 1 view .LVU421
+ 1414 00fe BAE7     		b	.L93
+ 1415              	.LVL115:
+ 1416              	.L98:
  373:src/softwareserial.c ****     }
- 1445              		.loc 1 373 9 is_stmt 1 view .LVU432
- 1446 0100 FFF7FEFF 		bl	softwareserialRXInterrupt
- 1447              	.LVL117:
- 1448              		.loc 1 377 1 is_stmt 0 view .LVU433
- 1449 0104 B9E7     		b	.L84
- 1450              	.L100:
- 1451 0106 00BF     		.align	2
- 1452              	.L99:
- 1453 0108 00000000 		.word	softwareserialtimerTX
- 1454 010c 00000000 		.word	softwareserialTXbuffer
- 1455 0110 00080140 		.word	1073809408
- 1456 0114 00000000 		.word	softwareserialtimer
- 1457 0118 00000000 		.word	softwareserialRXbuffer
- 1458              		.cfi_endproc
- 1459              	.LFE77:
- 1461              		.comm	softwareserialTXbuffer,1048,4
- 1462              		.comm	softwareserialRXbuffer,1048,4
- 1463              		.global	ssbits
- 1464              		.section	.bss.ssbits,"aw",%nobits
- 1465              		.align	2
- 1468              	ssbits:
-ARM GAS  /tmp/cc8pDC1F.s 			page 36
-
-
- 1469 0000 00000000 		.space	4
- 1470              		.global	timerval
- 1471              		.section	.bss.timerval,"aw",%nobits
- 1472              		.align	2
- 1475              	timerval:
- 1476 0000 00000000 		.space	4
- 1477              		.comm	softwareserialtimerTX,64,4
- 1478              		.comm	softwareserialtimer,64,4
- 1479              		.text
- 1480              	.Letext0:
- 1481              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
- 1482              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
- 1483              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 1484              		.file 6 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
- 1485              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 1486              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
- 1487              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 1488              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 1489              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 1490              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
- 1491              		.file 13 "/usr/include/newlib/string.h"
- 1492              		.file 14 "<built-in>"
-ARM GAS  /tmp/cc8pDC1F.s 			page 37
+ 1417              		.loc 1 373 9 is_stmt 1 view .LVU422
+ 1418 0100 FFF7FEFF 		bl	softwareserialRXInterrupt
+ 1419              	.LVL116:
+ 1420              		.loc 1 377 1 is_stmt 0 view .LVU423
+ 1421 0104 B9E7     		b	.L84
+ 1422              	.L100:
+ 1423 0106 00BF     		.align	2
+ 1424              	.L99:
+ 1425 0108 00000000 		.word	softwareserialtimerTX
+ 1426 010c 00000000 		.word	softwareserialTXbuffer
+ 1427 0110 00080140 		.word	1073809408
+ 1428 0114 00000000 		.word	softwareserialtimer
+ 1429 0118 00000000 		.word	softwareserialRXbuffer
+ 1430              		.cfi_endproc
+ 1431              	.LFE77:
+ 1433              		.comm	softwareserialTXbuffer,1048,4
+ 1434              		.comm	softwareserialRXbuffer,1048,4
+ 1435              		.global	ssbits
+ 1436              		.section	.bss.ssbits,"aw",%nobits
+ 1437              		.align	2
+ 1440              	ssbits:
+ 1441 0000 00000000 		.space	4
+ 1442              		.global	timerval
+ 1443              		.section	.bss.timerval,"aw",%nobits
+ 1444              		.align	2
+ 1447              	timerval:
+ 1448 0000 00000000 		.space	4
+ 1449              		.comm	softwareserialtimerTX,64,4
+ 1450              		.comm	softwareserialtimer,64,4
+ 1451              		.text
+ 1452              	.Letext0:
+ 1453              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 1454              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 1455              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 1456              		.file 6 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 1457              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 1458              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 1459              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 1460              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 1461              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1462              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
+ 1463              		.file 13 "/usr/include/newlib/string.h"
+ 1464              		.file 14 "<built-in>"
+ARM GAS  /tmp/ccFbbbSG.s 			page 36
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 softwareserial.c
-     /tmp/cc8pDC1F.s:19     .text.SoftwareSerialReadTimer:00000000 $t
-     /tmp/cc8pDC1F.s:25     .text.SoftwareSerialReadTimer:00000000 SoftwareSerialReadTimer
-     /tmp/cc8pDC1F.s:48     .text.SoftwareSerialReadTimer:0000000c $d
+     /tmp/ccFbbbSG.s:19     .text.SoftwareSerialReadTimer:00000000 $t
+     /tmp/ccFbbbSG.s:25     .text.SoftwareSerialReadTimer:00000000 SoftwareSerialReadTimer
+     /tmp/ccFbbbSG.s:48     .text.SoftwareSerialReadTimer:0000000c $d
                             *COM*:00000040 softwareserialtimer
-     /tmp/cc8pDC1F.s:1475   .bss.timerval:00000000 timerval
-     /tmp/cc8pDC1F.s:54     .text.SoftwareSerialInit:00000000 $t
-     /tmp/cc8pDC1F.s:60     .text.SoftwareSerialInit:00000000 SoftwareSerialInit
-     /tmp/cc8pDC1F.s:311    .text.SoftwareSerialInit:00000120 $d
+     /tmp/ccFbbbSG.s:1447   .bss.timerval:00000000 timerval
+     /tmp/ccFbbbSG.s:54     .text.SoftwareSerialInit:00000000 $t
+     /tmp/ccFbbbSG.s:60     .text.SoftwareSerialInit:00000000 SoftwareSerialInit
+     /tmp/ccFbbbSG.s:284    .text.SoftwareSerialInit:00000100 $d
                             *COM*:00000418 softwareserialRXbuffer
                             *COM*:00000418 softwareserialTXbuffer
                             *COM*:00000040 softwareserialtimerTX
-     /tmp/cc8pDC1F.s:325    .text.softwareserial_getrx:00000000 $t
-     /tmp/cc8pDC1F.s:331    .text.softwareserial_getrx:00000000 softwareserial_getrx
-     /tmp/cc8pDC1F.s:381    .text.softwareserial_getrx:00000038 $d
-     /tmp/cc8pDC1F.s:386    .text.softwareserial_peekrx:00000000 $t
-     /tmp/cc8pDC1F.s:392    .text.softwareserial_peekrx:00000000 softwareserial_peekrx
-     /tmp/cc8pDC1F.s:430    .text.softwareserial_peekrx:00000020 $d
-     /tmp/cc8pDC1F.s:435    .text.softwareserial_available:00000000 $t
-     /tmp/cc8pDC1F.s:441    .text.softwareserial_available:00000000 softwareserial_available
-     /tmp/cc8pDC1F.s:490    .text.softwareserial_available:00000028 $d
-     /tmp/cc8pDC1F.s:495    .text.softwareserial_flushRX:00000000 $t
-     /tmp/cc8pDC1F.s:501    .text.softwareserial_flushRX:00000000 softwareserial_flushRX
-     /tmp/cc8pDC1F.s:548    .text.softwareserial_flushRX:00000010 $d
-     /tmp/cc8pDC1F.s:553    .text.softwareserial_flushTX:00000000 $t
-     /tmp/cc8pDC1F.s:559    .text.softwareserial_flushTX:00000000 softwareserial_flushTX
-     /tmp/cc8pDC1F.s:605    .text.softwareserial_flushTX:00000010 $d
-     /tmp/cc8pDC1F.s:610    .text.softwareserial_puttx:00000000 $t
-     /tmp/cc8pDC1F.s:616    .text.softwareserial_puttx:00000000 softwareserial_puttx
-     /tmp/cc8pDC1F.s:688    .text.softwareserial_puttx:0000004c $d
-     /tmp/cc8pDC1F.s:693    .text.softwareserial_Send:00000000 $t
-     /tmp/cc8pDC1F.s:699    .text.softwareserial_Send:00000000 softwareserial_Send
-     /tmp/cc8pDC1F.s:792    .text.softwareserial_Send:00000048 $d
-     /tmp/cc8pDC1F.s:802    .text.softwareserial_Send_Wait:00000000 $t
-     /tmp/cc8pDC1F.s:808    .text.softwareserial_Send_Wait:00000000 softwareserial_Send_Wait
-     /tmp/cc8pDC1F.s:955    .text.softwareserial_Send_Wait:00000078 $d
-     /tmp/cc8pDC1F.s:962    .text.softwareserialRXInterrupt:00000000 $t
-     /tmp/cc8pDC1F.s:968    .text.softwareserialRXInterrupt:00000000 softwareserialRXInterrupt
-     /tmp/cc8pDC1F.s:1230   .text.softwareserialRXInterrupt:00000120 $d
-     /tmp/cc8pDC1F.s:1240   .text.TIM3_IRQHandler:00000000 $t
-     /tmp/cc8pDC1F.s:1246   .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
-     /tmp/cc8pDC1F.s:1453   .text.TIM3_IRQHandler:00000108 $d
-     /tmp/cc8pDC1F.s:1468   .bss.ssbits:00000000 ssbits
-     /tmp/cc8pDC1F.s:1465   .bss.ssbits:00000000 $d
-     /tmp/cc8pDC1F.s:1472   .bss.timerval:00000000 $d
+     /tmp/ccFbbbSG.s:297    .text.softwareserial_getrx:00000000 $t
+     /tmp/ccFbbbSG.s:303    .text.softwareserial_getrx:00000000 softwareserial_getrx
+     /tmp/ccFbbbSG.s:353    .text.softwareserial_getrx:00000038 $d
+     /tmp/ccFbbbSG.s:358    .text.softwareserial_peekrx:00000000 $t
+     /tmp/ccFbbbSG.s:364    .text.softwareserial_peekrx:00000000 softwareserial_peekrx
+     /tmp/ccFbbbSG.s:402    .text.softwareserial_peekrx:00000020 $d
+     /tmp/ccFbbbSG.s:407    .text.softwareserial_available:00000000 $t
+     /tmp/ccFbbbSG.s:413    .text.softwareserial_available:00000000 softwareserial_available
+     /tmp/ccFbbbSG.s:462    .text.softwareserial_available:00000028 $d
+     /tmp/ccFbbbSG.s:467    .text.softwareserial_flushRX:00000000 $t
+     /tmp/ccFbbbSG.s:473    .text.softwareserial_flushRX:00000000 softwareserial_flushRX
+     /tmp/ccFbbbSG.s:520    .text.softwareserial_flushRX:00000010 $d
+     /tmp/ccFbbbSG.s:525    .text.softwareserial_flushTX:00000000 $t
+     /tmp/ccFbbbSG.s:531    .text.softwareserial_flushTX:00000000 softwareserial_flushTX
+     /tmp/ccFbbbSG.s:577    .text.softwareserial_flushTX:00000010 $d
+     /tmp/ccFbbbSG.s:582    .text.softwareserial_puttx:00000000 $t
+     /tmp/ccFbbbSG.s:588    .text.softwareserial_puttx:00000000 softwareserial_puttx
+     /tmp/ccFbbbSG.s:660    .text.softwareserial_puttx:0000004c $d
+     /tmp/ccFbbbSG.s:665    .text.softwareserial_Send:00000000 $t
+     /tmp/ccFbbbSG.s:671    .text.softwareserial_Send:00000000 softwareserial_Send
+     /tmp/ccFbbbSG.s:764    .text.softwareserial_Send:00000048 $d
+     /tmp/ccFbbbSG.s:774    .text.softwareserial_Send_Wait:00000000 $t
+     /tmp/ccFbbbSG.s:780    .text.softwareserial_Send_Wait:00000000 softwareserial_Send_Wait
+     /tmp/ccFbbbSG.s:927    .text.softwareserial_Send_Wait:00000078 $d
+     /tmp/ccFbbbSG.s:934    .text.softwareserialRXInterrupt:00000000 $t
+     /tmp/ccFbbbSG.s:940    .text.softwareserialRXInterrupt:00000000 softwareserialRXInterrupt
+     /tmp/ccFbbbSG.s:1202   .text.softwareserialRXInterrupt:00000120 $d
+     /tmp/ccFbbbSG.s:1212   .text.TIM3_IRQHandler:00000000 $t
+     /tmp/ccFbbbSG.s:1218   .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
+     /tmp/ccFbbbSG.s:1425   .text.TIM3_IRQHandler:00000108 $d
+     /tmp/ccFbbbSG.s:1440   .bss.ssbits:00000000 ssbits
+     /tmp/ccFbbbSG.s:1437   .bss.ssbits:00000000 $d
+     /tmp/ccFbbbSG.s:1444   .bss.timerval:00000000 $d
 
 UNDEFINED SYMBOLS
 memset
@@ -2183,7 +2152,7 @@ HAL_NVIC_EnableIRQ
 __aeabi_i2f
 __aeabi_f2d
 __aeabi_dmul
-ARM GAS  /tmp/cc8pDC1F.s 			page 38
+ARM GAS  /tmp/ccFbbbSG.s 			page 37
 
 
 __aeabi_d2f
