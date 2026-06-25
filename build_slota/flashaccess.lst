@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccf5S4Z3.s 			page 1
+ARM GAS  /tmp/ccXn8Wb5.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
   36              	.LC5:
   37 006c 0D0A7772 		.ascii	"\015\012wrote flash at %lx len %d\000"
   37      6F746520 
-ARM GAS  /tmp/ccf5S4Z3.s 			page 2
+ARM GAS  /tmp/ccXn8Wb5.s 			page 2
 
 
   37      666C6173 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
   58              		.cfi_offset 6, -20
   59              		.cfi_offset 7, -16
   60              		.cfi_offset 8, -12
-ARM GAS  /tmp/ccf5S4Z3.s 			page 3
+ARM GAS  /tmp/ccXn8Wb5.s 			page 3
 
 
   61              		.cfi_offset 9, -8
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
   41:src/flashaccess.c ****         if (p[i] != 0xffff){
  107              		.loc 1 41 9 view .LVU15
  108              		.loc 1 41 14 is_stmt 0 view .LVU16
-ARM GAS  /tmp/ccf5S4Z3.s 			page 4
+ARM GAS  /tmp/ccXn8Wb5.s 			page 4
 
 
  109 0034 38F81430 		ldrh	r3, [r8, r4, lsl #1]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  148 0066 07F10109 		add	r9, r7, #1
  149              		.loc 1 56 35 view .LVU30
  150 006a 09EBD979 		add	r9, r9, r9, lsr #31
-ARM GAS  /tmp/ccf5S4Z3.s 			page 5
+ARM GAS  /tmp/ccXn8Wb5.s 			page 5
 
 
  151 006e 4FEA6909 		asr	r9, r9, #1
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  177              	.LBB6:
   58:src/flashaccess.c ****         start = (unsigned char *)flash_data;
  178              		.loc 1 58 9 is_stmt 1 view .LVU42
-ARM GAS  /tmp/ccf5S4Z3.s 			page 6
+ARM GAS  /tmp/ccXn8Wb5.s 			page 6
 
 
   59:src/flashaccess.c ****         FLASH_EraseInitTypeDef eraseinfo;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  215              		.loc 1 75 9 is_stmt 1 view .LVU60
  216 00aa 059B     		ldr	r3, [sp, #20]
  217 00ac 049A     		ldr	r2, [sp, #16]
-ARM GAS  /tmp/ccf5S4Z3.s 			page 7
+ARM GAS  /tmp/ccXn8Wb5.s 			page 7
 
 
  218 00ae 2E49     		ldr	r1, .L21+16
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
   86:src/flashaccess.c ****         if (res != HAL_OK){
   87:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
   88:src/flashaccess.c ****             consoleLog(tmp);
-ARM GAS  /tmp/ccf5S4Z3.s 			page 8
+ARM GAS  /tmp/ccXn8Wb5.s 			page 8
 
 
   89:src/flashaccess.c ****             HAL_FLASH_Lock();
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  299 0100 06A8     		add	r0, sp, #24
  300 0102 FFF7FEFF 		bl	consoleLog
  301              	.LVL34:
-ARM GAS  /tmp/ccf5S4Z3.s 			page 9
+ARM GAS  /tmp/ccXn8Wb5.s 			page 9
 
 
   89:src/flashaccess.c ****             return -1;
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  108:src/flashaccess.c ****     HAL_FLASH_Lock();
  339              		.loc 1 108 5 view .LVU96
  340 0132 FFF7FEFF 		bl	HAL_FLASH_Lock
-ARM GAS  /tmp/ccf5S4Z3.s 			page 10
+ARM GAS  /tmp/ccXn8Wb5.s 			page 10
 
 
  341              	.LVL41:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  386 0174 6C000000 		.word	.LC5
  387              		.cfi_endproc
  388              	.LFE67:
-ARM GAS  /tmp/ccf5S4Z3.s 			page 11
+ARM GAS  /tmp/ccXn8Wb5.s 			page 11
 
 
  390              		.section	.text.writeFlash16,"ax",%progbits
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  432 0012 80B2     		uxth	r0, r0
  433              	.LVL53:
   28:src/flashaccess.c **** 
-ARM GAS  /tmp/ccf5S4Z3.s 			page 12
+ARM GAS  /tmp/ccXn8Wb5.s 			page 12
 
 
  434              		.loc 1 28 1 view .LVU119
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  123:src/flashaccess.c ****     unsigned short *p = (unsigned short *)flash_data;
  471              		.loc 1 123 5 is_stmt 1 view .LVU122
  472              		.loc 1 123 21 is_stmt 0 view .LVU123
-ARM GAS  /tmp/ccf5S4Z3.s 			page 13
+ARM GAS  /tmp/ccXn8Wb5.s 			page 13
 
 
  473 0006 204B     		ldr	r3, .L37
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  516              	.LVL59:
  517              		.loc 1 134 27 view .LVU140
  518 0036 4910     		asrs	r1, r1, #1
-ARM GAS  /tmp/ccf5S4Z3.s 			page 14
+ARM GAS  /tmp/ccXn8Wb5.s 			page 14
 
 
  519              		.loc 1 134 30 view .LVU141
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  554              		.cfi_remember_state
  555              		.cfi_def_cfa_offset 12
  556              		@ sp needed
-ARM GAS  /tmp/ccf5S4Z3.s 			page 15
+ARM GAS  /tmp/ccXn8Wb5.s 			page 15
 
 
  557 0052 30BD     		pop	{r4, r5, pc}
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  599 0076 84E80700 		stm	r4, {r0, r1, r2}
  150:src/flashaccess.c ****     return -1;
  600              		.loc 1 150 5 is_stmt 1 view .LVU167
-ARM GAS  /tmp/ccf5S4Z3.s 			page 16
+ARM GAS  /tmp/ccXn8Wb5.s 			page 16
 
 
  601 007a 14A8     		add	r0, sp, #80
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  116:src/flashaccess.c ****         outlen /=2;
  648              		.loc 1 116 8 view .LVU177
  649 000a 02DB     		blt	.L40
-ARM GAS  /tmp/ccf5S4Z3.s 			page 17
+ARM GAS  /tmp/ccXn8Wb5.s 			page 17
 
 
  117:src/flashaccess.c ****     }
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  695 0008 1B68     		ldr	r3, [r3]
  696 000a 03EBD373 		add	r3, r3, r3, lsr #31
  697 000e 5B10     		asrs	r3, r3, #1
-ARM GAS  /tmp/ccf5S4Z3.s 			page 18
+ARM GAS  /tmp/ccXn8Wb5.s 			page 18
 
 
  698              		.loc 1 157 9 view .LVU190
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  740 0034 A3EB6200 		sub	r0, r3, r2, asr #1
  741              	.LVL87:
  742              		.loc 1 169 20 view .LVU208
-ARM GAS  /tmp/ccf5S4Z3.s 			page 19
+ARM GAS  /tmp/ccXn8Wb5.s 			page 19
 
 
  743 0038 4000     		lsls	r0, r0, #1
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  785              		.cfi_startproc
  786              		@ args = 0, pretend = 0, frame = 64
  787              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccf5S4Z3.s 			page 20
+ARM GAS  /tmp/ccXn8Wb5.s 			page 20
 
 
  788              		.loc 1 181 64 is_stmt 0 view .LVU215
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  828              		.loc 1 194 9 is_stmt 1 view .LVU227
  829              		.loc 1 194 31 is_stmt 0 view .LVU228
  830 0022 0494     		str	r4, [sp, #16]
-ARM GAS  /tmp/ccf5S4Z3.s 			page 21
+ARM GAS  /tmp/ccXn8Wb5.s 			page 21
 
 
  195:src/flashaccess.c ****         eraseinfo.TypeErase = FLASH_TYPEERASE_PAGES;
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  205:src/flashaccess.c ****         }
  206:src/flashaccess.c ****     }
  207:src/flashaccess.c **** 
-ARM GAS  /tmp/ccf5S4Z3.s 			page 22
+ARM GAS  /tmp/ccXn8Wb5.s 			page 22
 
 
  208:src/flashaccess.c ****     // write the data
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  215:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
  906              		.loc 1 215 9 is_stmt 1 view .LVU257
  215:src/flashaccess.c ****             sprintf(tmp, "\r\nwrite fail %d", (int)res);
-ARM GAS  /tmp/ccf5S4Z3.s 			page 23
+ARM GAS  /tmp/ccXn8Wb5.s 			page 23
 
 
  907              		.loc 1 215 12 is_stmt 0 view .LVU258
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  949 0096 00BF     		.align	2
  950              	.L63:
  951 0098 FFFF0108 		.word	134348799
-ARM GAS  /tmp/ccf5S4Z3.s 			page 24
+ARM GAS  /tmp/ccXn8Wb5.s 			page 24
 
 
  952 009c 1C000000 		.word	.LC2
@@ -1407,33 +1407,33 @@ ARM GAS  /tmp/ccf5S4Z3.s 			page 1
  980              		.file 9 "/usr/include/newlib/stdio.h"
  981              		.file 10 "inc/protocolfunctions.h"
  982              		.file 11 "<built-in>"
-ARM GAS  /tmp/ccf5S4Z3.s 			page 25
+ARM GAS  /tmp/ccXn8Wb5.s 			page 25
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 flashaccess.c
-     /tmp/ccf5S4Z3.s:19     .rodata.writeFlash.str1.4:00000000 $d
-     /tmp/ccf5S4Z3.s:39     .text.writeFlash:00000000 $t
-     /tmp/ccf5S4Z3.s:45     .text.writeFlash:00000000 writeFlash
-     /tmp/ccf5S4Z3.s:379    .text.writeFlash:00000158 $d
-     /tmp/ccf5S4Z3.s:969    .data.flash_data:00000000 flash_data
-     /tmp/ccf5S4Z3.s:962    .data.flashlen:00000000 flashlen
-     /tmp/ccf5S4Z3.s:391    .text.writeFlash16:00000000 $t
-     /tmp/ccf5S4Z3.s:397    .text.writeFlash16:00000000 writeFlash16
-     /tmp/ccf5S4Z3.s:440    .rodata.readFlash.str1.4:00000000 $d
-     /tmp/ccf5S4Z3.s:447    .text.readFlash:00000000 $t
-     /tmp/ccf5S4Z3.s:453    .text.readFlash:00000000 readFlash
-     /tmp/ccf5S4Z3.s:611    .text.readFlash:00000088 $d
-     /tmp/ccf5S4Z3.s:619    .text.readFlash16:00000000 $t
-     /tmp/ccf5S4Z3.s:625    .text.readFlash16:00000000 readFlash16
-     /tmp/ccf5S4Z3.s:668    .text.flashposn:00000000 $t
-     /tmp/ccf5S4Z3.s:674    .text.flashposn:00000000 flashposn
-     /tmp/ccf5S4Z3.s:769    .text.flashposn:00000044 $d
-     /tmp/ccf5S4Z3.s:775    .text.writeflashchunk:00000000 $t
-     /tmp/ccf5S4Z3.s:781    .text.writeflashchunk:00000000 writeflashchunk
-     /tmp/ccf5S4Z3.s:951    .text.writeflashchunk:00000098 $d
-     /tmp/ccf5S4Z3.s:959    .data.flashlen:00000000 $d
-     /tmp/ccf5S4Z3.s:966    .data.flash_data:00000000 $d
+     /tmp/ccXn8Wb5.s:19     .rodata.writeFlash.str1.4:00000000 $d
+     /tmp/ccXn8Wb5.s:39     .text.writeFlash:00000000 $t
+     /tmp/ccXn8Wb5.s:45     .text.writeFlash:00000000 writeFlash
+     /tmp/ccXn8Wb5.s:379    .text.writeFlash:00000158 $d
+     /tmp/ccXn8Wb5.s:969    .data.flash_data:00000000 flash_data
+     /tmp/ccXn8Wb5.s:962    .data.flashlen:00000000 flashlen
+     /tmp/ccXn8Wb5.s:391    .text.writeFlash16:00000000 $t
+     /tmp/ccXn8Wb5.s:397    .text.writeFlash16:00000000 writeFlash16
+     /tmp/ccXn8Wb5.s:440    .rodata.readFlash.str1.4:00000000 $d
+     /tmp/ccXn8Wb5.s:447    .text.readFlash:00000000 $t
+     /tmp/ccXn8Wb5.s:453    .text.readFlash:00000000 readFlash
+     /tmp/ccXn8Wb5.s:611    .text.readFlash:00000088 $d
+     /tmp/ccXn8Wb5.s:619    .text.readFlash16:00000000 $t
+     /tmp/ccXn8Wb5.s:625    .text.readFlash16:00000000 readFlash16
+     /tmp/ccXn8Wb5.s:668    .text.flashposn:00000000 $t
+     /tmp/ccXn8Wb5.s:674    .text.flashposn:00000000 flashposn
+     /tmp/ccXn8Wb5.s:769    .text.flashposn:00000044 $d
+     /tmp/ccXn8Wb5.s:775    .text.writeflashchunk:00000000 $t
+     /tmp/ccXn8Wb5.s:781    .text.writeflashchunk:00000000 writeflashchunk
+     /tmp/ccXn8Wb5.s:951    .text.writeflashchunk:00000098 $d
+     /tmp/ccXn8Wb5.s:959    .data.flashlen:00000000 $d
+     /tmp/ccXn8Wb5.s:966    .data.flash_data:00000000 $d
 
 UNDEFINED SYMBOLS
 sprintf

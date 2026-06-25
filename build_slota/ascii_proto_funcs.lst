@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc706Iir.s 			page 1
+ARM GAS  /tmp/ccetigEE.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
   29:src/ascii_proto_funcs.c **** #include "protocol.h"
   30:src/ascii_proto_funcs.c **** #include "hallinterrupts.h"
   31:src/ascii_proto_funcs.c **** #ifdef SOFTWARE_SERIAL
-ARM GAS  /tmp/cc706Iir.s 			page 2
+ARM GAS  /tmp/ccetigEE.s 			page 2
 
 
   32:src/ascii_proto_funcs.c ****     #include "softwareserial.h"
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
   86:src/ascii_proto_funcs.c **** extern uint8_t enablescope; // enable scope on values
   87:src/ascii_proto_funcs.c **** 
   88:src/ascii_proto_funcs.c **** static int speedB = 0;
-ARM GAS  /tmp/cc706Iir.s 			page 3
+ARM GAS  /tmp/ccetigEE.s 			page 3
 
 
   89:src/ascii_proto_funcs.c **** static int steerB = 0;
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  143:src/ascii_proto_funcs.c ****         case 'd':
  144:src/ascii_proto_funcs.c ****             if (!enable) { speedB = 0; steerB = 0; }
  145:src/ascii_proto_funcs.c ****             enable = 1;
-ARM GAS  /tmp/cc706Iir.s 			page 4
+ARM GAS  /tmp/ccetigEE.s 			page 4
 
 
  146:src/ascii_proto_funcs.c ****             input_timeout_counter = 0;
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  200:src/ascii_proto_funcs.c ****     pwms[0] = pwms[1] = speedB;
  201:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[0] = HallData[0].HallPosn_mm;
  202:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
-ARM GAS  /tmp/cc706Iir.s 			page 5
+ARM GAS  /tmp/ccetigEE.s 			page 5
 
 
  203:src/ascii_proto_funcs.c **** #ifdef CONTROL_SENSOR
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  257:src/ascii_proto_funcs.c ****     );
  258:src/ascii_proto_funcs.c ****     return 1;
  259:src/ascii_proto_funcs.c **** }
-ARM GAS  /tmp/cc706Iir.s 			page 6
+ARM GAS  /tmp/ccetigEE.s 			page 6
 
 
  260:src/ascii_proto_funcs.c **** 
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
   37              		.loc 1 304 1 view .LVU3
   38 0002 7047     		bx	lr
   39              		.cfi_endproc
-ARM GAS  /tmp/cc706Iir.s 			page 7
+ARM GAS  /tmp/ccetigEE.s 			page 7
 
 
   40              	.LFE75:
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  106:src/ascii_proto_funcs.c ****     int dir = 1;
   79              		.loc 1 106 65 is_stmt 0 view .LVU5
   80 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-ARM GAS  /tmp/cc706Iir.s 			page 8
+ARM GAS  /tmp/ccetigEE.s 			page 8
 
 
   81              	.LCFI0:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  132 0046 6000     		.2byte	(.L3-.L5)/2
  133 0048 6000     		.2byte	(.L3-.L5)/2
  134 004a 6000     		.2byte	(.L3-.L5)/2
-ARM GAS  /tmp/cc706Iir.s 			page 9
+ARM GAS  /tmp/ccetigEE.s 			page 9
 
 
  135 004c 6000     		.2byte	(.L3-.L5)/2
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  182              		.loc 1 114 35 is_stmt 0 discriminator 1 view .LVU15
  183 0092 B24A     		ldr	r2, .L43+12
  184              	.LVL7:
-ARM GAS  /tmp/cc706Iir.s 			page 10
+ARM GAS  /tmp/ccetigEE.s 			page 10
 
 
  114:src/ascii_proto_funcs.c ****             enable = 1;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  224              		.loc 1 121 44 is_stmt 0 view .LVU30
  225 00c4 4168     		ldr	r1, [r0, #4]
  226              	.LVL9:
-ARM GAS  /tmp/cc706Iir.s 			page 11
+ARM GAS  /tmp/ccetigEE.s 			page 11
 
 
  121:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "wanted_posn now %ldmm %ldmm\r\n", PosnData.wanted_posn_mm[0
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  270 00f6 8246     		mov	r10, r0
  271 00f8 8B46     		mov	fp, r1
  272 00fa 994B     		ldr	r3, .L43+16
-ARM GAS  /tmp/cc706Iir.s 			page 12
+ARM GAS  /tmp/ccetigEE.s 			page 12
 
 
  273 00fc D3F80090 		ldr	r9, [r3]
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  320 0156 3246     		mov	r2, r6
  321 0158 3B46     		mov	r3, r7
  322 015a 5046     		mov	r0, r10
-ARM GAS  /tmp/cc706Iir.s 			page 13
+ARM GAS  /tmp/ccetigEE.s 			page 13
 
 
  323 015c 5946     		mov	r1, fp
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  369 01aa 92E7     		b	.L3
  370              	.L28:
  127:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "speed now %d, steer now %d, speedL %ld, speedR %ld\r\n", sp
-ARM GAS  /tmp/cc706Iir.s 			page 14
+ARM GAS  /tmp/ccetigEE.s 			page 14
 
 
  371              		.loc 1 127 58 is_stmt 0 discriminator 4 view .LVU57
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  418              		.loc 1 132 36 view .LVU64
  419 01fc 0022     		movs	r2, #0
  420 01fe 5E4B     		ldr	r3, .L43+40
-ARM GAS  /tmp/cc706Iir.s 			page 15
+ARM GAS  /tmp/ccetigEE.s 			page 15
 
 
  421 0200 FFF7FEFF 		bl	__aeabi_dcmpgt
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  467 0254 A8B9     		cbnz	r0, .L32
  133:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "speed now %d, steer now %d, pwm %ld, pwm %ld\r\n", speedB, 
  468              		.loc 1 133 36 discriminator 5 view .LVU73
-ARM GAS  /tmp/cc706Iir.s 			page 16
+ARM GAS  /tmp/ccetigEE.s 			page 16
 
 
  469 0256 3046     		mov	r0, r6
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  512              		.loc 1 144 16 view .LVU84
  513 028e 1AB9     		cbnz	r2, .L16
  144:src/ascii_proto_funcs.c ****             enable = 1;
-ARM GAS  /tmp/cc706Iir.s 			page 17
+ARM GAS  /tmp/ccetigEE.s 			page 17
 
 
  514              		.loc 1 144 28 is_stmt 1 discriminator 1 view .LVU85
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  554              		.loc 1 150 21 is_stmt 1 view .LVU99
  150:src/ascii_proto_funcs.c ****                     sprintf(ascii_out, "wanted_posn now %ldmm %ldmm\r\n", PosnData.wanted_posn_mm[0
  555              		.loc 1 150 44 is_stmt 0 view .LVU100
-ARM GAS  /tmp/cc706Iir.s 			page 18
+ARM GAS  /tmp/ccetigEE.s 			page 18
 
 
  556 02c6 4B68     		ldr	r3, [r1, #4]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  600 0306 FFF7FEFF 		bl	__aeabi_dmul
  601              	.LVL55:
  602 030a 0646     		mov	r6, r0
-ARM GAS  /tmp/cc706Iir.s 			page 19
+ARM GAS  /tmp/ccetigEE.s 			page 19
 
 
  603 030c 0F46     		mov	r7, r1
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  155:src/ascii_proto_funcs.c ****                     SpeedData.wanted_speed_mm_per_sec[0] = CLAMP(speedB * SPEED_COEFFICIENT +  stee
  653              		.loc 1 155 58 discriminator 1 view .LVU114
  654 0390 4FF47A78 		mov	r8, #1000
-ARM GAS  /tmp/cc706Iir.s 			page 20
+ARM GAS  /tmp/ccetigEE.s 			page 20
 
 
  655              	.L19:
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  157:src/ascii_proto_funcs.c ****                     break;
  700              		.loc 1 157 21 is_stmt 1 view .LVU124
  701 03dc CDF80480 		str	r8, [sp, #4]
-ARM GAS  /tmp/cc706Iir.s 			page 21
+ARM GAS  /tmp/ccetigEE.s 			page 21
 
 
  702 03e0 0090     		str	r0, [sp]
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  748 0428 0646     		mov	r6, r0
  749 042a 0F46     		mov	r7, r1
  750 042c 0246     		mov	r2, r0
-ARM GAS  /tmp/cc706Iir.s 			page 22
+ARM GAS  /tmp/ccetigEE.s 			page 22
 
 
  751 042e 0B46     		mov	r3, r1
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  797 0482 184B     		ldr	r3, .L45+12
  798 0484 FFF7FEFF 		bl	__aeabi_dcmpgt
  799              	.LVL77:
-ARM GAS  /tmp/cc706Iir.s 			page 23
+ARM GAS  /tmp/ccetigEE.s 			page 23
 
 
  800 0488 78B9     		cbnz	r0, .L39
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  846              	.L46:
  847 04d4 AFF30080 		.align	3
  848              	.L45:
-ARM GAS  /tmp/cc706Iir.s 			page 24
+ARM GAS  /tmp/ccetigEE.s 			page 24
 
 
  849 04d8 00000000 		.word	0
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  896              		.loc 1 175 12 is_stmt 0 view .LVU155
  897 0008 1249     		ldr	r1, .L49+4
  898 000a 0B60     		str	r3, [r1]
-ARM GAS  /tmp/cc706Iir.s 			page 25
+ARM GAS  /tmp/ccetigEE.s 			page 25
 
 
  176:src/ascii_proto_funcs.c ****     PWMData.pwm[0] = CLAMP(speedB * SPEED_COEFFICIENT +  steerB * STEER_COEFFICIENT, -1000, 1000);
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  934 002a 0C69     		ldr	r4, [r1, #16]
  182:src/ascii_proto_funcs.c ****     PosnData.wanted_posn_mm[1] = HallData[1].HallPosn_mm;
  935              		.loc 1 182 32 view .LVU175
-ARM GAS  /tmp/cc706Iir.s 			page 26
+ARM GAS  /tmp/ccetigEE.s 			page 26
 
 
  936 002c 0F48     		ldr	r0, .L49+28
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  983 0000 496D6D65 		.ascii	"Immediate commands disabled\015\012\000"
  983      64696174 
  983      6520636F 
-ARM GAS  /tmp/cc706Iir.s 			page 27
+ARM GAS  /tmp/ccetigEE.s 			page 27
 
 
  983      6D6D616E 
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1025 0016 5360     		str	r3, [r2, #4]
  197:src/ascii_proto_funcs.c ****     SpeedData.wanted_speed_mm_per_sec[0] = SpeedData.wanted_speed_mm_per_sec[1] = speedB;
  1026              		.loc 1 197 5 is_stmt 1 view .LVU196
-ARM GAS  /tmp/cc706Iir.s 			page 28
+ARM GAS  /tmp/ccetigEE.s 			page 28
 
 
  197:src/ascii_proto_funcs.c ****     SpeedData.wanted_speed_mm_per_sec[0] = SpeedData.wanted_speed_mm_per_sec[1] = speedB;
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1062              		.loc 1 206 18 is_stmt 0 view .LVU215
  1063 0036 144A     		ldr	r2, .L53+28
  1064 0038 1360     		str	r3, [r2]
-ARM GAS  /tmp/cc706Iir.s 			page 29
+ARM GAS  /tmp/ccetigEE.s 			page 29
 
 
  207:src/ascii_proto_funcs.c ****     sprintf(ascii_out, "Immediate commands disabled\r\n");
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1110      523A2050 
  1110      3A256C64 
  1110      28256C64 
-ARM GAS  /tmp/cc706Iir.s 			page 30
+ARM GAS  /tmp/ccetigEE.s 			page 30
 
 
  1110      6D6D2920 
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1154              		.loc 1 216 90 view .LVU228
  1155 0010 8D69     		ldr	r5, [r1, #24]
  216:src/ascii_proto_funcs.c ****         HallData[1].HallPosn, HallData[1].HallPosn_mm, HallData[1].HallSpeed, HallData[1].HallSpeed
-ARM GAS  /tmp/cc706Iir.s 			page 31
+ARM GAS  /tmp/ccetigEE.s 			page 31
 
 
  1156              		.loc 1 216 122 view .LVU229
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1197              		.loc 1 220 1 is_stmt 0 view .LVU242
  1198 0062 0120     		movs	r0, #1
  1199 0064 0FB0     		add	sp, sp, #60
-ARM GAS  /tmp/cc706Iir.s 			page 32
+ARM GAS  /tmp/ccetigEE.s 			page 32
 
 
  1200              	.LCFI10:
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1247 0010 CCF80820 		str	r2, [ip, #8]	@ unaligned
  1248 0014 CCF80C30 		str	r3, [ip, #12]	@ unaligned
  1249 0018 07CC     		ldmia	r4!, {r0, r1, r2}
-ARM GAS  /tmp/cc706Iir.s 			page 33
+ARM GAS  /tmp/ccetigEE.s 			page 33
 
 
  1250 001a CCF81000 		str	r0, [ip, #16]	@ unaligned
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  331:src/ascii_proto_funcs.c ****         }
  332:src/ascii_proto_funcs.c ****         if ((cmd[1] | 0x20) == 'c'){
  333:src/ascii_proto_funcs.c ****             debug_out = 1;
-ARM GAS  /tmp/cc706Iir.s 			page 34
+ARM GAS  /tmp/ccetigEE.s 			page 34
 
 
  334:src/ascii_proto_funcs.c ****         }
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  388:src/ascii_proto_funcs.c ****                     if(s->params[i] != NULL) {
  389:src/ascii_proto_funcs.c ****                         if (s->params[i]->uistr){
  390:src/ascii_proto_funcs.c ****                             if (!strncmp(s->params[i]->uistr, &cmd[1], strlen(s->params[i]->uistr))
-ARM GAS  /tmp/cc706Iir.s 			page 35
+ARM GAS  /tmp/ccetigEE.s 			page 35
 
 
  391:src/ascii_proto_funcs.c ****                                 switch (s->params[i]->ui_type){
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  445:src/ascii_proto_funcs.c **** }
  446:src/ascii_proto_funcs.c **** 
  447:src/ascii_proto_funcs.c **** 
-ARM GAS  /tmp/cc706Iir.s 			page 36
+ARM GAS  /tmp/ccetigEE.s 			page 36
 
 
  448:src/ascii_proto_funcs.c **** // must be after all params added?
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  502:src/ascii_proto_funcs.c ****     speedB = 0;
  503:src/ascii_proto_funcs.c ****     steerB = 0;
  504:src/ascii_proto_funcs.c ****     PWMData.pwm[1] = CLAMP(speedB * SPEED_COEFFICIENT -  steerB * STEER_COEFFICIENT, -1000, 1000);
-ARM GAS  /tmp/cc706Iir.s 			page 37
+ARM GAS  /tmp/ccetigEE.s 			page 37
 
 
  505:src/ascii_proto_funcs.c ****     PWMData.pwm[0] = CLAMP(speedB * SPEED_COEFFICIENT +  steerB * STEER_COEFFICIENT, -1000, 1000);
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1297 000a 08BD     		pop	{r3, pc}
  1298              		.cfi_endproc
  1299              	.LFE84:
-ARM GAS  /tmp/cc706Iir.s 			page 38
+ARM GAS  /tmp/ccetigEE.s 			page 38
 
 
  1301              		.global	__aeabi_fmul
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  241:src/ascii_proto_funcs.c ****         (int)electrical_measurements.board_temp_deg_c, electrical_measurements.board_temp_raw,
  1342              		.loc 1 241 38 is_stmt 0 view .LVU259
  1343 0008 314C     		ldr	r4, .L67
-ARM GAS  /tmp/cc706Iir.s 			page 39
+ARM GAS  /tmp/ccetigEE.s 			page 39
 
 
  1344 000a 6068     		ldr	r0, [r4, #4]	@ float
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1385 0048 E06C     		ldr	r0, [r4, #76]	@ float
  1386 004a FFF7FEFF 		bl	__aeabi_f2d
  1387              	.LVL108:
-ARM GAS  /tmp/cc706Iir.s 			page 40
+ARM GAS  /tmp/ccetigEE.s 			page 40
 
 
  244:src/ascii_proto_funcs.c ****     );
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1436              	.LVL117:
  1437 00ba 0090     		str	r0, [sp]
  1438 00bc 3346     		mov	r3, r6
-ARM GAS  /tmp/cc706Iir.s 			page 41
+ARM GAS  /tmp/ccetigEE.s 			page 41
 
 
  1439 00be 2A46     		mov	r2, r5
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1488 0004 FFF7FEFF 		bl	immediate_electrical
  1489              	.LVL122:
  310:src/ascii_proto_funcs.c **** }
-ARM GAS  /tmp/cc706Iir.s 			page 42
+ARM GAS  /tmp/ccetigEE.s 			page 42
 
 
  1490              		.loc 1 310 5 is_stmt 1 view .LVU286
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1534              	.LVL125:
  254:src/ascii_proto_funcs.c ****         (int)(BUTTON_PORT->IDR & BUTTON_PIN)?1:0,
  1535              		.loc 1 254 36 view .LVU292
-ARM GAS  /tmp/cc706Iir.s 			page 43
+ARM GAS  /tmp/ccetigEE.s 			page 43
 
 
  1536 000a 0E4B     		ldr	r3, .L73+4
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1582              		.section	.text.line_stm32,"ax",%progbits
  1583              		.align	1
  1584              		.global	line_stm32
-ARM GAS  /tmp/cc706Iir.s 			page 44
+ARM GAS  /tmp/ccetigEE.s 			page 44
 
 
  1585              		.syntax unified
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1631              		.cfi_startproc
  1632              		@ args = 0, pretend = 0, frame = 0
  1633              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc706Iir.s 			page 45
+ARM GAS  /tmp/ccetigEE.s 			page 45
 
 
  313:src/ascii_proto_funcs.c **** //case 's': // display stats from main timing
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1680              		.section	.rodata.immediate_toggle_control.str1.4,"aMS",%progbits,1
  1681              		.align	2
  1682              	.LC11:
-ARM GAS  /tmp/cc706Iir.s 			page 46
+ARM GAS  /tmp/ccetigEE.s 			page 46
 
 
  1683 0000 636F6E74 		.ascii	"control type now %d (%s)\015\012\000"
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1724 0014 5342     		rsbs	r3, r2, #0
  1725 0016 02F00302 		and	r2, r2, #3
  1726 001a 03F00303 		and	r3, r3, #3
-ARM GAS  /tmp/cc706Iir.s 			page 47
+ARM GAS  /tmp/ccetigEE.s 			page 47
 
 
  1727 001e 58BF     		it	pl
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1772              		@ frame_needed = 0, uses_anonymous_args = 0
  322:src/ascii_proto_funcs.c **** //case 'E':
  1773              		.loc 1 322 70 is_stmt 0 view .LVU335
-ARM GAS  /tmp/cc706Iir.s 			page 48
+ARM GAS  /tmp/ccetigEE.s 			page 48
 
 
  1774 0000 38B5     		push	{r3, r4, r5, lr}
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1816              		.loc 1 337 5 view .LVU347
  338:src/ascii_proto_funcs.c **** 
  1817              		.loc 1 338 1 is_stmt 0 view .LVU348
-ARM GAS  /tmp/cc706Iir.s 			page 49
+ARM GAS  /tmp/ccetigEE.s 			page 49
 
 
  1818 002e 0120     		movs	r0, #1
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1862      64696174 
  1862      6520636F 
  1862      6D6D616E 
-ARM GAS  /tmp/cc706Iir.s 			page 50
+ARM GAS  /tmp/ccetigEE.s 			page 50
 
 
  1862      64732065 
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1897 0002 0446     		mov	r4, r0
  1898 0004 0D46     		mov	r5, r1
  1899 0006 1646     		mov	r6, r2
-ARM GAS  /tmp/cc706Iir.s 			page 51
+ARM GAS  /tmp/ccetigEE.s 			page 51
 
 
  502:src/ascii_proto_funcs.c ****     steerB = 0;
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1936 0028 504B     		ldr	r3, .L107+24
  1937 002a 1960     		str	r1, [r3]
  509:src/ascii_proto_funcs.c ****     if (strlen(cmd) == 1){
-ARM GAS  /tmp/cc706Iir.s 			page 52
+ARM GAS  /tmp/ccetigEE.s 			page 52
 
 
  1938              		.loc 1 509 5 is_stmt 1 view .LVU379
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  1976              		.loc 1 523 17 is_stmt 1 view .LVU395
  1977 0058 464C     		ldr	r4, .L107+32
  1978              	.LVL154:
-ARM GAS  /tmp/cc706Iir.s 			page 53
+ARM GAS  /tmp/ccetigEE.s 			page 53
 
 
  523:src/ascii_proto_funcs.c ****                 break;
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2024 00ac CCF80410 		str	r1, [ip, #4]	@ unaligned
  2025 00b0 CCF80820 		str	r2, [ip, #8]	@ unaligned
  2026 00b4 CCF80C30 		str	r3, [ip, #12]	@ unaligned
-ARM GAS  /tmp/cc706Iir.s 			page 54
+ARM GAS  /tmp/ccetigEE.s 			page 54
 
 
  2027 00b8 2C46     		mov	r4, r5
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2071 0102 0CF1100C 		add	ip, ip, #16
  2072 0106 B542     		cmp	r5, r6
  2073 0108 F0D1     		bne	.L102
-ARM GAS  /tmp/cc706Iir.s 			page 55
+ARM GAS  /tmp/ccetigEE.s 			page 55
 
 
  2074 010a 03CC     		ldmia	r4!, {r0, r1}
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2119 0158 00000000 		.word	steerB
  2120 015c 00000000 		.word	PWMData
  2121 0160 00000000 		.word	SpeedData
-ARM GAS  /tmp/cc706Iir.s 			page 56
+ARM GAS  /tmp/ccetigEE.s 			page 56
 
 
  2122 0164 00000000 		.word	dspeeds
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2168 0008 0023     		movs	r3, #0
  2169 000a 0593     		str	r3, [sp, #20]
  275:src/ascii_proto_funcs.c ****     int c = 0;
-ARM GAS  /tmp/cc706Iir.s 			page 57
+ARM GAS  /tmp/ccetigEE.s 			page 57
 
 
  2170              		.loc 1 275 5 is_stmt 1 view .LVU428
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2206              		.loc 1 285 19 is_stmt 0 view .LVU446
  2207 002c 049B     		ldr	r3, [sp, #16]
  2208 002e 0F49     		ldr	r1, .L114+4
-ARM GAS  /tmp/cc706Iir.s 			page 58
+ARM GAS  /tmp/ccetigEE.s 			page 58
 
 
  2209 0030 0B70     		strb	r3, [r1]
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2255 006c 00000000 		.word	buzzerPattern
  2256 0070 67666666 		.word	1717986919
  2257 0074 00000000 		.word	buzzerLen
-ARM GAS  /tmp/cc706Iir.s 			page 59
+ARM GAS  /tmp/ccetigEE.s 			page 59
 
 
  2258 0078 0C000000 		.word	.LC18
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2290              		.thumb_func
  2292              	line_generic_var:
  2293              	.LVL175:
-ARM GAS  /tmp/cc706Iir.s 			page 60
+ARM GAS  /tmp/ccetigEE.s 			page 60
 
 
  2294              	.LFB79:
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  355:src/ascii_proto_funcs.c ****                 // read all
  2337              		.loc 1 355 13 is_stmt 1 view .LVU466
  355:src/ascii_proto_funcs.c ****                 // read all
-ARM GAS  /tmp/cc706Iir.s 			page 61
+ARM GAS  /tmp/ccetigEE.s 			page 61
 
 
  2338              		.loc 1 355 16 is_stmt 0 view .LVU467
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2384              		.loc 1 353 13 view .LVU475
  2385 0060 764C     		ldr	r4, .L146+12
  2386 0062 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
-ARM GAS  /tmp/cc706Iir.s 			page 62
+ARM GAS  /tmp/ccetigEE.s 			page 62
 
 
  2387 0064 3860     		str	r0, [r7]	@ unaligned
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2430              	.L120:
  357:src/ascii_proto_funcs.c ****                     if(s->params[i] != NULL) {
  2431              		.loc 1 357 35 discriminator 1 view .LVU487
-ARM GAS  /tmp/cc706Iir.s 			page 63
+ARM GAS  /tmp/ccetigEE.s 			page 63
 
 
  2432 0098 FF2C     		cmp	r4, #255
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2471 00d2 2946     		mov	r1, r5
  2472 00d4 3046     		mov	r0, r6
  2473 00d6 C047     		blx	r8
-ARM GAS  /tmp/cc706Iir.s 			page 64
+ARM GAS  /tmp/ccetigEE.s 			page 64
 
 
  2474              	.LVL190:
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2514              		.loc 1 412 45 is_stmt 1 view .LVU516
  413:src/ascii_proto_funcs.c **** 
  2515              		.loc 1 413 45 view .LVU517
-ARM GAS  /tmp/cc706Iir.s 			page 65
+ARM GAS  /tmp/ccetigEE.s 			page 65
 
 
  2516 0100 4FF48172 		mov	r2, #258
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  422:src/ascii_proto_funcs.c ****                                             ascii_out[0] = 0; // don't print last one twice
  2558              		.loc 1 422 46 is_stmt 0 view .LVU530
  2559 0142 D6F82451 		ldr	r5, [r6, #292]
-ARM GAS  /tmp/cc706Iir.s 			page 66
+ARM GAS  /tmp/ccetigEE.s 			page 66
 
 
  422:src/ascii_proto_funcs.c ****                                             ascii_out[0] = 0; // don't print last one twice
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2600 0176 04F20A33 		addw	r3, r4, #778
  2601 017a 06EB8303 		add	r3, r6, r3, lsl #2
  2602 017e 5968     		ldr	r1, [r3, #4]
-ARM GAS  /tmp/cc706Iir.s 			page 67
+ARM GAS  /tmp/ccetigEE.s 			page 67
 
 
  400:src/ascii_proto_funcs.c ****                                             newMsg.cmd = PROTOCOL_CMD_READVALRESPONSE;
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2642 01b4 FFF7FEFF 		bl	sprintf
  2643              	.LVL202:
  2644              	.LBE4:
-ARM GAS  /tmp/cc706Iir.s 			page 68
+ARM GAS  /tmp/ccetigEE.s 			page 68
 
 
  394:src/ascii_proto_funcs.c **** 
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2685 01de B8F1000F 		cmp	r8, #0
  2686 01e2 F0D0     		beq	.L126
  390:src/ascii_proto_funcs.c ****                                 switch (s->params[i]->ui_type){
-ARM GAS  /tmp/cc706Iir.s 			page 69
+ARM GAS  /tmp/ccetigEE.s 			page 69
 
 
  2687              		.loc 1 390 29 is_stmt 1 view .LVU574
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2727 0216 B4F5807F 		cmp	r4, #256
  2728 021a 03D0     		beq	.L145
  2729              	.LVL207:
-ARM GAS  /tmp/cc706Iir.s 			page 70
+ARM GAS  /tmp/ccetigEE.s 			page 70
 
 
  2730              	.L118:
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2777 0017 00       		.align	2
  2778              	.LC28:
  2779 0018 64697361 		.ascii	"disablepoweroff now %d\015\012powerofftimer now %d\015"
-ARM GAS  /tmp/cc706Iir.s 			page 71
+ARM GAS  /tmp/ccetigEE.s 			page 71
 
 
  2779      626C6570 
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2823              		.loc 1 547 29 view .LVU601
  2824 0016 43F02003 		orr	r3, r3, #32
  2825              		.loc 1 547 12 view .LVU602
-ARM GAS  /tmp/cc706Iir.s 			page 72
+ARM GAS  /tmp/ccetigEE.s 			page 72
 
 
  2826 001a 722B     		cmp	r3, #114
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  562:src/ascii_proto_funcs.c ****                     powerofftimer = 1; // immediate
  563:src/ascii_proto_funcs.c ****                 } else {
  564:src/ascii_proto_funcs.c ****                     powerofftimer = ((s*1000)/DELAY_IN_MAIN_LOOP);
-ARM GAS  /tmp/cc706Iir.s 			page 73
+ARM GAS  /tmp/ccetigEE.s 			page 73
 
 
  565:src/ascii_proto_funcs.c ****                 }
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2901 0070 0146     		mov	r1, r0
  549:src/ascii_proto_funcs.c ****             HAL_Delay(500);
  2902              		.loc 1 549 13 discriminator 1 view .LVU622
-ARM GAS  /tmp/cc706Iir.s 			page 74
+ARM GAS  /tmp/ccetigEE.s 			page 74
 
 
  2903 0072 2846     		mov	r0, r5
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  2943              		.loc 1 564 46 is_stmt 0 view .LVU636
  2944 00a4 C822     		movs	r2, #200
  2945 00a6 02FB03F3 		mul	r3, r2, r3
-ARM GAS  /tmp/cc706Iir.s 			page 75
+ARM GAS  /tmp/ccetigEE.s 			page 75
 
 
  564:src/ascii_proto_funcs.c ****                 }
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  597:src/ascii_proto_funcs.c ****                 break;
  598:src/ascii_proto_funcs.c ****         }
  599:src/ascii_proto_funcs.c ****         // CR before prompt.... after message
-ARM GAS  /tmp/cc706Iir.s 			page 76
+ARM GAS  /tmp/ccetigEE.s 			page 76
 
 
  600:src/ascii_proto_funcs.c ****         sprintf(ascii_out, "\r\n");
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3011 0016 6160     		str	r1, [r4, #4]	@ unaligned
  3012 0018 A260     		str	r2, [r4, #8]	@ unaligned
  3013 001a E360     		str	r3, [r4, #12]	@ unaligned
-ARM GAS  /tmp/cc706Iir.s 			page 77
+ARM GAS  /tmp/ccetigEE.s 			page 77
 
 
  3014 001c 03CD     		ldmia	r5!, {r0, r1}
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3056              		.section	.text.line_test_message,"ax",%progbits
  3057              		.align	1
  3058              		.global	line_test_message
-ARM GAS  /tmp/cc706Iir.s 			page 78
+ARM GAS  /tmp/ccetigEE.s 			page 78
 
 
  3059              		.syntax unified
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3104 001e 164B     		ldr	r3, .L174
  3105 0020 1A88     		ldrh	r2, [r3]	@ unaligned
  3106 0022 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
-ARM GAS  /tmp/cc706Iir.s 			page 79
+ARM GAS  /tmp/ccetigEE.s 			page 79
 
 
  3107 0024 2280     		strh	r2, [r4]	@ unaligned
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3154 0064 92E80300 		ldm	r2, {r0, r1}
  3155 0068 83E80300 		stm	r3, {r0, r1}
  595:src/ascii_proto_funcs.c ****                 }
-ARM GAS  /tmp/cc706Iir.s 			page 80
+ARM GAS  /tmp/ccetigEE.s 			page 80
 
 
  3156              		.loc 1 595 21 is_stmt 1 view .LVU674
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3207 0006 1546     		mov	r5, r2
  619:src/ascii_proto_funcs.c **** // memory read hex address
  620:src/ascii_proto_funcs.c **** //case 'M':
-ARM GAS  /tmp/cc706Iir.s 			page 81
+ARM GAS  /tmp/ccetigEE.s 			page 81
 
 
  621:src/ascii_proto_funcs.c ****     unsigned char tmp[100];
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3249 0034 9370     		strb	r3, [r2, #2]
  634:src/ascii_proto_funcs.c ****     for (int a = 0; a < len; a++) {
  3250              		.loc 1 634 5 is_stmt 1 view .LVU692
-ARM GAS  /tmp/cc706Iir.s 			page 82
+ARM GAS  /tmp/ccetigEE.s 			page 82
 
 
  3251              	.LBB14:
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3299 0072 FFF7FEFF 		bl	strlen
  3300              	.LVL254:
  3301 0076 0146     		mov	r1, r0
-ARM GAS  /tmp/cc706Iir.s 			page 83
+ARM GAS  /tmp/ccetigEE.s 			page 83
 
 
  3302              		.loc 1 640 13 discriminator 1 view .LVU707
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3341 0092 0390     		str	r0, [sp, #12]
  3342 0094 C6E7     		b	.L178
  3343              	.LVL261:
-ARM GAS  /tmp/cc706Iir.s 			page 84
+ARM GAS  /tmp/ccetigEE.s 			page 84
 
 
  3344              	.L184:
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3385 0060 20204625 		.ascii	"  F%s<n> - %s\015\012\000"
  3385      733C6E3E 
  3385      202D2025 
-ARM GAS  /tmp/cc706Iir.s 			page 85
+ARM GAS  /tmp/ccetigEE.s 			page 85
 
 
  3385      730D0A00 
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3431              	.LBB19:
  3432              	.LBB20:
  467:src/ascii_proto_funcs.c ****                         "  F%s<n> - %s\r\n",
-ARM GAS  /tmp/cc706Iir.s 			page 86
+ARM GAS  /tmp/ccetigEE.s 			page 86
 
 
  3433              		.loc 1 467 21 discriminator 2 view .LVU739
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3473 003a 02A8     		add	r0, sp, #8
  3474 003c FFF7FEFF 		bl	snprintf
  3475              	.LVL268:
-ARM GAS  /tmp/cc706Iir.s 			page 87
+ARM GAS  /tmp/ccetigEE.s 			page 87
 
 
  472:src/ascii_proto_funcs.c ****                     if (p) strcat(p, tmp);
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3515              		.loc 1 461 9 view .LVU768
  461:src/ascii_proto_funcs.c **** 
  3516              		.loc 1 461 12 is_stmt 0 view .LVU769
-ARM GAS  /tmp/cc706Iir.s 			page 88
+ARM GAS  /tmp/ccetigEE.s 			page 88
 
 
  3517 0062 3FB1     		cbz	r7, .L189
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3561              		.cfi_def_cfa_offset 24
  3562              		@ sp needed
  3563 008c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
-ARM GAS  /tmp/cc706Iir.s 			page 89
+ARM GAS  /tmp/ccetigEE.s 			page 89
 
 
  3564              	.LVL280:
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3613              	.LC38:
  3614 0008 536C6F77 		.ascii	"Slower\000"
  3614      657200
-ARM GAS  /tmp/cc706Iir.s 			page 90
+ARM GAS  /tmp/ccetigEE.s 			page 90
 
 
  3615 000f 00       		.align	2
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3641      6F646500 
  3642              		.align	2
  3643              	.LC48:
-ARM GAS  /tmp/cc706Iir.s 			page 91
+ARM GAS  /tmp/ccetigEE.s 			page 91
 
 
  3644 00b4 73657420 		.ascii	"set alarm\000"
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3667 01b5 20205045 		.ascii	"  PE enable poweroff\015\012  Pn power off in n sec"
  3667      20656E61 
  3667      626C6520 
-ARM GAS  /tmp/cc706Iir.s 			page 92
+ARM GAS  /tmp/ccetigEE.s 			page 92
 
 
  3667      706F7765 
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3694              		.cfi_def_cfa_offset 16
  3695              		.cfi_offset 4, -16
  3696              		.cfi_offset 5, -12
-ARM GAS  /tmp/cc706Iir.s 			page 93
+ARM GAS  /tmp/ccetigEE.s 			page 93
 
 
  3697              		.cfi_offset 6, -8
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3743 0048 FFF7FEFF 		bl	ascii_add_immediate
  3744              	.LVL292:
  662:src/ascii_proto_funcs.c ****     ascii_add_immediate( 'N', immediate_sensors, "display sensor data");
-ARM GAS  /tmp/cc706Iir.s 			page 94
+ARM GAS  /tmp/ccetigEE.s 			page 94
 
 
  3745              		.loc 1 662 5 view .LVU797
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3790 0096 344A     		ldr	r2, .L208+100
  3791 0098 3449     		ldr	r1, .L208+104
  3792 009a 5320     		movs	r0, #83
-ARM GAS  /tmp/cc706Iir.s 			page 95
+ARM GAS  /tmp/ccetigEE.s 			page 95
 
 
  3793 009c FFF7FEFF 		bl	ascii_add_line_fn
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3832 00dc 2F4A     		ldr	r2, .L208+152
  3833 00de 3049     		ldr	r1, .L208+156
  3834 00e0 4920     		movs	r0, #73
-ARM GAS  /tmp/cc706Iir.s 			page 96
+ARM GAS  /tmp/ccetigEE.s 			page 96
 
 
  3835 00e2 FFF7FEFF 		bl	ascii_add_line_fn
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3883 0158 C0000000 		.word	.LC49
  3884 015c 00000000 		.word	line_toggle_sensor_control
  3885 0160 D8000000 		.word	.LC50
-ARM GAS  /tmp/cc706Iir.s 			page 97
+ARM GAS  /tmp/ccetigEE.s 			page 97
 
 
  3886 0164 00000000 		.word	line_electrical
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3941              		.section	.rodata
  3942              		.align	2
  3943              		.set	.LANCHOR0,. + 0
-ARM GAS  /tmp/cc706Iir.s 			page 98
+ARM GAS  /tmp/ccetigEE.s 			page 98
 
 
  3944              	.LC31:
@@ -5841,112 +5841,112 @@ ARM GAS  /tmp/cc706Iir.s 			page 1
  3960              		.file 14 "/usr/include/newlib/string.h"
  3961              		.file 15 "<built-in>"
  3962              		.file 16 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/cc706Iir.s 			page 99
+ARM GAS  /tmp/ccetigEE.s 			page 99
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ascii_proto_funcs.c
-     /tmp/cc706Iir.s:19     .text.line_toggle_sensor_control:00000000 $t
-     /tmp/cc706Iir.s:25     .text.line_toggle_sensor_control:00000000 line_toggle_sensor_control
-     /tmp/cc706Iir.s:43     .rodata.immediate_dir.str1.4:00000000 $d
-     /tmp/cc706Iir.s:66     .text.immediate_dir:00000000 $t
-     /tmp/cc706Iir.s:72     .text.immediate_dir:00000000 immediate_dir
-     /tmp/cc706Iir.s:106    .text.immediate_dir:00000012 $d
-     /tmp/cc706Iir.s:161    .text.immediate_dir:00000080 $t
-     /tmp/cc706Iir.s:636    .text.immediate_dir:00000350 $d
-     /tmp/cc706Iir.s:3939   .bss.speedB:00000000 speedB
-     /tmp/cc706Iir.s:3933   .bss.steerB:00000000 steerB
-     /tmp/cc706Iir.s:654    .text.immediate_dir:00000390 $t
-     /tmp/cc706Iir.s:849    .text.immediate_dir:000004d8 $d
-     /tmp/cc706Iir.s:865    .rodata.immediate_stop.str1.4:00000000 $d
-     /tmp/cc706Iir.s:869    .text.immediate_stop:00000000 $t
-     /tmp/cc706Iir.s:875    .text.immediate_stop:00000000 immediate_stop
-     /tmp/cc706Iir.s:967    .text.immediate_stop:00000050 $d
-     /tmp/cc706Iir.s:981    .rodata.immediate_quit.str1.4:00000000 $d
-     /tmp/cc706Iir.s:985    .text.immediate_quit:00000000 $t
-     /tmp/cc706Iir.s:991    .text.immediate_quit:00000000 immediate_quit
-     /tmp/cc706Iir.s:1093   .text.immediate_quit:0000006c $d
-     /tmp/cc706Iir.s:1107   .rodata.immediate_hall.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1113   .text.immediate_hall:00000000 $t
-     /tmp/cc706Iir.s:1119   .text.immediate_hall:00000000 immediate_hall
-     /tmp/cc706Iir.s:1209   .text.immediate_hall:0000006c $d
-     /tmp/cc706Iir.s:1216   .rodata.immediate_sensors.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1220   .text.immediate_sensors:00000000 $t
-     /tmp/cc706Iir.s:1226   .text.immediate_sensors:00000000 immediate_sensors
-     /tmp/cc706Iir.s:1264   .text.immediate_sensors:0000002c $d
-     /tmp/cc706Iir.s:1269   .text.line_sensors:00000000 $t
-     /tmp/cc706Iir.s:1275   .text.line_sensors:00000000 line_sensors
-     /tmp/cc706Iir.s:1305   .rodata.immediate_electrical.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1311   .text.immediate_electrical:00000000 $t
-     /tmp/cc706Iir.s:1317   .text.immediate_electrical:00000000 immediate_electrical
-     /tmp/cc706Iir.s:1457   .text.immediate_electrical:000000d0 $d
-     /tmp/cc706Iir.s:1465   .text.line_electrical:00000000 $t
-     /tmp/cc706Iir.s:1471   .text.line_electrical:00000000 line_electrical
-     /tmp/cc706Iir.s:1498   .rodata.immediate_stm32.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1503   .text.immediate_stm32:00000000 $t
-     /tmp/cc706Iir.s:1509   .text.immediate_stm32:00000000 immediate_stm32
-     /tmp/cc706Iir.s:1575   .text.immediate_stm32:00000040 $d
-     /tmp/cc706Iir.s:1583   .text.line_stm32:00000000 $t
-     /tmp/cc706Iir.s:1589   .text.line_stm32:00000000 line_stm32
-     /tmp/cc706Iir.s:1616   .rodata.line_main_timing_stats.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1621   .text.line_main_timing_stats:00000000 $t
-     /tmp/cc706Iir.s:1627   .text.line_main_timing_stats:00000000 line_main_timing_stats
-     /tmp/cc706Iir.s:1675   .text.line_main_timing_stats:00000028 $d
-     /tmp/cc706Iir.s:1681   .rodata.immediate_toggle_control.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1685   .text.immediate_toggle_control:00000000 $t
-     /tmp/cc706Iir.s:1691   .text.immediate_toggle_control:00000000 immediate_toggle_control
-     /tmp/cc706Iir.s:1749   .text.immediate_toggle_control:00000038 $d
-     /tmp/cc706Iir.s:3924   .rodata.control_types:00000000 control_types
-     /tmp/cc706Iir.s:1756   .rodata.line_debug_control.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1760   .text.line_debug_control:00000000 $t
-     /tmp/cc706Iir.s:1766   .text.line_debug_control:00000000 line_debug_control
-     /tmp/cc706Iir.s:1853   .text.line_debug_control:00000054 $d
-ARM GAS  /tmp/cc706Iir.s 			page 100
+     /tmp/ccetigEE.s:19     .text.line_toggle_sensor_control:00000000 $t
+     /tmp/ccetigEE.s:25     .text.line_toggle_sensor_control:00000000 line_toggle_sensor_control
+     /tmp/ccetigEE.s:43     .rodata.immediate_dir.str1.4:00000000 $d
+     /tmp/ccetigEE.s:66     .text.immediate_dir:00000000 $t
+     /tmp/ccetigEE.s:72     .text.immediate_dir:00000000 immediate_dir
+     /tmp/ccetigEE.s:106    .text.immediate_dir:00000012 $d
+     /tmp/ccetigEE.s:161    .text.immediate_dir:00000080 $t
+     /tmp/ccetigEE.s:636    .text.immediate_dir:00000350 $d
+     /tmp/ccetigEE.s:3939   .bss.speedB:00000000 speedB
+     /tmp/ccetigEE.s:3933   .bss.steerB:00000000 steerB
+     /tmp/ccetigEE.s:654    .text.immediate_dir:00000390 $t
+     /tmp/ccetigEE.s:849    .text.immediate_dir:000004d8 $d
+     /tmp/ccetigEE.s:865    .rodata.immediate_stop.str1.4:00000000 $d
+     /tmp/ccetigEE.s:869    .text.immediate_stop:00000000 $t
+     /tmp/ccetigEE.s:875    .text.immediate_stop:00000000 immediate_stop
+     /tmp/ccetigEE.s:967    .text.immediate_stop:00000050 $d
+     /tmp/ccetigEE.s:981    .rodata.immediate_quit.str1.4:00000000 $d
+     /tmp/ccetigEE.s:985    .text.immediate_quit:00000000 $t
+     /tmp/ccetigEE.s:991    .text.immediate_quit:00000000 immediate_quit
+     /tmp/ccetigEE.s:1093   .text.immediate_quit:0000006c $d
+     /tmp/ccetigEE.s:1107   .rodata.immediate_hall.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1113   .text.immediate_hall:00000000 $t
+     /tmp/ccetigEE.s:1119   .text.immediate_hall:00000000 immediate_hall
+     /tmp/ccetigEE.s:1209   .text.immediate_hall:0000006c $d
+     /tmp/ccetigEE.s:1216   .rodata.immediate_sensors.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1220   .text.immediate_sensors:00000000 $t
+     /tmp/ccetigEE.s:1226   .text.immediate_sensors:00000000 immediate_sensors
+     /tmp/ccetigEE.s:1264   .text.immediate_sensors:0000002c $d
+     /tmp/ccetigEE.s:1269   .text.line_sensors:00000000 $t
+     /tmp/ccetigEE.s:1275   .text.line_sensors:00000000 line_sensors
+     /tmp/ccetigEE.s:1305   .rodata.immediate_electrical.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1311   .text.immediate_electrical:00000000 $t
+     /tmp/ccetigEE.s:1317   .text.immediate_electrical:00000000 immediate_electrical
+     /tmp/ccetigEE.s:1457   .text.immediate_electrical:000000d0 $d
+     /tmp/ccetigEE.s:1465   .text.line_electrical:00000000 $t
+     /tmp/ccetigEE.s:1471   .text.line_electrical:00000000 line_electrical
+     /tmp/ccetigEE.s:1498   .rodata.immediate_stm32.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1503   .text.immediate_stm32:00000000 $t
+     /tmp/ccetigEE.s:1509   .text.immediate_stm32:00000000 immediate_stm32
+     /tmp/ccetigEE.s:1575   .text.immediate_stm32:00000040 $d
+     /tmp/ccetigEE.s:1583   .text.line_stm32:00000000 $t
+     /tmp/ccetigEE.s:1589   .text.line_stm32:00000000 line_stm32
+     /tmp/ccetigEE.s:1616   .rodata.line_main_timing_stats.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1621   .text.line_main_timing_stats:00000000 $t
+     /tmp/ccetigEE.s:1627   .text.line_main_timing_stats:00000000 line_main_timing_stats
+     /tmp/ccetigEE.s:1675   .text.line_main_timing_stats:00000028 $d
+     /tmp/ccetigEE.s:1681   .rodata.immediate_toggle_control.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1685   .text.immediate_toggle_control:00000000 $t
+     /tmp/ccetigEE.s:1691   .text.immediate_toggle_control:00000000 immediate_toggle_control
+     /tmp/ccetigEE.s:1749   .text.immediate_toggle_control:00000038 $d
+     /tmp/ccetigEE.s:3924   .rodata.control_types:00000000 control_types
+     /tmp/ccetigEE.s:1756   .rodata.line_debug_control.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1760   .text.line_debug_control:00000000 $t
+     /tmp/ccetigEE.s:1766   .text.line_debug_control:00000000 line_debug_control
+     /tmp/ccetigEE.s:1853   .text.line_debug_control:00000054 $d
+ARM GAS  /tmp/ccetigEE.s 			page 100
 
 
-     /tmp/cc706Iir.s:1860   .rodata.line_immediate.str1.4:00000000 $d
-     /tmp/cc706Iir.s:1876   .text.line_immediate:00000000 $t
-     /tmp/cc706Iir.s:1882   .text.line_immediate:00000000 line_immediate
-     /tmp/cc706Iir.s:2118   .text.line_immediate:00000154 $d
-     /tmp/cc706Iir.s:2134   .rodata.line_set_alarm.str1.4:00000000 $d
-     /tmp/cc706Iir.s:2141   .text.line_set_alarm:00000000 $t
-     /tmp/cc706Iir.s:2147   .text.line_set_alarm:00000000 line_set_alarm
-     /tmp/cc706Iir.s:2254   .text.line_set_alarm:00000068 $d
-     /tmp/cc706Iir.s:2264   .rodata.line_generic_var.str1.4:00000000 $d
-     /tmp/cc706Iir.s:2286   .text.line_generic_var:00000000 $t
-     /tmp/cc706Iir.s:2292   .text.line_generic_var:00000000 line_generic_var
-     /tmp/cc706Iir.s:2757   .text.line_generic_var:00000230 $d
-     /tmp/cc706Iir.s:2771   .rodata.line_poweroff_control.str1.4:00000000 $d
-     /tmp/cc706Iir.s:2782   .text.line_poweroff_control:00000000 $t
-     /tmp/cc706Iir.s:2788   .text.line_poweroff_control:00000000 line_poweroff_control
-     /tmp/cc706Iir.s:2953   .text.line_poweroff_control:000000b0 $d
-     /tmp/cc706Iir.s:2963   .rodata.line_reset_firmware.str1.4:00000000 $d
-     /tmp/cc706Iir.s:2967   .text.line_reset_firmware:00000000 $t
-     /tmp/cc706Iir.s:2973   .text.line_reset_firmware:00000000 line_reset_firmware
-     /tmp/cc706Iir.s:3045   .text.line_reset_firmware:00000044 $d
-     /tmp/cc706Iir.s:3050   .rodata.line_test_message.str1.4:00000000 $d
-     /tmp/cc706Iir.s:3057   .text.line_test_message:00000000 $t
-     /tmp/cc706Iir.s:3063   .text.line_test_message:00000000 line_test_message
-     /tmp/cc706Iir.s:3167   .text.line_test_message:00000078 $d
-     /tmp/cc706Iir.s:3174   .rodata.line_read_memory.str1.4:00000000 $d
-     /tmp/cc706Iir.s:3181   .text.line_read_memory:00000000 $t
-     /tmp/cc706Iir.s:3187   .text.line_read_memory:00000000 line_read_memory
-     /tmp/cc706Iir.s:3371   .text.line_read_memory:000000b0 $d
-     /tmp/cc706Iir.s:3378   .rodata.get_F_description.str1.4:00000000 $d
-     /tmp/cc706Iir.s:3387   .text.get_F_description:00000000 $t
-     /tmp/cc706Iir.s:3393   .text.get_F_description:00000000 get_F_description
-     /tmp/cc706Iir.s:3569   .text.get_F_description:00000090 $d
-     /tmp/cc706Iir.s:3576   .text.line_hall:00000000 $t
-     /tmp/cc706Iir.s:3582   .text.line_hall:00000000 line_hall
-     /tmp/cc706Iir.s:3609   .rodata.main_ascii_init.str1.4:00000000 $d
-     /tmp/cc706Iir.s:3678   .text.main_ascii_init:00000000 $t
-     /tmp/cc706Iir.s:3684   .text.main_ascii_init:00000000 main_ascii_init
-     /tmp/cc706Iir.s:3862   .text.main_ascii_init:00000104 $d
-     /tmp/cc706Iir.s:3908   .rodata.str1.4:00000000 $d
-     /tmp/cc706Iir.s:3921   .rodata.control_types:00000000 $d
-     /tmp/cc706Iir.s:3930   .bss.steerB:00000000 $d
-     /tmp/cc706Iir.s:3936   .bss.speedB:00000000 $d
-     /tmp/cc706Iir.s:3942   .rodata:00000000 $d
+     /tmp/ccetigEE.s:1860   .rodata.line_immediate.str1.4:00000000 $d
+     /tmp/ccetigEE.s:1876   .text.line_immediate:00000000 $t
+     /tmp/ccetigEE.s:1882   .text.line_immediate:00000000 line_immediate
+     /tmp/ccetigEE.s:2118   .text.line_immediate:00000154 $d
+     /tmp/ccetigEE.s:2134   .rodata.line_set_alarm.str1.4:00000000 $d
+     /tmp/ccetigEE.s:2141   .text.line_set_alarm:00000000 $t
+     /tmp/ccetigEE.s:2147   .text.line_set_alarm:00000000 line_set_alarm
+     /tmp/ccetigEE.s:2254   .text.line_set_alarm:00000068 $d
+     /tmp/ccetigEE.s:2264   .rodata.line_generic_var.str1.4:00000000 $d
+     /tmp/ccetigEE.s:2286   .text.line_generic_var:00000000 $t
+     /tmp/ccetigEE.s:2292   .text.line_generic_var:00000000 line_generic_var
+     /tmp/ccetigEE.s:2757   .text.line_generic_var:00000230 $d
+     /tmp/ccetigEE.s:2771   .rodata.line_poweroff_control.str1.4:00000000 $d
+     /tmp/ccetigEE.s:2782   .text.line_poweroff_control:00000000 $t
+     /tmp/ccetigEE.s:2788   .text.line_poweroff_control:00000000 line_poweroff_control
+     /tmp/ccetigEE.s:2953   .text.line_poweroff_control:000000b0 $d
+     /tmp/ccetigEE.s:2963   .rodata.line_reset_firmware.str1.4:00000000 $d
+     /tmp/ccetigEE.s:2967   .text.line_reset_firmware:00000000 $t
+     /tmp/ccetigEE.s:2973   .text.line_reset_firmware:00000000 line_reset_firmware
+     /tmp/ccetigEE.s:3045   .text.line_reset_firmware:00000044 $d
+     /tmp/ccetigEE.s:3050   .rodata.line_test_message.str1.4:00000000 $d
+     /tmp/ccetigEE.s:3057   .text.line_test_message:00000000 $t
+     /tmp/ccetigEE.s:3063   .text.line_test_message:00000000 line_test_message
+     /tmp/ccetigEE.s:3167   .text.line_test_message:00000078 $d
+     /tmp/ccetigEE.s:3174   .rodata.line_read_memory.str1.4:00000000 $d
+     /tmp/ccetigEE.s:3181   .text.line_read_memory:00000000 $t
+     /tmp/ccetigEE.s:3187   .text.line_read_memory:00000000 line_read_memory
+     /tmp/ccetigEE.s:3371   .text.line_read_memory:000000b0 $d
+     /tmp/ccetigEE.s:3378   .rodata.get_F_description.str1.4:00000000 $d
+     /tmp/ccetigEE.s:3387   .text.get_F_description:00000000 $t
+     /tmp/ccetigEE.s:3393   .text.get_F_description:00000000 get_F_description
+     /tmp/ccetigEE.s:3569   .text.get_F_description:00000090 $d
+     /tmp/ccetigEE.s:3576   .text.line_hall:00000000 $t
+     /tmp/ccetigEE.s:3582   .text.line_hall:00000000 line_hall
+     /tmp/ccetigEE.s:3609   .rodata.main_ascii_init.str1.4:00000000 $d
+     /tmp/ccetigEE.s:3678   .text.main_ascii_init:00000000 $t
+     /tmp/ccetigEE.s:3684   .text.main_ascii_init:00000000 main_ascii_init
+     /tmp/ccetigEE.s:3862   .text.main_ascii_init:00000104 $d
+     /tmp/ccetigEE.s:3908   .rodata.str1.4:00000000 $d
+     /tmp/ccetigEE.s:3921   .rodata.control_types:00000000 $d
+     /tmp/ccetigEE.s:3930   .bss.steerB:00000000 $d
+     /tmp/ccetigEE.s:3936   .bss.speedB:00000000 $d
+     /tmp/ccetigEE.s:3942   .rodata:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_i2d
@@ -5961,7 +5961,7 @@ enable
 input_timeout_counter
 control_type
 PosnData
-ARM GAS  /tmp/cc706Iir.s 			page 101
+ARM GAS  /tmp/ccetigEE.s 			page 101
 
 
 SpeedData

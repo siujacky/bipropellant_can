@@ -519,8 +519,8 @@ void MX_TIM_Init(void) {
   HAL_TIM_PWM_ConfigChannel(&htim_right, &sConfigOC, TIM_CHANNEL_2);
   HAL_TIM_PWM_ConfigChannel(&htim_right, &sConfigOC, TIM_CHANNEL_3);
 
-  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_DISABLE; /* hi-Z when MOE=0: phases float → free-wheel, safer with damaged FETs */
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE; /* hi-Z when MOE=0 */
+  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_ENABLE;  /* short-brake on MOE=0: matches reference firmware */
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_ENABLE;  /* short-brake on MOE=0 */
   sBreakDeadTimeConfig.LockLevel        = TIM_LOCKLEVEL_OFF;
   sBreakDeadTimeConfig.DeadTime         = DEAD_TIME;
   sBreakDeadTimeConfig.BreakState       = TIM_BREAK_DISABLE;
@@ -556,8 +556,8 @@ void MX_TIM_Init(void) {
   HAL_TIM_PWM_ConfigChannel(&htim_left, &sConfigOC, TIM_CHANNEL_2);
   HAL_TIM_PWM_ConfigChannel(&htim_left, &sConfigOC, TIM_CHANNEL_3);
 
-  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_DISABLE; /* hi-Z when MOE=0: phases float → free-wheel, safer with damaged FETs */
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE; /* hi-Z when MOE=0 */
+  sBreakDeadTimeConfig.OffStateRunMode  = TIM_OSSR_ENABLE;  /* short-brake on MOE=0: matches reference firmware */
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_ENABLE;  /* short-brake on MOE=0 */
   sBreakDeadTimeConfig.LockLevel        = TIM_LOCKLEVEL_OFF;
   sBreakDeadTimeConfig.DeadTime         = DEAD_TIME;
   sBreakDeadTimeConfig.BreakState       = TIM_BREAK_DISABLE;
@@ -591,61 +591,14 @@ void MX_TIM_Init(void) {
 
   __HAL_TIM_ENABLE(&htim_right);
 
-  /* Clear MOE immediately after enabling timers. */
-  htim_left.Instance->BDTR  &= ~(1U << 15);   /* TIM8 MOE=0 */
-  htim_right.Instance->BDTR &= ~(1U << 15);   /* TIM1 MOE=0 */
-
-  /* CRITICAL: Actively drive ALL motor PWM pins LOW (GPIO output, not AF).
-   *
-   * With OSSR=0, OSSI=0, MOE=0, the STM32 releases AF control of the pins.
-   * The hoverboard PCB has pull-ups on gate driver inputs (HIN/LIN). When
-   * pins float HIGH: both high and low-side FETs are ON → phases shorted.
-   * A floating HIGH drove the V-phase high-side FET → burned MOSFET.
-   *
-   * Fix: reconfigure all 12 PWM pins as GPIO output LOW. This actively
-   * holds HIN=0 (high-side OFF) and LIN=0 (low-side OFF) → all FETs off
-   * → motor phases truly floating → wheel turns freely.
-   *
-   * When BLDC ISR enables (enable=1), HAL_TIM_PWM_Start/PWMN_Start will
-   * reconfigure the pins back to AF-PP for active motor control.
-   *
-   * GPIO output PP 50MHz in STM32F1 CRL/CRH: CNF=00, MODE=11 → 0x3
-   * Use BSRR upper half (bit-reset = drive LOW): BSRR = (1<<(16+pin))
-   */
-  { /* RIGHT motor (TIM1): PA8,PA9,PA10 = UH/VH/WH; PB13,PB14,PB15 = UL/VL/WL */
-    GPIO_InitTypeDef g = {0};
-    g.Mode  = GPIO_MODE_OUTPUT_PP;
-    g.Speed = GPIO_SPEED_FREQ_HIGH;
-    g.Pull  = GPIO_NOPULL;
-    g.Pin   = RIGHT_TIM_UH_PIN | RIGHT_TIM_VH_PIN | RIGHT_TIM_WH_PIN;
-    HAL_GPIO_Init(RIGHT_TIM_UH_PORT, &g);         /* PA8/PA9/PA10 */
-    HAL_GPIO_WritePin(RIGHT_TIM_UH_PORT, RIGHT_TIM_UH_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RIGHT_TIM_VH_PORT, RIGHT_TIM_VH_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RIGHT_TIM_WH_PORT, RIGHT_TIM_WH_PIN, GPIO_PIN_RESET);
-    g.Pin = RIGHT_TIM_UL_PIN;  HAL_GPIO_Init(RIGHT_TIM_UL_PORT, &g);
-    g.Pin = RIGHT_TIM_VL_PIN;  HAL_GPIO_Init(RIGHT_TIM_VL_PORT, &g);
-    g.Pin = RIGHT_TIM_WL_PIN;  HAL_GPIO_Init(RIGHT_TIM_WL_PORT, &g);
-    HAL_GPIO_WritePin(RIGHT_TIM_UL_PORT, RIGHT_TIM_UL_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RIGHT_TIM_VL_PORT, RIGHT_TIM_VL_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RIGHT_TIM_WL_PORT, RIGHT_TIM_WL_PIN, GPIO_PIN_RESET);
-  }
-  { /* LEFT motor (TIM8): PC6,PC7,PC8 = UH/VH/WH; PA7,PB0,PB1 = UL/VL/WL */
-    GPIO_InitTypeDef g = {0};
-    g.Mode  = GPIO_MODE_OUTPUT_PP;
-    g.Speed = GPIO_SPEED_FREQ_HIGH;
-    g.Pull  = GPIO_NOPULL;
-    g.Pin   = LEFT_TIM_UH_PIN | LEFT_TIM_VH_PIN | LEFT_TIM_WH_PIN;
-    HAL_GPIO_Init(LEFT_TIM_UH_PORT, &g);          /* PC6/PC7/PC8 */
-    HAL_GPIO_WritePin(LEFT_TIM_UH_PORT, LEFT_TIM_UH_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LEFT_TIM_VH_PORT, LEFT_TIM_VH_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LEFT_TIM_WH_PORT, LEFT_TIM_WH_PIN, GPIO_PIN_RESET);
-    g.Pin = LEFT_TIM_UL_PIN;  HAL_GPIO_Init(LEFT_TIM_UL_PORT, &g);
-    g.Pin = LEFT_TIM_VL_PIN;  HAL_GPIO_Init(LEFT_TIM_VL_PORT, &g);
-    g.Pin = LEFT_TIM_WL_PIN;  HAL_GPIO_Init(LEFT_TIM_WL_PORT, &g);
-    HAL_GPIO_WritePin(LEFT_TIM_UL_PORT, LEFT_TIM_UL_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LEFT_TIM_VL_PORT, LEFT_TIM_VL_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(LEFT_TIM_WL_PORT, LEFT_TIM_WL_PIN, GPIO_PIN_RESET);
-  }
+  /* Clear MOE immediately after enabling timers — matches reference firmware lines 568-569.
+   * With OSSR=ENABLE and OSSI=ENABLE, MOE=0 drives:
+   *   HIGH-SIDE (HIN) → LOW  via OCIdleState=RESET   (high-side FETs off)
+   *   LOW-SIDE  (LIN) → HIGH via OCNIdleState=SET     (low-side FETs on = short-brake)
+   * Pins remain in AF_PP mode — BLDC ISR manages MOE going forward.
+   * At zero speed: back-EMF=0 → zero braking torque → wheel turns freely. */
+  htim_left.Instance->BDTR  &= ~(1U << 15);   /* TIM8 MOE=0 → short-brake */
+  htim_right.Instance->BDTR &= ~(1U << 15);   /* TIM1 MOE=0 → short-brake */
 }
 
 void MX_ADC1_Init(void) {

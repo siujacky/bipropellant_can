@@ -352,10 +352,17 @@ int main(void) {
   #ifdef SERIAL_USART3_IT
   USART3_IT_init();
   #endif
+  /* SOFTWARE_SERIAL init is permanently disabled to protect PA13(SWDIO)/PA14(SWCLK).
+   * config.h CONTROL_TYPE=9 defines SOFTWARE_SERIAL and SOFTWARE_SERIAL_USE_SWD_PINS
+   * which would reconfigure SWD pins as GPIO → breaking ST-Link debug connection.
+   * SoftwareSerialInit() must NEVER be called while ST-Link debugging is needed.
+   * (The #if 0 block below is intentionally dead code for documentation.) */
+  #if 0
   #ifdef SOFTWARE_SERIAL
     #ifndef SOFTWARE_SERIAL_DEFERRED_INIT
-      SoftwareSerialInit();  // Init now unless deferred (CAN mode defers until MCP2515 detected)
+      SoftwareSerialInit();
     #endif
+  #endif
   #endif
 
   // Initialize flash content BEFORE CAN init (so CAN IDs are available)

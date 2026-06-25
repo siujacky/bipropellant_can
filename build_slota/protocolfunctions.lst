@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc3QIfGH.s 			page 1
+ARM GAS  /tmp/ccteiRdm.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
   29:src/protocolfunctions.c **** #if defined(SERIAL_USART3_IT) && !defined(CONTROL_SENSOR)
   30:src/protocolfunctions.c ****     PROTOCOL_STAT sUSART3;
   31:src/protocolfunctions.c **** #endif
-ARM GAS  /tmp/cc3QIfGH.s 			page 2
+ARM GAS  /tmp/ccteiRdm.s 			page 2
 
 
   32:src/protocolfunctions.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
   57 0018 124B     		ldr	r3, .L9
   58              	.LVL1:
   59              		.loc 1 56 17 view .LVU5
-ARM GAS  /tmp/cc3QIfGH.s 			page 3
+ARM GAS  /tmp/ccteiRdm.s 			page 3
 
 
   60 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
   92              		.loc 1 72 5 view .LVU16
   93 0034 2B46     		mov	r3, r5
   94 0036 2246     		mov	r2, r4
-ARM GAS  /tmp/cc3QIfGH.s 			page 4
+ARM GAS  /tmp/ccteiRdm.s 			page 4
 
 
   95 0038 3946     		mov	r1, r7
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
   67:src/protocolfunctions.c ****             }
  133              		.loc 1 67 17 is_stmt 1 view .LVU33
  134 005c FFF7FEFF 		bl	init_PID_control
-ARM GAS  /tmp/cc3QIfGH.s 			page 5
+ARM GAS  /tmp/ccteiRdm.s 			page 5
 
 
  135              	.LVL11:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  104:src/protocolfunctions.c **** ////////////////////////////////////////////////////////////////////////////////////////////
  105:src/protocolfunctions.c **** // Variable & Functions for 0x03 SpeedData
  106:src/protocolfunctions.c **** 
-ARM GAS  /tmp/cc3QIfGH.s 			page 6
+ARM GAS  /tmp/ccteiRdm.s 			page 6
 
 
  107:src/protocolfunctions.c **** PROTOCOL_SPEED_DATA SpeedData = {
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  195              	.L16:
  196              		.align	2
  197              	.L15:
-ARM GAS  /tmp/cc3QIfGH.s 			page 7
+ARM GAS  /tmp/ccteiRdm.s 			page 7
 
 
  198 001c 00000000 		.word	control_type
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  243 0012 1669     		ldr	r6, [r2, #16]
  244              		.loc 1 136 50 view .LVU52
  245 0014 0E60     		str	r6, [r1]
-ARM GAS  /tmp/cc3QIfGH.s 			page 8
+ARM GAS  /tmp/ccteiRdm.s 			page 8
 
 
  137:src/protocolfunctions.c ****             ((POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn_mm - HallData[0].HallPosn_mm_
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  288              		.loc 1 148 63 is_stmt 0 view .LVU72
  289 0040 2B69     		ldr	r3, [r5, #16]
  290              		.loc 1 148 70 view .LVU73
-ARM GAS  /tmp/cc3QIfGH.s 			page 9
+ARM GAS  /tmp/ccteiRdm.s 			page 9
 
 
  291 0042 1A68     		ldr	r2, [r3]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  336              		.cfi_offset 6, -12
  337              		.cfi_offset 7, -8
  338              		.cfi_offset 14, -4
-ARM GAS  /tmp/cc3QIfGH.s 			page 10
+ARM GAS  /tmp/ccteiRdm.s 			page 10
 
 
  339 0002 0746     		mov	r7, r0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  378              		.loc 1 174 13 view .LVU94
  379              		.loc 1 174 20 is_stmt 0 view .LVU95
  380 0036 094B     		ldr	r3, .L31+4
-ARM GAS  /tmp/cc3QIfGH.s 			page 11
+ARM GAS  /tmp/ccteiRdm.s 			page 11
 
 
  381 0038 0122     		movs	r2, #1
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  428              		.thumb_func
  430              	fn_RawPosition:
  431              	.LVL23:
-ARM GAS  /tmp/cc3QIfGH.s 			page 12
+ARM GAS  /tmp/ccteiRdm.s 			page 12
 
 
  432              	.LFB70:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  464              		.loc 1 204 59 view .LVU117
  465 0014 0E60     		str	r6, [r1]
  205:src/protocolfunctions.c ****             ((PROTOCOL_POSN*) (param->ptr))->LeftOffset = HallData[0].HallPosn - HallData[0].HallPo
-ARM GAS  /tmp/cc3QIfGH.s 			page 13
+ARM GAS  /tmp/ccteiRdm.s 			page 13
 
 
  466              		.loc 1 205 13 is_stmt 1 view .LVU118
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  509 0040 2A69     		ldr	r2, [r5, #16]
  510              		.loc 1 216 76 view .LVU138
  511 0042 1168     		ldr	r1, [r2]
-ARM GAS  /tmp/cc3QIfGH.s 			page 14
+ARM GAS  /tmp/ccteiRdm.s 			page 14
 
 
  512              		.loc 1 216 43 view .LVU139
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  242:src/protocolfunctions.c **** 
  243:src/protocolfunctions.c ****     fn_defaultProcessing(s, param, cmd, msg);
  244:src/protocolfunctions.c **** 
-ARM GAS  /tmp/cc3QIfGH.s 			page 15
+ARM GAS  /tmp/ccteiRdm.s 			page 15
 
 
  245:src/protocolfunctions.c ****     switch (cmd) {
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  566              	.LVL29:
  567              		.loc 1 275 26 view .LVU151
  568 0010 0321     		movs	r1, #3
-ARM GAS  /tmp/cc3QIfGH.s 			page 16
+ARM GAS  /tmp/ccteiRdm.s 			page 16
 
 
  569              	.LVL30:
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
  596              		.loc 1 295 50 is_stmt 0 view .LVU160
  597 002c 2269     		ldr	r2, [r4, #16]
-ARM GAS  /tmp/cc3QIfGH.s 			page 17
+ARM GAS  /tmp/ccteiRdm.s 			page 17
 
 
  295:src/protocolfunctions.c ****                     ((PROTOCOL_PWM_DATA*) (param->ptr))->pwm[i] = 0;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  635              		.loc 1 290 21 is_stmt 1 view .LVU177
  290:src/protocolfunctions.c ****                 }
  636              		.loc 1 290 65 is_stmt 0 view .LVU178
-ARM GAS  /tmp/cc3QIfGH.s 			page 18
+ARM GAS  /tmp/ccteiRdm.s 			page 18
 
 
  637 0058 42F82310 		str	r1, [r2, r3, lsl #2]
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  676 0086 D7E7     		b	.L50
  677              	.L55:
  678 0088 0023     		movs	r3, #0
-ARM GAS  /tmp/cc3QIfGH.s 			page 19
+ARM GAS  /tmp/ccteiRdm.s 			page 19
 
 
  679 008a D5E7     		b	.L50
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  319:src/protocolfunctions.c ****         case PROTOCOL_CMD_SILENTREAD:
  320:src/protocolfunctions.c ****             ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerFreq       = buzzerFreq;
  718              		.loc 1 320 13 view .LVU197
-ARM GAS  /tmp/cc3QIfGH.s 			page 20
+ARM GAS  /tmp/ccteiRdm.s 			page 20
 
 
  719              		.loc 1 320 44 is_stmt 0 view .LVU198
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  762 003c 1170     		strb	r1, [r2]
  332:src/protocolfunctions.c ****             buzzerLen       = ((PROTOCOL_BUZZER_DATA*) (param->ptr))->buzzerLen;
  763              		.loc 1 332 13 is_stmt 1 view .LVU214
-ARM GAS  /tmp/cc3QIfGH.s 			page 21
+ARM GAS  /tmp/ccteiRdm.s 			page 21
 
 
  764              		.loc 1 332 69 is_stmt 0 view .LVU215
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  353:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
  354:src/protocolfunctions.c ****         case PROTOCOL_CMD_READVALRESPONSE:
  355:src/protocolfunctions.c ****             if (FlashContent.magic != CURRENT_MAGIC){
-ARM GAS  /tmp/cc3QIfGH.s 			page 22
+ARM GAS  /tmp/ccteiRdm.s 			page 22
 
 
  356:src/protocolfunctions.c ****                 char temp[128];
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  822 0010 064B     		ldr	r3, .L73
  823 0012 5B8A     		ldrh	r3, [r3, #18]
  824 0014 B3F5C86F 		cmp	r3, #1600
-ARM GAS  /tmp/cc3QIfGH.s 			page 23
+ARM GAS  /tmp/ccteiRdm.s 			page 23
 
 
  825 0018 04D2     		bcs	.L71
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  875 0004 FFF7FEFF 		bl	fn_defaultProcessing
  876              	.LVL44:
  245:src/protocolfunctions.c ****         case PROTOCOL_CMD_WRITEVAL:
-ARM GAS  /tmp/cc3QIfGH.s 			page 24
+ARM GAS  /tmp/ccteiRdm.s 			page 24
 
 
  877              		.loc 1 245 5 view .LVU238
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  925              		.cfi_offset 4, -8
  926              		.cfi_offset 14, -4
  927 0002 1446     		mov	r4, r2
-ARM GAS  /tmp/cc3QIfGH.s 			page 25
+ARM GAS  /tmp/ccteiRdm.s 			page 25
 
 
  370:src/protocolfunctions.c **** 
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  965 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
  966              	.LCFI10:
  967              		.cfi_def_cfa_offset 28
-ARM GAS  /tmp/cc3QIfGH.s 			page 26
+ARM GAS  /tmp/ccteiRdm.s 			page 26
 
 
  968              		.cfi_offset 4, -28
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1008 0024 D14B     		ldr	r3, .L87+28
  1009 0026 C6F82031 		str	r3, [r6, #288]
  418:src/protocolfunctions.c ****       sSoftwareSerial.send_serial_data_wait=softwareserial_Send_Wait;
-ARM GAS  /tmp/cc3QIfGH.s 			page 27
+ARM GAS  /tmp/ccteiRdm.s 			page 27
 
 
  1010              		.loc 1 418 7 is_stmt 1 view .LVU267
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1027 0046 2846     		mov	r0, r5
  1028              	.LVL56:
  1029              		.loc 1 455 5 is_stmt 0 view .LVU276
-ARM GAS  /tmp/cc3QIfGH.s 			page 28
+ARM GAS  /tmp/ccteiRdm.s 			page 28
 
 
  1030 0048 FFF7FEFF 		bl	main_ascii_init
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1071 0088 2846     		mov	r0, r5
  1072 008a FFF7FEFF 		bl	setParamVariable
  1073              	.LVL63:
-ARM GAS  /tmp/cc3QIfGH.s 			page 29
+ARM GAS  /tmp/ccteiRdm.s 			page 29
 
 
  1074              		.loc 1 468 16 discriminator 1 view .LVU286
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1120 00d0 0721     		movs	r1, #7
  1121 00d2 2846     		mov	r0, r5
  1122 00d4 FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/cc3QIfGH.s 			page 30
+ARM GAS  /tmp/ccteiRdm.s 			page 30
 
 
  1123              	.LVL71:
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1169 011a 0A21     		movs	r1, #10
  1170 011c 2846     		mov	r0, r5
  1171 011e FFF7FEFF 		bl	setParamVariable
-ARM GAS  /tmp/cc3QIfGH.s 			page 31
+ARM GAS  /tmp/ccteiRdm.s 			page 31
 
 
  1172              	.LVL79:
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1219 016a 0444     		add	r4, r4, r0
  1220              	.LVL87:
  492:src/protocolfunctions.c ****         setParamHandler( s, 0x0D, fn_PWMData );
-ARM GAS  /tmp/cc3QIfGH.s 			page 32
+ARM GAS  /tmp/ccteiRdm.s 			page 32
 
 
  1221              		.loc 1 492 9 is_stmt 1 view .LVU319
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1267 01b0 854E     		ldr	r6, .L87+120
  1268 01b2 0227     		movs	r7, #2
  1269 01b4 0097     		str	r7, [sp]
-ARM GAS  /tmp/cc3QIfGH.s 			page 33
+ARM GAS  /tmp/ccteiRdm.s 			page 33
 
 
  1270 01b6 3346     		mov	r3, r6
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1317              		.loc 1 507 9 is_stmt 1 view .LVU339
  1318 0200 4A46     		mov	r2, r9
  1319 0202 8221     		movs	r1, #130
-ARM GAS  /tmp/cc3QIfGH.s 			page 34
+ARM GAS  /tmp/ccteiRdm.s 			page 34
 
 
  1320 0204 2846     		mov	r0, r5
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1366 024c FFF7FEFF 		bl	setParamVariable
  1367              	.LVL110:
  1368              		.loc 1 515 16 discriminator 1 view .LVU350
-ARM GAS  /tmp/cc3QIfGH.s 			page 35
+ARM GAS  /tmp/ccteiRdm.s 			page 35
 
 
  1369 0250 0444     		add	r4, r4, r0
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1414              		.loc 1 524 19 is_stmt 0 view .LVU361
  1415 0294 0097     		str	r7, [sp]
  1416 0296 06F11003 		add	r3, r6, #16
-ARM GAS  /tmp/cc3QIfGH.s 			page 36
+ARM GAS  /tmp/ccteiRdm.s 			page 36
 
 
  1417 029a 1222     		movs	r2, #18
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1463              		.loc 1 532 19 is_stmt 0 view .LVU372
  1464 02e0 0097     		str	r7, [sp]
  1465 02e2 06F11403 		add	r3, r6, #20
-ARM GAS  /tmp/cc3QIfGH.s 			page 37
+ARM GAS  /tmp/ccteiRdm.s 			page 37
 
 
  1466 02e6 1222     		movs	r2, #18
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1511              		.loc 1 541 19 is_stmt 0 view .LVU383
  1512 032a 0097     		str	r7, [sp]
  1513 032c 06F12003 		add	r3, r6, #32
-ARM GAS  /tmp/cc3QIfGH.s 			page 38
+ARM GAS  /tmp/ccteiRdm.s 			page 38
 
 
  1514 0330 1222     		movs	r2, #18
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1563 03a8 00000000 		.word	disablepoweroff
  1564 03ac 00000000 		.word	debug_out
  1565 03b0 00000000 		.word	xytPosn
-ARM GAS  /tmp/cc3QIfGH.s 			page 39
+ARM GAS  /tmp/ccteiRdm.s 			page 39
 
 
  1566 03b4 00000000 		.word	fn_xytPosn
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1607 0008 08BD     		pop	{r3, pc}
  1608              	.LVL141:
  1609              	.L92:
-ARM GAS  /tmp/cc3QIfGH.s 			page 40
+ARM GAS  /tmp/ccteiRdm.s 			page 40
 
 
  551:src/protocolfunctions.c ****     #endif
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1653              		.cfi_def_cfa_offset 8
  1654              		.cfi_offset 4, -8
  1655              		.cfi_offset 14, -4
-ARM GAS  /tmp/cc3QIfGH.s 			page 41
+ARM GAS  /tmp/ccteiRdm.s 			page 41
 
 
  1656 0002 A0B0     		sub	sp, sp, #128
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  359:src/protocolfunctions.c ****                 return;
  1700              		.loc 1 359 36 is_stmt 0 view .LVU410
  1701 0030 064B     		ldr	r3, .L100
-ARM GAS  /tmp/cc3QIfGH.s 			page 42
+ARM GAS  /tmp/ccteiRdm.s 			page 42
 
 
  1702 0032 40F2D642 		movw	r2, #1238
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  565:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart2;
  1751              		.loc 1 565 5 is_stmt 1 view .LVU417
  566:src/protocolfunctions.c ****     extern UART_HandleTypeDef huart3;
-ARM GAS  /tmp/cc3QIfGH.s 			page 43
+ARM GAS  /tmp/ccteiRdm.s 			page 43
 
 
  1752              		.loc 1 566 5 view .LVU418
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  586:src/protocolfunctions.c **** }
  1786              		.loc 1 586 1 view .LVU434
  1787 001c 38BD     		pop	{r3, r4, r5, pc}
-ARM GAS  /tmp/cc3QIfGH.s 			page 44
+ARM GAS  /tmp/ccteiRdm.s 			page 44
 
 
  1788              	.LVL157:
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1844              		.global	protocol_enable
  1845              		.section	.bss.protocol_enable,"aw",%nobits
  1848              	protocol_enable:
-ARM GAS  /tmp/cc3QIfGH.s 			page 45
+ARM GAS  /tmp/ccteiRdm.s 			page 45
 
 
  1849 0000 00       		.space	1
@@ -2662,67 +2662,67 @@ ARM GAS  /tmp/cc3QIfGH.s 			page 1
  1867              		.file 16 "inc/flashaccess.h"
  1868              		.file 17 "/usr/include/newlib/stdio.h"
  1869              		.file 18 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  /tmp/cc3QIfGH.s 			page 46
+ARM GAS  /tmp/ccteiRdm.s 			page 46
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 protocolfunctions.c
-     /tmp/cc3QIfGH.s:19     .text.fn_enable:00000000 $t
-     /tmp/cc3QIfGH.s:25     .text.fn_enable:00000000 fn_enable
-     /tmp/cc3QIfGH.s:141    .text.fn_enable:00000064 $d
-     /tmp/cc3QIfGH.s:1848   .bss.protocol_enable:00000000 protocol_enable
-     /tmp/cc3QIfGH.s:1824   .data.PosnData:00000000 PosnData
-     /tmp/cc3QIfGH.s:1837   .data.SpeedData:00000000 SpeedData
-     /tmp/cc3QIfGH.s:1812   .data.PWMData:00000000 PWMData
-     /tmp/cc3QIfGH.s:151    .text.fn_SpeedData:00000000 $t
-     /tmp/cc3QIfGH.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
-     /tmp/cc3QIfGH.s:198    .text.fn_SpeedData:0000001c $d
-     /tmp/cc3QIfGH.s:204    .text.fn_Position:00000000 $t
-     /tmp/cc3QIfGH.s:210    .text.fn_Position:00000000 fn_Position
-     /tmp/cc3QIfGH.s:311    .text.fn_Position:00000050 $d
-     /tmp/cc3QIfGH.s:316    .text.fn_PositionIncr:00000000 $t
-     /tmp/cc3QIfGH.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
-     /tmp/cc3QIfGH.s:416    .text.fn_PositionIncr:00000058 $d
-     /tmp/cc3QIfGH.s:424    .text.fn_RawPosition:00000000 $t
-     /tmp/cc3QIfGH.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
-     /tmp/cc3QIfGH.s:529    .text.fn_RawPosition:00000050 $d
-     /tmp/cc3QIfGH.s:534    .text.fn_PWMData:00000000 $t
-     /tmp/cc3QIfGH.s:540    .text.fn_PWMData:00000000 fn_PWMData
-     /tmp/cc3QIfGH.s:683    .text.fn_PWMData:0000008c $d
-     /tmp/cc3QIfGH.s:689    .text.fn_BuzzerData:00000000 $t
-     /tmp/cc3QIfGH.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
-     /tmp/cc3QIfGH.s:784    .text.fn_BuzzerData:0000004c $d
-     /tmp/cc3QIfGH.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
-     /tmp/cc3QIfGH.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
-     /tmp/cc3QIfGH.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
-     /tmp/cc3QIfGH.s:854    .text.fn_xytPosn:00000000 $t
-     /tmp/cc3QIfGH.s:860    .text.fn_xytPosn:00000000 fn_xytPosn
-     /tmp/cc3QIfGH.s:903    .text.fn_xytPosn:00000024 $d
-     /tmp/cc3QIfGH.s:908    .text.fn_FlashContentPID:00000000 $t
-     /tmp/cc3QIfGH.s:914    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
-     /tmp/cc3QIfGH.s:951    .text.setup_protocol:00000000 $t
-     /tmp/cc3QIfGH.s:957    .text.setup_protocol:00000000 setup_protocol
-     /tmp/cc3QIfGH.s:1541   .text.setup_protocol:00000350 $d
+     /tmp/ccteiRdm.s:19     .text.fn_enable:00000000 $t
+     /tmp/ccteiRdm.s:25     .text.fn_enable:00000000 fn_enable
+     /tmp/ccteiRdm.s:141    .text.fn_enable:00000064 $d
+     /tmp/ccteiRdm.s:1848   .bss.protocol_enable:00000000 protocol_enable
+     /tmp/ccteiRdm.s:1824   .data.PosnData:00000000 PosnData
+     /tmp/ccteiRdm.s:1837   .data.SpeedData:00000000 SpeedData
+     /tmp/ccteiRdm.s:1812   .data.PWMData:00000000 PWMData
+     /tmp/ccteiRdm.s:151    .text.fn_SpeedData:00000000 $t
+     /tmp/ccteiRdm.s:157    .text.fn_SpeedData:00000000 fn_SpeedData
+     /tmp/ccteiRdm.s:198    .text.fn_SpeedData:0000001c $d
+     /tmp/ccteiRdm.s:204    .text.fn_Position:00000000 $t
+     /tmp/ccteiRdm.s:210    .text.fn_Position:00000000 fn_Position
+     /tmp/ccteiRdm.s:311    .text.fn_Position:00000050 $d
+     /tmp/ccteiRdm.s:316    .text.fn_PositionIncr:00000000 $t
+     /tmp/ccteiRdm.s:322    .text.fn_PositionIncr:00000000 fn_PositionIncr
+     /tmp/ccteiRdm.s:416    .text.fn_PositionIncr:00000058 $d
+     /tmp/ccteiRdm.s:424    .text.fn_RawPosition:00000000 $t
+     /tmp/ccteiRdm.s:430    .text.fn_RawPosition:00000000 fn_RawPosition
+     /tmp/ccteiRdm.s:529    .text.fn_RawPosition:00000050 $d
+     /tmp/ccteiRdm.s:534    .text.fn_PWMData:00000000 $t
+     /tmp/ccteiRdm.s:540    .text.fn_PWMData:00000000 fn_PWMData
+     /tmp/ccteiRdm.s:683    .text.fn_PWMData:0000008c $d
+     /tmp/ccteiRdm.s:689    .text.fn_BuzzerData:00000000 $t
+     /tmp/ccteiRdm.s:695    .text.fn_BuzzerData:00000000 fn_BuzzerData
+     /tmp/ccteiRdm.s:784    .text.fn_BuzzerData:0000004c $d
+     /tmp/ccteiRdm.s:791    .text.fn_FlashContentMaxCurrLim:00000000 $t
+     /tmp/ccteiRdm.s:797    .text.fn_FlashContentMaxCurrLim:00000000 fn_FlashContentMaxCurrLim
+     /tmp/ccteiRdm.s:847    .text.fn_FlashContentMaxCurrLim:0000002c $d
+     /tmp/ccteiRdm.s:854    .text.fn_xytPosn:00000000 $t
+     /tmp/ccteiRdm.s:860    .text.fn_xytPosn:00000000 fn_xytPosn
+     /tmp/ccteiRdm.s:903    .text.fn_xytPosn:00000024 $d
+     /tmp/ccteiRdm.s:908    .text.fn_FlashContentPID:00000000 $t
+     /tmp/ccteiRdm.s:914    .text.fn_FlashContentPID:00000000 fn_FlashContentPID
+     /tmp/ccteiRdm.s:951    .text.setup_protocol:00000000 $t
+     /tmp/ccteiRdm.s:957    .text.setup_protocol:00000000 setup_protocol
+     /tmp/ccteiRdm.s:1541   .text.setup_protocol:00000350 $d
                             *COM*:00001254 sSoftwareSerial
                             *COM*:00000010 Position
                             *COM*:00000008 PositionIncr
                             *COM*:00000010 RawPosition
-     /tmp/cc3QIfGH.s:1805   .bss.BuzzerData:00000000 BuzzerData
-     /tmp/cc3QIfGH.s:1643   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
-     /tmp/cc3QIfGH.s:1579   .text.consoleLog:00000000 $t
-     /tmp/cc3QIfGH.s:1585   .text.consoleLog:00000000 consoleLog
-     /tmp/cc3QIfGH.s:1623   .text.consoleLog:00000018 $d
-     /tmp/cc3QIfGH.s:1629   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
-     /tmp/cc3QIfGH.s:1637   .text.fn_FlashContentMagic:00000000 $t
-     /tmp/cc3QIfGH.s:1722   .text.fn_FlashContentMagic:0000004c $d
-     /tmp/cc3QIfGH.s:1729   .text.consoleLogRaw:00000000 $t
-     /tmp/cc3QIfGH.s:1735   .text.consoleLogRaw:00000000 consoleLogRaw
-     /tmp/cc3QIfGH.s:1802   .bss.BuzzerData:00000000 $d
-     /tmp/cc3QIfGH.s:1809   .data.PWMData:00000000 $d
-     /tmp/cc3QIfGH.s:1821   .data.PosnData:00000000 $d
-     /tmp/cc3QIfGH.s:1834   .data.SpeedData:00000000 $d
-     /tmp/cc3QIfGH.s:1849   .bss.protocol_enable:00000000 $d
-ARM GAS  /tmp/cc3QIfGH.s 			page 47
+     /tmp/ccteiRdm.s:1805   .bss.BuzzerData:00000000 BuzzerData
+     /tmp/ccteiRdm.s:1643   .text.fn_FlashContentMagic:00000000 fn_FlashContentMagic
+     /tmp/ccteiRdm.s:1579   .text.consoleLog:00000000 $t
+     /tmp/ccteiRdm.s:1585   .text.consoleLog:00000000 consoleLog
+     /tmp/ccteiRdm.s:1623   .text.consoleLog:00000018 $d
+     /tmp/ccteiRdm.s:1629   .rodata.fn_FlashContentMagic.str1.4:00000000 $d
+     /tmp/ccteiRdm.s:1637   .text.fn_FlashContentMagic:00000000 $t
+     /tmp/ccteiRdm.s:1722   .text.fn_FlashContentMagic:0000004c $d
+     /tmp/ccteiRdm.s:1729   .text.consoleLogRaw:00000000 $t
+     /tmp/ccteiRdm.s:1735   .text.consoleLogRaw:00000000 consoleLogRaw
+     /tmp/ccteiRdm.s:1802   .bss.BuzzerData:00000000 $d
+     /tmp/ccteiRdm.s:1809   .data.PWMData:00000000 $d
+     /tmp/ccteiRdm.s:1821   .data.PosnData:00000000 $d
+     /tmp/ccteiRdm.s:1834   .data.SpeedData:00000000 $d
+     /tmp/ccteiRdm.s:1849   .bss.protocol_enable:00000000 $d
+ARM GAS  /tmp/ccteiRdm.s 			page 47
 
 
 
