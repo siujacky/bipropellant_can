@@ -440,7 +440,15 @@ int main(void) {
   float board_temp_adc_filtered = (float)adc_buffer.temp;
   float board_temp_deg_c;
 
-  enable = 1;  // enable motors
+  /* FIX: keep enable=0 until explicit CAN enable command received.
+   * Immediately clear MOE on both motor timers to force hi-Z (free-wheel):
+   *   MOE=0 + OSSR=0 + OSSI=0 → all timer outputs disabled → phases float.
+   * Without this, setup.c leaves MOE=1 with CCR=0 → complementary PWM drives
+   * all low-side gates HIGH → all motor phases shorted to GND → wheel locked.
+   * The BLDC ISR will set MOE=1 again only when enable=1 is explicitly set. */
+  enable = 0;
+  LEFT_TIM->BDTR  &= ~(1U << 15);   /* Clear MOE — left motor hi-Z */
+  RIGHT_TIM->BDTR &= ~(1U << 15);   /* Clear MOE — right motor hi-Z */
 
   // ####### POWER-BUTTON startup conditions #######
   power_button_info.startup_button_held = HAL_GPIO_ReadPin(BUTTON_PORT, BUTTON_PIN);

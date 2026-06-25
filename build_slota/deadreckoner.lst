@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccxxA0bx.s 			page 1
+ARM GAS  /tmp/cclO1sXA.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
   30:src/deadreckoner.c **** 	d->leftTicks = pLeftTicks;
   31:src/deadreckoner.c **** 	d->rightTicks = pRightTicks;
   32:src/deadreckoner.c **** 	d->ticksPerRev = ticksPerRev;
-ARM GAS  /tmp/ccxxA0bx.s 			page 2
+ARM GAS  /tmp/cclO1sXA.s 			page 2
 
 
   33:src/deadreckoner.c **** 	d->radius = wheelDiameter/2;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
   87:src/deadreckoner.c **** 	d->leftOmegaDirection = directionL;
   88:src/deadreckoner.c **** 	d->rightOmegaDirection = directionR;
   89:src/deadreckoner.c **** }
-ARM GAS  /tmp/ccxxA0bx.s 			page 3
+ARM GAS  /tmp/cclO1sXA.s 			page 3
 
 
   90:src/deadreckoner.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
   42              	.LVL2:
   43              	.L4:
  124:src/deadreckoner.c **** 		return UNSIGNED_LONG_MAX - previous + current;
-ARM GAS  /tmp/ccxxA0bx.s 			page 4
+ARM GAS  /tmp/cclO1sXA.s 			page 4
 
 
   44              		.loc 1 124 3 is_stmt 1 view .LVU6
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
   93 000e 0146     		mov	r1, r0
  100:src/deadreckoner.c **** 
   94              		.loc 1 100 16 discriminator 1 view .LVU14
-ARM GAS  /tmp/ccxxA0bx.s 			page 5
+ARM GAS  /tmp/cclO1sXA.s 			page 5
 
 
   95 0010 2846     		mov	r0, r5
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  135 0044 3246     		mov	r2, r6
  136 0046 3B46     		mov	r3, r7
  137 0048 FFF7FEFF 		bl	__aeabi_dmul
-ARM GAS  /tmp/ccxxA0bx.s 			page 6
+ARM GAS  /tmp/cclO1sXA.s 			page 6
 
 
  138              	.LVL13:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  183              	.LVL21:
  106:src/deadreckoner.c **** 
  184              		.loc 1 106 8 view .LVU38
-ARM GAS  /tmp/ccxxA0bx.s 			page 7
+ARM GAS  /tmp/cclO1sXA.s 			page 7
 
 
  185 0098 C4E90A01 		strd	r0, [r4, #40]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
   23:src/deadreckoner.c ****     // get zeroed structure
  228              		.loc 1 23 165 is_stmt 0 view .LVU52
  229 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
-ARM GAS  /tmp/ccxxA0bx.s 			page 8
+ARM GAS  /tmp/cclO1sXA.s 			page 8
 
 
  230              	.LCFI3:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  269              		.loc 1 32 17 is_stmt 0 view .LVU67
  270 0022 C0E90C67 		strd	r6, [r0, #48]
   33:src/deadreckoner.c **** 	d->length = wheelBase;
-ARM GAS  /tmp/ccxxA0bx.s 			page 9
+ARM GAS  /tmp/cclO1sXA.s 			page 9
 
 
  271              		.loc 1 33 2 is_stmt 1 view .LVU68
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  311 0068 0000E03F 		.word	1071644672
  312              		.cfi_endproc
  313              	.LFE66:
-ARM GAS  /tmp/ccxxA0bx.s 			page 10
+ARM GAS  /tmp/cclO1sXA.s 			page 10
 
 
  315              		.section	.text.DeadReckoner_Destroy,"ax",%progbits
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  359              		.cfi_restore 4
  360              		.cfi_restore 14
   49:src/deadreckoner.c **** 
-ARM GAS  /tmp/ccxxA0bx.s 			page 11
+ARM GAS  /tmp/cclO1sXA.s 			page 11
 
 
  361              		.loc 1 49 1 view .LVU93
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  405 0018 DDE90401 		ldrd	r0, [sp, #16]
  406              	.LVL39:
   55:src/deadreckoner.c ****     } else {
-ARM GAS  /tmp/ccxxA0bx.s 			page 12
+ARM GAS  /tmp/cclO1sXA.s 			page 12
 
 
  407              		.loc 1 55 19 view .LVU106
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  454              		.cfi_def_cfa_offset 16
  455              		.cfi_offset 3, -16
  456              		.cfi_offset 4, -12
-ARM GAS  /tmp/ccxxA0bx.s 			page 13
+ARM GAS  /tmp/cclO1sXA.s 			page 13
 
 
  457              		.cfi_offset 11, -8
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  494              		.loc 1 66 27 view .LVU131
  495 002e FFF7FEFF 		bl	__aeabi_ddiv
  496              	.LVL47:
-ARM GAS  /tmp/ccxxA0bx.s 			page 14
+ARM GAS  /tmp/cclO1sXA.s 			page 14
 
 
   66:src/deadreckoner.c ****         } else {
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  544              		.cfi_def_cfa_offset 32
  545              		.cfi_offset 3, -32
  546              		.cfi_offset 4, -28
-ARM GAS  /tmp/ccxxA0bx.s 			page 15
+ARM GAS  /tmp/cclO1sXA.s 			page 15
 
 
  547              		.cfi_offset 5, -24
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  591              	.L32:
   77:src/deadreckoner.c **** }
  592              		.loc 1 77 2 is_stmt 1 view .LVU151
-ARM GAS  /tmp/ccxxA0bx.s 			page 16
+ARM GAS  /tmp/cclO1sXA.s 			page 16
 
 
   77:src/deadreckoner.c **** }
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  639              		.syntax unified
  640              		.thumb
  641              		.thumb_func
-ARM GAS  /tmp/ccxxA0bx.s 			page 17
+ARM GAS  /tmp/cclO1sXA.s 			page 17
 
 
  643              	getW:
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  686              	.LVL68:
  687 002a FFF7FEFF 		bl	__aeabi_f2d
  688              	.LVL69:
-ARM GAS  /tmp/ccxxA0bx.s 			page 18
+ARM GAS  /tmp/cclO1sXA.s 			page 18
 
 
   82:src/deadreckoner.c **** }
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  737              		.thumb_func
  739              	getLROmegaDirection:
  740              	.LVL72:
-ARM GAS  /tmp/ccxxA0bx.s 			page 19
+ARM GAS  /tmp/cclO1sXA.s 			page 19
 
 
  741              	.LFB73:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  785              	.LVL75:
  786              	.LFB76:
  129:src/deadreckoner.c **** 
-ARM GAS  /tmp/ccxxA0bx.s 			page 20
+ARM GAS  /tmp/cclO1sXA.s 			page 20
 
 
  130:src/deadreckoner.c **** void computePosition(DEADRECKONER *d) {
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  146:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
  147:src/deadreckoner.c **** 	float v = (Vr + Vl) / 2.0;
  148:src/deadreckoner.c **** 	d->w = (Vr - Vl) / d->length;
-ARM GAS  /tmp/ccxxA0bx.s 			page 21
+ARM GAS  /tmp/cclO1sXA.s 			page 21
 
 
  149:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  851              		.loc 1 145 2 is_stmt 1 view .LVU207
  145:src/deadreckoner.c **** 	float Vr = d->wr * d->radius;
  852              		.loc 1 145 22 is_stmt 0 view .LVU208
-ARM GAS  /tmp/ccxxA0bx.s 			page 22
+ARM GAS  /tmp/cclO1sXA.s 			page 22
 
 
  853 0034 D4E91289 		ldrd	r8, [r4, #72]
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  895              		.loc 1 148 2 is_stmt 1 view .LVU220
  148:src/deadreckoner.c **** 	// Uses 4th order Runge-Kutta to integrate numerically to find position.
  896              		.loc 1 148 13 is_stmt 0 view .LVU221
-ARM GAS  /tmp/ccxxA0bx.s 			page 23
+ARM GAS  /tmp/cclO1sXA.s 			page 23
 
 
  897 006e 3946     		mov	r1, r7
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  941              	.LVL106:
  942 00b4 0646     		mov	r6, r0
  943              	.LVL107:
-ARM GAS  /tmp/ccxxA0bx.s 			page 24
+ARM GAS  /tmp/cclO1sXA.s 			page 24
 
 
  150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  150:src/deadreckoner.c **** 	float yNext = d->yc + dt * v*(2 + cos(dt*d->w / 2))*sin(d->theta + dt * d->w / 2) / 3;
  990              		.loc 1 150 22 discriminator 2 view .LVU240
  991 010a 5046     		mov	r0, r10
-ARM GAS  /tmp/ccxxA0bx.s 			page 25
+ARM GAS  /tmp/cclO1sXA.s 			page 25
 
 
  992 010c 5946     		mov	r1, fp
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  1035              	.LVL126:
  152:src/deadreckoner.c **** 
  1036              		.loc 1 152 34 view .LVU252
-ARM GAS  /tmp/ccxxA0bx.s 			page 26
+ARM GAS  /tmp/cclO1sXA.s 			page 26
 
 
  1037 014c FFF7FEFF 		bl	__aeabi_f2d
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  1079              		.align	2
  1080              	.L49:
  1081 0188 00007A44 		.word	1148846080
-ARM GAS  /tmp/ccxxA0bx.s 			page 27
+ARM GAS  /tmp/cclO1sXA.s 			page 27
 
 
  1082 018c 00000840 		.word	1074266112
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  1131              	.L51:
  179:src/deadreckoner.c **** }...
  1132              		.loc 1 179 1 view .LVU282
-ARM GAS  /tmp/ccxxA0bx.s 			page 28
+ARM GAS  /tmp/cclO1sXA.s 			page 28
 
 
  1133 0022 7047     		bx	lr
@@ -1632,39 +1632,39 @@ ARM GAS  /tmp/ccxxA0bx.s 			page 1
  1142              		.file 5 "/usr/include/newlib/math.h"
  1143              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
  1144              		.file 7 "/usr/include/newlib/stdlib.h"
-ARM GAS  /tmp/ccxxA0bx.s 			page 29
+ARM GAS  /tmp/cclO1sXA.s 			page 29
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 deadreckoner.c
-     /tmp/ccxxA0bx.s:19     .text.getChange:00000000 $t
-     /tmp/ccxxA0bx.s:24     .text.getChange:00000000 getChange
-     /tmp/ccxxA0bx.s:59     .text.computeAngularVelocities:00000000 $t
-     /tmp/ccxxA0bx.s:64     .text.computeAngularVelocities:00000000 computeAngularVelocities
-     /tmp/ccxxA0bx.s:215    .text.DeadReckoner:00000000 $t
-     /tmp/ccxxA0bx.s:221    .text.DeadReckoner:00000000 DeadReckoner
-     /tmp/ccxxA0bx.s:309    .text.DeadReckoner:00000060 $d
-     /tmp/ccxxA0bx.s:316    .text.DeadReckoner_Destroy:00000000 $t
-     /tmp/ccxxA0bx.s:322    .text.DeadReckoner_Destroy:00000000 DeadReckoner_Destroy
-     /tmp/ccxxA0bx.s:367    .text.setXYT:00000000 $t
-     /tmp/ccxxA0bx.s:373    .text.setXYT:00000000 setXYT
-     /tmp/ccxxA0bx.s:431    .text.setXYT:00000040 $d
-     /tmp/ccxxA0bx.s:438    .text.getXYT:00000000 $t
-     /tmp/ccxxA0bx.s:444    .text.getXYT:00000000 getXYT
-     /tmp/ccxxA0bx.s:520    .text.getXYT:00000050 $d
-     /tmp/ccxxA0bx.s:528    .text.getWl:00000000 $t
-     /tmp/ccxxA0bx.s:534    .text.getWl:00000000 getWl
-     /tmp/ccxxA0bx.s:637    .text.getW:00000000 $t
-     /tmp/ccxxA0bx.s:643    .text.getW:00000000 getW
-     /tmp/ccxxA0bx.s:707    .text.setLROmegaDirection:00000000 $t
-     /tmp/ccxxA0bx.s:713    .text.setLROmegaDirection:00000000 setLROmegaDirection
-     /tmp/ccxxA0bx.s:733    .text.getLROmegaDirection:00000000 $t
-     /tmp/ccxxA0bx.s:739    .text.getLROmegaDirection:00000000 getLROmegaDirection
-     /tmp/ccxxA0bx.s:778    .text.computePosition:00000000 $t
-     /tmp/ccxxA0bx.s:784    .text.computePosition:00000000 computePosition
-     /tmp/ccxxA0bx.s:1081   .text.computePosition:00000188 $d
-     /tmp/ccxxA0bx.s:1087   .text.reset:00000000 $t
-     /tmp/ccxxA0bx.s:1093   .text.reset:00000000 reset
+     /tmp/cclO1sXA.s:19     .text.getChange:00000000 $t
+     /tmp/cclO1sXA.s:24     .text.getChange:00000000 getChange
+     /tmp/cclO1sXA.s:59     .text.computeAngularVelocities:00000000 $t
+     /tmp/cclO1sXA.s:64     .text.computeAngularVelocities:00000000 computeAngularVelocities
+     /tmp/cclO1sXA.s:215    .text.DeadReckoner:00000000 $t
+     /tmp/cclO1sXA.s:221    .text.DeadReckoner:00000000 DeadReckoner
+     /tmp/cclO1sXA.s:309    .text.DeadReckoner:00000060 $d
+     /tmp/cclO1sXA.s:316    .text.DeadReckoner_Destroy:00000000 $t
+     /tmp/cclO1sXA.s:322    .text.DeadReckoner_Destroy:00000000 DeadReckoner_Destroy
+     /tmp/cclO1sXA.s:367    .text.setXYT:00000000 $t
+     /tmp/cclO1sXA.s:373    .text.setXYT:00000000 setXYT
+     /tmp/cclO1sXA.s:431    .text.setXYT:00000040 $d
+     /tmp/cclO1sXA.s:438    .text.getXYT:00000000 $t
+     /tmp/cclO1sXA.s:444    .text.getXYT:00000000 getXYT
+     /tmp/cclO1sXA.s:520    .text.getXYT:00000050 $d
+     /tmp/cclO1sXA.s:528    .text.getWl:00000000 $t
+     /tmp/cclO1sXA.s:534    .text.getWl:00000000 getWl
+     /tmp/cclO1sXA.s:637    .text.getW:00000000 $t
+     /tmp/cclO1sXA.s:643    .text.getW:00000000 getW
+     /tmp/cclO1sXA.s:707    .text.setLROmegaDirection:00000000 $t
+     /tmp/cclO1sXA.s:713    .text.setLROmegaDirection:00000000 setLROmegaDirection
+     /tmp/cclO1sXA.s:733    .text.getLROmegaDirection:00000000 $t
+     /tmp/cclO1sXA.s:739    .text.getLROmegaDirection:00000000 getLROmegaDirection
+     /tmp/cclO1sXA.s:778    .text.computePosition:00000000 $t
+     /tmp/cclO1sXA.s:784    .text.computePosition:00000000 computePosition
+     /tmp/cclO1sXA.s:1081   .text.computePosition:00000188 $d
+     /tmp/cclO1sXA.s:1087   .text.reset:00000000 $t
+     /tmp/cclO1sXA.s:1093   .text.reset:00000000 reset
 
 UNDEFINED SYMBOLS
 __aeabi_i2d
